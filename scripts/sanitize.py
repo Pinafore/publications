@@ -4,7 +4,7 @@ from glob import glob
 import re
 import sys
 
-kCOMMENT = re.compile(r"(?<!\\)%.*")
+kCOMMENT = re.compile(r"%.*")
 kSTRIP = re.compile(r"\\.*comment{")
 strippable = set(["\\hidetext{"])
 
@@ -31,8 +31,10 @@ if __name__ == "__main__":
         strippable = strippable | set(kSTRIP.findall(open(ii).read()))
     print(strippable)
 
-    for ii in glob("%s/*" % sys.argv[1:]):
+    for ii in glob("%s/*" % sys.argv[1]) + \
+            ["%s.tex" % sys.argv[1].split("/")[0]]:
         raw_file = open(ii).read()
+        print("\n".join(kCOMMENT.findall(raw_file)[:5]))
         new_text = kCOMMENT.sub("", raw_file)
 
         strips_found = 1
