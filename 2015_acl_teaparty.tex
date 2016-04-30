@@ -1,0 +1,208 @@
+%
+% File acl2015.tex
+%
+% Contact: car@ir.hit.edu.cn, gdzhou@suda.edu.cn
+%%
+%% Based on the style files for ACL-2014, which were, in turn,
+%% Based on the style files for ACL-2013, which were, in turn,
+%% Based on the style files for ACL-2012, which were, in turn,
+%% based on the style files for ACL-2011, which were, in turn,
+%% based on the style files for ACL-2010, which were, in turn,
+%% based on the style files for ACL-IJCNLP-2009, which were, in turn,
+%% based on the style files for EACL-2009 and IJCNLP-2008...
+
+%% Based on the style files for EACL 2006 by
+%%e.agirre@ehu.es or Sergi.Balari@uab.es
+%% and that of ACL 08 by Joakim Nivre and Noah Smith
+
+\documentclass[11pt]{article}
+\usepackage{style/acl2015}
+\usepackage{url}
+\usepackage{graphicx} % more modern
+\usepackage{epstopdf}
+\usepackage{times}
+\usepackage{latexsym}
+\usepackage{amsmath}
+%\usepackage{caption}
+%\usepackage{subcaption}
+\usepackage{enumitem}
+\usepackage{multicol}
+\usepackage{subfloat}
+\usepackage{epstopdf}
+\usepackage{stmaryrd}
+\usepackage{multirow}
+\usepackage{amssymb}
+\usepackage{bm}
+\usepackage{color}
+\usepackage[usenames,dvipsnames]{xcolor}
+
+% Squeezing macros
+\usepackage[font=small]{caption}
+\usepackage[compact]{titlesec}
+\titlespacing{\section}{0pt}{2ex}{1ex}
+\titlespacing{\subsection}{0pt}{1ex}{0ex}
+\titlespacing{\subsubsection}{0pt}{0.5ex}{0ex}
+\captionsetup{belowskip=2pt,aboveskip=2pt}
+\makeatletter
+\g@addto@macro \normalsize {%
+ \setlength\abovedisplayskip{5pt plus 2pt minus 5pt}%
+ \setlength\belowdisplayskip{5pt plus 2pt minus 5pt}%
+}
+\makeatother
+
+
+\newif\ifcomment\commentfalse
+%\newif\ifcomment\commenttrue
+\input{style/preamble}
+\setitemize[0]{leftmargin=10pt,itemindent=10pt}
+
+% This will create hyperlinks for citations but will make references ugly.
+%\usepackage{hyperref}
+%\hypersetup{
+%    colorlinks,
+%    citecolor=black,
+%    filecolor=black,
+%    linkcolor=black,
+%    urlcolor=black
+%}
+%
+%\newcommand{\urlwofont}[1]
+%{
+%\urlstyle{same}\url{#1}
+%}
+
+\newcommand{\fw}[0]{{Freedom Works}}
+\newcommand{\vote}[0]{{\textsc{Vote}}}
+
+\newcommand{\tp}[1]{\textcolor{RawSienna}{#1}}
+\newcommand{\ntp}[1]{\textcolor{ForestGreen}{#1}}
+\newcommand{\nom}[0]{\abr{nominate}}
+\newcommand{\dwnom}[0]{\abr{dw-nominate}}
+\newcommand{\irt}[0]{IRT}
+\newcommand{\us}[0]{U.S.}
+\newcommand{\lda}[0]{\textsc{lda}}
+
+\newcommand{\given}[0]{\, | \,}
+\newcommand{\glob}[0]{\textsc{g}}
+\newcommand{\loc}[0]{\textsc{l}}
+\newcommand{\moveto}[2]{#1 \shortrightarrow #2}
+\newcommand{\cur}[0]{\textsc{cur}}
+\newcommand{\prop}[0]{\textsc{prop}}
+
+\newcommand{\name}[0]{\abr{hiptm}}
+\newcommand{\shlda}[0]{SHLDA}
+\newcommand{\slda}[0]{\abr{slda}}
+\newcommand{\hdp}[0]{\textsc{hdp}}
+\newcommand{\nhdp}[0]{nHDP}
+\newcommand{\ncrf}[0]{nCRF}
+\newcommand{\ltoh}[0]{L2H}
+\newcommand{\mcmc}[0]{{MCMC}}
+
+% Distributions
+\newcommand{\Beta}[1]{\mbox{Beta}(#1)}
+\newcommand{\DP}[2]{\mbox{DP}(#1, #2)}
+\newcommand{\GEM}[1]{\mbox{\textsc{gem}}(#1)}
+\newcommand{\Dir}[1]{\mbox{Dir}(#1)}
+\newcommand{\Mult}[1]{\mbox{Mult}(#1)}
+\newcommand{\Bern}[1]{\mbox{Bernoulli}(#1)}
+
+\newcommand{\tf}[0]{{TF}}
+\newcommand{\tfidf}[0]{{TF-IDF}}
+\newcommand{\svm}[0]{\abr{svm}}
+
+% Subscripts and Superscripts
+\newcommand{\subtwo}[2]{_{#1, #2}}
+\newcommand{\electronicmail}[1]{{\tt \small{#1}}}
+\newcommand{\subthree}[3]{_{#1, #2, #3}}
+\newcommand{\subfour}[4]{_{#1, #2, #3, #4}}
+
+\newcommand{\minussubthree}[3]{_{-{#1, #2, #3}}}
+\newcommand{\minussubtwo}[2]{_{-{#1, #2}}}
+
+\newcommand{\suptwo}[2]{^{#1, #2}}
+\newcommand{\supthree}[3]{^{#1, #2, #3}}
+\newcommand{\minussuptwo}[2]{^{-{#1, #2}}}
+\newcommand{\minussupthree}[3]{^{-{#1, #2, #3}}}
+
+\newcommand{\latexfile}[1]{\input{2015_acl_teaparty/sections/#1}}
+\newcommand{\figfile}[1]{2015_acl_teaparty/figures/#1}
+\newcommand{\autofig}[1]{2015_acl_teaparty/auto_fig/#1}
+
+\newenvironment{myquote}{\list{}{\leftmargin=0.3in\rightmargin=0.3in}\item[]}{\endlist}
+
+%\setlength\titlebox{4cm}
+
+% You can expand the titlebox if you need extra space
+% to show all the authors. Please do not make the titlebox
+% smaller than 5cm (the original size); we will check this
+% in the camera-ready version and ask you to change it back.
+
+\title{Tea Party in the House: A Hierarchical Ideal Point Topic Model
+  \\and Its Application to Republican Legislators in the 112\textsuperscript{th} Congress}
+
+
+\author{Viet-An Nguyen \\
+ Computer Science \\
+ University of Maryland\\
+ College Park, \textsc{md} \\
+\electronicmail{vietan@cs.umd.edu}
+ \\\And
+ Jordan Boyd-Graber \\
+ Computer Science \\
+ University of Colorado\\
+ Boulder, \textsc{co} \\
+\electronicmail{Jordan.Boyd.Graber} \\
+\electronicmail{@colorado.edu}
+ \\\And
+ Philip Resnik \\
+ Linguistics \& UMIACS\\
+ University of Maryland\\
+ College Park, \textsc{md} \\
+\electronicmail{resnik@umd.edu}
+\\\And
+ Kristina Miler \\
+ Government and Politics \\
+ University of Maryland \\
+ College Park, \textsc{md} \\
+\electronicmail{kmiler@umd.edu}
+}
+
+\date{}
+
+\begin{document}
+\maketitle
+\begin{abstract}
+
+  We introduce the \textit{Hierarchical Ideal Point Topic Model}, which provides
+  a rich picture of policy issues, framing, and voting behavior using a joint
+  model of votes, bill text, and the language that legislators use when debating
+  bills.  We use this model to look at the relationship between Tea Party
+  Republicans and ``establishment'' Republicans in the \us{} House of
+  Representatives during the 112\textsuperscript{th} Congress.
+
+\end{abstract}
+
+\jbgcomment{Abstract should include something about us being able to
+  handle text only}
+
+\latexfile{10-intro} % Philip
+\latexfile{20-model} % JBG
+\latexfile{30-inference} % JBG
+\latexfile{40-prediction} % JBG
+\latexfile{50-analyze_idealpoints} % JBG
+\latexfile{60-analyze_hierarchy} % Philip / Kris
+\latexfile{70-conclusion} % Philip
+
+\section*{Acknowledgements}
+
+This work was supported by the \abr{nsf} Grant \abr{iis}-1211153 and \abr{iis}-1409287.
+Boyd-Graber is also supported by \abr{nsf} grants \abr{iis}-1320538
+and \abr{ncse}-1422492. Any opinions, findings, conclusions, or
+recommendations expressed here are those of the authors and do not
+necessarily reflect the view of the sponsor.
+
+\bibliographystyle{style/acl}
+\small
+\bibliography{bib/journal-full,bib/jbg,bib/vietan}
+
+\end{document}
