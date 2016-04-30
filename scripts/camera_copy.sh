@@ -19,7 +19,7 @@ done
 
 
 echo "------------"
-mkdir -p $2
+mkdir -p $2/$1
 cp $1.tex $2/$1.tex
 if [ -s $1/figures.R ]
 then

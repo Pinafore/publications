@@ -1,0 +1,241 @@
+Index	ID	Score	NumWithVotes	NumAgainstVotes	FreedomWorksID	ICPSRID	Name	Party	NominateScore	TPCaucus	FWEndorsement	TPExpress	SPEndorsement	Group
+2	400570	-0.9853922735555198	30	27	9015	29508	Brian P. Bilbray	Republican	0.408	Non-member	0	1	0	Rep. Non-member
+3	400367	0.38558572007490155	45	13	9202	29759	Peter A. Sessions	Republican	0.609	Member	0	0	0	Rep. Member
+4	400158	-0.05750527418336913	39	17	9083	20124	Samuel B. Graves	Republican	0.456	Non-member	0	0	0	Rep. Non-member
+5	400165	-0.045296096290043275	41	15	9090	94828	Ralph Moody Hall	Republican	0.443	Non-member	0	0	0	Rep. Non-member
+9	400376	-1.1923561255681885	30	29	9204	29910	Michael K. Simpson	Republican	0.312	Non-member	0	1	0	Rep. Non-member
+12	400260	-0.4778509087061659	33	20	9140	20332	Thaddeus G. McCotter	Republican	0.341	Non-member	0	1	0	Rep. Non-member
+14	400373	-0.7664060499589533	33	25	9203	29718	John M. Shimkus	Republican	0.399	Non-member	0	0	0	Rep. Non-member
+15	400267	-1.1581030268306676	31	25	9141	29315	Howard P. McKeon	Republican	0.424	Non-member	0	1	0	Rep. Non-member
+17	400247	-1.3457865411584524	30	29	9132	29393	Frank D. Lucas	Republican	0.382	Non-member	0	1	0	Rep. Non-member
+22	400147	-1.4418552758837022	29	30	9074	20345	Jim  Gerlach	Republican	0.219	Non-member	0	1	0	Rep. Non-member
+23	400154	0.555590610411817	47	11	9081	39308	Robert W. Goodlatte	Republican	0.495	Non-member	0	0	0	Rep. Non-member
+24	400380	-1.4821031334662376	24	34	9210	14863	Christopher H. Smith	Republican	0.131	Non-member	0	1	0	Rep. Non-member
+25	400157	-0.6821107491785556	33	22	9082	29762	Kay  Granger	Republican	0.403	Non-member	0	0	0	Rep. Non-member
+26	412295	1.401868293970948	57	2	9147	20903	Tom  McClintock	Republican	0.78	Member	0	1	0	Rep. Member
+27	412294	0.479145041206982	48	10	9138	20953	Cynthia M. Lummis	Republican	0.682	Non-member	0	1	0	Rep. Non-member
+28	400151	0.8842864860047894	52	7	9080	20319	John Philip Gingrey	Republican	0.574	Member	0	0	0	Rep. Member
+30	412290	-0.21824884868169922	40	19	9125	20929	Leonard  Lance	Republican	0.312	Non-member	0	1	0	Rep. Non-member
+34	400252	0.43598740841080047	45	12	9133	29349	Donald A. Manzullo	Republican	0.519	Non-member	0	0	0	Rep. Non-member
+35	412292	-0.7092714117584289	35	24	9137	20926	Blaine  Luetkemeyer	Republican	0.485	Member	0	0	0	Rep. Member
+36	400388	0.9315174346834062	52	7	9212	15627	Clifford B. Stearns	Republican	0.559	Member	0	0	0	Rep. Member
+37	400381	-0.8210213608295278	32	25	9211	15445	Lamar S. Smith	Republican	0.414	Member	0	0	0	Rep. Member
+41	400279	0.9293981684014896	52	6	9153	20110	Jeff  Miller	Republican	0.656	Non-member	0	0	0	Rep. Non-member
+42	400137	-0.6159626850609387	36	23	9070	20143	J. Randy Forbes	Republican	0.414	Non-member	0	0	0	Rep. Non-member
+43	400141	1.3734596670894703	55	3	9071	20304	Trent  Franks	Republican	0.775	Member	0	0	0	Rep. Member
+45	400142	-1.3584391041304567	27	28	9421	29541	Rodney P. Frelinghuysen	Republican	0.274	Non-member	0	1	0	Rep. Non-member
+46	412284	0.3937423395960811	46	11	9117	20915	Lynn  Jenkins	Republican	0.531	Member	0	1	0	Rep. Member
+48	412283	0.4360875017111969	44	13	9103	20963	Duncan D. Hunter	Republican	0.528	Non-member	0	1	0	Rep. Non-member
+49	400145	1.4290240518655837	56	2	9073	20336	Scott  Garrett	Republican	0.704	Non-member	0	1	0	Rep. Non-member
+50	400144	-1.092392929939785	30	26	9072	15413	Elton W. Gallegly	Republican	0.403	Non-member	0	1	0	Rep. Non-member
+52	400288	0.23196458581948493	41	15	9155	29549	Sue W. Myrick	Republican	0.575	Non-member	0	0	0	Rep. Non-member
+55	400392	0.34853498330675353	45	12	9213	20131	John A. Sullivan	Republican	0.536	Non-member	0	1	0	Rep. Non-member
+59	400285	-0.6076795039877703	36	23	9154	20346	Tim  Murphy	Republican	0.25	Non-member	0	0	0	Rep. Non-member
+60	412280	-0.5068662081192231	37	22	9093	20925	Gregg  Harper	Republican	0.439	Non-member	0	0	0	Rep. Non-member
+62	409888	-0.6943045439386428	35	23	9205	20134	William  Shuster	Republican	0.409	Non-member	0	0	0	Rep. Non-member
+63	412269	-0.4358287002023101	37	20	9045	20919	Bill  Cassidy	Republican	0.464	Member	0	0	0	Rep. Member
+65	412398	1.335635563372154	48	3	9177	21104	Ben  Quayle	Republican	0.728	Non-member	1	1	0	Rep. Non-member
+67	412397	0.4871792797136963	49	10	9086	21103	Paul  Gosar	Republican	0.528	Non-member	1	1	1	Rep. Non-member
+69	412275	1.141428480693175	54	5	9064	20918	John  Fleming	Republican	0.567	Member	0	0	0	Rep. Member
+70	412399	1.401868293970948	57	2	9207	21105	David  Schweikert	Republican	0.678	Non-member	1	1	0	Rep. Non-member
+71	412394	-0.8695495157460934	35	24	9186	21192	Martha  Roby	Republican	0.381	Non-member	1	0	1	Rep. Non-member
+73	412393	-0.9665637287881957	34	25	9176	21101	Tom W. Reed	Republican	0.362	Non-member	0	0	0	Rep. Non-member
+74	400134	1.7166184400900968	58	1	9062	20100	Jeff  Flake	Republican	0.988	Non-member	0	0	0	Rep. Non-member
+76	412278	-0.6091025169393153	36	23	9092	20916	Brett  Guthrie	Republican	0.371	Non-member	0	0	0	Rep. Non-member
+77	412395	0.7491929760846007	50	9	9028	21193	Mo  Brooks	Republican	0.588	Non-member	1	0	0	Rep. Non-member
+78	400276	-0.4799685150674182	37	22	9151	20331	Candice  Miller	Republican	0.32	Non-member	0	1	0	Rep. Non-member
+79	400277	0.3087139962546134	41	13	9152	29905	Gary Gene Miller	Republican	0.498	Member	0	1	0	Rep. Member
+80	412392	1.2577191202209526	53	4	9217	21100	Marlin A. Stutzman	Republican	0.795	Non-member	0	0	0	Rep. Non-member
+83	400273	0.017102409167773017	42	16	9150	29331	John L. Mica	Republican	0.465	Non-member	0	0	0	Rep. Non-member
+84	412271	0.519427689952705	49	10	9047	20906	Mike  Coffman	Republican	0.551	Member	0	1	0	Rep. Member
+85	412270	1.2468847481477077	54	4	9046	20949	Jason  Chaffetz	Republican	0.722	Non-member	0	1	0	Rep. Non-member
+87	400116	0.45503825935523357	46	13	9060	15455	John James Duncan	Republican	0.6	Non-member	0	0	0	Rep. Non-member
+89	400115	-0.8463314825051045	34	25	9052	14813	David T. Dreier	Republican	0.478	Non-member	0	0	0	Rep. Non-member
+92	400219	-1.5237319836848815	29	30	9114	29375	Peter T. King	Republican	0.273	Non-member	0	0	0	Rep. Non-member
+97	400018	-0.18089242017208595	41	17	9010	15085	Joe Linus Barton	Republican	0.54	Member	0	0	0	Rep. Member
+99	400017	-0.12732023880385102	41	17	9004	29356	Roscoe G. Bartlett	Republican	0.501	Member	0	0	0	Rep. Member
+101	400221	0.10925551381743358	44	13	9120	29338	Jack  Kingston	Republican	0.55	Non-member	0	0	0	Rep. Non-member
+102	400019	-1.1467699475719075	30	28	9011	29538	Charles F. Bass	Republican	0.344	Non-member	1	1	0	Rep. Non-member
+103	400220	0.4725143964297834	47	10	9115	20325	Steve A. King	Republican	0.656	Member	0	0	0	Rep. Member
+106	400121	-1.3282505937891425	29	29	9061	29736	Jo Ann H. Emerson	Republican	0.274	Non-member	0	0	0	Rep. Non-member
+107	400108	-1.605378434992371	26	31	9051	20316	Mario  Diaz-Balart	Republican	0.298	Non-member	0	0	0	Rep. Non-member
+111	400010	-0.5051974994316313	37	22	9003	29301	Spencer Thomas Bachus	Republican	0.403	Non-member	0	0	0	Rep. Non-member
+112	400206	0.3254756036619592	43	12	9111	29143	Samuel Robert Johnson	Republican	0.617	Non-member	0	0	0	Rep. Non-member
+113	400335	-0.96349391061567	33	26	9172	20125	Dennis  Rehberg	Republican	0.347	Member	0	1	0	Rep. Member
+114	400207	0.28268336933924737	44	14	9112	20116	Timothy V. Johnson	Republican	0.242	Non-member	0	0	0	Rep. Non-member
+116	400209	0.10241653320372461	36	20	9113	29546	Walter Beaman Jones	Republican	0.218	Non-member	0	0	0	Rep. Non-member
+119	400342	-0.8493631832670123	34	25	9182	20120	Michael  Rogers	Republican	0.414	Non-member	0	1	0	Rep. Non-member
+120	400005	0.7212014252277378	47	7	9001	20123	W. Todd Akin	Republican	0.633	Member	0	0	0	Rep. Member
+121	412196	-0.4620350834265059	38	20	9026	20709	Vern  Buchanan	Republican	0.347	Non-member	0	0	0	Rep. Non-member
+122	400004	-0.8514013531532655	33	26	9000	29701	Robert  Aderholt	Republican	0.379	Member	0	0	0	Rep. Member
+123	400341	-1.185295666340115	31	27	9181	20301	Michael  Rogers	Republican	0.346	Non-member	0	0	0	Rep. Non-member
+124	400344	-1.5854663660408579	28	31	9190	15634	Ileana  Ros-Lehtinen	Republican	0.25	Non-member	0	0	0	Rep. Non-member
+125	400006	-1.5770766805287046	28	30	9002	90327	Rodney M. Alexander	Republican	0.357	Member	0	0	0	Rep. Member
+126	400343	0.9607294175521348	50	9	9183	15621	Dana T. Rohrabacher	Republican	0.622	Non-member	0	0	0	Rep. Non-member
+130	400340	-1.4884393186663842	29	30	9180	14854	Harold  Rogers	Republican	0.332	Non-member	0	0	0	Rep. Non-member
+134	412190	-0.5795761491698289	36	22	9146	20703	Kevin  McCarthy	Republican	0.487	Non-member	0	1	0	Rep. Non-member
+135	412191	1.4237390173475042	53	2	9124	20704	Doug  Lamborn	Republican	0.728	Member	0	1	0	Rep. Member
+140	400046	0.5308081337925934	47	11	9023	29760	Kevin P. Brady	Republican	0.538	Non-member	0	0	0	Rep. Non-member
+141	400348	0.9231663525408448	52	7	9191	29321	Edward R. Royce	Republican	0.714	Member	0	1	0	Rep. Member
+143	400239	-1.2755963215544706	30	22	9130	14644	Jerry  Lewis	Republican	0.352	Non-member	0	1	0	Rep. Non-member
+149	400235	-1.2896963603068896	24	33	9123	29553	Steven C. LaTourette	Republican	0.206	Non-member	0	0	0	Rep. Non-member
+151	400351	0.38579630512457697	45	13	9192	29939	Paul D. Ryan	Republican	0.574	Non-member	0	0	0	Rep. Non-member
+154	400244	-1.4157549839170196	24	35	9131	29539	Frank A. LoBiondo	Republican	0.196	Non-member	0	1	0	Rep. Non-member
+156	400039	-0.42656815733067194	38	20	9022	29775	Mary Whitaker Bono Mack	Republican	0.35	Non-member	0	0	0	Rep. Non-member
+158	400038	-1.3421450057025903	29	28	9021	20300	Jo  Bonner	Republican	0.402	Non-member	0	0	0	Rep. Non-member
+164	400224	-0.22527294831659977	39	20	9121	20333	John P. Kline	Republican	0.53	Non-member	0	1	0	Rep. Non-member
+167	400032	0.629292764360045	49	10	9020	20351	Marsha W. Blackburn	Republican	0.632	Non-member	0	0	0	Rep. Non-member
+171	400234	-1.143281477733965	32	27	9122	29522	Thomas P. Latham	Republican	0.32	Non-member	0	0	0	Rep. Non-member
+174	400027	-1.4360049403448718	27	32	9012	29912	Judy  Biggert	Republican	0.315	Non-member	0	0	0	Rep. Non-member
+179	400029	0.8030493404154423	46	11	9013	20357	Rob  Bishop	Republican	0.543	Member	0	1	0	Rep. Member
+180	400365	0.8043174073507035	51	8	9201	14657	F. James Sensenbrenner	Republican	0.659	Non-member	0	0	0	Rep. Non-member
+182	412442	-0.16458536351016667	40	19	9168	21147	Alan  Nunnelee	Republican	0.499	Non-member	1	0	1	Rep. Non-member
+183	412441	-1.0587699481567816	31	28	9049	21146	Chip  Cravaack	Republican	0.372	Non-member	0	1	0	Rep. Non-member
+184	412444	0.0704395120758499	43	16	9095	21149	Vicky  Hartzler	Republican	0.536	Member	1	0	1	Rep. Member
+185	412443	-0.33305967745137754	39	20	9169	21148	Steven  Palazzo	Republican	0.474	Member	0	0	0	Rep. Member
+187	412438	1.6928971873267882	59	0	9008	21143	Justin  Amash	Republican	0.867	Non-member	1	1	0	Rep. Non-member
+191	412434	0.8882199993680622	53	6	9094	21139	Andy  Harris	Republican	0.578	Non-member	1	0	0	Rep. Non-member
+193	412436	0.09191733696160981	44	15	9017	21141	Dan  Benishek	Republican	0.631	Non-member	1	1	1	Rep. Non-member
+194	412437	1.3117503790815235	55	3	9106	21142	Bill  Huizenga	Republican	0.688	Non-member	1	1	0	Rep. Non-member
+195	400068	-0.5824110563139508	36	22	9036	20356	John R. Carter	Republican	0.507	Member	0	0	0	Rep. Member
+198	412216	1.0614891681333185	43	6	9005	20728	Michele  Bachmann	Republican	0.595	Member	0	1	1	Rep. Member
+199	400061	-1.2530590930913428	31	28	9035	20146	Shelley Moore Capito	Republican	0.256	Non-member	0	1	0	Rep. Non-member
+200	412217	-0.22587417459626163	40	19	9216	20729	Adrian  Smith	Republican	0.526	Member	0	1	0	Rep. Member
+201	400060	-0.5993136681981376	35	21	9034	20144	Eric I. Cantor	Republican	0.552	Non-member	0	0	0	Rep. Non-member
+202	412213	0.7023965820680806	50	9	9225	20725	Timothy  Walberg	Republican	0.538	Member	1	1	0	Rep. Member
+206	412433	1.066092483316746	53	5	9128	21138	Jeff M. Landry	Republican	0.633	Member	1	0	0	Rep. Member
+209	412431	1.354285770108968	56	3	9178	21136	Mike  Pompeo	Republican	0.707	Non-member	1	1	0	Rep. Non-member
+210	412430	0.7182112236291229	51	8	9239	21135	Kevin  Yoder	Republican	0.615	Non-member	1	1	0	Rep. Non-member
+211	412429	1.3585400648218295	57	2	9105	21134	Tim  Huelskamp	Republican	0.749	Member	1	1	0	Rep. Member
+212	412427	-0.67130074406251	36	23	9029	21132	Larry  Bucshon	Republican	0.415	Non-member	1	0	0	Rep. Non-member
+213	400052	1.2372024589824993	54	4	9030	20355	Michael C. Burgess	Republican	0.546	Member	0	0	0	Rep. Member
+214	412428	0.0951558683212114	43	16	9238	21133	Todd  Young	Republican	0.562	Non-member	1	0	0	Rep. Non-member
+215	400058	-1.0258943938497667	32	25	9033	29124	David Lee Camp	Republican	0.383	Non-member	0	1	0	Rep. Non-member
+216	400057	-1.1954141292652347	31	27	9032	29323	Ken S. Calvert	Republican	0.361	Non-member	0	1	0	Rep. Non-member
+217	412426	0.9110823458510845	50	7	9188	21131	Todd  Rokita	Republican	0.658	Non-member	1	0	0	Rep. Non-member
+218	412423	-1.1096470087027765	31	27	9198	21130	Robert T. Schilling	Republican	0.381	Non-member	1	0	0	Rep. Non-member
+219	412424	1.45160195039291	56	2	9229	21126	Joe  Walsh	Republican	0.741	Member	0	0	0	Rep. Member
+220	400055	0.9293345548517719	50	7	9031	15014	Dan L. Burton	Republican	0.592	Member	0	0	0	Rep. Member
+225	412010	0.5368270813029776	48	11	9193	20540	Jean  Schmidt	Republican	0.466	Non-member	0	0	0	Rep. Non-member
+226	412011	1.1894282393642681	52	5	9037	20539	John Bayard Taylor Campbell	Republican	0.784	Non-member	0	1	0	Rep. Non-member
+228	412202	-0.46442224683144406	37	22	9194	20715	Peter J. Roskam	Republican	0.461	Non-member	0	0	0	Rep. Non-member
+229	412460	-0.7143748582045624	35	24	9118	21162	Bill  Johnson	Republican	0.485	Non-member	1	1	0	Rep. Non-member
+230	412462	-0.6802878361263232	36	23	9179	21164	Jim  Renacci	Republican	0.42	Non-member	1	1	0	Rep. Non-member
+231	412461	-1.5831928141925717	27	28	9219	21163	Steve  Stivers	Republican	0.278	Non-member	1	1	0	Rep. Non-member
+232	412464	0.09040290410031145	44	15	9129	21166	James  Lankford	Republican	0.552	Non-member	1	1	0	Rep. Non-member
+233	412463	-0.8948932159604077	34	25	9079	21165	Bob  Gibbs	Republican	0.446	Non-member	1	1	0	Rep. Non-member
+234	412466	-1.5416026460426255	28	30	9157	21168	Patrick  Meehan	Republican	0.206	Non-member	1	0	0	Rep. Non-member
+235	412465	-1.0414165746790875	32	27	9119	21167	Mike  Kelly	Republican	0.318	Non-member	1	1	0	Rep. Non-member
+236	412456	0.49609730878267677	46	10	9038	21158	Ann Marie  Buerkle	Republican	0.587	Non-member	1	0	1	Rep. Non-member
+237	400089	0.11272781666593949	44	15	9050	20139	John A. Culberson	Republican	0.532	Member	0	0	0	Rep. Member
+238	412457	-0.23521180433343683	38	18	9065	21159	Renee  Ellmers	Republican	0.478	Non-member	1	0	1	Rep. Non-member
+239	412458	-1.1672413311304528	31	27	9018	21160	Rick  Berg	Republican	0.359	Non-member	0	1	0	Rep. Non-member
+241	400086	-1.4404955407339621	29	29	9043	20111	Ander  Crenshaw	Republican	0.367	Member	0	0	0	Rep. Member
+242	412317	-1.1095612704036175	32	27	9226	20946	Glenn  Thompson	Republican	0.342	Non-member	0	0	0	Rep. Non-member
+247	412314	-1.4148522592252877	28	29	9196	20914	Aaron  Schock	Republican	0.33	Non-member	0	0	0	Rep. Non-member
+249	412311	0.2904735987653344	45	14	9185	20910	Thomas J. Rooney	Republican	0.492	Non-member	0	0	0	Rep. Non-member
+250	412310	-0.2829946357688088	40	19	9184	20947	Phil P. Roe	Republican	0.481	Member	0	0	0	Rep. Member
+251	412451	-1.476364766315855	28	31	9097	21154	Michael  Grimm	Republican	0.242	Non-member	0	0	0	Rep. Non-member
+252	412454	-1.4334169464166129	27	30	9099	21157	Richard  Hanna	Republican	0.237	Non-member	1	0	0	Rep. Non-member
+253	412453	-1.336946144429586	27	32	9078	21156	Chris P. Gibson	Republican	0.218	Non-member	0	0	0	Rep. Non-member
+254	412452	-1.101676189468798	31	28	9098	21155	Nan  Hayworth	Republican	0.313	Non-member	0	0	0	Rep. Non-member
+255	412447	-0.2842557079800239	39	19	9096	21152	Frank  Guinta	Republican	0.453	Non-member	1	1	0	Rep. Non-member
+256	412445	0.41627352726607364	47	12	9139	21150	Billy  Long	Republican	0.652	Non-member	1	0	0	Rep. Non-member
+257	412446	-0.9039135973269532	32	27	9107	21151	Joe  Heck	Republican	0.314	Non-member	1	1	0	Rep. Non-member
+258	400077	-0.9985749749154276	33	26	9042	20344	Tom  Cole	Republican	0.371	Non-member	0	1	0	Rep. Non-member
+259	400076	0.35745696879892724	44	12	9041	15092	Howard  Coble	Republican	0.522	Member	0	0	0	Rep. Member
+261	412449	-1.5854663660408579	28	31	9199	21153	Jon  Runyan	Republican	0.238	Non-member	1	1	0	Rep. Non-member
+264	400071	1.1832820080453061	54	5	9040	29550	Steven J. Chabot	Republican	0.59	Non-member	1	1	0	Rep. Non-member
+265	412309	0.6101862695542539	50	9	9175	20909	Bill  Posey	Republican	0.464	Non-member	0	0	0	Rep. Non-member
+268	412302	-0.05761899995445978	41	18	9165	20948	Pete  Olson	Republican	0.54	Non-member	0	0	0	Rep. Non-member
+269	412303	-0.6836195542292692	36	23	9166	20924	Erik  Paulsen	Republican	0.402	Non-member	0	1	0	Rep. Non-member
+270	412485	0.24400208891797945	42	17	9089	21191	H. Morgan Griffith	Republican	0.535	Non-member	1	0	0	Rep. Non-member
+271	412486	-1.1063255514114143	31	28	9109	21187	Jaime  Herrera Beutler	Republican	0.406	Non-member	0	1	0	Rep. Non-member
+272	412487	-1.2668847938513204	26	33	9149	21188	David  McKinley	Republican	0.256	Member	1	1	0	Rep. Member
+273	412488	-0.3545351637325618	39	19	9059	21189	Sean  Duffy	Republican	0.503	Non-member	1	0	1	Rep. Non-member
+274	412481	0.14571600756168823	43	15	9039	21183	Francisco  Canseco	Republican	0.574	Non-member	1	0	0	Rep. Non-member
+275	412482	0.14366564863583356	44	15	9069	21184	Blake  Farenthold	Republican	0.547	Member	0	0	0	Rep. Member
+276	412483	0.12783401065251318	42	17	9379	21185	E. Scott Rigell	Republican	0.451	Non-member	0	0	0	Rep. Non-member
+277	412484	0.360964754614821	45	14	9108	21186	Robert  Hurt	Republican	0.593	Non-member	0	0	0	Rep. Non-member
+279	412265	-0.5642947362700224	37	22	9006	20940	Steve  Austria	Republican	0.401	Non-member	0	0	0	Rep. Non-member
+282	412480	0.6886847172136569	50	9	9068	21182	Bill  Flores	Republican	0.622	Non-member	1	0	0	Rep. Non-member
+284	412261	0.9574606684112434	51	7	9195	20759	Steve Joseph Scalise	Republican	0.584	Member	0	0	0	Rep. Member
+285	412388	1.5495953701222016	58	1	9085	20962	Tom  Graves	Republican	0.906	Non-member	1	0	0	Rep. Non-member
+290	412479	0.39776632399425893	48	11	9067	21181	Stephen  Fincher	Republican	0.545	Member	1	0	1	Rep. Member
+291	412478	0.6120631276673586	49	10	9019	21180	Diane  Black	Republican	0.595	Member	1	0	0	Rep. Member
+293	412476	0.27650930019009545	46	12	9066	21178	Chuck  Fleischmann	Republican	0.512	Non-member	1	0	0	Rep. Non-member
+294	412477	-0.03526445296758215	41	18	9058	21179	Scott  DesJarlais	Republican	0.525	Non-member	0	0	0	Rep. Non-member
+295	412474	1.6620091066910903	57	2	9158	21176	Mick  Mulvaney	Republican	0.895	Member	1	0	0	Rep. Member
+296	412475	-1.1653127703840822	32	27	9159	21177	Kristi  Noem	Republican	0.382	Non-member	0	0	0	Rep. Non-member
+297	412472	1.7232748783451566	58	1	9057	21174	Jeff  Duncan	Republican	0.773	Member	1	0	0	Rep. Member
+298	412473	1.3988333976527576	55	4	9088	21175	Trey  Gowdy	Republican	0.73	Non-member	1	0	0	Rep. Non-member
+300	412471	1.1939390966897674	55	4	9209	21173	Tim  Scott	Republican	0.703	Non-member	1	0	1	Rep. Non-member
+301	400297	0.09280594553988421	43	15	9160	20307	Devin G. Nunes	Republican	0.499	Non-member	0	1	0	Rep. Non-member
+302	412256	0.2814470064481231	45	14	9136	20755	Robert E. Latta	Republican	0.538	Non-member	0	0	0	Rep. Non-member
+305	412255	-0.8459418942440738	33	25	9234	20756	Rob J. Wittman	Republican	0.376	Non-member	0	0	0	Rep. Non-member
+306	412252	1.6118122221823483	55	2	9027	20753	Paul C. Broun	Republican	0.941	Member	0	0	0	Rep. Member
+309	400196	0.44690206950238753	45	12	9110	20107	Darrell  Issa	Republican	0.531	Non-member	0	0	0	Rep. Non-member
+312	412250	-0.28416355511239766	38	19	9016	20758	Gus  Bilirakis	Republican	0.373	Member	0	0	0	Rep. Member
+316	412469	-1.3780995069609816	29	29	9009	21171	Lou  Barletta	Republican	0.266	Non-member	0	1	0	Rep. Non-member
+317	412468	-1.2367275743243122	30	26	9148	21170	Thomas  Marino	Republican	0.398	Non-member	1	1	0	Rep. Non-member
+324	400171	-1.2158150263635068	30	28	9091	29580	Doc  Hastings	Republican	0.445	Non-member	0	1	0	Rep. Non-member
+327	412499	-1.206068563943751	12	17	9456	21197	Robert L. Turner	Republican	0.311	Non-member	0	0	0	Rep. Non-member
+329	400175	1.0099538668636703	53	6	9100	20352	Jeb  Hensarling	Republican	0.745	Non-member	0	0	0	Rep. Non-member
+333	400176	0.395565982451511	45	12	9101	15420	Walter  Herger	Republican	0.558	Member	0	1	0	Rep. Member
+335	412226	1.5300767065215377	56	2	9116	20738	Jim  Jordan	Republican	0.69	Non-member	0	0	0	Rep. Non-member
+337	412489	0.4081200818313734	47	12	9189	21190	Reid  Ribble	Republican	0.637	Non-member	1	0	0	Rep. Non-member
+338	412406	0.15818037293200202	45	13	9077	21112	Cory  Gardner	Republican	0.536	Non-member	1	1	0	Rep. Non-member
+339	412405	-0.09522849314273245	43	16	9227	21111	Scott  Tipton	Republican	0.432	Non-member	1	1	0	Rep. Non-member
+340	412408	0.777688593914526	52	7	9218	21114	Steve  Southerland	Republican	0.621	Non-member	1	0	0	Rep. Non-member
+342	412402	-1.2936951010179945	31	28	9235	21108	Steve  Womack	Republican	0.332	Non-member	1	0	0	Rep. Non-member
+343	412401	-0.2980669667251368	40	19	9087	21107	Tim  Griffin	Republican	0.447	Non-member	1	0	0	Rep. Non-member
+345	412403	-0.8011279071616317	35	23	9055	21109	Jeff  Denham	Republican	0.426	Non-member	1	1	0	Rep. Non-member
+346	412500	0.25337176778543996	20	8	9457	21196	Mark E. Amodei	Republican	0.463	Non-member	0	1	0	Rep. Non-member
+347	412409	-0.05956825463217116	42	17	9167	21115	Richard  Nugent	Republican	0.543	Member	0	0	0	Rep. Member
+348	412410	-0.5238170637461895	37	21	9228	21116	Daniel  Webster	Republican	0.48	Non-member	0	0	0	Rep. Non-member
+349	412411	0.6815478439787545	50	9	9197	21117	Dennis  Ross	Republican	0.624	Member	1	0	0	Rep. Member
+350	412419	1.4840860382775736	56	1	9126	21125	Raúl  Labrador	Republican	0.751	Non-member	0	1	0	Rep. Non-member
+352	412417	0.6487716966475211	50	9	9208	21123	Austin  Scott	Republican	0.627	Non-member	1	0	0	Rep. Non-member
+353	412416	0.8740360316723684	50	8	9237	21122	Rob  Woodall	Republican	0.737	Non-member	0	0	0	Rep. Non-member
+354	412415	-1.2699443531632326	30	29	9187	21121	David  Rivera	Republican	0.272	Non-member	1	0	0	Rep. Non-member
+355	412414	0.5084490005118582	48	11	9007	21120	Sandy  Adams	Republican	0.594	Member	1	0	0	Rep. Member
+356	412413	-0.0010295134258652265	43	16	9236	21119	Allen  West	Republican	0.472	Member	0	0	0	Rep. Member
+358	412421	-1.280819434617332	30	29	9127	21128	Adam  Kinzinger	Republican	0.309	Non-member	1	0	1	Rep. Non-member
+359	412422	-0.01853142117844632	42	17	9104	21129	Randy  Hultgren	Republican	0.489	Non-member	0	0	1	Rep. Non-member
+360	412420	-1.5793624775790331	26	32	9056	21127	Bob  Dold	Republican	0.209	Non-member	1	0	0	Rep. Non-member
+361	412400	-1.1746059115592795	32	27	9048	21106	Rick A. Crawford	Republican	0.35	Non-member	1	0	0	Rep. Non-member
+362	400617	-1.292272963388017	31	28	9134	14647	Daniel E. Lungren	Republican	0.504	Non-member	0	1	0	Rep. Non-member
+365	400414	-0.7019464460897022	35	24	9223	15446	Frederick Stephen Upton	Republican	0.324	Non-member	0	1	0	Rep. Non-member
+366	400411	-0.9801897282003453	32	26	9222	20342	Michael R. Turner	Republican	0.28	Non-member	0	0	0	Rep. Non-member
+370	400419	-1.0191386259465447	32	26	9224	29932	Greg P. Walden	Republican	0.348	Non-member	0	0	0	Rep. Non-member
+371	400400	-0.442798412386156	38	21	9214	29921	Lee R. Terry	Republican	0.436	Non-member	0	1	0	Rep. Non-member
+374	400404	0.3088998633345561	45	14	9220	29572	William M. Thornberry	Republican	0.568	Non-member	0	0	0	Rep. Non-member
+376	400406	-0.7465260295805987	34	24	9221	20130	Patrick J. Tiberi	Republican	0.401	Non-member	0	1	0	Rep. Non-member
+381	400440	-0.6642667092961277	29	26	9431	14066	Donald E. Young	Republican	0.274	Non-member	0	0	0	Rep. Non-member
+382	400636	-0.2591128019700056	40	19	9024	20514	Charles W. Boustany	Republican	0.422	Non-member	0	0	0	Rep. Non-member
+383	400441	1.2964653952222822	55	3	9156	20353	Randy  Neugebauer	Republican	0.64	Member	0	0	0	Rep. Member
+385	400633	-1.0726889952411833	31	25	9053	20511	Geoff  Davis	Republican	0.423	Non-member	0	0	0	Rep. Non-member
+387	400640	-1.1093192795902878	30	26	9075	20518	Jeffrey Lane Fortenberry	Republican	0.303	Non-member	0	1	0	Rep. Non-member
+388	400439	-0.7446313460079335	31	23	9430	13047	C. W. Bill Young	Republican	0.321	Non-member	0	0	0	Rep. Non-member
+393	400435	-1.3838506814250902	29	30	9232	14869	Frank Rudolph Wolf	Republican	0.28	Non-member	0	0	0	Rep. Non-member
+394	400433	1.2985933124919162	54	5	9231	20138	Addison G. Wilson	Republican	0.569	Member	0	0	0	Rep. Member
+397	400626	1.0632029158746905	53	6	9173	20505	Tom  Price	Republican	0.655	Member	0	0	0	Rep. Member
+398	400431	-0.853607920472441	33	23	9230	29525	Edward  Whitfield	Republican	0.308	Non-member	0	0	0	Rep. Non-member
+399	400627	1.2014952641224934	55	4	9233	20506	Lynn A. Westmoreland	Republican	0.697	Member	0	0	0	Rep. Member
+400	400320	-0.1469997623895074	41	18	9170	29752	Joseph R. Pitts	Republican	0.553	Non-member	0	0	0	Rep. Non-member
+401	400622	1.2726045989676904	47	4	9135	20503	Connie  Mack	Republican	0.604	Non-member	0	0	0	Rep. Non-member
+402	400321	-1.1983702834113545	31	27	9171	20135	Todd R. Platts	Republican	0.254	Non-member	0	0	0	Rep. Non-member
+404	400313	0.16895971034669546	45	13	9161	20337	Steven E. Pearce	Republican	0.487	Member	1	1	0	Rep. Member
+407	400315	0.6119942568750646	45	9	9162	20117	Mike  Pence	Republican	0.677	Member	0	0	0	Rep. Member
+413	400318	0.15683464239788217	44	15	9164	14675	Thomas E. Petri	Republican	0.373	Non-member	0	0	0	Rep. Non-member
+414	400656	0.6864497099336787	49	10	9144	20532	Kenny Ewell Marchant	Republican	0.603	Member	0	0	0	Rep. Member
+415	400655	0.6022817412265122	48	11	9044	20531	K. Michael Conaway	Republican	0.613	Non-member	0	0	0	Rep. Non-member
+416	400654	-0.10519925555610382	41	18	9143	20530	Michael T. McCaul	Republican	0.445	Non-member	0	0	0	Rep. Non-member
+418	400659	-0.3608112193105004	38	21	9145	20535	Cathy  McMorris Rodgers	Republican	0.446	Non-member	0	1	1	Rep. Non-member
+421	400660	-1.5971860098555029	23	30	9375	20536	Dave G. Reichert	Republican	0.208	Non-member	0	0	0	Rep. Non-member
+423	400643	1.0092901500398155	51	8	9076	20521	Virginia  Foxx	Republican	0.671	Non-member	0	0	0	Rep. Non-member
+425	400644	0.8505262536920186	46	8	9142	20522	Patrick T. McHenry	Republican	0.618	Non-member	0	0	0	Rep. Non-member
+427	400646	-1.0016461217667494	31	27	9063	20524	Michael G. Fitzpatrick	Republican	0.203	Non-member	1	1	0	Rep. Non-member
+428	400648	-1.4301687410919444	30	29	9054	20526	Charles Wieder Dent	Republican	0.241	Non-member	0	1	0	Rep. Non-member
+429	400651	1.0842656808116589	53	4	9084	20527	Louis B. Gohmert	Republican	0.561	Member	0	0	0	Rep. Member
+430	400652	0.7602170218995715	51	8	9174	20528	Ted  Poe	Republican	0.599	Member	0	0	0	Rep. Member

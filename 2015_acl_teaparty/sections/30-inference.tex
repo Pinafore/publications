@@ -1,0 +1,158 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Inference}
+\label{sec:c6_inference}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\jbgcomment{The averaging paper should be cited somewhere in here}
+
+Given observed data of (1) votes $\{v \subtwo ab\}$ by $A$ legislators
+on $B$ bills, (2) speeches $\{\bm w_d\}$ from legislators, and
+(3) bill text $\{\bm w'_b\}$, we estimate the latent variables using stochastic
+\abr{em}. In each iteration, we perform the following steps: (1) sampling issue assignments
+$\{z' \subtwo bm\}$ for bill text tokens, (2) sampling the
+issue assignments $\{z \subtwo dn\}$ and frame assignments $\{t
+\subtwo dn\}$ for speech tokens, (3) sampling the topics at
+first-level issue nodes $\{\phi_k\}$, (4) sampling the distribution
+over frames $\{\psi_k\}$ for all issues, (5) optimizing frames'
+regression parameters $\{\eta \subtwo kj\}$ using
+\abr{l-bfgs}~\cite{Liu:MP89:lbfgs}, and (6) updating legislators' ideal points $\{u \subtwo ak\}$ and bills'
+polarity $\{x_b\}$ and popularity $\{y_b\}$ using gradient ascent.
+
+\paragraph{Sampling Issue Assignments for Bill Tokens}
+\label{subsec:c6_sample_zprime}
+
+The probability of assigning a token $w' \subtwo bm$ in the bill text
+to an issue $k$ is
+\begin{equation}
+  p(z' \subtwo bm = k \given \mbox{rest}) \propto
+  \frac{M \subtwo bk \minussuptwo bm + \alpha}{M \subtwo b{\cdot} \minussuptwo bm + K \alpha} \cdot
+  \hat{\phi} \subtwo k{w' \subtwo bm}
+\end{equation}
+where $M \subtwo bk$ denotes the number of tokens in bill text $b$
+assigned to issue $k$.  The current estimated probability of
+word type $v$ given issue $k$ is $\hat{\phi} \subtwo kv$
+(Equation~\ref{eq:phi_samp}). Marginal counts are denoted by $\cdot$
+and the superscript $\minussuptwo bm$ excludes the assignment for
+token $w' \subtwo bm$ from the corresponding count.
+
+\paragraph{Sampling Frame Assignments in Speeches}
+\label{subsec:c6_sample_zt}
+
+To sample the assignments for tokens in the speeches, we first sample
+an issue using
+\begin{equation}
+  p(z \subtwo dn = k \given \mbox{rest}) \propto
+  \frac{N \subtwo dk \minussuptwo dn + \alpha}{N \subtwo d{\cdot} \minussuptwo dn + K \alpha} \cdot
+  \hat{\phi} \subtwo k{w \subtwo dn}
+  %\frac{N \subtwo k{w \subtwo dn} \minussuptwo dn + \beta \phi^{\star} \subtwo k{w \subtwo dn}}{N \subtwo k{\cdot} \minussuptwo dn + \beta}
+\end{equation}
+where $N \subtwo dk$ similarly denotes the number of times that tokens
+in $d$ are assigned to issue $k$. Given the sampled issue $k$, we
+sample the frame as 
+
+$p(t \subtwo dn = j \given z \subtwo dn = k, a_d =
+a, \mbox{rest}) \propto$
+\begin{equation}
+\left\{
+  \begin{array}{ll}
+    \mathcal{N}(u \subtwo ak; \mu \subthree akj, \rho) \cdot
+     \left(\frac{N \subthree dkj \minussuptwo dn}{N \subthree dkj \minussuptwo dn + \lambda} +
+        \frac{\lambda \cdot \hat{\psi} \subtwo kj}{N \subthree dkj \minussuptwo dn + \lambda }
+        \right),
+     & \\
+     \mathcal{N}(u \subtwo ak; \mu \subthree ak{j^{\mbox{\scriptsize new}}}, \rho) \cdot
+     \frac{\lambda}{N \subthree dkj \minussuptwo dn + \lambda} \cdot
+        \hat{\psi} \subtwo k{j^{\mbox{\scriptsize new}}}
+        %\frac{\lambda_0}{\hat{N} \subthree {\cdot}kj \minussuptwo dn + \lambda_0}
+        ,
+     &
+  \end{array}
+\right.
+\label{eqn:c6_sample_t}
+\end{equation}
+where $\mu \subthree akj = (\sum_{j'=1}^{J_k} \eta \subtwo k{j'} N \subthree dk{j'} \minussuptwo dn
++ \eta \subtwo kj) /  N \subthree dk{\cdot}$ for an existing frame $j$, and for a newly created
+frame $j^{\mbox{\scriptsize new}}$, we have $\mu \subthree ak{j^{\mbox{\scriptsize new}}} =
+(\sum_{j'=1}^{J_k} \eta \subtwo k{j'} N \subthree dk{j'} \minussuptwo dn + \eta \subtwo
+k{j^{\mbox{\scriptsize new}}}) /  N \subthree dk{\cdot}$, where $\eta \subtwo
+k{j^{\mbox{\scriptsize new}}}$ is drawn from the Gaussian prior $\mathcal{N}(0, \gamma)$. Here, the
+estimated global probability of choosing a frame $j$ of issue $k$ is $\hat{\psi} \subtwo kj$. 
+\ignore{We describe how we update this probability during inference in Section~\ref{subsec:c6_sample_frame_proportion}.}
+
+\paragraph{Sampling Issue Topics}
+
+In the generative process of \name{}, the topic $\phi_k$ of issue $k$ (1)
+generates tokens in the bill text and (2) provides the Dirichlet priors of the
+issue's frames. Rather than collapsing multinomials and factorizing~\cite{hu-12:fttm},
+we follow \newcite{Ahmed:ICML13:ncrf} and sample
+\begin{equation}
+  \hat{\phi}_k \sim \mbox{Dir} (\bm m_k + \tilde{\bm n}_k + \beta \phi_k^{\star})
+  \label{eq:phi_samp}
+\end{equation}
+where $\bm m_k \equiv (M \subtwo k1, M \subtwo k2, \cdots, M \subtwo
+kV)$ is the token count vector from the bill text assigned to each
+issue. The vector $\tilde{\bm n}_k \equiv (\tilde{N} \subtwo k1,
+\tilde{N} \subtwo k2, \cdots, \tilde{N} \subtwo kV)$ denotes the token
+counts propagated from words assigned to topics that are associated
+with frames of issue $k$, approximated using minimal or maximal path
+assumptions~\cite{Cowans:PhD06,Wallach:PhD08}.
+
+\paragraph{Sampling Frame Proportions}
+
+Following the \textit{direct assignment} method described in \newcite{Teh:JASA06:hdp}, we sample the global frame proportion as 
+
+$\hat{\psi}_k \equiv (\hat{\psi} \subtwo k1, \hat{\psi} \subtwo k2, \cdots, \hat{\psi} \subtwo k{j^{\mbox{\scriptsize new}}})$
+\begin{equation}
+ \sim \mbox{Dir} (\hat{N} \subthree {\cdot}k1, \hat{N} \subthree {\cdot}k2,
+ \cdots, \hat{N} \subthree {\cdot}k{J_k}, \lambda_0)
+\end{equation}
+where $\hat{N} \subthree {\cdot}kj = \sum_{d=1}^D \hat{N} \subthree dkj$ and $\hat{N} \subthree
+dkj$ can be sampled effectively using the Antoniak distribution~\cite{Aantoniak:AS74}.
+
+%We sample the global frame proportion $\hat{\psi}_k$ using the
+%\textit{direct assignment} method of \newcite{Teh:JASA06:hdp}.
+
+\ignore{
+\begin{align}
+  \hat{\psi}_k & \equiv
+  (\hat{\psi} \subtwo k1, \hat{\psi} \subtwo k2, \cdots, \hat{\psi} \subtwo
+  k{j^{\mbox{\scriptsize new}}}) \\
+ &  \sim \mbox{Dir} (\hat{N} \subthree {\cdot}k1, \hat{N} \subthree {\cdot}k2,
+ \cdots, \hat{N} \subthree {\cdot}k{J_k}, \lambda_0) \notag
+\end{align}
+where $\hat{N} \subthree {\cdot}kj = \sum_{d=1}^D \hat{N} \subthree dkj$ and $\hat{N} \subthree
+dkj$ can be sampled effectively using the Antoniak distribution~\cite{Aantoniak:AS74}. More
+details can be found in~\cite[page 1574]{Teh:JASA06:hdp}.
+}
+
+\paragraph{Optimizing Frame Regression Parameters}
+\label{subsec:c6_upadte_eta}
+
+We update the regression parameters $\bm \eta_k$ of frames under issue $k$ using
+L-BFGS~\cite{Liu:MP89:lbfgs} to optimize $\mathcal{L}(\bm \eta_k)$
+\begin{equation}
+  - \frac{1}{2 \rho} \sum_{a=1}^A (u \subtwo ak - \bm \eta_k^T \hat{\bm \psi} \subtwo ak)
+  - \frac{1}{2 \gamma} \sum_{j=1}^{J_k} \eta^2 \subtwo kj
+\end{equation}
+
+\paragraph{Updating Ideal Points, Polarity and Popularity}
+\label{subsec:c6_upadte_ideal_point}
+
+We update the multi-dimensional ideal point $\bm u_a$ of each legislator $a$ and
+the polarity $x_b$ and popularity $y_b$ of each bill $b$ by optimizing the log
+likelihood using gradient ascent.
+% \begin{align}
+% \small
+%   =& \sum_{a=1}^A \sum_{b=1}^B v \subtwo ab \log p(v \subtwo an = 1) + (1- v \subtwo ab)  \log p(v \subtwo ab = 0) \nonumber \\
+%   &- \frac{1}{2\rho} \sum_{a=1}^A \sum_{k=1}^K \left(u \subtwo ak - \bm \eta_k^T \hat{\bm \psi} \subtwo ak \right)
+%   - \frac{1}{2\sigma} \sum_{b=1}^B x_b^2 - \frac{1}{2\sigma} \sum_{b=1}^B y_b^2
+% \end{align}
+
+
+%\paragraph{Practical notes on implementation}
+%\label{subsec:c6_implementation_note}
+%
+%\begin{itemize}
+%  \item Initialization
+%  \item Threshold
+%\end{itemize}

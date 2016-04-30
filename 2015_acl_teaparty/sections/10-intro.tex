@@ -1,0 +1,137 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Capturing Political Polarization}
+\label{sec:c6_intro}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+Ideal-point models are one of the most widely used tools in
+contemporary political science research \cite{Poole:Book07:ideology}.
+These models estimate political preferences for legislators, known as
+their \emph{ideal points}, from binary data such as legislative votes.
+Popular formulations analyze legislators' votes and place them on a
+one-dimensional scale, most often interpreted as an ideological
+spectrum from liberal to conservative.
+
+Moving beyond a single dimension is attractive, however, since people
+may lean differently based on policy issues; for example, the
+conservative movement in the \us{} includes fiscal conservatives
+who are relatively liberal on social issues, and vice versa. In
+\textit{multi-dimensional} ideal point models, therefore, the ideal
+point of each legislator is no longer characterized by a single
+number, but by a multi-dimensional
+vector. With that move comes a new challenge, though: the additional
+dimensions are often difficult to interpret. To mitigate this problem,
+recent research has introduced methods that estimate multi-dimensional
+ideal points using both voting data and the texts of the bills being
+voted on, e.g., using topic models and associating each dimension of
+the ideal point space with a topic. The words most strongly associated with the topic can sometimes
+provide a readable description of its corresponding dimension.
+
+In this paper, we develop this idea further by introducing \name{},
+the \textit{Hierarchical Ideal Point Topic Model}, to estimate
+multi-dimensional ideal points for legislators in the \us{}
+Congress. \name{} differs from previous models in three ways. First,
+\name{} uses not only votes and associated bill text, but also the
+\emph{language} of the legislators themselves; this allows predictions
+of ideal points from politicians' writing alone. Second, \name{}
+improves the interpretability of ideal-point dimensions by
+incorporating data from the Congressional Bills Project~\cite{CBP}, in
+which bills are labeled with major topics from the Policy
+Agendas Project Topic Codebook.\footnote{\url{http://www.policyagendas.org/}} And third,
+\name{} discovers a \emph{hierarchy} of topics, allowing us to analyze
+both agenda issues and issue-specific frames that legislators use on
+the congressional floor, following \newcite{Nguyen:NIPS13} in modeling
+framing as second-level agenda setting~\cite{McCombs:JS05}.
+
+Using this new model, we focus on Republican legislators during
+the~112\textsuperscript{th} \us{} Congress, from January 2011 until
+January 2013.  This is a particularly interesting session of Congress
+for political scientists, because of the rise of the Tea Party, a
+decentralized political movement with populist, libertarian, and
+conservative elements.  Although united with ``establishment''
+Republicans against Democrats in the 2010~midterm elections,
+leading to massive Democratic defeats, the Tea Party was---and still
+is---wrestling with establishment Republicans for control of the
+Republican party.
+
+The Tea Party is a new and complex phenomenon for political
+scientists; as \newcite{CarminesARPS15} observe: ``Conventional views
+of ideology as a single-dimensional, left-right spectrum experience
+great difficulty in understanding or explaining the Tea Party.''  Our
+model identifies legislators who have low (or high) levels of ``Tea
+Partiness'' but are (or are not) members of the Tea Party Caucus, 
+and providing insights into the nature of polarization within the
+Republican party. \name{} also makes it possible to investigate a number of questions of interest to
+political scientists. For example, are there Republicans who identify
+themselves as members of the Tea Party, but whose votes and language
+betray a lack of enthusiasm for Tea Party issues?  How well can we
+predict from someone's language alone whether they are likely to
+associate themselves with the Tea Party?  Our computational modeling approach to ``Tea
+Partiness'', distinct from self-declared Tea Party Caucus membership, 
+may have particular value in understanding Republican
+party politics going forward because, despite the continued
+influence of the Tea Party, the official Tea Party Caucus in the
+House of Representatives is largely inactive and its future uncertain~\cite{fuller2015}.
+
+\ignore{How do establishment and Tea Party Republicans differ in their framing of key issues under debate?}
+
+\ignore{For example, are there Republicans who identify
+themselves as members of the Tea Party, but whose votes and language
+betray a lack of enthusiasm for Tea Party issues?  How well can we
+predict from someone's language alone whether they are likely to
+associate themselves with the Tea Party?  How do establishment and Tea
+Party Republicans differ in their framing of key issues under debate?}
+
+\ignore{
+It is, therefore, a promising area to
+explore using new, multi-dimensional ideal-point models.  \name{}
+makes it possible to investigate a number of questions of interest to
+political scientists. For example, are there Republicans who identify
+themselves as members of the Tea Party, but whose votes and language
+betray a lack of enthusiasm for Tea Party issues?  How well can we
+predict from someone's language alone whether they are likely to
+associate themselves with the Tea Party?  How do establishment and Tea
+Party Republicans differ in their framing of key issues under debate?
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Polarization across Dimensions}
+\label{subsec:c6_idealpoint_overview}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+Ideal point models describe probabilistic
+relationships between observed responses (votes) on a set of items (bills) by a set of
+responders (legislators) who are characterized by continuous latent
+traits~\cite{Fox:Book10}.  A popular formulation posits an
+\textit{ideal point} $u_a$ for each lawmaker $a$, a \textit{polarity}
+$x_b$, and \textit{popularity} $y_b$ for each bill $b$, all being
+values in
+$(-\infty,+\infty)$~\cite{Martin:PA02,Bafumi:PA05,Gerrish:ICML11}. Lawmaker
+$a$ votes ``Yes'' on bill $b$ with probability
+\begin{equation}
+  p(v \subtwo ab = \mbox{Yes} \given u_a, x_b, y_b) = \Phi(u_a x_b + y_b)
+  \label{eqn:c6_onedim}
+\end{equation}
+where $\Phi(\alpha) = \exp(\alpha) / (1 + \exp(\alpha))$ is the
+logistic (or inverse-logit) function.\footnote{A probit function is
+  also often used where $\Phi(\alpha)$ is instead the cumulative
+  distribution function of a Gaussian
+  distribution~\cite{Martin:PA02}.} Intuitively, most lawmakers
+vote ``Yes'' on bills with high popularity $y_b$ and ``No'' on bills
+with low $y_b$. When a bill's popularity is lower, the outcome of
+the vote $v \subtwo ab$ depends more on the interaction between the lawmaker's ideal
+point $u_a$ and the bill's polarity $x_b$.
+
+Multi-dimensional ideal point models replace scalars $u_a$ and $x_b$
+with $K$-dimensional vectors $\bm u_a$ and $\bm
+x_b$~\cite{Heckman:NBER96,Jackman:PA01,Clinton:APSR04}.
+Unfortunately, as \newcite{Lauderdale:AJPS14} observe, the binary data
+used for these models are ``insufficiently informative to support
+analyses beyond one or two dimensions'', and the additional dimensions
+are difficult to interpret.  To address this lack of interpretability, recent work has proposed multi-dimensional ideal point models to jointly capture both binary votes and the associated text~\cite{Gerrish:NIPS12,Gu:KDD14,Lauderdale:AJPS14,Sim:AAAI15:utility}.
+
+\ignore{Gerrish and Blei~\shortcite{Gerrish:NIPS12} introduce the
+\textit{issue-adjusted ideal point} model, which posits that each
+legislator $a$ is characterized by a base ideal point $u_a$ and an
+issue-adjusted vector that explains votes based on
+\emph{issue-specific} ideal points.
+}

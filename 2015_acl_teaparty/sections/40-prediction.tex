@@ -1,0 +1,125 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Data Collection}
+\label{sec:c6_data}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+What makes a Tea Partier?  To address that question, we use
+\textit{key votes} identified by \fw{} as the most important votes on
+issues of economic freedom.  Led by former House Majority Leader Dick
+Armey (\abr{r-tx}), \fw{} is a conservative non-profit organization
+which promotes ``Lower Taxes, Less Government, More
+Freedom''.\footnote{\url{http://congress.freedomworks.org/}}
+\newcite{Karpowitz:PS11:teaparty} report that \fw{} endorsements are
+more effective than other Tea Party organizations at getting out votes
+for Republican candidates in the 2010 midterms.
+
+For the 112\textsuperscript{th} Congress, \fw{} selected 60 key votes,
+40 in 2011 and 20 in 2012.  We are interested in ideal points with
+respect to the Tea Party movement, i.e., on the anti-pro Tea Party
+dimension: whether a legislator agrees with \fw{} on a bill. More
+specifically, we assign $v \subtwo ab$ to be 1 if legislator $a$
+agrees with \fw{} on bill $b$, and 0 otherwise. In addition to the votes, we obtained the bill text with labels from the Congressional Bills Project\footnote{\url{http://congressionalbills.org/}} and the congressional speeches from GovTrack.\footnote{\url{https://www.govtrack.us/data/us/112/}} In total, we have 240
+Republicans, 60 who self-identify with the Tea Party Caucus, and
+13,856 votes.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Predicting Tea Party Membership}
+\label{sec:c6_prediction}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+To quantitatively evaluate the effectiveness of \name{} in
+capturing ``Tea Partiness'', we predict Tea Party Caucus membership of
+legislators given their votes and text. This examines (1) how effective the baseline
+features extracted from the votes and text are in predicting the Caucus
+membership, and (2) how much prediction improves using features extracted from \name{}.
+For baselines, we consider simple feature sets where each legislator
+is represented by their speeches as either (1) a \tfidf{}
+vector ~\cite{salton-68}, (2) a normalized \tfidf{} vector, or (3) a binary vector
+containing their votes.
+
+Our dataset for binary prediction comprises a set of~60 Republican
+representatives who self-identify as Tea Party Caucus members and~180
+who do not.  These are divided using 5-fold cross-validation with stratified
+sampling, which preserves the ratio of the two classes in both the training and
+test sets.  We report performance using \abr{auc-roc}~\cite{lusted-71} using
+\svm{}$^{light}$~\cite{Joachims:CHAP99}.\footnote{We use the default settings of
+  \svm{}$^{light}$, except that we set the cost-factor equal to the ratio
+  between the number of negative examples (i.e., number of non-Tea Party Caucus
+  members) and the number of positive examples (i.e., number of Tea Party Caucus
+  members).}  After preprocessing, our vocabulary contains
+5,349 unique word types.
+
+\jbgcomment{SVM-light's role as a baseline should be expanded,
+  highlighting the connection to the model.}
+
+\paragraph{Membership from Votes and Text.}
+\label{subsec:c6_pred_vote_text}
+
+\begin{figure}[t]
+\centering
+  \includegraphics[width=.9\linewidth]{\autofig{votetext_112}}
+  \caption{Tea Party Caucus membership prediction results over five folds using \abr{auc-roc} (higher is better, random baseline achieves 0.5).
+  The features extracted from our model are estimated using both the votes and the text.}
+  \label{fig:c6_votetext_112}
+\end{figure}
+
+First, given the votes and text of all the legislators, we run \name{} for 1,000
+iterations with a burn-in period of 500 iterations. After burning in, we keep
+the sampled state of the model after every fifty iterations. The feature values are
+obtained by averaging over the ten stored models as suggested in~\newcite{Nguyen:EMNLP14}. Each legislator $a$ is
+represented by a vector concatenating:
+\begin{itemize*}
+  \item $K$-dimensional ideal point vector estimated from both votes and text $u \subtwo ak$
+  \item $K$-dimensional vector, estimating the ideal point using only text $\bm \eta_k^T  \hat{\bm \psi} \subtwo ak$
+  \item $B$ probabilities estimating $a$'s votes on $B$ bills $\Phi(x_b \sum_{k=1}^K \hat{\vartheta} \subtwo bk u \subtwo ak + y_b)$
+\end{itemize*}
+
+Figure~\ref{fig:c6_votetext_112} shows \abr{auc-roc} results for our feature
+sets. \ignore{All feature sets improve upon random prediction's \abr{auc-roc}
+0.5. \psrcomment{Seems unnecessary to say.}} \vote{}-based features clearly outperform text-based features like \tf{}
+and \tfidf{}. Combining \vote{} with either \tf{} or \tfidf{} does not improve
+the prediction performance much (i.e., \vote{}-\tf{} and
+\vote{}-\tfidf{}). Features extracted from our model, \name{}, also outperform
+\tf{} and \tfidf{} significantly, but only slightly better than \vote{}. However,
+\name{} and \vote{} together significantly outperform \vote{} alone.
+
+\paragraph{Membership Prediction from Text Only.}
+\label{subsec:c6_pred_text}
+
+\begin{figure}[t]
+\centering
+  \includegraphics[width=.85\linewidth]{\autofig{textonly_112}}
+  \caption{Tea Party Caucus membership prediction results over five folds using \abr{auc-roc} (higher is better, random baseline achieves 0.5).
+  The features extracted from our model for unseen legislators are estimated using their text only.}
+  \label{fig:c6_textonly_112}
+\end{figure}
+
+\ignore{In the previous section, we experiment with features from both the votes and the text from
+legislators to predict their Tea Party Caucus memberships. However, its applicability is limited
+since we need to have both the votes and text to be able to make predictions. In this section, we
+look at a more difficult, yet more practical problem, which predicts the Tea Party Caucus
+membership using only the text of new lawmakers.}
+
+The results in Figure~\ref{fig:c6_votetext_112} require both votes and
+legislators' language. This is limiting, since it permits
+predictions of ``Tea Partiness'' only for people with an established
+congressional voting record.  A potentially more interesting and practical task
+is prediction based on language alone.
+
+Thus, we first run our inference algorithm on the training data, which includes
+both votes and text.  After training, using multiple models, we sample the issue
+and frame assignments for each token of the text authored by test lawmakers.
+Since the votes are not available, \name{}'s extracted features here only
+consist of (1) the $K$-dimensional vector $\bm \eta_k^T \hat{\bm \psi}
+\subtwo ak$ estimating legislators' ideal point
+using text alone, and (2) the $B$
+probabilities $\Phi(x_b \sum_{k=1}^K \hat{\vartheta}
+\subtwo bk u \subtwo ak + y_b)$ estimating the votes.
+
+Figure~\ref{fig:c6_textonly_112} compares this approach with the two
+baselines capable of using text alone, \tf{} and \tfidf{}.  Since \name{} can no longer access the votes in
+the test data, its performance drops significantly compared with
+\vote{}. However, it still quite strongly outperforms the two text-based baselines, showing that jointly modeling the voting behavior improves the text-based elements of the model.
+
+\jbgcomment{Would be nice to have more discussion on the why}
+\psrcomment{See the sentence I added at the end.}
