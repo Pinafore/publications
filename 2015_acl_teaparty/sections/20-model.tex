@@ -1,7 +1,7 @@
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 \section{Hierarchical Ideal Point Topic Model}
 \label{sec:c6_model}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 
 Bringing topic models~\cite{blei-09} into ideal-point modeling
 provides an interpretable, text-based foundation for political
@@ -216,267 +216,267 @@ how legislators frame specific topics. Incorporating the bill text into the
 regression is an interesting direction for future work.
 }
 
-%\section{Ideal Point Models}
-%\label{sec:ideal_point} Ideal point models are methods to estimate the position of voters and bills
-%given the observable votes. More specifically, ideal point models take as input a set of binary
-%votes $v \subtwo ab$ of voter $a$ on bill $b$. There are $A$ unique voters and $B$ unique bills.
-%
-%\paragraph{One-dimensional ideal point model} Proposed by~\cite{Poole:AJPS85}, the seminal ideal
-%point model associates each voter $a$ with an \textit{ideal point} $u_a$, and each bill $b$ a
-%\textit{polarity} $x_b$ and a \textit{popularity} $y_b$. The probability of voter $a$ voting
-%\textsf{Yes} on a bill $b$ is defined by $p(v \subtwo ab = 1) = f(u_a x_b + y_b)$ where
-%$f(x)$ is the logistic function $\frac{\exp(x)}{\exp(x) + 1}$.\footnote{The probit function
-%can also be used instead.}
-%
-%Additional references:~\cite{Martin:PA02}, \cite{Heckman:NBER96}
-%
-%\paragraph{Multi-dimensional ideal point model} Instead of putting each voter on a single ideal
-%point dimension, various work have extended to multi-dimensional space~\cite{Londregan:PA99},
-%\cite{Jackman:PA01},\cite{Clinton:APSR04}. $p(v \subtwo ab = 1) = \sigma(\sum_{k=1}^K u \subtwo ak
-%x \subtwo bk + y_b)$.
-%
-%\subsection{Ideal point models using bill text}
-%\begin{itemize}
-%	\item Issue-adjusted ideal point model~\cite{Gerrish:NIPS12}
-%	\begin{equation}
-%		p(v \subtwo ab = 1) = \sigma((\sum_{k=1}^K z \subtwo uk \mathbb{E}[\theta \subtwo bk \, | \, \bm w_b] + u_a) x_b + y_b)
-%	\end{equation}
-%	\item Topic-factorized ideal point model~\cite{Gu:KDD14}
-%	\begin{equation}
-%		p(v \subtwo ab = 1) = \sigma(\sum_{k=1}^K \theta \subtwo bk u \subtwo ak x \subtwo bk + y_b)
-%	\end{equation}
-%	Similar idea~\cite{Lauderdale:AJPS14} (but use probit instead of logit function)
-%	\begin{equation}
-%		p(v \subtwo ab = 1) = \sigma((\sum_{k=1}^K \theta \subtwo bk u \subtwo ak) x_b + y_b)
-%	\end{equation}
-%	\item Ideal point topic model (IPTM)~\cite{Gerrish:ICML11}: model $x_b$ and $y_b$ as response variables of SLDA
-%\end{itemize}
-%
-%\section{SNHDP Ideal Point Model}
-%Supervised Nested Hierarchical Dirichlet Process (\name{}) Ideal Point Model
-%\begin{itemize}
-%	\item All text-based ideal point models above use the bill text
-%	\item Our model focus on modeling text from the voters (lawmakers)~\cite{Grimmer-09}
-%	\item Based on recent advances in hierarchical nonparametric Bayesian
-%modeling~\cite[nCRF]{Ahmed:ICML13} \cite[nHDP]{Paisley:PAMI14}, we develop a supervised
-%hierarchical model which learns a hierarchy of topics, each of which is mapped to a position on
-%our scaling spectrum.
-%	\item A few advantages of our model
-%	\begin{itemize}
-%		\item Study agenda-setting and framing
-%		\item Perform vote prediction for unknown voters given their text.
-%	\end{itemize}
-%\end{itemize}
-%
-%\subsection{Generative process}
-%
-%\begin{figure*}[t]
-%\begin{minipage}{\textwidth}
-%  \begin{minipage}[t]{0.25\textwidth}
-%   \vspace{0pt}
-%    \centering
-%    \includegraphics[width=\linewidth]{2015_teaparty/figs/snhdp}\\
-%  \end{minipage}
-%  \begin{minipage}[t]{0.32\textwidth}
-%   \vspace{0pt}
-%    \begin{small}
-%    \begin{enumerate*}
-%    	\item Generate a global tree $\mathcal{T}$: for each node $k$
-%    	\begin{itemize}
-%    		\item Draw topic $\phi_k \sim \mbox{Dir}(\beta)$
-%    		\item Draw ideal point $\eta_k \sim \mathcal{N}(\mu, \sigma)$
-%            \item Draw $\omega_k \sim \mbox{Beta}(\gamma^{\glob}, \pi)$
-%            \item Draw $\theta_k \sim \mbox{GEM}(\alpha^{\glob})$
-%    	\end{itemize}
-%    	\item For each bill $b \in [1, B]$
-%    	\begin{itemize}
-%    		\item Draw $x_b \sim \mathcal{N}(0, \sigma_x)$
-%    		\item Draw $y_b \sim \mathcal{N}(0, \sigma_y)$
-%    	\end{itemize}
-%    	\item For each word type $v \in [1,V]$, draw $\tau_v \sim \mathcal{N}(0, \sigma_v)$
-%    \end{enumerate*}
-%    \end{small}
-%  \end{minipage}
-%  \begin{minipage}[t]{0.43\textwidth}
-%   \vspace{0pt}
-%    \begin{small}
-%    \begin{enumerate*}
-%    	\item[4.] For each document $d$ authored by voter $a_d$
-%    	\begin{itemize}
-%    		\item Generate local tree $\mathcal{T}_d$: for each node $k$
-%            \begin{itemize}
-%              \item Draw $\omega \subtwo dk \sim \mbox{Beta}(\gamma^{\loc}, \omega_k)$
-%              \item Draw $\theta \subtwo dk \sim \mbox{Dir}(\alpha^{\loc}, \theta_k)$
-%            \end{itemize}
-%    		\item For each token $n \in [1, N_d]$
-%    		\begin{itemize}
-%    			\item Draw a node $z \subtwo dn \sim \mathcal{T}_d$
-%    			\item Draw word token $w \subtwo dn \sim \mbox{Mult}(\phi_{z \subtwo dn})$
-%    		\end{itemize}
-%    	\end{itemize}
-%    	\item[5.] For each voter $a \in [1, A]$
-%    	\begin{itemize}
-%    		\item Draw ideal point \\$u_a \sim \mathcal{N}(\bar{\bm z}_a^T \eta + \bar{\bm w}_a^T \tau, \rho)$
-%    		\item For each bill $b \in [1, B]$, the probability of $v \subtwo ab$ being
-%    \textsf{Yes} is $f \subtwo ab = f(u_a x_b + y_b)$
-%    	\end{itemize}
-%    \end{enumerate*}
-%    \end{small}
-%  \end{minipage}
-%\captionof{figure}{\small The graphical model and generative process of \name{} Ideal Point model. Hyperparameters
-%are omitted for clarity.} \label{fig:snhdp}
-%\end{minipage}
-%\end{figure*}
-%
-%\paragraph{Generate global tree $\mathcal{T}$} The global tree $\mathcal{T}$ is generated using the nested Chinese
-%restaurant process (nCRP). Proposed by~\cite{blei-07}, nCRP provides a flexible distribution over
-%tree-like structures with unbounded width and depth. This is achieved by associating each node $k$
-%in the tree with an infinite distribution over its children $\theta_k \sim
-%\mbox{GEM}(\alpha^{\glob})$ and a biased coin $\omega_k \sim \mbox{Beta}(\gamma^{\glob},
-%\pi)$.\footnote{In $\mbox{Beta}(\gamma^{\glob}, \pi)$, $\gamma^{\glob}$ is the scale and $\pi$ is
-%the mean vector.} This construction was also used in earlier
-%work~\cite{Adams:NIPS10,Nguyen:NIPSW13}.
-%
-%In addition, each node $k$ in the tree is also associated with a topic $\phi_k \sim
-%\mbox{Dir}(\beta)$ and a regression parameter $\eta_k \sim \mathcal{N}(\mu,
-%\sigma)$~\cite{nguyen-13:shlda}.
-%
-%\paragraph{Generate documents} Each document has its own distribution over nodes in the global tree,
-%defined by the local tree $\mathcal{T}_d$~\cite{Ahmed:ICML13,Paisley:PAMI14}. [... Describe how
-%$\mathcal{T}_d$ is generated.] [Describe nCRF by Ahmed et al. nHDP proposed is a similar model. The
-%major difference is the termination process and the inference technique.]
-%
-%Each token $w \subtwo dn$ in our corpus is generated by first drawing a node $z \subtwo dn$ in the
-%document-specific tree $\mathcal{T}_d$ and then drawing a word type from the corresponding topic
-%$\phi_{z \subtwo dn}$. To draw a node from the local tree, we first start at the root and traverse
-%downward. Assume the current node is $k$, we will stay at $k$ with probability $\omega \subtwo dk
-%\sim \mbox{Beta}(\gamma^{\loc}, \omega_k)$. If deciding to move to a child node, we can move to an
-%existing child or a new child.
-%
-%\paragraph{Generate vote outcomes} We model each voter's ideal point $u_a \sim \mathcal{N}(\bar{\bm z}_a^T \eta,
-%\rho)$ where $\bar{\bm z}_a$ is a vector capturing how much attention that voter $a$ put on each
-%topic in our hierarchy and is defined as $\bar{z} \subtwo ak = \frac{\sum_{d \in \mathcal{D}_a}
-%\sum_{n=1}^{N \subtwo ad} \ind{z \subtwo dn = k}}{\sum_{d \in \mathcal{D}_a} N \subtwo ad}$
-%where $\mathcal{D}_a$ denotes the set of documents authored by $a$ and $\ind{\mbox{\textsf{\small
-%expr}}} = 1$ if $\small \textsf{expr}$ is true, and $0$ otherwise.
-%
-%\subsection{Inference}
-%\label{sec:inference} We alternate among these steps
-%\begin{itemize}
-%  \item Sample a node for each token
-%  \item Update the regression parameters
-%  \item Update voters' and bills' ideal points
-%\end{itemize}
-%
-%\paragraph{Sample node assignments}
-%
-%To assign a token $w \subtwo dn$ to a node in the tree, we first propose a node by sampling from an
-%approximate conditional probability distribution over the tree nodes and then use the
-%Metropolis-Hastings algorithm to either accept or reject the proposed node. Assume that token $n$
-%of document $d$ is currently at node $k$ with level $l$ in $\mathcal{T}_d$, the probability that
-%this token will stay at node $k$ is
-%\begin{small}
-%\begin{equation*}
-%	\lambda^{\moveto kk} \subtwo dn = \frac{N \subtwo dk \minussuptwo dn}{N \subtwo d{\geq k} \minussuptwo dn + \gamma^{\loc}}
-%	+ \frac{\gamma^{\loc}}{N \subtwo d{\geq k} \minussuptwo dn + \gamma^{\loc}}
-%	\frac{N \subtwo {\cdot}k \minussuptwo dn + \gamma^{\glob} \pi_l}{N \subtwo {\cdot}{\geq k} \minussuptwo dn + \gamma^{\glob}}
-%\end{equation*}
-%\end{small}%
-%where $N \subtwo dk$ is the number of tokens in document $d$ assigned to node $k$; $N \subtwo d{\geq k}$ is the number of document $d$'s tokens assigned to any nodes in the subtree rooted at $k$; $N \subtwo {\cdot}k$ is the number of tokens in all documents assigned to node $k$; and $N \subtwo {\cdot}{\geq k}$ is the number of tokens in all documents assigned to any nodes in the subtree rooted at $k$. We use the superscript $\minussuptwo dn$ to denote the exclusion of the assignment of token $n$ in document $d$ from the corresponding counts.
-%
-%If the token is not staying at $k$, it can move to either an existing child node $j$ of $k$ or a
-%new child node $j^{new}$ of $k$. The probability that it will move to an existing child node $j$ is
-%$\lambda^{\moveto kj} \subtwo dn = $
-%\begin{small}
-%%\begin{equation*}
-%%	 (1 - \lambda^{\moveto kk} \subtwo dn)
-%%	\left(\frac{N \subtwo d{\moveto kj} \minussuptwo dn}{N \subtwo d{\moveto k{\star}} \minussuptwo dn + \alpha^{\loc}}
-%%	+ \frac{\alpha^{\loc}}{N \subtwo d{\moveto k{\star}} \minussuptwo dn + \alpha^{\loc}}
-%%	\frac{N \minussuptwo dn \subtwo {\cdot}{\moveto kj}}{N \subtwo {\cdot}{\moveto k{\star}} \minussuptwo dn + \alpha^{\glob}}
-%%	\right)
-%%\end{equation*}
-%\begin{equation*}
-%	 (1 - \lambda^{\moveto kk} \subtwo dn)
-%	\left(\frac{N \subtwo d{\moveto kj} \minussuptwo dn}{N \subtwo d{>k} \minussuptwo dn + \alpha^{\loc}}
-%	+ \frac{\alpha^{\loc}}{N \subtwo d{>k} \minussuptwo dn + \alpha^{\loc}}
-%	\frac{N \minussuptwo dn \subtwo {\cdot}{\moveto kj}}{N \subtwo {\cdot}{>k} \minussuptwo dn + \alpha^{\glob}}
-%	\right)
-%\end{equation*}
-%\end{small}%
-%where $N \subtwo d{\moveto kj}$ denotes the number of tokens in document $d$ moving from node $k$ to node $j$, $N \subtwo d{>k}$ denotes the number of tokens in document $d$ moving from node $k$ to any of its child node (i.e., $N \subtwo d{>k} = N \subtwo d{\geq k} - N \subtwo dn$).
-%
-%The probability that the token will move to a new child node $j^{new}$ is $\lambda^{\moveto k{j^{new}}} \subtwo dn = $
-%\begin{small}
-%\begin{equation*}
-%	 (1 - \lambda^{\moveto kk} \subtwo dn)
-%	\left(\frac{\alpha^{\loc}}{N \subtwo d{>k} \minussuptwo dn + \alpha^{\loc}}
-%	\frac{\alpha^{\glob}}{N \subtwo {\cdot}{>k} \minussuptwo dn + \alpha^{\glob}}
-%	\right)
-%\end{equation*}
-%\end{small}
-%
-%We propose a node by traversing from the root of the tree downwards, sample a node level-by-level.
-%At each node $k$, we choose among the following three options with probabilities:
-%%\begin{itemize}
-%%  \item Stay on the current node $k$ with probability $\lambda^{\moveto kk} \subtwo dn \cdot
-%%      \phi \subtwo k{w \subtwo dn}$
-%%  \item Move to an existing child node $j$ with probability $\lambda^{\moveto kj} \subtwo dn
-%%      \cdot \phi \subtwo j{w \subtwo dn}$
-%%  \item Create a new child node $j^{new}$ of $k$ and move there with probability
-%%      $\lambda^{\moveto k{j^{new}}} \subtwo dn \cdot \phi \subtwo {j^{new}}{w \subtwo dn}$.
-%%      Since we put a symmetric Dirichlet prior over the topics, $\phi \subtwo {j^{new}}{w
-%%      \subtwo dn} = 1/V$.
-%%\end{itemize}
-%
-%$
-%\left\{
-%  \begin{array}{ll}
-%    \lambda^{\moveto kk} \subtwo dn \cdot \phi \subtwo k{w \subtwo dn}, & \hbox{stay on $k$;} \\
-%    \lambda^{\moveto kj} \subtwo dn \cdot \phi \subtwo j{w \subtwo dn}, & \hbox{move to existing child $j$;} \\
-%    \lambda^{\moveto k{j^{new}}} \subtwo dn \cdot \phi \subtwo {j^{new}}{w \subtwo dn}, & \hbox{move to new child $j^{new}$.}
-%  \end{array}
-%\right. $
-%The proposal probability for a node $k$ is $q(k) = $
-%\begin{equation*}
-%  \frac{\lambda^{\moveto kk} \subtwo dn \cdot \phi \subtwo k{w \subtwo dn}}
-%  {\sum_{j' \in \mathcal{C}_k} \lambda^{\moveto k{j'}} \subtwo dn \cdot \phi \subtwo {j'}{w \subtwo dn}}
-%  \prod_{(\moveto ij) \in \mathcal{P}({k})}
-%  \frac{\lambda^{\moveto ij} \subtwo dn \cdot \phi \subtwo j{w \subtwo dn}}
-%  {\sum_{j' \in \mathcal{C}_i} \lambda^{\moveto i{j'}} \subtwo dn \cdot \phi \subtwo {j'}{w \subtwo dn}}
-%\end{equation*}
-%The true probability of assigning $w \subtwo dn$ to node $k$ is \begin{equation*}
-%	p(k) = \lambda^{\moveto kk} \subtwo dn
-%	\cdot \phi \subtwo k{w \subtwo dn}
-%	\prod_{(\moveto ij) \in \mathcal{P}({k})} \lambda^{\moveto ij} \subtwo dn
-%\end{equation*}
-%where $\mathcal{C}_i$ denotes the set of nodes which consists of $i$, all existing children of $i$
-%and a new child of $i$ and $\mathcal{P}(k)$ denotes the path from the root to node
-%$k$. Thus, assume the current node is $k^{\cur}$ and the proposed node is $k^{\prop}$, the according to the Metropolis-Hastings algorithm, we accept the proposed node with the probability of $\min \left(1,
-%\frac{q(k^{\prop})}{q(k^{\cur})} \frac{p(k^{\cur})}{p(k^{\prop})}\right)$
-%
-%References~\cite{Kim:CIKM12}, \cite{Ahmed:ICML13}.
-%
-%\paragraph{Update topic regression parameters}
-%\begin{equation*}
-%	\mathcal{L}(\eta) = -\frac{1}{2\rho}\sum_{a=1}^A (u_a - \bar{\bm z}_a^T \eta)^2
-%	- \frac{1}{2\sigma} \sum_{k \in \mathcal{T}} (\eta_k - \mu)^2
-%\end{equation*}
-%
-%\paragraph{Update ideal point model's parameters}
-%Update $u_a$, $x_b$ and $y_b$ using gradient descent. $\mathcal{L}(\bm u, \bm x, \bm y)$
-%\begin{small}
-%\begin{eqnarray}
-%	&=& \sum_{a=1}^A \sum_{b=1}^B v \subtwo ab \log f \subtwo ab + (1 - v \subtwo ab) \log (1 - f \subtwo ab) \nonumber \\
-%	&-& \sum_{a=1}^A \frac{(u_a - \bar{\bm z}_a^T \eta)^2 }{2\rho}
-%	- \sum_{b=1}^B \frac{x_b^2}{2\sigma_x}
-%	- \sum_{b=1}^B \frac{y_b^2}{2\sigma_y} \nonumber
-%\end{eqnarray}
-%\end{small}
-%
-%\paragraph{Improving identifiability using anchored voters}
-%To avoid sign flipping, we initialize extreme voters with -3 and 3.
-%
-%\paragraph{Improving topic interpretability using priors}
-%We use the major issues in Policy Agenda
-%codebook~\footnote{\url{http://www.policyagendas.org/page/topic-codebook}} to label to first-level
-%node in our hierarchy. The labeled data are from the Congressional Bill project
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

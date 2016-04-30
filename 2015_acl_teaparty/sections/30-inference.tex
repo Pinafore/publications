@@ -1,7 +1,7 @@
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 \section{Inference}
 \label{sec:c6_inference}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 
 \jbgcomment{The averaging paper should be cited somewhere in here}
 
@@ -44,7 +44,7 @@ an issue using
   p(z \subtwo dn = k \given \mbox{rest}) \propto
   \frac{N \subtwo dk \minussuptwo dn + \alpha}{N \subtwo d{\cdot} \minussuptwo dn + K \alpha} \cdot
   \hat{\phi} \subtwo k{w \subtwo dn}
-  %\frac{N \subtwo k{w \subtwo dn} \minussuptwo dn + \beta \phi^{\star} \subtwo k{w \subtwo dn}}{N \subtwo k{\cdot} \minussuptwo dn + \beta}
+  
 \end{equation}
 where $N \subtwo dk$ similarly denotes the number of times that tokens
 in $d$ are assigned to issue $k$. Given the sampled issue $k$, we
@@ -63,7 +63,7 @@ a, \mbox{rest}) \propto$
      \mathcal{N}(u \subtwo ak; \mu \subthree ak{j^{\mbox{\scriptsize new}}}, \rho) \cdot
      \frac{\lambda}{N \subthree dkj \minussuptwo dn + \lambda} \cdot
         \hat{\psi} \subtwo k{j^{\mbox{\scriptsize new}}}
-        %\frac{\lambda_0}{\hat{N} \subthree {\cdot}kj \minussuptwo dn + \lambda_0}
+        
         ,
      &
   \end{array}
@@ -109,8 +109,8 @@ $\hat{\psi}_k \equiv (\hat{\psi} \subtwo k1, \hat{\psi} \subtwo k2, \cdots, \hat
 where $\hat{N} \subthree {\cdot}kj = \sum_{d=1}^D \hat{N} \subthree dkj$ and $\hat{N} \subthree
 dkj$ can be sampled effectively using the Antoniak distribution~\cite{Aantoniak:AS74}.
 
-%We sample the global frame proportion $\hat{\psi}_k$ using the
-%\textit{direct assignment} method of \newcite{Teh:JASA06:hdp}.
+
+
 
 \ignore{
 \begin{align}
@@ -141,18 +141,18 @@ L-BFGS~\cite{Liu:MP89:lbfgs} to optimize $\mathcal{L}(\bm \eta_k)$
 We update the multi-dimensional ideal point $\bm u_a$ of each legislator $a$ and
 the polarity $x_b$ and popularity $y_b$ of each bill $b$ by optimizing the log
 likelihood using gradient ascent.
-% \begin{align}
-% \small
-%   =& \sum_{a=1}^A \sum_{b=1}^B v \subtwo ab \log p(v \subtwo an = 1) + (1- v \subtwo ab)  \log p(v \subtwo ab = 0) \nonumber \\
-%   &- \frac{1}{2\rho} \sum_{a=1}^A \sum_{k=1}^K \left(u \subtwo ak - \bm \eta_k^T \hat{\bm \psi} \subtwo ak \right)
-%   - \frac{1}{2\sigma} \sum_{b=1}^B x_b^2 - \frac{1}{2\sigma} \sum_{b=1}^B y_b^2
-% \end{align}
 
 
-%\paragraph{Practical notes on implementation}
-%\label{subsec:c6_implementation_note}
-%
-%\begin{itemize}
-%  \item Initialization
-%  \item Threshold
-%\end{itemize}
+
+
+
+
+
+
+
+
+
+
+
+
+
