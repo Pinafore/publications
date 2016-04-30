@@ -1,0 +1,20 @@
+
+\section{Related Work}
+\label{sec:related}
+
+We describe relevant data-driven coreference
+research in this section, all of which train and evaluate on only newswire text.  Despite efforts to build better rule-based~\cite{luo2004mention} or
+hybrid statistical systems~\cite{haghighi2010coreference}, data-driven systems currently
+dominate the field. The 2012 \conll{} shared task led to improved data-driven
+systems for coreference resolution that finally outperformed both the Stanford
+system~\cite{lee2011stanford} and the \abr{ims} system~\cite{bjorkelund2012data},
+the latter of which was the best available publicly-available English coreference
+system at the time. The recently-released
+Berkeley coreference system~\cite{DurrettKlein2013} is especially striking: it performs well with only a sparse set of carefully-chosen features.
+Semantic knowledge sources---especially WordNet~\cite{miller1995wordnet} and
+Wikipedia---have been used in coreference
+engines~\cite{ponzetto2006exploiting}. A system by~\newcite{ratinov2012learning} demonstrates good performance by using Wikipedia knowledge to strengthen a
+multi-pass rule based system. In a more recent work,
+\newcite{durrett2014joint} outperform previous systems by building a joint model that matches mentions to Wikipedia entities while doing named entity resolution and
+coreference resolution simultaneously. We take a different approach by approximating semantic and world knowledge through our word embedding features.
+Our simple classifier yields a binary decision for each mention pair, a method that had been very popular before the last five years~\cite{soon2001machine,bengtson2008understanding,stoyanov2010coreference}. Recently, better results have been obtained with mention-ranking systems~\cite{luo2004mention,haghighi2010coreference,DurrettKlein2013,bjorkelund2014learning}. However, on quiz bowl data, our experiments show that binary classifiers can outperform mention-ranking approaches.

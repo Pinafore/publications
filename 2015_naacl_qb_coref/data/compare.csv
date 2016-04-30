@@ -1,0 +1,46 @@
+Coreference,Mentions,Score,Metric,Formula
+QB Final (Berkeley trained on QB),Berkeley Mentions,60.2,MUC,P
+QB Final (Berkeley trained on QB),CRF Mentions,56.9,MUC,P
+LR,CRF Mentions,67,MUC,P
+QB Final (Berkeley trained on QB),Gold Mentions,70.2,MUC,P
+LR,Gold Mentions,58.8,MUC,P
+QB Final (Berkeley trained on QB),Berkeley Mentions,33.4,MUC,R
+QB Final (Berkeley trained on QB),CRF Mentions,26.9,MUC,R
+LR,CRF Mentions,72.4,MUC,R
+QB Final (Berkeley trained on QB),Gold Mentions,40.2,MUC,R
+LR,Gold Mentions,56.8,MUC,R
+QB Final (Berkeley trained on QB),Berkeley Mentions,42.4,MUC,F1
+QB Final (Berkeley trained on QB),CRF Mentions,38.9,MUC,F1
+LR,CRF Mentions,67.8,MUC,F1
+QB Final (Berkeley trained on QB),Gold Mentions,49.6,MUC,F1
+LR,Gold Mentions,57.8,MUC,F1
+QB Final (Berkeley trained on QB),Berkeley Mentions,56.9,BCUB,P
+QB Final (Berkeley trained on QB),CRF Mentions,50.6,BCUB,P
+LR,CRF Mentions,59.2,BCUB,P
+QB Final (Berkeley trained on QB),Gold Mentions,88.5,BCUB,P
+LR,Gold Mentions,68.1,BCUB,P
+QB Final (Berkeley trained on QB),Berkeley Mentions,21.1,BCUB,R
+QB Final (Berkeley trained on QB),CRF Mentions,18.7,BCUB,R
+LR,CRF Mentions,78.6,BCUB,R
+QB Final (Berkeley trained on QB),Gold Mentions,64.7,BCUB,R
+LR,Gold Mentions,74.8,BCUB,R
+QB Final (Berkeley trained on QB),Berkeley Mentions,30.7,BCUB,F1
+QB Final (Berkeley trained on QB),CRF Mentions,27.2,BCUB,F1
+LR,CRF Mentions,63.9,BCUB,F1
+QB Final (Berkeley trained on QB),Gold Mentions,74.2,BCUB,F1
+LR,Gold Mentions,70.4,BCUB,F1
+QB Final (Berkeley trained on QB),Berkeley Mentions,56.9,CEAFE,P
+QB Final (Berkeley trained on QB),CRF Mentions,51.7,CEAFE,P
+LR,CRF Mentions,58.7,CEAFE,P
+QB Final (Berkeley trained on QB),Gold Mentions,56.5,CEAFE,P
+LR,Gold Mentions,73.3,CEAFE,P
+QB Final (Berkeley trained on QB),Berkeley Mentions,13,CEAFE,R
+QB Final (Berkeley trained on QB),CRF Mentions,12.7,CEAFE,R
+LR,CRF Mentions,48.6,CEAFE,R
+QB Final (Berkeley trained on QB),Gold Mentions,80,CEAFE,R
+LR,Gold Mentions,76.1,CEAFE,R
+QB Final (Berkeley trained on QB),Berkeley Mentions,21.2,CEAFE,F1
+QB Final (Berkeley trained on QB),CRF Mentions,20.5,CEAFE,F1
+LR,CRF Mentions,49.2,CEAFE,F1
+QB Final (Berkeley trained on QB),Gold Mentions,65.7,CEAFE,F1
+LR,Gold Mentions,74.2,CEAFE,F1

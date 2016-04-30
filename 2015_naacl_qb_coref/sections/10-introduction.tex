@@ -1,0 +1,59 @@
+
+%\jbgcomment{Apply citations liberally throughout}
+\section{Introduction}
+\label{sec:intro}
+
+% done \jbgcomment{It would be good to have a survey paper cited in this
+%  first paragraph (move it up if it's part of the monster set below)}
+
+Coreference resolution---adding annotations to an input text where multiple
+strings refer to the same entity---is a fundamental problem in computational
+linguistics. It is challenging because it requires the application of syntactic,
+semantic, and world knowledge~\cite{ng2010supervised}.
+
+For example, in the sentence \emph{Monsieur Poirot assured Hastings that he
+  ought to have faith in him}, the strings \emph{Monsieur Poirot} and \emph{him}
+refer to the same person, while \emph{Hastings} and \emph{he} refer to a
+different character.
+
+There are a panoply of sophisticated coreference systems, both
+data-driven~\cite{fernandes2012latent,DurrettKlein2013,durrett2014joint,bjorkelund2014learning}
+and
+rule-based~\cite{Pradhan:2011:CST:2132936.2132937,lee2011stanford}. Recent
+\conll{} shared tasks provide the opportunity to make a fair
+comparison between these systems. However, because all of these shared
+tasks contain strictly newswire data,\footnote{We use ``newswire'' as
+  an umbrella term that encompasses all forms of edited news-related data,
+  including news articles, blogs, newsgroups, and transcripts of
+  broadcast news.} it is unclear how existing systems
+perform on more diverse data.
+
+We argue in Section~\ref{sec:newswire-bad} that to truly solve coreference
+resolution, the research community needs high-quality datasets that contain many
+challenging cases such as nested coreferences and coreferences that can only be
+resolved using external knowledge. In contrast, newswire is deliberately
+written to contain few coreferences, and those coreferences should be easy for
+the reader to resolve. Thus, systems that are trained on such data
+commonly fail to detect coreferences in more expressive, non-newswire text.
+
+Given newswire's imperfect range of coreference examples, can we do
+better?  In Section~\ref{sec:qb-data} we present a specialized dataset
+that specifically tests a \emph{human's} coreference resolution
+ability.  This dataset comes from a community of trivia fans who also
+serve as enthusiastic annotators (Section~\ref{sec:annotation}). These
+data have denser coreference mentions than newswire text and present
+hitherto unexplored questions of what is coreferent and what is
+not. We also incorporate active learning into the annotation
+process. The result is a small but highly dense dataset of 400
+documents with 9,471 mentions.
+
+We demonstrate in Section~\ref{sec:system} that our dataset is
+significantly different from newswire based on results from the
+effective, widely-used Berkeley system~\cite{DurrettKlein2013}. These
+results motivate us to develop a very simple end-to-end coreference
+resolution system consisting of a \textsc{crf}-based mention detector
+and a pairwise classifier. Our system outperforms the Berkeley system
+when both have been trained on our new dataset. This result motivates
+further exploration into complex coreference types absent in newswire
+data, which we discuss at length in
+Section~\ref{sec:conclusion}.
