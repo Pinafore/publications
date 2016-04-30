@@ -75,8 +75,7 @@ represented by a vector concatenating:
 \end{itemize*}
 
 Figure~\ref{fig:c6_votetext_112} shows \abr{auc-roc} results for our feature
-sets. \ignore{All feature sets improve upon random prediction's \abr{auc-roc}
-0.5. \psrcomment{Seems unnecessary to say.}} \vote{}-based features clearly outperform text-based features like \tf{}
+sets.  \vote{}-based features clearly outperform text-based features like \tf{}
 and \tfidf{}. Combining \vote{} with either \tf{} or \tfidf{} does not improve
 the prediction performance much (i.e., \vote{}-\tf{} and
 \vote{}-\tfidf{}). Features extracted from our model, \name{}, also outperform
@@ -94,11 +93,7 @@ the prediction performance much (i.e., \vote{}-\tf{} and
   \label{fig:c6_textonly_112}
 \end{figure}
 
-\ignore{In the previous section, we experiment with features from both the votes and the text from
-legislators to predict their Tea Party Caucus memberships. However, its applicability is limited
-since we need to have both the votes and text to be able to make predictions. In this section, we
-look at a more difficult, yet more practical problem, which predicts the Tea Party Caucus
-membership using only the text of new lawmakers.}
+
 
 The results in Figure~\ref{fig:c6_votetext_112} require both votes and
 legislators' language. This is limiting, since it permits
