@@ -34,3 +34,8 @@ To use a screenreader to read the source, open the main file:
 > 2015_naacl_qb_coref.tex
 
 And then follow the input commands to find any included files.
+
+Requirements
+================
+
+To compile papers, you'll need pdflatex, Rscript, python, ruby, and bibtex.
