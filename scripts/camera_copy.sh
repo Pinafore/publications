@@ -7,12 +7,14 @@
 # Copy any of the shared files
 cp Makefile $
 
-for DIR in scripts
+for DIR in scripts bib style
 do
     # rm -r $DIR
     # git checkout $DIR
+    mkdir -p $2/$DIR
     echo cp $DIR/*.* $2/$DIR
     cp $DIR/*.* $2/$DIR
+    echo $DIR done
 done
 
 
