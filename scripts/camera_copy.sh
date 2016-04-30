@@ -1,0 +1,37 @@
+
+# Usage:
+# in the base pinafore papers directory:
+# > ./scripts/camera_copy.sh 20XX_CONF_PAPER ~/repositories/publications
+# If the directories aren't the same, you might break stuff
+
+# Copy any of the shared files
+cp Makefile $
+
+for DIR in style scripts bib
+do
+    # rm -r $DIR
+    # git checkout $DIR
+    echo cp $DIR/*.* $2/$DIR
+    cp $DIR/*.* $2/$DIR
+done
+
+echo "------------"
+mkdir -p $2
+echo cp $1.tex $2/$1.tex
+cp $1.tex $2/$1.tex
+echo "------------"
+
+for DIR in figures sections data
+do
+    # rm -r $1/$DIR
+    # git checkout $1/$DIR
+    mkdir -p $2/$1/$DIR
+    echo cp $1/$DIR/*.* $2/$1/$DIR
+    cp $1/$DIR/*.* $2/$1/$DIR
+done
+
+echo "------------"
+cd $2
+git add bib/*.* style/*.* scripts/*.*
+git add $1/figures/*.* $1/sections/*.* $1/data/*.* $1.tex
+git commit -m "Import of $1" -a
