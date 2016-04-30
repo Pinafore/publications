@@ -16,10 +16,7 @@ def remove_command(command, text):
 
     before, after = text.split(command, 1)
     num_close = 1
-    print(before)
-    print(after)
     while num_close > 0:
-        print(num_close, after)
         mid, after = after.split("}", 1)
         num_close -= 1
         num_close += sum(1 for x in mid if x == '{')
@@ -27,7 +24,8 @@ def remove_command(command, text):
 
 if __name__ == "__main__":
     # gather set of strippable commands
-    for ii in glob("%s/*" % sys.argv[1:]):
+    for ii in glob("%s/*" % sys.argv[1]) + \
+            ["%s.tex" % sys.argv[1].split("/")[0]]:
         strippable = strippable | set(kSTRIP.findall(open(ii).read()))
     print(strippable)
 
