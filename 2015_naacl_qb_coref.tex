@@ -1,0 +1,83 @@
+%
+% File acl2014.tex
+%
+% Contact: koller@ling.uni-potsdam.de, yusuke@nii.ac.jp
+%%
+%% Based on the style files for ACL-2013, which were, in turn,
+%% Based on the style files for ACL-2012, which were, in turn,
+%% based on the style files for ACL-2011, which were, in turn,
+%% based on the style files for ACL-2010, which were, in turn,
+%% based on the style files for ACL-IJCNLP-2009, which were, in turn,
+%% based on the style files for EACL-2009 and IJCNLP-2008...
+
+%% Based on the style files for EACL 2006 by
+%%e.agirre@ehu.es or Sergi.Balari@uab.es
+%% and that of ACL 08 by Joakim Nivre and Noah Smith
+
+\documentclass[11pt]{article}
+\usepackage{style/naaclhlt2015}
+\usepackage{graphics}
+\makeatletter
+\newcommand{\filename}[1]{2015_naacl_qb_coref/#1}
+\newcommand{\@BIBLABEL}{\@emptybiblabel}
+\newcommand{\@emptybiblabel}[1]{}
+\makeatother
+\usepackage{hyperref}
+\usepackage[usenames,dvipsnames]{color}
+\usepackage[normalem]{ulem}
+\usepackage{tablefootnote}
+\usepackage{booktabs}
+
+\newif\ifcomment\commentfalse
+\input{style/preamble}
+
+\providecommand{\conll}[0]{\abr{CoNLL}}
+
+\setlength\titlebox{6cm}
+
+% You can expand the titlebox if you need extra space
+% to show all the authors. Please do not make the titlebox
+% smaller than 5cm (the original size); we will check this
+% in the camera-ready version and ask you to change it back.
+
+
+\title{Removing the Training Wheels:  A Coreference Dataset \\ that
+  Entertains Humans and Challenges Computers}
+
+\author{
+  Anupam Guha,$^{1}$ Mohit Iyyer,$^{1}$ Danny Bouman,$^{1}$ Jordan Boyd-Graber$^{2}$\\
+  $^1$University of Maryland, Department of Computer Science and \abr{umiacs}\\
+  $^2$University of Colorado, Department of Computer Science \\
+    {\tt aguha@cs.umd.edu}, {\tt miyyer@umiacs.umd.edu}, {\tt dannybb@gmail.com}, \\{\tt Jordan.Boyd.Graber@colorado.edu}\\
+}
+
+\begin{document}
+\maketitle
+\begin{abstract}
+
+  \input{2015_naacl_qb_coref/sections/00-abstract}
+
+\end{abstract}
+
+\input{2015_naacl_qb_coref/sections/10-introduction}
+\input{2015_naacl_qb_coref/sections/20-newswire_bad}
+\input{2015_naacl_qb_coref/sections/30-qb_data}
+\input{2015_naacl_qb_coref/sections/40-annotation}
+\input{2015_naacl_qb_coref/sections/50-system}
+\input{2015_naacl_qb_coref/sections/60-related}
+\input{2015_naacl_qb_coref/sections/70-conclusion}
+\input{2015_naacl_qb_coref/sections/80-acknowledgments}
+
+
+\clearpage
+
+\jbgcomment{The bibliography still has some extra fields.  Replace venues with
+  references from journal-abbrv, remove publishers, locations, and pages for conferences.}
+
+\bibliographystyle{style/acl2014}
+\footnotesize
+\bibliography{bib/journal-full,bib/miyyer,bib/jbg,bib/aguha}
+%\bibliography{jbg}
+% \bibliography{}s
+
+\end{document}
