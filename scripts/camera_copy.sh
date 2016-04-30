@@ -5,7 +5,7 @@
 # If the directories aren't the same, you might break stuff
 
 # Copy any of the shared files
-cp Makefile $
+cp Makefile $2
 
 for DIR in scripts bib style
 do
@@ -36,6 +36,7 @@ done
 
 echo "------------"
 cd $2
+git add Makefile scripts/*
 git add `python scripts/latex_deps.py $1.tex`
 git add $1/figures/*.* $1/sections/*.* $1/data/*.* $1.tex
 git commit -m "Import of $1" -a

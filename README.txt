@@ -35,6 +35,9 @@ To use a screenreader to read the source, open the main file:
 
 And then follow the input commands to find any included files.
 
+Or you can go to the "sections" subdirectory within a paper and read the LaTeX
+files in order (prefixed by number to help you read in order).
+
 Requirements
 ================
 
