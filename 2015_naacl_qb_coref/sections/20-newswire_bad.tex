@@ -1,0 +1,84 @@
+\section{Newswire's Limitations for Coreference}
+\label{sec:newswire-bad}
+
+\begin{table*}
+\begin{tabular*}{\linewidth}{p{0.05\linewidth}|p{0.9\linewidth}@{}}
+\hline
+\textbf{NW} & Later, [they]$_1$ all met with [President Jacques Chirac]$_2$. [Mr. Chirac]$_2$ said an important first step had been taken to calm tensions. \\
+\textbf{NW} & Around the time of the [Macau]$_1$ handover, questions that were hot in [the Western media]$_2$ were ``what is Macaense''? And what is native [Macau]$_1$ culture?  \\
+\textbf{NW} & [MCA]$_1$ said that [it]$_1$ expects [the proposed transaction]$_2$ to be completed no later than November 10th. \\
+\hline
+\textbf{QB} & As a child, [this character]$_1$ reads [[his]$_1$ uncle]$_2$ [the column]$_3$ [\emph{That Body of Yours}]$_3$ every Sunday. \\
+\textbf{QB} & At one point, [these characters]$_1$ climb into barrels aboard a ship bound for England. Later, [one of [these characters]$_1$]$_2$ stabs [the Player]$_3$ with a fake knife. \\
+\textbf{QB} & [One poet from [this country]$_2$]$_1$ invented the haiku, while [another]$_3$ wrote the [\emph{Tale of Genji}]$_4$. Identify [this homeland]$_2$ of [Basho]$_1$ and [Lady Murasaki]$_3$. \\
+\hline
+\end{tabular*}
+\caption{Three newswire sentences and three quiz bowl sentences with annotated coreferences and singleton mentions. These examples show that quiz bowl sentences contain more complicated types of coreferences that may even require world knowledge to resolve.}
+\label{table1}
+\end{table*}
+
+Newswire text is widely used as training data for coreference
+resolution systems. The standard datasets used in the
+\abr{muc}~\cite{MUC-6,MUC-7},
+\abr{ace}~\cite{doddington2004automatic}, and \conll{} shared
+tasks~\cite{Pradhan:2011:CST:2132936.2132937} contain only such
+text. In this section we argue why this monoculture, despite its many
+past successes, offer diminishing results for advancing the
+coreference subfield.
+
+% I don't think these need to be in here -Mohit In short the Message
+% Understanding Conferences (\abr{muc}) are about developing
+% information extraction tools and have worked on coreference
+% resolution. They have always use news-report text. The Automatic
+% Content Extraction (\abr{ace}) tasks are about developing automatic
+% content extraction technology to support processing of human
+% language in text, and has had the task of coreference resolution. It
+% has used text from sources likes weblogs, newswire and broadcast
+% conversation. \conll{} the Conference on Natural Language Learning,
+% has also had coreference tasks and used similar text.
+
+First, newswire text has sparse references, and those that it has are
+mainly identity coreferences and appositives. In the \conll{} 2011
+shared task~\cite{pradhan2007ontonotes} based on OntoNotes
+4.0~\cite{hovy2006ontonotes},\footnote{As our representative for
+  ``newswire'' data, the English portion of the Ontonotes 4.0 contains
+  professionally-delivered weblogs and newsgroups (15\%), newswire
+  (46\%), broadcast news (15\%), and broadcast conversation (15\%).}
+there are 2.1 mentions per sentence; in the next section we present a
+dataset with 3.7 mentions per sentence.\footnote{Neither of these
+  figures include singleton mentions, as OntoNotes does not have gold
+  tagged singletons. Our dataset has an even higher density when
+  singletons are included.} In newswire text, most nominal entities
+(not including pronouns) are singletons; in other words, they do not
+corefer to anything. OntoNotes 4.0 development data contains 25.4K
+singleton nominal entities~\cite{DurrettKlein2013}, compared to only
+7.6K entities which corefer to something (anaphora). On the other
+hand, most pronominals are anaphoric, which makes them easy to resolve
+as pronouns are single token entities. While it is easy to obtain a
+lot of newswire data, the amount of coreferent-heavy mention clusters
+in such text is not correspondingly high.
+
+Second, coreference resolution in news text is trivial for humans because it
+rarely requires world knowledge or semantic understanding. Systems trained on
+news media data for a related problem---entity extraction---falter on
+non-journalistic texts~\cite{poibeau2001proper}.  This discrepancy in
+performance can be attributed to the stylistic conventions of
+journalism. Journalists are instructed to limit the number of entities mentioned
+in a sentence, and there are strict rules for referring to
+individuals~\cite{boyd-08}. Furthermore, writers cannot assume that their
+readers are familiar with all participants in the story, which requires that
+each entity is explicitly introduced in the text~\cite{goldstein2004associated}.
+These constraints make for easy reading and, as a side effect, easy coreference
+resolution. Unlike this simplified ``journalistic'' coreference, everyday
+coreference relies heavily on inferring the identities of people and entities in
+language, which requires substantial world knowledge.
+
+While news media contains examples of coreference, the primary goal of a
+journalist is to convey information, not to challenge the reader's coreference
+resolution faculty. Our goal is to evaluate coreference systems on data that
+taxes even human coreference.
+
+%If we want to have a truly challenging coreference setting, we should
+%evaluate our coreference system on text whose goal is for the reader
+%to also resolve a coreference task.  \mnicomment{the emnlp reviewers
+%all disagreed with this statement, make it weaker or reword} done
