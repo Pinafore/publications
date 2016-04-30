@@ -7,13 +7,15 @@
 # Copy any of the shared files
 cp Makefile $
 
-for DIR in style scripts bib
+for DIR in scripts
 do
     # rm -r $DIR
     # git checkout $DIR
     echo cp $DIR/*.* $2/$DIR
     cp $DIR/*.* $2/$DIR
 done
+
+
 
 echo "------------"
 mkdir -p $2
@@ -32,6 +34,6 @@ done
 
 echo "------------"
 cd $2
-git add bib/*.* style/*.* scripts/*.*
+git add `python scripts/latex_deps.py $1.tex`
 git add $1/figures/*.* $1/sections/*.* $1/data/*.* $1.tex
 git commit -m "Import of $1" -a
