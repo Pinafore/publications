@@ -25,6 +25,7 @@ if [ -s $1/figures.R ]
 then
     cp $1/figures.R $2/$1
 fi
+python scripts/sanitize.py $1/sections
 echo "------------"
 
 for DIR in figures sections data
