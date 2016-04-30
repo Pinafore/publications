@@ -141,8 +141,7 @@ One of our model's goal is to study how legislators \textit{frame} policy agenda
 
 
 
-\jbgcomment{There's a missing connection here.  How does it improve
-  the model?}
+
 
 \paragraph{Generating Bill Text.}
 \label{subsec:c6_bill_text}
@@ -184,7 +183,7 @@ and $N \subthree ak{\cdot}$ is the marginal count. When $N \subthree ak{\cdot} =
 0$, which means that legislator $a$ does not talk about issue $k$, we back off
 to an uninformed zero mean.
 
-\jbgcomment{``regress on'' should be more explicit}
+
 
 Equation~\ref{eqn:c6_idealpoint} resembles how supervised topic models (\slda{}) link topics with a response, in that the response---the issue-specific ideal point $u \subtwo ak$---is latent. It is similar to how \newcite{Gerrish:ICML11} use the bill text to regress on the bill's latent polarity $x_b$ and popularity $y_b$. In this paper, we only use text from congressional speeches for regression, as these can capture how legislators frame specific topics. Incorporating the bill text into the regression is an interesting direction for future work.
 
