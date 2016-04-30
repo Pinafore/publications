@@ -1,4 +1,3 @@
-
 # Usage:
 # in the base pinafore papers directory:
 # > ./scripts/camera_copy.sh 20XX_CONF_PAPER ~/repositories/publications
@@ -21,8 +20,11 @@ done
 
 echo "------------"
 mkdir -p $2
-echo cp $1.tex $2/$1.tex
 cp $1.tex $2/$1.tex
+if [ -s $1/figures.R ]
+then
+    cp $1/figures.R $2/$1
+fi
 echo "------------"
 
 for DIR in figures sections data
@@ -39,4 +41,8 @@ cd $2
 git add Makefile scripts/*
 git add `python scripts/latex_deps.py $1.tex`
 git add $1/figures/*.* $1/sections/*.* $1/data/*.* $1.tex
+if [ -s $1/figures.R ]
+then
+   git add $1/figures.R
+fi
 git commit -m "Import of $1" -a
