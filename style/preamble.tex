@@ -1,0 +1,141 @@
+\usepackage{amsfonts}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+% \usepackage{bbm}
+\usepackage{bm}
+\usepackage{color}
+%\usepackage[usenames,dvipsnames]{color}
+\usepackage{comment}
+\usepackage{tabularx}
+\usepackage{environ}
+\usepackage{textcomp}
+\usepackage{float}
+\usepackage{graphicx}
+\usepackage{mathtools}
+\usepackage{mdwlist}
+\usepackage{microtype}
+\usepackage{multirow}
+% \usepackage[table]{xcolor}
+\usepackage{multicol}
+\usepackage{url}
+\usepackage{latexsym}
+
+% Do not put either of these (subfigure or subfloat) into the preamble
+% - they clash.  Use them in the final LaTeX document
+% Do not use times in the preamble!  It just causes problems.  If you
+% want it, put it in your own document.
+%\usepackage{times}
+
+%\usepackage{ulem}
+
+%comment out the following line, as it conflicts with aistats2012.sty
+%\usepackage[font=small,labelfont=bf,tableposition=top]{caption}
+\usepackage{nomencl}
+
+\newcommand{\breakalign}{\right. \nonumber \\ & \left. \hspace{2cm}}
+
+\newcommand{\topic}[1]{\underline{#1}}
+\newcommand{\gem}[1]{\mbox{\textsc{gem}}}
+\newcommand{\abr}[1]{\textsc{#1}}
+\newcommand{\camelabr}[2]{{\scriptsize #1}{\textsc{#2}}}
+\newcommand{\grammar}[1]{{\color{red} #1}}
+\newcommand{\explain}[2]{\underbrace{#2}_{\mbox{\footnotesize{#1}}}}
+\newcommand{\dir}[1]{\mbox{Dir}(#1)}
+\newcommand{\bet}[1]{\mbox{Beta}(#1)}
+\newcommand{\py}[1]{\mbox{\textsc{py}}(#1)}
+\newcommand{\td}[2]{\mbox{\textsc{TreeDist}}_{#1} \left( #2 \right)}
+\newcommand{\yield}[1]{\mbox{\textsc{Yield}} \left( #1 \right)}
+\newcommand{\mult}[1]{\mbox{Mult}( #1)}
+\newcommand{\wn}{\textsc{WordNet}}
+\newcommand{\g}{\, | \,}
+\newcommand{\G}[1]{\Gamma \left( \textstyle #1 \right)}
+\newcommand{\LG}[1]{\log \Gamma \left( \textstyle #1 \right)}
+\newcommand{\Pois}[1]{\mbox{Poisson}(#1)}
+\newcommand{\pcfg}[3]{#1_{#2 \rightarrow #3}}
+\newcommand{\grule}[2]{#1 \rightarrow #2}
+\newcommand{\kl}[2]{D_{\mbox{\textsc{KL}}} \left( #1 \,||\, #2 \right)}
+
+\newcommand{\digambig}[1]{\Psi \left( #1 \right) }
+\newcommand{\digam}[1]{\Psi \left( \textstyle #1 \right) }
+\newcommand{\ddigam}[1]{\Psi' \left( \textstyle #1 \right) }
+
+\newcommand{\e}[2]{\mathbb{E}_{#1}\left[ #2 \right] }
+\newcommand{\h}[2]{\mathbb{H}_{#1}\left[ #2 \right] }
+\newcommand{\ind}[1]{\mathbb{I}\left[ #1 \right] }
+\newcommand{\ex}[1]{\mbox{exp}\left\{ #1\right\} }
+\newcommand{\D}[2]{\frac{\partial #1}{\partial #2}}
+\newcommand{\elbo}{\mathcal{L}}
+
+\newcommand{\hidetext}[1]{}
+\newcommand{\ignore}[1]{}
+
+\ifcomment
+\newcommand{\nahocomment}[1]{  \colorbox{yellow}{   \parbox{.8\linewidth}{\scriptsize NAHO: #1}  }}
+\newcommand{\jbgcomment}[1]{  \colorbox{red}{   \parbox{.8\linewidth}{ JBG: #1}  }}
+\newcommand{\yhcomment}[1]{  \colorbox{green}{  \parbox{.8\linewidth}{ YH:  #1}
+  }}
+\newcommand{\hhecomment}[1]{  \colorbox{blue}{  \parbox{.8\linewidth}{ HH:  #1}
+  }}
+\newcommand{\jjmcomment}[1]{  \colorbox{green}{  \parbox{.8\linewidth}{ John:  #1}
+  }}
+\newcommand{\tncomment}[1]{  \colorbox{blue}{  \parbox{.8\linewidth}{ TN:  #1}
+  }}
+\newcommand{\mnicomment}[1]{  \colorbox{green}{  \parbox{.8\linewidth}{ Mohit:  #1}  }}
+\newcommand{\rscomment}[1]{  \colorbox{yellow}{  \parbox{.8\linewidth}{ Richard:  #1}  }}
+\newcommand{\jszcomment}[1]{  \colorbox{green}{  \parbox{.8\linewidth}{ JSG:  #1}  }}
+\newcommand{\ascomment}[1]{  \colorbox{blue}{  \parbox{.8\linewidth}{ AS:  #1}
+  }}
+\newcommand{\vecomment}[1]{  \colorbox{blue}{  \parbox{.8\linewidth}{ VE:  #1}  }}
+\newcommand{\halcomment}[1]{  \colorbox{magenta!20}{  \parbox{.8\linewidth}{ Hal:  #1}  }}
+\newcommand{\kgcomment}[1]{  \colorbox{blue}{  \parbox{.8\linewidth}{ Kim:  #1}  }}
+\newcommand{\vancomment}[1]{  \colorbox{green}{  \parbox{.8\linewidth}{ VAN:  #1}  }}
+\newcommand{\alvincomment}[1]{  \colorbox{violet}{  \parbox{.8\linewidth}{ VAN:  #1}  }}
+\newcommand{\reviewercomment}[1]{  \colorbox{blue}{  \parbox{.8\linewidth}{Reviewer:  #1}  }}
+\newcommand{\brscomment}[1]{  \colorbox{blue}{  \parbox{.8\linewidth}{BRS:  #1}  }}
+\newcommand{\psrcomment}[1]{  \colorbox{yellow}{  \parbox{.8\linewidth}{PSR:  #1}  }}
+\newcommand{\zkcomment}[1]{  \colorbox{cyan}{  \parbox{.8\linewidth}{ZK:  #1}  }}
+\newcommand{\ctcomment}[1]{
+  \colorbox{blue}{  \parbox{.8\linewidth}{CT:  #1}  }}
+\newcommand{\swcomment}[1]{ \colorbox{yellow}{ \parbox{.8\linewidth}{ SW: #1}
+  }}
+\newcommand{\shaycomment}[1]{  \colorbox{yellow}{  \parbox{.8\linewidth}{SBC:  #1}  }}
+\else
+\newcommand{\nahocomment}[1]{ }
+\newcommand{\alvincomment}[1]{ }
+\newcommand{\jbgcomment}[1]{ }
+\newcommand{\yhcomment}[1]{ }
+\newcommand{\jjmcomment}[1]{ }
+\newcommand{\hhecomment}[1]{ }
+\newcommand{\tncomment}[1]{ }
+\newcommand{\mnicomment}[1]{ }
+\newcommand{\ascomment}[1]{ }
+\newcommand{\vecomment}[1]{ }
+\newcommand{\halcomment}[1]{ }
+\newcommand{\kgcomment}[1]{ }
+\newcommand{\brscomment}[1]{ }
+\newcommand{\reviewercomment}[1]{ }
+\newcommand{\zkcomment}[1]{ }
+\newcommand{\jszcomment}[1]{ }
+\newcommand{\ctcomment}[1]{ }
+\newcommand{\swcomment}[1]{ }
+\newcommand{\psrcomment}[1]{ }
+\newcommand{\vancomment}[1]{ }
+\newcommand{\shaycomment}[1]{ }
+\fi
+
+\newcommand{\email}[1]{\begin{small} \url{#1} \end{small}}
+\newcommand{\smallurl}[1]{ \begin{scriptsize}\url{#1}\end{scriptsize}}
+\newenvironment{compactenum}{ \begin{enumerate*} \small }{ \end{enumerate*} }
+
+\NewEnviron{smalign}{
+\vspace{-.6cm}
+\begin{small}
+\begin{align}
+  \BODY
+\end{align}
+\end{small}
+\vspace{-.6cm}
+}
+
+\definecolor{grey}{rgb}{0.95,0.95,0.95}
