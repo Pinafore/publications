@@ -1,30 +1,30 @@
-%
-% File acl2015.tex
-%
-% Contact: car@ir.hit.edu.cn, gdzhou@suda.edu.cn
-%%
-%% Based on the style files for ACL-2014, which were, in turn,
-%% Based on the style files for ACL-2013, which were, in turn,
-%% Based on the style files for ACL-2012, which were, in turn,
-%% based on the style files for ACL-2011, which were, in turn,
-%% based on the style files for ACL-2010, which were, in turn,
-%% based on the style files for ACL-IJCNLP-2009, which were, in turn,
-%% based on the style files for EACL-2009 and IJCNLP-2008...
 
-%% Based on the style files for EACL 2006 by
-%%e.agirre@ehu.es or Sergi.Balari@uab.es
-%% and that of ACL 08 by Joakim Nivre and Noah Smith
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 \documentclass[11pt]{article}
 \usepackage{style/acl2015}
 \usepackage{url}
-\usepackage{graphicx} % more modern
+\usepackage{graphicx} 
 \usepackage{epstopdf}
 \usepackage{times}
 \usepackage{latexsym}
 \usepackage{amsmath}
-%\usepackage{caption}
-%\usepackage{subcaption}
+
+
 \usepackage{enumitem}
 \usepackage{multicol}
 \usepackage{subfloat}
@@ -36,7 +36,7 @@
 \usepackage{color}
 \usepackage[usenames,dvipsnames]{xcolor}
 
-% Squeezing macros
+
 \usepackage[font=small]{caption}
 \usepackage[compact]{titlesec}
 \titlespacing{\section}{0pt}{2ex}{1ex}
@@ -44,32 +44,32 @@
 \titlespacing{\subsubsection}{0pt}{0.5ex}{0ex}
 \captionsetup{belowskip=2pt,aboveskip=2pt}
 \makeatletter
-\g@addto@macro \normalsize {%
- \setlength\abovedisplayskip{5pt plus 2pt minus 5pt}%
- \setlength\belowdisplayskip{5pt plus 2pt minus 5pt}%
+\g@addto@macro \normalsize {
+ \setlength\abovedisplayskip{5pt plus 2pt minus 5pt}
+ \setlength\belowdisplayskip{5pt plus 2pt minus 5pt}
 }
 \makeatother
 
 
 \newif\ifcomment\commentfalse
-%\newif\ifcomment\commenttrue
+
 \input{style/preamble}
 \setitemize[0]{leftmargin=10pt,itemindent=10pt}
 
-% This will create hyperlinks for citations but will make references ugly.
-%\usepackage{hyperref}
-%\hypersetup{
-%    colorlinks,
-%    citecolor=black,
-%    filecolor=black,
-%    linkcolor=black,
-%    urlcolor=black
-%}
-%
-%\newcommand{\urlwofont}[1]
-%{
-%\urlstyle{same}\url{#1}
-%}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 \newcommand{\fw}[0]{{Freedom Works}}
 \newcommand{\vote}[0]{{\textsc{Vote}}}
@@ -98,7 +98,7 @@
 \newcommand{\ltoh}[0]{L2H}
 \newcommand{\mcmc}[0]{{MCMC}}
 
-% Distributions
+
 \newcommand{\Beta}[1]{\mbox{Beta}(#1)}
 \newcommand{\DP}[2]{\mbox{DP}(#1, #2)}
 \newcommand{\GEM}[1]{\mbox{\textsc{gem}}(#1)}
@@ -110,7 +110,7 @@
 \newcommand{\tfidf}[0]{{TF-IDF}}
 \newcommand{\svm}[0]{\abr{svm}}
 
-% Subscripts and Superscripts
+
 \newcommand{\subtwo}[2]{_{#1, #2}}
 \newcommand{\electronicmail}[1]{{\tt \small{#1}}}
 \newcommand{\subthree}[3]{_{#1, #2, #3}}
@@ -130,12 +130,12 @@
 
 \newenvironment{myquote}{\list{}{\leftmargin=0.3in\rightmargin=0.3in}\item[]}{\endlist}
 
-%\setlength\titlebox{4cm}
 
-% You can expand the titlebox if you need extra space
-% to show all the authors. Please do not make the titlebox
-% smaller than 5cm (the original size); we will check this
-% in the camera-ready version and ask you to change it back.
+
+
+
+
+
 
 \title{Tea Party in the House: A Hierarchical Ideal Point Topic Model
   \\and Its Application to Republican Legislators in the 112\textsuperscript{th} Congress}
@@ -185,13 +185,13 @@
 \jbgcomment{Abstract should include something about us being able to
   handle text only}
 
-\latexfile{10-intro} % Philip
-\latexfile{20-model} % JBG
-\latexfile{30-inference} % JBG
-\latexfile{40-prediction} % JBG
-\latexfile{50-analyze_idealpoints} % JBG
-\latexfile{60-analyze_hierarchy} % Philip / Kris
-\latexfile{70-conclusion} % Philip
+\latexfile{10-intro} 
+\latexfile{20-model} 
+\latexfile{30-inference} 
+\latexfile{40-prediction} 
+\latexfile{50-analyze_idealpoints} 
+\latexfile{60-analyze_hierarchy} 
+\latexfile{70-conclusion} 
 
 \section*{Acknowledgements}
 

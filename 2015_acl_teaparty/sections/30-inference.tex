@@ -77,7 +77,7 @@ frame $j^{\mbox{\scriptsize new}}$, we have $\mu \subthree ak{j^{\mbox{\scriptsi
 k{j^{\mbox{\scriptsize new}}}) /  N \subthree dk{\cdot}$, where $\eta \subtwo
 k{j^{\mbox{\scriptsize new}}}$ is drawn from the Gaussian prior $\mathcal{N}(0, \gamma)$. Here, the
 estimated global probability of choosing a frame $j$ of issue $k$ is $\hat{\psi} \subtwo kj$. 
-\ignore{We describe how we update this probability during inference in Section~\ref{subsec:c6_sample_frame_proportion}.}
+
 
 \paragraph{Sampling Issue Topics}
 
@@ -112,18 +112,7 @@ dkj$ can be sampled effectively using the Antoniak distribution~\cite{Aantoniak:
 
 
 
-\ignore{
-\begin{align}
-  \hat{\psi}_k & \equiv
-  (\hat{\psi} \subtwo k1, \hat{\psi} \subtwo k2, \cdots, \hat{\psi} \subtwo
-  k{j^{\mbox{\scriptsize new}}}) \\
- &  \sim \mbox{Dir} (\hat{N} \subthree {\cdot}k1, \hat{N} \subthree {\cdot}k2,
- \cdots, \hat{N} \subthree {\cdot}k{J_k}, \lambda_0) \notag
-\end{align}
-where $\hat{N} \subthree {\cdot}kj = \sum_{d=1}^D \hat{N} \subthree dkj$ and $\hat{N} \subthree
-dkj$ can be sampled effectively using the Antoniak distribution~\cite{Aantoniak:AS74}. More
-details can be found in~\cite[page 1574]{Teh:JASA06:hdp}.
-}
+
 
 \paragraph{Optimizing Frame Regression Parameters}
 \label{subsec:c6_upadte_eta}

@@ -6,7 +6,7 @@ import sys
 
 kCOMMENT = re.compile(r"%.*")
 kSTRIP = re.compile(r"\\.*comment{")
-strippable = set(["\\hidetext{"])
+strippable = set(["\\hidetext{", "\\ignore{"])
 
 
 def remove_command(command, text):

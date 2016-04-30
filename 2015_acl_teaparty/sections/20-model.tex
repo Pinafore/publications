@@ -109,21 +109,12 @@ dimension.\footnote{\newcite{Nguyen:NIPS13} allow first-level nodes to
   \hline
   \textbf{{Agriculture}}:
     food; agriculture; loan; farm; crop; dairy; rural; conserve; commodity; eligible; farmer; margin; milk; contract; nutrition; livestock; plant \\ \hline
-\ignore{
-  \textbf{{Banking, Finance, and Domestic Commerce}}:
-    insure; bank; patent; mortgage; loan; commission; issuer; director; fee; application; contract; transaction; property; internet; flood\_insurance; code; file\\ \hline
-  \textbf{{Defense}}:
-    unit; army\_force; transfer; army; contract; acquisition; subsection; air\_force; homeland\_security; nuclear; personnel; public\_law; nation\_defense; navy; command \\ \hline
-  \textbf{{Energy}}:
-    oil; electricity; fuel; shelf; outer\_continent; pipeline; facility; environment; qualification; renew\_energy; energy\_efficiency; interior; energy\_policy; exploration \\ \hline}
+
   \textbf{{Health}}:
     drug; medicine; coverage; disease; public\_health; hospital; social\_security; health\_insurrance; patient; application; treatment; payment; physician; nurse; clinic\\ \hline
   \textbf{{Labor, Employment, and Immigration}}:
     employment; immigration; labor; paragraph; eligible; status; compensation; application; wage; homeland\_security; unemployment; board; violation; file; perform; mine \\ \hline
-\ignore{  \textbf{{Social Welfare}}:
-    social\_security; disable; eligible; payment; social; food; nutrition; insurance; employment; income; poverty; earn;  calendar \\ \hline
-  \textbf{{Transportation}}:
-    transport; highway; motor\_vehicle; metropolitan; airport; freight; rail; carrier; chapter; driver; motor; october; traffic; paragraph; surface\_transport \\ \hline}
+
 \end{tabular}
 \caption{Examples of informed priors $\phi_k^{\star}$ for issues.}
 \label{tab:c6_prior}
@@ -148,17 +139,7 @@ discover polarized topics' associated response variables.
 \paragraph{Generating Text from Legislators.}
 One of our model's goal is to study how legislators \textit{frame} policy agenda issues. To achieve that, we analyze congressional speeches (documents) $\{\bm w_d\}$, each of which is delivered by a legislator $a_d$. To generate each token $w \subtwo dn$ of a speech $d$, legislator $a_d$ will (1) first choose an issue $z \subtwo dn \in [1,K]$ from a document-specific multinomial $\theta_d$, then (2) choose a frame $t \subtwo dn$ from the set of infinitely many possible frames of the given issue $z \subtwo dn$ using the frame proportion $\psi \subtwo dk$ drawn from a Dirichlet process, and finally (3) choose a word type from the chosen frame's topic $\phi \subtwo {z \subtwo dn}{t \subtwo dn}$. In other words, our model generates speeches using a mixture of $K$ \hdp{}s ~\cite{Teh:JASA06:hdp}.\footnote{If we abandoned the labeled data from the Congressional Bills Project to obtain the prior means $\phi_k^{\star}$, it would be relatively straightforward to extend to a fully nonparametric model with unbounded $K$~\cite{Ahmed:ICML13:ncrf,Paisley:TPAMI14:nhdp}.}
 
-\ignore{
-One of our model's goals is to study how legislators \textit{frame}
-policy agenda issues. To achieve that, we analyze congressional
-speeches (documents) $\{\bm w_d\}$ from legislator $a_d$.  Our model
-generates text in the speeches using a mixture of $K$
-\hdp{}s~\cite{Teh:JASA06:hdp}.\footnote{If we abandoned the labeled
-  data from the Congressional Bills Project to obtain the prior means
-  $\phi_k^{\star}$, it would be relatively straightforward to extend
-  to a fully nonparametric model with unbounded
-  $K$~\cite{Ahmed:ICML13:ncrf}.}
-}
+
 
 \jbgcomment{There's a missing connection here.  How does it improve
   the model?}
@@ -207,14 +188,7 @@ to an uninformed zero mean.
 
 Equation~\ref{eqn:c6_idealpoint} resembles how supervised topic models (\slda{}) link topics with a response, in that the response---the issue-specific ideal point $u \subtwo ak$---is latent. It is similar to how \newcite{Gerrish:ICML11} use the bill text to regress on the bill's latent polarity $x_b$ and popularity $y_b$. In this paper, we only use text from congressional speeches for regression, as these can capture how legislators frame specific topics. Incorporating the bill text into the regression is an interesting direction for future work.
 
-\ignore{Equation~\ref{eqn:c6_idealpoint} resembles how supervised topic models (\slda{})
-link topics with a response, in that the response, the issue-specific ideal
-points $u \subtwo ak$, is latent. Like \newcite{Gerrish:ICML11}, we use the bill
-text to regress on the bill's latent polarity $x_b$ and popularity $y_b$. We
-only use text from congressional speeches for regression, as these can capture
-how legislators frame specific topics. Incorporating the bill text into the
-regression is an interesting direction for future work.
-}
+
 
 
 
