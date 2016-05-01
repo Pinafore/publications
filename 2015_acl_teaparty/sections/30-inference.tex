@@ -44,11 +44,10 @@ an issue using
   p(z \subtwo dn = k \given \mbox{rest}) \propto
   \frac{N \subtwo dk \minussuptwo dn + \alpha}{N \subtwo d{\cdot} \minussuptwo dn + K \alpha} \cdot
   \hat{\phi} \subtwo k{w \subtwo dn}
-  
 \end{equation}
 where $N \subtwo dk$ similarly denotes the number of times that tokens
 in $d$ are assigned to issue $k$. Given the sampled issue $k$, we
-sample the frame as 
+sample the frame as
 
 $p(t \subtwo dn = j \given z \subtwo dn = k, a_d =
 a, \mbox{rest}) \propto$
@@ -63,7 +62,7 @@ a, \mbox{rest}) \propto$
      \mathcal{N}(u \subtwo ak; \mu \subthree ak{j^{\mbox{\scriptsize new}}}, \rho) \cdot
      \frac{\lambda}{N \subthree dkj \minussuptwo dn + \lambda} \cdot
         \hat{\psi} \subtwo k{j^{\mbox{\scriptsize new}}}
-        
+
         ,
      &
   \end{array}
@@ -76,7 +75,7 @@ frame $j^{\mbox{\scriptsize new}}$, we have $\mu \subthree ak{j^{\mbox{\scriptsi
 (\sum_{j'=1}^{J_k} \eta \subtwo k{j'} N \subthree dk{j'} \minussuptwo dn + \eta \subtwo
 k{j^{\mbox{\scriptsize new}}}) /  N \subthree dk{\cdot}$, where $\eta \subtwo
 k{j^{\mbox{\scriptsize new}}}$ is drawn from the Gaussian prior $\mathcal{N}(0, \gamma)$. Here, the
-estimated global probability of choosing a frame $j$ of issue $k$ is $\hat{\psi} \subtwo kj$. 
+estimated global probability of choosing a frame $j$ of issue $k$ is $\hat{\psi} \subtwo kj$.
 
 
 \paragraph{Sampling Issue Topics}
@@ -99,7 +98,7 @@ assumptions~\cite{Cowans:PhD06,Wallach:PhD08}.
 
 \paragraph{Sampling Frame Proportions}
 
-Following the \textit{direct assignment} method described in \newcite{Teh:JASA06:hdp}, we sample the global frame proportion as 
+Following the \textit{direct assignment} method described in \newcite{Teh:JASA06:hdp}, we sample the global frame proportion as
 
 $\hat{\psi}_k \equiv (\hat{\psi} \subtwo k1, \hat{\psi} \subtwo k2, \cdots, \hat{\psi} \subtwo k{j^{\mbox{\scriptsize new}}})$
 \begin{equation}
@@ -130,18 +129,3 @@ L-BFGS~\cite{Liu:MP89:lbfgs} to optimize $\mathcal{L}(\bm \eta_k)$
 We update the multi-dimensional ideal point $\bm u_a$ of each legislator $a$ and
 the polarity $x_b$ and popularity $y_b$ of each bill $b$ by optimizing the log
 likelihood using gradient ascent.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
