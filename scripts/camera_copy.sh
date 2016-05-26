@@ -39,12 +39,11 @@ done
 
 echo "------------"
 cd $2
+git add Makefile scripts/*
 git add `python scripts/latex_deps.py $1.tex`
-git add $1/figures/*.* $1/sections/*.* $1.tex
-git add $1/data/*.*
+git add $1/figures/*.* $1/sections/*.* $1/data/*.* $1.tex
 if [ -s $1/figures.R ]
 then
    git add $1/figures.R
 fi
-git status
-echo "Look over things and do a git commit!"
+git commit -m "Import of $1" -a

@@ -1,5 +1,5 @@
 
-TEX = $(wildcard */sections/*.tex *.tex)
+TEX = $(wildcard */sections/*.tex *.tex */*.tex)
 GFX = $(wildcard */figures/*.*)
 DATA = $(wildcard */data/*.*)
 BIB = $(wildcard bib/*.bib)
@@ -9,7 +9,7 @@ BIB = $(wildcard bib/*.bib)
 
 clean:
 	rm -f *.aux *.dvi *.log *.bbl *.pdf *~ *.out *.blg
-	rm -f */*.aux */*.dvi */*.log */*.bbl */*~ */*.out */*.blg */*/*~
+	rm -f */*.aux */*.dvi */*.log */*.bbl */*.pdf */*~ */*.out */*.blg */*/*~
 	rm -fR */auto_fig
 
 %.bbl: $(BIB) $(TEX)
@@ -30,6 +30,7 @@ clean:
 	mkdir -p ~/public_html/temp
 	cp $(<:.tex=.pdf) $@
 	cp $@ ~/public_html/temp
+	./scripts/style-check.rb $(<:.tex=)/*.tex $(<:.tex=)/sections/*.tex
 
 %.paper.ps: %.tex %.bbl style/preamble.tex $(TEX) $(GFX)
 	latex $<
