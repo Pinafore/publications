@@ -1,0 +1,27 @@
+
+
+
+
+
+For a variety of short text similarity tasks, domain adaptation
+improves average performance across different domains, tasks, and
+training set sizes.  Our adaptive model is also by far the least
+affected by adverse factors such as noisy training data and scarcity
+or coarse granularity of in-domain examples.  This combination of
+excellent average-case and very reliable worst-case performance makes
+it the model of choice for new \sts{} domains and applications.
+
+Although \sts{} is a useful task with sparse data, few domain adaptation
+ studies have been reported.  
+Among those is the supervised model of Heilman and Madnani
+\shortcite{Heilman:2013a,Heilman:2013b} based on the multilevel model of
+\newcite{daume-07}.  \newcite{Gella:2013} report using a
+two-level stacked regressor, where the second level combines
+predictions from $n$ level 1 models, each trained on data from a
+separate domain.  Unsupervised models use
+ techniques such as tagging examples with their source
+datasets \cite{Gella:2013,Severyn:2013} and computing vocabulary
+similarity between source and target domains
+\cite{Arora:2015}.  To the best of our knowledge, ours is the first systematic
+study of supervised \da{} and \mtl{} techniques for \sts{} with
+detailed comparisons with comparable non-adaptive baselines.

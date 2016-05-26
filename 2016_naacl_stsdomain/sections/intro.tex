@@ -1,0 +1,47 @@
+
+
+
+Given two snippets of text---neither longer than a few
+sentences---short text similarity (\textbf{\sts{}}) determines how
+semantically close they are.  \sts{} has a broad range of
+applications: question answering~\cite{Yao:2013,Severyn:2015}, text
+summarization~\cite{Dasgupta:2013,Wang:2013}, machine translation
+evaluation~\cite{Chan:2008,Liu:2011}, and grading of student answers
+in academic tests~\cite{Mohler:2011,Ramachandran:2015}.
+
+\sts{} is typically viewed as a \emph{supervised} machine learning
+problem~\cite{Bar:2012,Lynum:2014,Hanig:2015}.  SemEval
+ contests~\cite{Agirre:2012,Agirre:2015} have spurred recent progress
+ in \sts{} and have provided valuable training data for these
+ supervised approaches.  However, similarity varies across domains, as
+ does the underlying text; e.g., syntactically well-formed academic
+ text versus informal English in forum \qa{}.
+
+
+
+
+Our goal is to effectively use domain adaptation (\da{}) to transfer
+information from these disparate \sts{} domains.  While ``domain'' can
+take a range of meanings, we consider adaptation to different (1)
+sources of text (e.g., news headlines, tweets), and (2) applications
+of \sts{} (e.g., \qa{} vs. answer grading).  Our goal is to improve
+performance in a new domain with few in-domain annotations by using
+many out-of-domain ones (\Cref{section:tasks-and-datasets}).
+
+In \Cref{section:approach}, we describe our Bayesian approach that
+posits that per-domain parameter vectors share a common Gaussian prior that represents
+the global parameter vector.  Importantly, this idea can be extended with little
+effort to a nested domain hierarchy (domains within domains), which
+allows us to create a single, unified \sts{} model that \emph{generalizes across
+domains as well as tasks}, capturing the nuances that an \sts{} system must have
+for tasks such as short answer scoring or question answering.
+
+We compare our \da{} methods against two baselines: (1) a domain-agnostic model
+that uses all training data and does not distinguish between in-domain
+and out-of-domain examples, and (2) a model that learns only from in-domain
+examples.  \Cref{section:experiments} shows that across ten different \sts{}
+domains, the adaptive model consistently outperforms the first baseline while
+performing at least as well as the second across training datasets of different
+sizes.  Our multitask model also yields better overall results over the same
+baselines across three related tasks: (1) \sts{}, (2) short answer scoring
+(\sas{}), and (3) answer sentence ranking (\asr{}) for question answering.  

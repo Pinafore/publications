@@ -1,0 +1,59 @@
+
+\paragraph{Short Text Similarity (\sts{})}
+\label{section:tasks-and-datasets-sts}
+Given two short texts, \sts{} provides a real-valued
+score that represents their degree of semantic similarity.  Our \sts{} datasets
+come from the SemEval 2012--2015 corpora, containing over 14,000
+human-annotated sentence pairs (via Amazon Mechanical Turk) from domains like
+news, tweets, forum posts, and image descriptions.
+
+For our experiments, we select ten datasets from ten different
+domains, containing 6,450 sentence pairs.\footnote{2012: \textsc{msr}par-test;
+2013: \textsc{smt}; 2014: Deft-forum, On\textsc{wn}, Tweet-news; 2015: Answers-forums,
+Answers-students, Belief, Headlines and Images.}  This selection is
+intended to maximize (a) the number of domains, (b) domain uniqueness:
+of three different news headlines datasets, for example, we select the
+most recent (2015), discarding older ones (2013, 2014), and (c) amount of
+per-domain data available: we exclude the \abr{fnwn} (2013) dataset with 189
+annotations, for example, because it limits per-domain training data
+in our experiments. Sizes of the selected datasets range from 375 to 750 pairs.
+Average correlation (Pearson's $r$) among annotators ranges from 58.6\% to
+88.8\% on individual datasets (above 70\% for most)
+\cite{Agirre:2012,Agirre:2013,Agirre:2014,Agirre:2015}.
+
+\paragraph{Short Answer Scoring (\sas{})}
+\label{section:tasks-and-datasets-sas}
+\sas{} comes in different forms; we explore a form where for a
+short-answer question, a gold answer is provided, and the goal is to
+grade student answers based on how similar they are to the gold
+answer~\cite{Ramachandran:2015}.  We use a dataset of undergraduate data
+structures questions and student responses graded by two
+judges~\cite{Mohler:2011}.  These questions are spread across ten
+different assignments and two examinations, each on a related set of
+topics (e.g., programming basics, sorting algorithms).
+Inter-annotator agreement is 58.6\% (Pearson's $\rho$) and 0.659 (\abr{rmse}
+on a 5-point scale).  We discard assignments with fewer than 200 pairs,
+retaining 1,182 student responses to forty questions spread across five
+assignments and tests.\footnote{Assignments: \#1, \#2, and \#3; Exams:
+\#11 and \#12.}
+
+\paragraph{Answer Sentence Ranking (\asr{})}
+\label{section:tasks-and-datasets-asr}
+
+Given a factoid question and a set of candidate answer sentences,
+\asr{} orders candidates so that sentences containing the
+answer are ranked higher.  Text similarity is the foundation of most
+prior work: a candidate sentence's relevance is based on its
+similarity with the question~\cite{Wang:2007,Yao:2013,Severyn:2015}.
+
+For our \asr{} experiments, we use factoid questions developed by
+\newcite{Wang:2007} from Text REtrieval Conferences (\textsc{trec})
+8--13.  Candidate \qa{} pairs of a question and a candidate were
+labeled with whether the candidate answers the question.  The
+questions are of different types (e.g., \emph{what}, \emph{where}); we
+retain 2,247
+\qa{} pairs under four question types, each with at least 200 answer candidates in the combined
+development and test sets.\footnote{\emph{what}, \emph{when},
+\emph{who} and \emph{how many}.}  Each question type represents a
+unique topical domain---\emph{who} questions are about persons and
+\emph{how many} questions are about quantities.

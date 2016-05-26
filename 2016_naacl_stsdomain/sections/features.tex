@@ -1,0 +1,46 @@
+
+
+
+
+
+
+
+Any feature-based \sts{} model can serve as the base model for
+a hierarchical Bayesian adaptation framework. For our experiments, we adopt the
+feature set of the ridge regression model in \newcite{Sultan:2015}, the
+best-performing system at SemEval-2015~\cite{Agirre:2015}.
+
+
+
+Input sentences $S^{(1)}=(w^{(1)}_1, ..., w^{(1)}_n)$ and
+$S^{(2)}=(w^{(2)}_1, ..., w^{(2)}_m)$ (where each $w$ is a token)
+produce two similarity features.  The first is the proportion of
+content words in $S^{(1)}$ and $S^{(2)}$ (combined) that have a
+semantically similar word---identified using a monolingual word
+aligner~\cite{Sultan:2014}---in the other sentence.  The overall
+semantic similarity of a word pair $(w^{(1)}_i, w^{(2)}_j)
+\in S^{(1)} \times S^{(2)}$ is a weighted sum
+of lexical and contextual similarities: a paraphrase
+database~\cite[\abr{ppdb}]{Ganitkevitch:2013} identifies lexically
+similar words; contextual similarity is the average lexical similarity
+in (1) dependencies of $w^{(1)}_i$ in $S^{(1)}$ and $w^{(2)}_j$ in
+$S^{(2)}$, and (2) content words in [-3, 3] windows around $w^{(1)}_i$ in
+$S^{(1)}$ and $w^{(2)}_j$ in $S^{(2)}$.  Lexical similarity scores of
+pairs in \abr{ppdb} as well as weights of word and contextual
+similarities are optimized on an alignment
+dataset~\cite{Brockett:2007}.  To avoid penalizing long answer
+snippets (that still have the desired semantic content) in \sas{} and
+\asr{}, word alignment proportions outside the reference
+(gold) answer (\sas{}) and the question (\asr{}) are ignored.
+
+
+The second feature captures finer-grained similarities
+between related words (e.g., \texttt{cell} and \texttt{organism}).
+Given the 400-dimensional embedding~\cite{Baroni:2014} of each
+content word (lemmatized) in an input sentence, we compute a sentence
+vector by adding its content lemma vectors. The cosine similarity
+between the $S^{(1)}$ and $S^{(2)}$ vectors is then used as an \sts{}
+feature. Baroni et al.\ develop the word embeddings using
+\texttt{word2vec}\footnote{\url{https://code.google.com/p/word2vec/}}
+from a corpus of about 2.8 billion tokens, using the Continuous Bag-of-Words
+(\textsc{cbow}) model proposed by \newcite{Mikolov:2013}.
