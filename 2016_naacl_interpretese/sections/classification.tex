@@ -1,0 +1,99 @@
+\input{2016_naacl_interpretese/tactic_examples}
+\section{Distinguishing \trans{} and \inter{}}
+\label{sec:distinguish}
+
+In this section, we discuss strategies used in \inter{}, which we
+detect automatically in the next section.  Our hypothesis is that
+tactics used by interpreters roughly fall in two non-exclusive
+categories: (i) \emph{delay minimization}, to enable prompt
+translation by arranging target words in an order similar to the
+source; (ii) \emph{memory footprint minimization}, to avoid
+overloading working memory by reducing communicated information.
+
+
+
+
+
+
+
+
+\paragraph{Segmentation}
+
+Interpreters often break source sentences into multiple smaller
+sentences~\cite{erik11theory,shimizu13iwslt}, a process we call segmentation.
+This is different from what is commonly used in speech translation
+systems~\cite{fujita13timing,oda14segmentation}, where translations of segments
+are directly concatenated.  Instead, humans try to incorporate new information
+into the precedent partial translation, e.g., using ``which is'' to put it in a
+clause (Table~\ref{tab:examples}, Example~3), or creating a new sentence joined
+by conjunctions (Table~\ref{tab:examples}, Example~5).
+
+\paragraph{Passivization}
+
+Passivization is useful for interpreting from head-final
+languages (e.g., Japanese, German) to head-initial languages (e.g., English,
+French)~\cite{he15rewrite}.  Because the verb is needed early in the target sentence but only
+appears at the end of the source sentence, an obvious strategy is to wait for the final
+verb.  However, if the interpreter uses passive voice, they can start translating
+immediately and append the verb at the end (Table~\ref{tab:examples},
+Examples~3--4).  During passivization, the subject is often omitted when obvious
+from context.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\paragraph{Generalization}
+
+\newcite{erik11theory} and \newcite{raja00strategy} observe that interpreters
+focus on delivering the gist of a sentence rather than duplicating the
+nuanced meaning of each word.  More frequent words are chosen as their
+retrieval time is faster~\cite{dell92access,cuetos06access} (e.g.,
+``honorific'' versus ``polite'' in Table~\ref{tab:examples},
+Example~1).  Although \newcite{volansky13feats} show that
+generalization happens in translation too, it is likely more frequent
+in \inter{} given the severe time constraints.
+
+\paragraph{Summarization}
+
+Faced with overwhelming information, interpreters need efficient ways to
+encode meaning.  Less important words, or even a whole sentence can drop,
+especially when the interpreter falls behind the speaker.  In
+Table~\ref{tab:examples}, Example~2, the literal translation ``as much as
+possible'' is reduced to ``very'', and the adjective ``Japanese'' is omitted.
+
+\begin{figure}
+\centering
+\includegraphics[width=0.7\linewidth]{2016_naacl_interpretese/figures/wordle.pdf}
+\caption{A word cloud visualization of \inter{} (black) and \trans{} (gold).}
+\label{fig:wordle}
+\end{figure}
+
+
+
+\paragraph{}
+
+Before we study these characteristics quantitatively in the next section, we
+visualize \inter{} and \trans{} by a word cloud in Figure~\ref{fig:wordle}.  The
+size of each word is proportional to the difference between its frequencies in
+\inter{} and \trans{} (Section~\ref{sec:experiments}).  The word color indicates
+whether it is more frequent in \inter{} (blue) or \trans{} (red).  ``the'' is
+over-represented in \inter{}, a phenomenon also occurs in \trans{} v.s. the
+original text~\cite{eetemadi14feats}.  More conjunction words (e.g., ``and'',
+``so'', ``or'', ``then'') are used in \inter{}, likely for segmentation, whereas
+``that'' is more frequent in \trans{}---a sign of clauses.  In addition, the
+pronoun ``I'' occurs more often in \trans{} while ``be'' and ``is'' occur more
+often in \inter{}, which is consistent with our passivization hypothesis.

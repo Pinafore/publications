@@ -1,0 +1,52 @@
+\section{Human Simultaneous Interpretation}
+\label{sec:intro}
+
+Although simultaneous interpretation has a key role in today's international
+community,\footnote{Unlike consecutive interpretation (speakers stop
+  after a complete thought and wait for the interpreter), simultaneous
+  interpretation has the interpreter to translate \emph{while}
+  listening to speakers.} it remains underexplored within machine
+translation (\abr{mt}).  One key challenge is to achieve a good
+quality/speed trade-off: deciding when, what, and how to translate.
+In this study, \textbf{we take a data-driven, comparative approach and
+  examine:} (i) What distinguishes simultaneously interpreted text
+(\inter{}\footnote{Language produced in the
+  process of translation is often considered a dialect of the target
+  language: ``\trans{}''~\cite{translationese}.  Thus,
+  ``\inter{}'' refers to interpreted language.})
+from batch-translated text (\trans{})?  (ii) What strategies do human
+interpreters use?
+
+Most previous work focuses on qualitative
+analysis~\cite{epic,erik11theory,shimizu14corpus} or pattern
+counting~\cite{tohyama06lrec,att13speech}.  In contrast, we use a more
+systematic approach based on feature selection and statistical tests.
+In addition, most work ignores \emph{translated} text, making it hard
+to isolate strategies applied by interpreters as opposed to general
+strategies needed for any translation.  \newcite{shimizu14corpus} are
+the first to take a comparative approach; however, they directly train
+\abr{mt} systems on the interpretation corpus without explicitly
+examining interpretation tactics.  While some techniques can be
+learned implicitly, the model may also learn undesirable behavior such
+as omission and simplification: byproducts of limited human working
+memory (Section~\ref{sec:analysis}).
+
+Prior work studies simultaneous interpretation of
+Japanese$\leftrightarrow$English~\cite{tohyama06lrec,shimizu14corpus}
+and Spanish$\leftrightarrow$English~\cite{att13speech}.  We focus on
+Japanese$\leftrightarrow$English interpretation.  Since information
+required by the target English sentence often comes late in the source
+Japanese sentence (e.g., the verb, the noun being modified), we expect
+it to reveal a richer set of tactics.\footnote{The tactics are
+  consistent with those discovered on other language pairs in prior
+  work, with additional ones specific to head-final to head-initial
+  languages.}  Our contributions are three-fold.  First, we collect
+new human translations for an existing simultaneous interpretation
+corpus, which can benefit future comparative
+research.\footnote{\url{https://github.com/hhexiy/interpretese}}
+Second, we use classification and feature selection methods to examine
+linguistic characteristics comparatively.  Third, we categorize human
+interpretation strategies, including word reordering tactics and
+summarization tactics.  Our results help linguists understand
+simultaneous interpretation and help computer scientists build better
+automatic interpretation systems.

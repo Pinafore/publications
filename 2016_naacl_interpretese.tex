@@ -1,0 +1,130 @@
+%
+% File naaclhlt2016.tex
+%
+
+\documentclass[11pt]{article}
+\usepackage{style/naaclhlt2016}
+\naaclfinalcopy
+\def\naaclpaperid{234}
+
+\usepackage{times}
+\usepackage{url}
+\usepackage{setspace}
+\usepackage{latexsym}
+\usepackage{CJKutf8}
+\usepackage{multirow}
+\usepackage{booktabs}
+\usepackage{array}
+\newcolumntype{L}[1]{>{\raggedright\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+\usepackage{ulem}
+\usepackage{courier}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage[T1]{fontenc}
+\normalem
+
+\newcommand{\todo}[1]{({\bf TODO:} #1)}
+\newcommand{\trans}{{Translationese}}
+\newcommand{\inter}{{Interpretese}}
+\newcommand{\jatext}[1]{\begin{CJK}{UTF8}{min}#1\end{CJK}}
+\newcommand{\pos}[1]{{\small \texttt{#1}}}
+\renewcommand{\S}{$\langle$S$\rangle$}
+\renewcommand{\SS}{$\langle$SS$\rangle$}
+\newcommand{\E}{$\langle$E$\rangle$}
+\newcommand{\EE}{$\langle$EE$\rangle$}
+
+
+\definecolor{darkblue}{rgb}{0.0,0.0,0.5}
+\definecolor{darkpurple}{rgb}{0.4,0.0,0.4}
+\definecolor{darkred}{rgb}{0.5,0.0,0.0}
+\definecolor{darkgreen}{rgb}{0.0,0.5,0.0}
+
+\newcommand{\summarized}[1]{\textcolor{darkred}{\uwave{#1}}}
+\newcommand{\moregeneral}[1]{\emph{\textcolor{darkpurple}{#1}}}
+\newcommand{\Segment}{\textcolor{darkgreen}{\langle\big\|\rangle}}
+\newcommand{\passivized}[1]{\textcolor{darkblue}{\underline{#1}}}
+
+\newcommand{\Gn}{\moregeneral{generalize}}
+\newcommand{\Sg}{segment $\Segment$}
+\newcommand{\Sm}{\summarized{summarize}}
+\newcommand{\Ps}{\passivized{passivize}}
+\newcommand{\Om}{(omit)}
+\newcommand{\Source}[1]{{(S)\hspace{1ex}\jatext{#1}}}
+\newcommand{\Trans}[1]{{(T)\hspace{1ex}#1}}
+\newcommand{\Inter}[1]{{(I)\hspace{1ex}#1}}
+
+\makeatletter
+\newcommand{\@BIBLABEL}{\@emptybiblabel}
+\newcommand{\@emptybiblabel}[1]{}
+\makeatother
+\usepackage{hyperref}
+
+\naaclfinalcopy % Uncomment this line for the final submission
+
+% To expand the titlebox for more authors, uncomment
+% below and set accordingly.
+% \addtolength\titlebox{.5in}
+
+\frenchspacing
+\newif\ifcomment\commentfalse
+
+\input{style/preamble}
+
+\title{Interpretese vs. Translationese: \\ The Uniqueness of Human Strategies in Simultaneous Interpretation}
+
+\author{He He \\
+  Computer Science \\
+  University of Maryland \\
+  {\tt hhe@cs.umd.edu} \\\And
+  Jordan Boyd-Graber \\
+  Computer Science \\
+  University of Colorado \\
+{\tt Jordan.Boyd.Graber} \\
+   {\tt @colorado.edu} \\ \And
+  Hal {Daum\'e III} \\
+  Computer Science and \abr{umiacs} \\
+  University of Maryland \\
+  {\tt hal@cs.umd.edu}}
+
+\date{}
+
+\begin{document}
+\maketitle
+\begin{abstract}
+  Computational approaches to simultaneous interpretation are stymied
+  by how little we know about the tactics human interpreters use. We
+  produce a parallel corpus of translated and simultaneously
+  interpreted text and study differences between them through a
+  computational approach.  Our analysis reveals that human
+  interpreters regularly apply several effective tactics to reduce
+  translation latency, including sentence segmentation and
+  passivization.  In addition to these unique, clever strategies, we
+  show that limited human memory also causes other idiosyncratic
+  properties of human interpretation such as generalization and
+  omission of source content.
+\end{abstract}
+
+\input{2016_naacl_interpretese/sections/introduction}
+\input{2016_naacl_interpretese/sections/classification}
+\input{2016_naacl_interpretese/sections/experiments}
+\input{2016_naacl_interpretese/sections/conclusion}
+\input{2016_naacl_interpretese/sections/features}
+
+\section*{Acknowledgments}
+
+We thank CIAIR (Nagoya University, Japan) for providing the interpretation data which
+formed the foundation of this research.
+We also thank Alvin Grissom~II, Naho Orita and the reviewers for their insightful comments.
+This work was supported by
+\abr{nsf} grant \abr{iis}-1320538.  Boyd-Graber is also partially
+supported by \abr{nsf} grants \abr{ccf}-1409287 and
+\abr{ncse}-1422492. Any opinions, findings,
+conclusions, or recommendations expressed here are those of the
+authors and do not necessarily reflect the view of the sponsor.
+
+%\clearpage
+
+\bibliographystyle{style/naaclhlt2016}
+\bibliography{bib/journal-full,bib/jbg,bib/hhe}
+
+\end{document}
