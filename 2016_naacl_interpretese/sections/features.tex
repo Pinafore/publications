@@ -1,0 +1,69 @@
+\appendix
+
+
+\section{Feature Extraction}
+\label{sec:features}
+
+We use the Berkeley aligner~\cite{berkeleyaligner} for word alignment,
+the Stanford \abr{pos} tagger~\cite{stanford-tagger} to tag English
+sentences, and Kuromoji~\footnote{\url{http://www.atilika.org/}} to
+tokenize, lemmatize and tag Japanese sentences.  Below we describe the
+features in detail.
+
+\noindent
+\textbf{Inversion:} Let $\{A_i\}$ be the set of indexes of target
+words to which each source word $w_i$ is aligned.  We count $A_i$ and
+$A_j$ ($i < j$) as an inverted pair if $\max(A_i) > \min(A_j)$.  This
+means that we have to wait until the $j$th word to translate the $i$th
+word.
+
+\noindent
+\textbf{Segmentation:}
+We use the \texttt{punkt} sentence segmenter~\cite{kiss06segmenter}
+from \abr{NLTK} to detect sentences in a text chunk.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\noindent
+\textbf{Passivization:}
+We compute the number of passive verbs normalized by the total number
+of verbs.  We detect passive voice in English by matching the
+following regular expression: a \emph{be} verb (be, are, is, was, were
+etc.) followed by zero to four non-verb words and one verb in its past
+participle form.  We detect passive voice in Japanese by checking that
+the dictionary form of a verb has the suffix ``\jatext{れる}''.
+
+
+
+
+
+
+
+
+
+\noindent
+\textbf{Vocabulary}
+  To measure variety, we use $V_t/N$ and $V_s/N$, where $V_t$ and
+  $V_s$ are counts of distinct tokens and stems, and $N$ is the total
+  number of tokens.  To measure complexity, we use word length, number
+  of syllables per word, approximated by vowel sequences; and unigram
+  and bigram frequency from Microsoft Web $N$-gram.
+
+\noindent
+\textbf{Summarization}
+We use the sentence compression ratio, sentence length, number of
+omitted source words, approximated by counts of unaligned words, and
+number of content words.

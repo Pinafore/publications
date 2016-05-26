@@ -1,0 +1,53 @@
+
+\begin{table*}[t!]
+
+\newcommand{\Tactic}[1]{\multirow{3}{*}{\begin{minipage}{0.1\textwidth}#1\end{minipage}}}
+\newcounter{example}
+\addtocounter{example}{1}
+\newcommand{\id}{\arabic{example} \stepcounter{example}}
+\centering
+\singlespacing
+{\footnotesize
+\begin{tabular}{p{0.6ex}|L{0.8\textwidth}|l}
+\toprule
+& \multicolumn{1}{c|}{Source (S), translation (T) and interpretation (I) text} & Tactic \\
+\midrule
+\multirow{3}{*}{\id}&\Source{この日本語の待遇表現の特徴ですが英語から日本語へ直訳しただけでは表現できないといった特徴があります.}&\Tactic{\Gn\\\Sg\\\Om}\\
+& \Trans{(One of) the characteristics of \moregeneral{honorific} Japanese is that it can not be \moregeneral{adequately} expressed when using a direct translation (from English to Japanese).} & \\
+& \Inter{Now let me talk about the characteristic of the Japanese \moregeneral{polite} expressions. $\Segment$ And such such expressions can not be expressed \moregeneral{enough} just by translating directly.} & \\
+\midrule
+\multirow{3}{*}{\id}&\Source{で三番目の特徴としてはですねえ出来る限り自然な日本語の話言葉とてその出力をするといったような特徴があります.}&\Tactic{\Gn\\\Sm\\\Om}\\
+& \Trans{Its third \moregeneral{characteristic} is that its output is, \summarized{as much as possible}, in the natural language of spoken (Japanese).} & \\
+& \Inter{And the third \moregeneral{feature} is that the translation could be produced in a \summarized{very} natural spoken language.} & \\
+\midrule
+\multirow{3}{*}{\id}&\Source{まとめますと我々は派生文法という従来の学校文法とは違う文法を使った日本語解析を行っています.その結果従来よりも単純な解析が可能となっております.}&\Tactic{\Sg\\\Om}\\
+& \Trans{In sum , we've conducted an analysis on the Japanese language , using a grammar different from school grammar, called derivational grammar. (As a result,) we were able to produce a simpler analysis (than the conventional method).} & \\
+& \Inter{So, we are doing Japanese analysis based on derivational grammar, $\Segment$ which is different from school grammar, $\Segment$ which enables us to analyze in simple way.} & \\
+\midrule
+\multirow{3}{*}{\id}&\Source{つまり例えばこの表現一は認識できますが二から四は認識できない.}&\Tactic{\Gn\\\Ps\\\Sg}\\
+& \Trans{\passivized{They might \moregeneral{recognize}} expression one but not \moregeneral{expressions} two to four.} & \\
+& \Inter{The phrase number one only \passivized{is \moregeneral{accepted}} $\Segment$ and \moregeneral{phrases} two, three, four \passivized{were not \moregeneral{accepted}}.} & \\
+\midrule
+\multirow{3}{*}{\id}&\Source{以上のお話をまとめますと自然な発話というものを扱うことができる音声対話の方法ということを考案しました.}&\Tactic{\Gn\\\Ps\\\Sg}\\
+& \Trans{In summary , \passivized{we have \moregeneral{devised}} a way for voice interaction systems \passivized{to handle} natural speech.} & \\
+& \Inter{And this is the summary of what I have so far stated. The spontaneous speech \passivized{can be dealt with} by the speech dialog method $\Segment$ and that method \passivized{was \moregeneral{proposed}}.} & \\
+\bottomrule
+\end{tabular}
+}
+
+\caption{Examples of tactics used by interpreters
+to cope with divergent word
+  orders, limited working memory, and the pressure to produce low-latency translations.  
+  We show the source input (S), translated sentences (T), and interpreted sentences (I).
+  The tactics are listed in the rightmost column and marked in
+  the text:  more general translations are highlighted in
+  \moregeneral{italics}; $\Segment$ marks where new clauses or sentences are created;
+  and passivized verbs in translation \passivized{are underlined}.
+  Information appearing in translation but omitted in interpretation are in (parentheses).
+  Summarized expressions and their corresponding expression in translation are \summarized{underlined by wavy lines}.}
+  
+  
+\label{tab:examples}
+
+\vspace{-1em}
+\end{table*}

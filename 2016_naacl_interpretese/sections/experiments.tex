@@ -1,0 +1,207 @@
+\section{Classification of \trans{} and \inter{}}
+\label{sec:experiments}
+
+We investigate the difference between \trans{} and \inter{} by
+creating a text classifier to distinguish between them and then
+examining the most useful features. We train our classifier on a
+bilingual Japanese-English corpus of spoken monologues and their
+simultaneous interpretations~\cite{ciair}.  To obtain a three-way
+parallel corpus of aligned translation, interpretation, and their
+shared source text, we first align the interpreted sentences to source
+sentences by dynamic programming following
+\newcite{champollion}.\footnote{Sentences are defined by sentence
+  boundaries marked in the corpus, thus coherence is preserved during
+  alignment.} This step results in 1684 pairs of text chunks, with 33
+tokens per chunk on average.  We then collect human translations from
+Gengo\footnote{\url{http://gengo.com} (``standard'' quality).} for
+each source text chunk (one translator per monologue).  The original
+corpus has four interpretors per monologue. We use all available
+interpretation by copying the translation of a text chunk for its
+additional interpretation.
+
+\subsection{Discriminative Features}
+\label{sec:classification_results}
+
+We use logistic regression as our classifier.  Its job is to tell, given a chunk
+of English text, which translation produced it.  We add $\ell_1$ regularization
+to select the non-zero features that best distinguish \inter{} from \trans{}.
+We use three different sets of features: (1) \textbf{\abr{POS}:} $n$-gram
+features of \abr{POS} tags (up to trigram);~\footnote{We prepend \pos{\S{}} and
+  append \pos{\E{}} to all sentences.}  (2) \textbf{\abr{LEX}:} word unigrams;
+(3) \textbf{\abr{LING}:} features reflecting linguistic hypothese
+(Section~\ref{sec:distinguish}), most are counts of indicator functions
+normalized by length of the chunk (Appendix~\ref{sec:features}).
+
+The top linguistic features listed in Table~\ref{tab:feat} are consistent with
+our hypotheses.  The most prominent ones---also revealed by \abr{pos} and
+\abr{lex}---are the segmentation features, including counts of conjunction words
+(\feat{CC}), content words (nouns, verbs, adjectives, and adverbs) that appear
+more than once (\feat{repeated}), demonstratives (\feat{demo}) such as
+\emph{this, that, these, those}, segmented sentences (\feat{sent}), and proper
+nouns (\feat{NNP}).  More conjunction words and more sentences in a text chunk
+are signs of segmentation.  Repeated words and the frequent use of
+demonstratives come from transforming clauses to independent sentences.
+Next are the passivization features, indicating more passivized verbs
+(\feat{passive}) and fewer pronouns (\feat{pronoun}) in \inter{}.
+
+
+
+
+
+The lack of pronouns may be results of either subject omission during
+passivization or general omission.  The last group are the vocabulary features,
+showing fewer numbers of stem types, token types, and content words in \inter{},
+evidence of word generalization.  In addition, a smaller number of content words
+suggests that interpreters may use more function words to manipulate the sentence
+structure.
+
+\subsection{Classification Results}
+
+
+
+
+
+
+
+
+
+
+
+
+
+\begin{table*}[t!]
+\centering
+\singlespacing
+\renewcommand{\arraystretch}{0.8}
+{\footnotesize
+\begin{tabular}{c|ccc|c|cc|cc|c}
+\toprule
+Sample & inv-all & inv-verb & inv-noun & segment & pass-t & pass-st & omit & insert & word freq \\
+\midrule
+$H_a$ & \multicolumn{3}{c|}{$\mu_I < \mu_T$} & $\mu_I > \mu_T$ & \multicolumn{2}{c|}{$\mu_I > \mu_T$} & \multicolumn{2}{c|}{$\mu_I > \mu_T$} & $\mu_I > \mu_T$ \\
+$t$-stat & -1.55 & \bf{-3.81} & \bf{-2.13} & \bf{4.21} & \bf{5.67} & 1.41 & \bf{16.16} & \bf{10.66} & \bf{7.88} \\
+$p$-value & .12 & $<$.001 & .03 & $<$.001 & $<$.001 & .16 & $<$.001 & $<$.001 & $<$.001\\
+\bottomrule
+\end{tabular}
+}
+\caption{Two-sample $t$-tests for \inter{} and \trans{}.  The test
+  statistics are bolded when we reject $H_0$ at the 0.05 significance
+  level (two-tailed).
+
+
+
+
+
+
+
+
+}
+\label{tab:ttest}
+\end{table*}
+
+Recall that our goal is to understand \inter{}, not to classify
+\inter{} and \trans{}; however, the ten-fold cross validation accuracy
+of \abr{LING}, \abr{POS}, \abr{LEX} are 0.66, 0.85, and 0.94.
+\abr{LEX} and \abr{POS} yield high accuracy as some features are
+overfitting, e.g., in this dataset, most interpreters used ``parsing''
+for ``\jatext{構文解析}'' while the translator used ``syntactic
+analysis''.  Therefore, they do not reveal much about the
+characteristics of \inter{} except for frequent use of ``and'' and
+\pos{CC}, which indicates segmentation.  Similarly,
+\newcite{volansky13feats} and \newcite{eetemadi14feats} also find
+lexical features very effective but not generalizable for detecting
+Translationese and exclude them from analysis.  One reason for the
+relatively low accuracy of \abr{ling} may be inconsistent use of
+strategies among humans (Section~\ref{sec:analysis}).
+
+\begin{table}[t!]
+\centering
+\singlespacing
+\renewcommand{\arraystretch}{0.8}
+\newcommand{\+}{+}
+\renewcommand{\-}{\textendash}
+\renewcommand{\pos}[1]{{\footnotesize \texttt{#1}}}
+{\footnotesize
+\begin{tabular}{l@{\hspace{0.7ex}}p{2ex}|l@{\hspace{0.7ex}}p{2ex}|l@{\hspace{0.7ex}}p{2ex}}
+\toprule
+\abr{ling} & & \abr{pos} & & \abr{lex} & \\
+\midrule
+\textsf{CC} & \+ & \pos{\S{} CC} & \+ & And & \+ \\
+\textsf{repeated} & \+ & \pos{. CC} & \+ & parsing & \+ \\
+\textsf{demo} & \+ & \pos{\S{} CC IN} & \+ & gradual & \- \\
+\textsf{sent} & \+ & \pos{NN CC PR} & \+ & syntax & \- \\
+\textsf{passive} & \+ & \pos{\S{} CC DT} & \+ & keyboard & \+ \\
+\textsf{pronoun} & \- & \pos{CC RB DT} & \+ & attitudinal & \- \\
+\textsf{NNP} & \+ & \pos{, RB DT} & \+ & text & \- \\
+\textsf{stem type} & \- & \pos{. CC DT} & \+ & adhoc & \+ \\
+\textsf{tok type} & \- & \pos{NN FW NN} & \+ & construction & \- \\
+\textsf{content} & \- & \pos{NN CC RB} & \- & Furthermore & \- \\
+\bottomrule
+\end{tabular}
+}
+\caption{Top 10 highest-weighted features in each model.
+The sign shows whether it is indicative of \inter{} (+) or \trans{} (\textendash).
+}
+\label{tab:feat}
+\end{table}
+
+\section{Strategy Analysis}
+\label{sec:analysis}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+To better understand under what situations these tactics are used, we
+apply two-sample $t$-tests to compare the following quantities between
+\inter{} and \trans{}: (1) number of inversions (non-monotonic
+translations) on all source tokens ({inv-all}), verbs ({inv-verb}) and
+nouns ({inv-noun}); (2) number of segmented sentences; (3) number of
+natural passivization ({pass-st}), meaning copying a passive
+construction in the source sentence into the target sentence, and
+intentional passivization ({pass-t}), meaning introducing
+passivization into the target sentence when the source sentence is in
+active voice; (4) number of omitted words on the source side and
+inserted words on the target side;\footnote{The number
+  of unaligned words in the source or target.}
+(5) average word frequency given by Microsoft Web $n$-gram---higher
+means more
+common.\footnote{\url{http://weblm.research.microsoft.com/}} For all
+pairs of samples, the null hypothesis $H_0$ is that the means on
+\inter{} and \trans{} are equal; the alternative hypotheses and
+results are in Table~\ref{tab:ttest}.
+
+As expected, segmentation and intentional passivization happen more
+often during interpretation.  \inter{} has fewer inversions, especially
+for verbs; reducing word order difference is
+important for delay minimization.  Since there are two to four
+different interpretations for each lecture, we further analyze how
+consistent humans are on these decisions.  All interpreters agree on
+segmentation 73.7\% of the time, while the agreement on passivization
+is only 57.1\%---passivization is an acquired skill; not all
+interpreters use it when it can speed interpretation.
+
+The tests also confirm our hypotheses on generalization and omission.
+However, these tactics are not inherent to the task of simultaneous
+interpretation.  Instead, they are a byproduct of humans' limited
+working memory.  Computers can load much larger resources into memory
+and weigh quality of different translations in an instant, thus
+potentially rendering the speaker's message more accurately.
+Therefore, directly learning from corpus of human interpretation may
+lead to suboptimal results~\cite{shimizu14corpus}.
