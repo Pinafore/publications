@@ -1,0 +1,94 @@
+%
+% File naaclhlt2016.tex
+%
+
+\documentclass[11pt,letterpaper]{article}
+\usepackage{style/naaclhlt2016}
+\usepackage{times}
+\usepackage{bbm}
+\usepackage[usenames,dvipsnames]{color}
+\usepackage[utf8]{inputenc}
+
+\newif\ifcomment\commenttrue
+\input{style/preamble}
+
+\makeatletter
+\newcommand{\@BIBLABEL}{\@emptybiblabel}
+\newcommand{\@emptybiblabel}[1]{}
+\makeatother
+\usepackage{hyperref}
+
+\naaclfinalcopy % Uncomment this line for the final submission
+\def\naaclpaperid{490} %  Enter the naacl Paper ID here
+
+% To expand the titlebox for more authors, uncomment
+% below and set accordingly.
+% \addtolength\titlebox{.5in}
+
+\newcommand\BibTeX{B{\sc ib}\TeX}
+\newcommand{\rmn}[0]{{\bf \textsc{rmn}}}
+\newcommand{\grmn}[0]{{\bf \textsc{grmn}}}
+\newcommand{\htmm}[0]{{\bf \textsc{htmm}}}
+\newcommand{\lda}[0]{{\bf \textsc{lda}}}
+\newcommand{\nubbi}[0]{{\bf \textsc{nubbi}}}
+\newcommand{\norm}[1]{| #1 |}
+\newcommand{\euclidean}[1]{\left\lVert #1 \right\rVert}
+\newcommand{\rnn}[0]{{\bf \textsc{rnn}}}
+\newcommand{\gru}[0]{{\bf \textsc{gru}}}
+\newcommand{\bmat}[1]{\text{\textbf{#1}}}
+\newcommand{\bvec}[1]{\boldsymbol{#1}}
+
+\title{Feuding Families and Former Friends:\\Unsupervised Learning for Dynamic Fictional Relationships}
+
+\author{
+  Mohit Iyyer,$^{1}$ Anupam Guha,$^{1}$ Snigdha Chaturvedi,$^{1}$ Jordan Boyd-Graber,$^{2}$ Hal Daumé III$^{1}$\\
+  $^1$University of Maryland, Department of Computer Science and \abr{umiacs}\\
+        $^2$University of Colorado, Department of Computer Science \\
+  {\tt \{miyyer,aguha,snigdac,hal\}@umiacs.umd.edu}, \\
+  {\tt Jordan.Boyd.Graber@colorado.edu} \\
+}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+  Understanding how a fictional relationship between two characters changes over
+  time (e.g., from best friends to sworn enemies) is a key challenge in digital
+  humanities scholarship.  We present a novel unsupervised neural network for
+  this task that incorporates dictionary learning to generate interpretable,
+  accurate relationship trajectories. While previous work on characterizing
+  literary relationships relies on plot summaries annotated with predefined
+  labels, our model jointly learns a set of global relationship descriptors as
+  well as a trajectory over these descriptors for each relationship in a dataset
+  of raw text from novels. We find that our model learns descriptors of events
+  (e.g., marriage or murder) as well as interpersonal states (love,
+  sadness). Our model outperforms topic model baselines on two crowdsourced
+  tasks, and we also find interesting correlations to annotations in an existing
+  dataset.
+\end{abstract}
+
+\input{2016_naacl_relationships/sections/introduction}
+\input{2016_naacl_relationships/sections/data}
+\input{2016_naacl_relationships/sections/model}
+\input{2016_naacl_relationships/sections/experiments}
+\input{2016_naacl_relationships/sections/discussion}
+\input{2016_naacl_relationships/sections/related}
+\input{2016_naacl_relationships/sections/conclusion}
+
+\section*{Acknowledgments}
+
+We thank Jonathan Chang and Amit Gruber for providing baseline code, Thang Nguyen for helpful discussions about our model, and the anonymous reviewers for their insightful comments.
+This work was supported by \abr{nsf} grant \abr{iis}-1320538.
+Boyd-Graber is also partially supported by \abr{nsf} grants
+\abr{ccf}-1409287 and \abr{ncse}-1422492. Any opinions, findings,
+conclusions, or recommendations expressed here are those of the
+authors and do not necessarily reflect the view of the sponsor.
+
+\clearpage
+
+\bibliographystyle{style/naaclhlt2016}
+\bibliography{bib/journal-full,bib/miyyer,bib/jbg}
+
+
+\end{document}

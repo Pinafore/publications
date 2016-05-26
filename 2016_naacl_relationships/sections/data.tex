@@ -1,0 +1,35 @@
+\section{A Dataset of Character Interactions}
+\label{sec:data}
+
+Our dataset consists of 1,383 fictional works pulled from Project
+Gutenberg and other Internet sources. Project Gutenberg has a limited
+selection (outside of science fiction) of mostly classic literature,
+so we add more contemporary novels from various genres such as
+mystery, romance, and fantasy to our dataset.
+
+To identify character mentions, we run the Book-\abr{nlp} pipeline of
+\newcite{bamman-underwood-smith:2014:P14-1}, which includes character name
+clustering, quoted speaker identification, and coreference
+resolution.\footnote{While this pipeline works reasonably well, it is unreliable
+  for first-person narratives; we leave the necessary improvements to character
+  name clustering, which are further expanded upon in \newcite{vala2015mr}, for
+  future work.} For every detected character mention, we define a span as
+beginning 100 tokens before the mention and ending 100 tokens after the
+mention. We do not use sentence or paragraph boundaries because they vary
+considerably depending on the author (e.g., William Faulkner routinely wrote
+single sentences longer than many of Hemingway's paragraphs). All spans in our
+dataset contain mentions to exactly two characters. This is a rather strict
+requirement that forces a reduction in data size, but spans in which more than
+two characters are mentioned are generally noisier.
+
+Once we have identified usable spans in the dataset, we apply a second filtering
+step that removes relationships containing fewer than five spans. Without this
+filter, our dataset is dominated by fleeting interactions between minor
+characters; this is undesirable since our focus is on longer, mutable
+relationships. Finally, we filter our vocabulary by removing the 500 most
+frequently occurring words, as well as all words that occur in fewer than 100
+books. The latter step helps correct for variation in time period and genre
+(e.g., ``thou'' and ``thy'' found in older works like the \textit{Canterbury
+  Tales}). Our final dataset contains 20,013 relationships and 380,408 spans,
+while our vocabulary contains 16,223 words.\footnote{Code and span data
+  available at \url{http://github.com/miyyer/rmn}.}

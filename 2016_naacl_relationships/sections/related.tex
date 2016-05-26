@@ -1,0 +1,46 @@
+\section{Related Work}
+\label{sec:related}
+
+There are two major areas upon which our work builds: computational literary
+analysis and deep neural networks for natural language processing.
+
+Most previous work in computational literary analysis has focused either on
+characters or events. In the former category, graphical models and classifiers
+have been proposed for learning character personas from
+novels~\cite{bamman-underwood-smith:2014:P14-1,flekova2015personality} and film
+summaries~\cite{bamman-oconnor-smith:2013:ACL2013}. The \nubbi\ model of
+\newcite{chang2009connections} learns topics that statically describe characters
+and their relationships. Because these models lack temporal components (the
+focus of our task), we compare instead against the
+\htmm\ of \newcite{gruber2007hidden}.
+
+Closest to our own work is the supervised structured
+prediction problem of \newcite{snigdhachars}, in which features are
+designed to predict dynamic sequences of positive and negative
+interactions between two characters in plot summaries. Other research in this area
+includes social network construction from
+novels~\cite{elson2010extracting,Srivastava:2016} and film~\cite{krishnan2015youre},
+as well as attempts to summarize and generate
+stories~\cite{elsner2012character}. 
+
+While some of the relationship descriptors learned by our model are
+character-centric, others are more events-based, depicting actions rather than
+feelings; such descriptors have been the focus of much previous
+work~\cite{schankabelson77,chambers2008unsupervised,chambers2009unsupervised,orr2014learning}. Our
+model is more closely related to the plot units
+framework~\cite{lehnert1981plot,daume13plotunits}, which annotates events with
+emotional states.
+
+The \rmn\ builds on deep recurrent autoencoders such as the hierarchical
+\abr{lstm} autoencoder of \newcite{li2015hierarchical}; however, it is more
+efficient because of the span-level vector averaging. It is also similar to
+recent neural topic model architectures~\cite{cao2015novel,dasacl2015}, although
+these models are limited to static document representations. We hope to apply the \rmn\ to nonfictional datasets as well; in this vein, \newcite{IyyerEtAl2014} apply a neural network to sentences from nonfiction political books for ideology prediction.
+
+More generally, topic models and related generative models are a central tool
+for understanding large corpora from science~\cite{talley-11} to
+politics~\cite{Nguyen-14b}. We show representation learning models
+like \rmn\ can be just as interpretable as \abr{lda}-based models. Other
+applications for which researchers have prioritized interpretable vector
+representations include text-to-vision mappings~\cite{lazaridou2014wampimuk} and
+word embeddings~\cite{fyshe2015compositional,faruqui2015sparse}.
