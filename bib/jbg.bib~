@@ -1,13 +1,5 @@
 % NAACL 2016
 
-@inproceedings{Nguyen:Boyd-Graber:Lund:Seppi:Ringger-2015,
-	Title = {Is your anchor going up or down?  {F}ast and accurate supervised topic models},
-	Booktitle = naacl,
-	Author = {Thang Nguyen and Jordan Boyd-Graber and Jeff Lund and Kevin Seppi and Eric Ringger},
-	Year = {2015},
-	Location = {Denver, Colorado},
-}
-
 @inproceedings{Dasgupta-08,
  author = {Dasgupta, Sanjoy and Hsu, Daniel},
  title = {Hierarchical Sampling for Active Learning},
@@ -1920,24 +1912,6 @@ url = {http://books.nips.cc/papers/files/nips25/NIPS2012_1251.pdf}
     Pages = {60--63},
     Title = {Interfaces to Support the Scholarly Exploration of Text Collections},
     Year = 2007
-}
-
-@inproceedings{hoque-15,
- author = {Hoque, Enamul and Carenini, Giuseppe},
- title = {ConVisIT: Interactive Topic Modeling for Exploring Asynchronous Online Conversations},
- booktitle = {Proceedings of the 20th International Conference on Intelligent User Interfaces},
- series = {IUI '15},
- year = {2015},
- isbn = {978-1-4503-3306-1},
- location = {Atlanta, Georgia, USA},
- pages = {169--180},
- numpages = {12},
- url = {http://doi.acm.org/10.1145/2678025.2701370},
- doi = {10.1145/2678025.2701370},
- acmid = {2701370},
- publisher = {ACM},
- address = {New York, NY, USA},
- keywords = {asynchronous conversation, computer mediated communication, interactive topic modeling, text visualization},
 }
 
 @inproceedings{arguello-06,
@@ -6559,28 +6533,6 @@ information such as the web.},
     Title = {Laboratory Life: the social construction of scientific facts},
     Year = {1986}
 }
-
-@article{king-04,
-  title={Functional genomic hypothesis generation and experimentation by a robot scientist},
-  author={King, Ross D and Whelan, Kenneth E and Jones, Ffion M and Reiser, Philip GK and Bryant, Christopher H and Muggleton, Stephen H and Kell, Douglas B and Oliver, Stephen G},
-  journal={Nature},
-  volume={427},
-  number={6971},
-  pages={247--252},
-  year={2004},
-  publisher={Nature Publishing Group}
-}
-
-
-@book{saldana-12,
-  title={The Coding Manual for Qualitative Researchers},
-  author={Saldana, J.},
-  isbn={9781446271421},
-  url={https://books.google.de/books?id=V3tTG4jvgFkC},
-  year={2012},
-  publisher={SAGE Publications}
-}
-
 
 @inproceedings{lau-10,
     Address = {Beijing, China},

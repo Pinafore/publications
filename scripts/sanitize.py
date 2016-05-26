@@ -4,7 +4,7 @@ from glob import glob
 import re
 import sys
 
-kCOMMENT = re.compile(r"%.*")
+kCOMMENT = re.compile(r"(?<!\\)%.*")
 kSTRIP = re.compile(r"\\.*comment{")
 strippable = set(["\\hidetext{", "\\ignore{"])
 
@@ -20,6 +20,9 @@ def remove_command(command, text):
         mid, after = after.split("}", 1)
         num_close -= 1
         num_close += sum(1 for x in mid if x == '{')
+        if before.endswith("\n") and after.startswith("\n"):
+            after = after.strip()
+
     return before + after
 
 if __name__ == "__main__":
