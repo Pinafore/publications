@@ -1,0 +1,49 @@
+\section{Deep Q-Learning}
+\label{sec:background}
+
+Reinforcement learning is commonly used for solving Markov-decision
+processes (\abr{mdp}), where an agent interacts with the world and
+collects rewards.  Formally, the agent takes an action $a$ in state
+$s$, goes to the next state $s'$ according to the transition
+probability $\mathcal{T}(s,a,s')=Pr(s'|s,a)$ and receives reward $r$.
+States and actions are defined by the state space $\mathcal{S}$ and
+the action space $\mathcal{A}$.  Rewards $r$ are assigned by a real-valued
+reward function $\mathcal{R}(s, a, s')$.  The agent's behavior is
+defined by a policy $\pi$ such that $\pi(a|s)$ is the probability of
+taking action $a$ in state $s$.  The goal of reinforcement learning is
+to find an optimal policy $\pi^\ast$ that maximizes the expected
+discounted cumulative
+reward 
+$R = \e{}{\sum_{t=0}^T\gamma^t r_t}$, where $\gamma \in [0, 1]$ is the
+discount factor and $T$ is the time step when the episode ends.
+
+One approach to solve \abr{mdp}s is to compute its $Q$-function:
+the expected reward starting from state $s$, taking action $a$ and following policy $\pi$:
+
+$Q^\pi(s,a) \equiv \e{}{\sum_{t} \gamma^t r_t | s_0=s, a_0=a, \pi}$.  Q-values
+of an optimal policy solve the Bellman Equation~\cite{rl-intro}:
+\begin{equation*}
+\label{eqn:qiteration}
+Q^\ast(s,a) = \sum_{s'}\mathcal{T}(s,a,s')\left [ r + \gamma \max_{a'} Q^\ast(s', a')\right ].
+\end{equation*}
+Optimal policies always select the action with the highest Q-value for a given
+state.  Q-learning~\cite{qlearning,rl-intro}
+finds the optimal Q-values without knowledge of $\mathcal{T}$.
+Given observed transitions $(s, a, s', r)$, Q-values are updated recursively:
+\begin{equation*}
+\label{eqn:qlearning}
+Q(s,a) \leftarrow Q(s,a) + \alpha\left [r + \gamma\max_{a'} Q(s', a') - Q(s,a)\right ].
+\end{equation*}
+
+For complex problems with continuous states, the $Q$-function cannot be
+expressed as a lookup table, requiring a continuous approximation.  Deep
+reinforcement learning such as \dqn{}~\cite{mnih-dqn-2015}---a deep Q-learning
+method with experience replay---approximates the $Q$-function using a neural
+network.  It draws samples $(s, a, s', r)$ from a replay memory $M$, and the
+neural network predicts $Q^\ast$ by minimizing squared loss at iteration
+$i$:
+\begin{dmath*}
+L^i(\theta^i) = \mathbb{E}_{(s, a, s', r) \sim U(M)} \left [ \left ( {r + \gamma\max_{a'}Q(s',a';\theta^{i-1})} - Q(s,a;\theta^i)\right ) ^2 \right ],
+\end{dmath*}
+where $U(M)$ is a uniform distribution over replay memory.
+

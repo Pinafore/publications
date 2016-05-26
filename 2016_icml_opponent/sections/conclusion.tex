@@ -1,0 +1,12 @@
+\section{Conclusion and Future Work}
+\label{sec:conclusion}
+Our general opponent modeling approach in the reinforcement learning setting incorporates (implicit) prediction of opponents' behavior into policy learning without domain knowledge.
+We use recent deep Q-learning advances
+to learn a representation of opponents that better maximizes available rewards.
+The proposed network architectures are novel models that capture the interaction between opponent behavior and Q-values.
+Our model is also flexible enough to include supervision for parameters of the opponents, much as in explicit modeling.
+
+These gains can further benefit from advances in deep learning.  For example, \citet{eigen13dmoe} extends the Mixture-of-Experts network to a stacked model---deep Mixture-of-Experts---which can be combined with hierarchical reinforcement learning to learn a hierarchy of opponent strategies in large, complex domains such as online strategy games.
+In addition, instead of hand-crafting opponent features, we can feed in raw opponent actions and use a recurrent neural network to learn the opponent representation.
+Another important direction is to design online algorithms that can adapt to fast changing behavior and balance exploitation and exploration of opponents.
+

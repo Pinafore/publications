@@ -1,0 +1,28 @@
+\section{Related Work and Discussion}
+\label{sec:related_work}
+\paragraph{Implicit vs. Explicit opponent modeling}
+
+Opponent modeling has been studied extensively in games.  Most existing approaches fall into the category of explicit modeling, where a model (e.g., decision trees, neural networks, Bayesian models) is built to directly predict parameters of the opponent, e.g., actions~\cite{opponent-qlearning,game-theory-opponent-modeling}, private information~\cite{poker-opp,scrabble-opp}, or domain-specific strategies~\cite{schadd07opponentmodeling,bayesbluff}.  One difficulty is that the model may need a prohibitive number of examples before producing anything useful.  Another is that as the opponent behavior is modeled separately from the world, it is not always clear how to incorporate these predictions robustly into policy learning.  The results on multitasking \dron{} also suggest that improvement from explicit modeling is limited.  However, it is better suited to games of incomplete information, where it is clear what information needs to be predicted to achieve higher reward.
+
+Our work is closely related to implicit opponent modeling.  Since the
+agent aims to maximize its own expected reward without having to
+identify the opponent's strategy, this approach does not have the
+difficulty of incorporating
+prediction of the opponent's parameters.  \citet{rubin11expert-imitator} and \citet{bard13implicit-modeling} construct a
+a portfolio of strategies offline based on
+domain knowledge or past experience for heads-up limit Texas hold'em; they then select strategies
+online using multi-arm bandit algorithms.
+Our approach does not have a clear online/offline distinction.
+We learn strategies and their selector in a joint, probabilistic way.
+However, the offline construction can be mimicked in our models by initializing expert networks with
+\dqn{} pre-trained against different opponents.
+
+\paragraph{Neural network opponent models}
+\citet{davidson99opponent} applies neural networks to opponent modeling, where a simple multi-layer perceptron is trained as a classifier to predict opponent actions given game logs.
+\citet{Lockett07evolvingexplicit} propose an architecture similar to \dron{}-concat that aims to identify the type of an opponent.
+However, instead of learning a hidden representation, they learn a mixture weights over a pre-specified set of cardinal opponents;
+and they use the neural network as a standalone solver without the reinforcement learning setting, which may not be suitable for more complex problems.
+\citet{foerster16riddle} use modern neural networks to learn a group of parameter-sharing agents that solve a coordination task,
+where each agent is controlled by a deep recurrent Q-Network~\cite{drqn}.
+Our setting is different in that we control only one agent and the policy space of other agents is unknown.
+Opponent modeling with neural networks remains understudied with ample room for improvement.
