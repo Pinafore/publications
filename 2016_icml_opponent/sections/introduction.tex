@@ -1,0 +1,66 @@
+\section{Introduction}
+\label{sec:intro}
+
+An intelligent agent working in strategic settings (e.g., collaborative or
+competitive tasks) must predict the action of other agents and reason about
+their intentions.  This is important because all active agents affect the state
+of the world.  For example, a multi-player game \abr{ai} can exploit suboptimal
+players if it can predict their bad moves; a negotiating agent can reach an
+agreement faster if it knows the other party's bottom line; a self-driving car
+must avoid accidents by predicting where cars and pedestrians are going.  Two
+critical questions in opponent modeling are what variable(s) to model and how to
+use the predicted information.  However, the answers depend much on the specific
+application, and most previous
+work~\cite{opponent-modeling-in-poker,bayesbluff,game-theory-opponent-modeling}
+focuses exclusively on poker games which require substantial domain knowledge.
+
+We aim to build a general opponent modeling framework in the
+reinforcement learning setting, which enables the agent to exploit
+idiosyncrasies of various opponents.  First, to account for
+changing behavior, we model uncertainty in the opponent's
+strategy instead of classifying it into a set of stereotypes.
+Second, domain knowledge is often required when prediction of the
+opponents are separated from learning the dynamics of the world.
+Therefore, we jointly learn a policy and model the opponent
+probabilistically.
+
+We develop a new model, \dron{} (Deep
+Reinforcement Opponent Network), based on the recent deep
+Q-Network of \citet[\dqn{}]{mnih-dqn-2015} in Section~\ref{sec:method}.
+\dron{} has a policy learning module that predicts Q-values
+and an opponent learning module that infers opponent strategy.\footnote{Code and data: \url{https://github.com/hhexiy/opponent}}
+Instead of explicitly predicting
+opponent properties, \dron{} learns hidden representation of the opponents
+based on past observations and uses it (in addition to the state information) to compute an adaptive response.
+More specifically,
+we propose two architectures, one using simple concatenation to combine the two modules and one based on the Mixture-of-Experts network.
+While we model opponents implicitly,
+additional supervision (e.g., the action or strategy taken)
+can be added through multitasking.
+
+Compared to previous models
+that are specialized in particular applications, \dron{} is designed with a
+general purpose and does not require knowledge of possible (parameterized)
+game strategies.
+
+A second contribution is \dqn{} agents that learn in multi-agent settings. Deep
+reinforcement learning has shown competitive performance in various tasks:
+arcade games~\cite{mnih-dqn-2015}, object
+recognition~\cite{mnih14visualattention}, and robot
+navigation~\cite{zhang15dnnmemory}.  However, it has been mostly applied to the
+single-agent decision-theoretic settings with stationary environments.  One
+exception is \citet{multiagent-dqn}, where two agents controlled by independent
+\dqn{}s interact under collaborative and competitive rewards.  While their focus
+is the collective behavior of a multi-agent system with known controllers, we
+study from the view point of a single agent that must learn a reactive
+policy in a stochastic environment filled with \emph{unknown}
+opponents.
+
+
+We evaluate our method on two tasks in Section~\ref{sec:experiments}: a
+simulated two-player soccer game in a grid world, and a real question-answering
+game, quiz bowl, against users playing online.  Both games have opponents with a mixture of
+strategies that require different counter-strategies.  Our model consistently
+achieves better results than the \dqn{} baseline.  In addition, we show our
+method is more robust to non-stationary strategies; it successfully identifies
+the opponent's strategy and responds correspondingly.
