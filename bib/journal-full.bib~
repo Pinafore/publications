@@ -19,7 +19,6 @@
 @String{ai="Artificial Intelligence"}
 @String{ijcai="International Joint Conference on Artificial Intelligence"}
 @String{ijcv="International Journal of Computer Vision"}
-@String{iclr="Proceedings of the International Conference on Learning Representations"}
 @String{icml="Proceedings of the International Conference of Machine Learning"}
 @String{ismir="International Society for Music Information Retrieval Conference"}
 @String{jacm="Journal of the Association for Computing Machinery"}
@@ -39,7 +38,7 @@
 @String{ecir="Proceedings of the European Conference on Information Retrieval"}
 @String{uai="Proceedings of Uncertainty in Artificial Intelligence"}
 @String{vldb="International Conference on Very Large Databases"}
-@String{www="Proceedings of the World Wide Web Conference"}
+@String{www="Proceedings of World Wide Web Conference"}
 @String{icassp="IEEE International Conference on Acoustics, Speech, and Signal Processing"}
 @String{ica="International Conference on Independent Component Analysis and Signal Separation"}
 @String{sdm="Proceedings of SIAM International Conference on Data Mining"}

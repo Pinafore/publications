@@ -1,6 +1,6 @@
 
-TEX = $(wildcard */*.tex *.tex)
-GFX = $(wildcard */*.p?? */figures/*.*)
+TEX = $(wildcard */sections/*.tex *.tex)
+GFX = $(wildcard */figures/*.*)
 DATA = $(wildcard */data/*.*)
 BIB = $(wildcard bib/*.bib)
 
@@ -9,7 +9,7 @@ BIB = $(wildcard bib/*.bib)
 
 clean:
 	rm -f *.aux *.dvi *.log *.bbl *.pdf *~ *.out *.blg
-	rm -f */*.aux */*.dvi */*.log */*.bbl */*.pdf */*~ */*.out */*.blg
+	rm -f */*.aux */*.dvi */*.log */*.bbl */*~ */*.out */*.blg */*/*~
 	rm -fR */auto_fig
 
 %.bbl: $(BIB) $(TEX)
@@ -38,3 +38,6 @@ clean:
 	dvips $(<:.tex=.dvi) -t letter
 	mv $(<:.tex=.ps) $@
 	cp $@ ~/public_html/temp
+
+# We don't want make to delete bibliography files or the figures, so we need this rule
+.SECONDARY:
