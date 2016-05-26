@@ -1,0 +1,149 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%% ICML 2016 EXAMPLE LATEX SUBMISSION FILE %%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Use the following line _only_ if you're still using LaTeX 2.09.
+%\documentstyle[icml2016,epsf,natbib]{article}
+% If you rely on Latex2e packages, like most moden people use this:
+\documentclass{article}
+
+% use Times
+\usepackage{times}
+% For figures
+\usepackage{graphicx} % more modern
+%\usepackage{epsfig} % less modern
+\usepackage{subfigure}
+
+% For citations
+\usepackage{natbib}
+
+% For algorithms
+\usepackage{algorithm}
+\usepackage{algorithmic}
+
+% As of 2011, we use the hyperref package to produce hyperlinks in the
+% resulting PDF.  If this breaks your system, please commend out the
+% following usepackage line and replace \usepackage{icml2016} with
+% \usepackage[nohyperref]{icml2016} above.
+\usepackage{hyperref}
+
+% Packages hyperref and algorithmic misbehave sometimes.  We can fix
+% this with the following command.
+\newcommand{\theHalgorithm}{\arabic{algorithm}}
+
+% Employ the following version of the ``usepackage'' statement for
+% submitting the draft version of the paper for review.  This will set
+% the note in the first column to ``Under review.  Do not distribute.''
+%\usepackage{style/icml2016}
+
+% Employ this version of the ``usepackage'' statement after the paper has
+% been accepted, when creating the final version.  This will set the
+% note in the first column to ``Proceedings of the...''
+\usepackage[accepted]{style/icml2016}
+
+
+% The \icmltitle you define below is probably too long as a header.
+% Therefore, a short form for the running title is supplied here:
+\icmltitlerunning{Opponent Modeling in Deep Reinforcement Learning}
+
+\newif\ifcomment\commentfalse
+\input{style/preamble}
+\usepackage{breqn}
+\newcommand{\dqn}{\abr{dqn}}
+\newcommand{\dron}{\abr{dron}}
+\newcommand{\dronmoe}{\abr{dron-moe}}
+\newcommand{\gru}{\abr{gru}}
+\newcommand{\oa}{o}
+\newcommand{\op}{\pi^o}
+\newcommand{\todo}[1]{{\color{blue}[TODO: {#1}]}}
+
+\begin{document}
+
+\twocolumn[
+\icmltitle{Opponent Modeling in Deep Reinforcement Learning}
+
+% It is OKAY to include author information, even for blind
+% submissions: the style file will automatically remove it for you
+% unless you've provided the [accepted] option to the icml2016
+% package.
+\icmlauthor{He He}{hhe@umiacs.umd.edu}
+\icmladdress{University of Maryland,
+            College Park, MD 20740 USA}
+\icmlauthor{Jordan Boyd-Graber}{Jordan.Boyd.Graber@colorado.edu}
+\icmladdress{University of Colorado,
+            Boulder, CO 80309 USA}
+\icmlauthor{Kevin Kwok}{kkwok@mit.edu}
+\icmladdress{Massachusetts Institute of Technology,
+            Cambridge, MA 02139 USA}
+\icmlauthor{Hal Daum\'e III}{hal@umiacs.umd.edu}
+\icmladdress{University of Maryland,
+            College Park, MD 20740 USA}
+
+% You may provide any keywords that you
+% find helpful for describing your paper; these are used to populate
+% the "keywords" metadata in the PDF but will not be shown in the document
+\icmlkeywords{opponent modeling, reinforcement learning, neural network}
+
+\vskip 0.3in
+]
+
+\begin{abstract}
+%In a typical Markov Decision Process, a single agent interacts with the world modeled by a transition function
+%and is unaware of other possible active agents in the environment.
+%This is suboptimal in multi-agent settings where other agents with competing goals are also adapting their strategies.
+
+  Opponent modeling is necessary in multi-agent settings where
+  secondary agents with competing goals also adapt their strategies,
+  yet it remains challenging because strategies interact with each
+  other and change.  Most previous work focuses on
+  developing probabilistic models or parameterized strategies for
+  specific applications.  Inspired by the recent success of deep
+  reinforcement learning, we present neural-based models that jointly
+  learn a policy and the behavior of opponents.  Instead of explicitly
+  predicting the opponent's action, we encode observation of the
+  opponents into a deep Q-Network (\abr{dqn}); however, we retain
+  explicit modeling (if desired) using multitasking.  By using a Mixture-of-Experts
+  architecture, our model automatically discovers different strategy
+  patterns of opponents without extra supervision.  We
+  evaluate our models on a simulated soccer game and a popular trivia
+  game, showing superior performance over \abr{dqn} and its variants.
+\end{abstract}
+
+\input{2016_icml_opponent/sections/introduction}
+\input{2016_icml_opponent/sections/background}
+\input{2016_icml_opponent/sections/method}
+\input{2016_icml_opponent/sections/experiments}
+\input{2016_icml_opponent/sections/related_work}
+\input{2016_icml_opponent/sections/conclusion}
+
+% Acknowledgements should only appear in the accepted version.
+
+\section*{Acknowledgements}
+We thank Hua He, Xiujun Li and Mohit Iyyer for helpful discussions about deep Q-learning and our model. 
+We also thank the anonymous reviewers for their insightful comments.
+This work was supported by \abr{nsf} grant \abr{iis}-1320538.
+Boyd-Graber is also partially supported by \abr{nsf} grants
+\abr{ccf}-1409287 and \abr{ncse}-1422492. Any opinions, findings,
+conclusions, or recommendations expressed here are those of the
+authors and do not necessarily reflect the view of the sponsor.
+
+% In the unusual situation where you want a paper to appear in the
+% references without citing it in the main text, use \nocite
+%\nocite{langley00}
+
+\bibliographystyle{style/icml2016}
+\bibliography{bib/journal-full,bib/jbg,bib/hhe}
+
+\end{document}
+
+
+% This document was modified from the file originally made available by
+% Pat Langley and Andrea Danyluk for ICML-2K. This version was
+% created by Lise Getoor and Tobias Scheffer, it was slightly modified
+% from the 2010 version by Thorsten Joachims & Johannes Fuernkranz,
+% slightly modified from the 2009 version by Kiri Wagstaff and
+% Sam Roweis's 2008 version, which is slightly modified from
+% Prasad Tadepalli's 2007 version which is a lightly
+% changed version of the previous year's version by Andrew Moore,
+% which was in turn edited from those of Kristian Kersting and
+% Codrina Lauth. Alex Smola contributed to the algorithmic style files.
