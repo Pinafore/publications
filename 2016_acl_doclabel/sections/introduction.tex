@@ -1,0 +1,55 @@
+Many fields depend on texts labeled by human experts; computational
+linguistics uses such annotation to determine word senses and
+sentiment~\cite{wordsense,sentiment}; while social science uses
+``coding'' to scale up and systemetize content
+analysis~\cite{policy_pref_Budge,policy_pref_Klingemann}.
+
+Classification takes these labeled data as a training set and labels new data
+automatically.  Creating a broadly applicable and consistent 
+label set that generalizes well is time-consuming
+and difficult, requiring expensive annotators to examine large swaths
+of the data. Effective \abr{nlp} systems must
+measure~\cite{hwa2004sample,osborne2004ensemble,ngai2000rule} and
+reduce annotation cost~\cite{tomanek2007approach}. Annotation is hard because it requires both \emph{global}
+and \emph{local} knowledge of the entire dataset.  Global knowledge is
+required to create the set of labels, and local knowledge is required
+to annotate the most useful examples to serve as a training set for an
+automatic classifier.
+
+We create a single interface---\name{} (Active Learning with Topic
+Overviews)---to address both the global and local challenges using two machine
+learning tools: \emph{topic models} and \emph{active learning} (we review both
+in Section~\ref{sec:ALTO}). Topic models address the need for annotators to have
+a \emph{global overview} of the data, exposing the broad themes of the corpus so
+annotators know what labels to create.  Active learning \emph{selects} documents that
+help the classifier understand the differences between labels and directs
+the user's attention \emph{locally} to them.  We thus create four experimental
+conditions to compare the effects of providing users with either a topic model
+or a simple list of documents, with or without active learning suggestions
+(Section~\ref{sec:conditions}). Following this section we then describe our data
+and evaluation metrics (Section~\ref{sec:data_metrics}).
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Through both synthetic experiments (Section~\ref{sec:synthetic_exp}) and a user
+study (Section~\ref{sec:user_exp_results}) with 40 participants, we evaluate
+\name{} and its constituent components by comparing results from the four
+conditions introduced above.  We first examine user strategies for organizing
+documents, user satisfaction, and user efficiency. Finally, we evaluate the overall effectiveness of the label set in a post study crowdsourced task. 
+
+
+
+

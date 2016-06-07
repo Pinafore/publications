@@ -33,6 +33,7 @@ do
     # rm -r $1/$DIR
     # git checkout $1/$DIR
     mkdir -p $2/$1/$DIR
+    echo cp $1/$DIR/*.* $2/$1/$DIR
     cp $1/$DIR/*.* $2/$1/$DIR
 done
 

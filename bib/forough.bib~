@@ -1,0 +1,526 @@
+@article{ITM,
+  title={Interactive topic modeling},
+  author={Hu, Yuening and Boyd-Graber, Jordan and Satinoff, Brianna and Smith, Alison},
+  journal={Machine learning},
+  volume={95},
+  number={3},
+  pages={423--469},
+  year={2014},
+  publisher={Springer}
+}
+@inproceedings{dualist,
+  title={Closing the loop: Fast, interactive semi-supervised annotation with queries on features and instances},
+  author={Settles, Burr},
+  booktitle=emnlp,
+  year={2011},
+}
+@inproceedings{slda,
+  title={Supervised topic models},
+  author={Mcauliffe, Jon D and Blei, David M},
+  booktitle=nips,
+  year={2008}
+}
+@article{liblinear,
+  title={LIBLINEAR: A library for large linear classification},
+  author={Fan, Rong-En and Chang, Kai-Wei and Hsieh, Cho-Jui and Wang, Xiang-Rui and Lin, Chih-Jen},
+  journal=jmlr,
+  volume={9},
+  pages={1871--1874},
+  year={2008},
+}
+@inproceedings{doc_explore,
+  title={Document exploration with topic modeling: Designing interactive visualizations to support effective analysis workflows},
+  author={Chuang, Jason and Hu, Yuening and Jin, Ashley and Wilkerson, John D and McFarland, Daniel A and Manning, Christopher D and Heer, Jeffrey},
+  booktitle={NIPS Workshop on Topic Models: Computation, Application, and Evaluation},
+  year={2013}
+}
+@article{political,
+  title={Text as data: The promise and pitfalls of automatic content analysis methods for political texts},
+  author={Grimmer, Justin and Stewart, Brandon M},
+  journal={Political Analysis},
+  pages={mps028},
+  year={2013},
+  publisher={SPM-PMSAPSA}
+}
+
+@inproceedings{europarl_corpus,
+  title={Europarl: A parallel corpus for statistical machine translation},
+  author={Koehn, Philipp},
+  booktitle={MT summit},
+  volume={5},
+  pages={79--86},
+  year={2005}
+}
+@techreport{purity,
+  title={Criterion functions for document clustering: Experiments and analysis},
+  author={Zhao, Ying and Karypis, George},
+  year={2001}
+}
+
+@book{wordsense,
+  title={Computer recognition of English word senses},
+  author={Kelly, Edward F and Stone, Philip J},
+  volume={13},
+  year={1975},
+  publisher={North-Holland}
+}
+@inproceedings{sentiment,
+  title={Determining the sentiment of opinions},
+  author={Kim, Soo-Min and Hovy, Eduard},
+  booktitle=acl,
+  pages={1367},
+  year={2004},
+  organization={Association for Computational Linguistics}
+}
+@book{policy_pref_Budge,
+  title={Mapping policy preferences: estimates for parties, electors, and governments, 1945-1998},
+  author={Budge, Ian},
+  volume={1},
+  year={2001},
+  publisher={Oxford University Press}
+}
+@book{policy_pref_Klingemann,
+  title={Mapping policy preferences II: estimates for parties, electors, and governments in Eastern Europe, European Union, and OECD 1990-2003},
+  author={Klingemann, Hans-Dieter and Volkens, Andrea and Bara, Judith and Budge, Ian and McDonald, Michael D and others},
+  year={2006},
+  publisher={Oxford University Press Oxford}
+}
+%active learning/annotation
+
+ @inproceedings{haertel-08,
+  author    = {Robbie Haertel and
+               Eric K. Ringger and
+               Kevin D. Seppi and
+               James L. Carroll and
+               Peter McClanahan},
+  title     = {Assessing the Costs of Sampling Methods in Active Learning
+               for Annotation},
+  booktitle = acl,
+  year      = {2008},
+}
+@inproceedings{McCallum-98,
+  author    = {Andrew McCallum and
+               Kamal Nigam},
+  title     = {Employing EM and Pool-Based Active Learning for Text Classification},
+  booktitle = icml,
+  year      = {1998},
+  pages     = {350-358},
+}
+
+@inproceedings{hsueh,
+ author = {Hsueh, Pei-Yun and Melville, Prem and Sindhwani, Vikas},
+ title = {Data quality from crowdsourcing: a study of annotation selection criteria},
+ booktitle = {Proceedings of the NAACL HLT 2009 Workshop on Active Learning for Natural Language Processing},
+ series = {HLT '09},
+ year = {2009},
+ location = {Boulder, Colorado},
+ publisher = {Association for Computational Linguistics},
+ address = {Stroudsburg, PA, USA}
+}
+
+@inproceedings{zaidan-08,
+    Address = {Whistler, BC},
+    Author = {Omar F. Zaidan and Jason Eisner and Christine Piatko},
+    Booktitle = {Proceedings of the NIPS*2008 Workshop on Cost Sensitive Learning},
+    Note = {10 pages},
+    Title = {Machine Learning with Annotator Rationales to Reduce Annotation Cost},
+    Year = 2008
+}
+@inproceedings{donmez-08,
+  author    = {Pinar Donmez and
+               Jaime G. Carbonell},
+  title     = {Proactive learning: cost-sensitive active learning with
+               multiple imperfect oracles},
+  booktitle = cikm,
+  year      = {2008},
+  pages     = {619-628}
+}
+@inproceedings{bengio2009curriculum,
+  title={Curriculum learning},
+  author={Bengio, Yoshua and Louradour, J{\'e}r{\^o}me and Collobert, Ronan and Weston, Jason},
+  booktitle={Proceedings of the 26th annual international conference on machine learning},
+  pages={41--48},
+  year={2009},
+  organization={ACM}
+}
+@inproceedings{l2h,
+  Title = {Learning a Concept Hierarchy from Multi-labeled Documents},
+  Booktitle = {Neural Information Processing Systems},
+  Author = {Viet-An Nguyen and Jordan Boyd-Graber and Philip Resnik and Jonathan Chang},
+  Year = {2014},
+  Location = {Montreal, Canada},
+}
+
+@inproceedings{ramage-10b,
+  author = {Ramage, Daniel and Dumais, Susan T. and Liebling, Daniel J.},
+  booktitle = icwsm,
+  title = {Characterizing Microblogs with Topic Models.},
+  year = 2010
+}
+@inproceedings{mcauliffe2008supervised,
+  title={Supervised topic models},
+  author={Mcauliffe, Jon D and Blei, David M},
+  booktitle={Advances in neural information processing systems},
+  pages={121--128},
+  year={2008}
+}
+%topic modeling visualization/interpretation
+@article{zhu2012medlda,
+  title={MedLDA: maximum margin supervised topic models},
+  author={Zhu, Jun and Ahmed, Amr and Xing, Eric P},
+  journal={The Journal of Machine Learning Research},
+  volume={13},
+  number={1},
+  pages={2237--2278},
+  year={2012},
+  publisher={JMLR. org}
+}
+@inproceedings{shlda,
+  Author = {Viet-An Nguyen and Jordan Boyd-Graber and Philip Resnik},
+  Booktitle = {Neural Information Processing Systems},
+  Year = {2013},
+  Location = {Lake Tahoe, Nevada},
+  Title = {Lexical and Hierarchical Topic Regression},
+}
+@inproceedings{Nguyen_average,
+  Title = {Sometimes Average is Best: The Importance of Averaging for Prediction using MCMC Inference in Topic Modeling},
+  Booktitle = emnlp,
+  Author = {Viet-An Nguyen and Jordan Boyd-Graber and Philip Resnik},
+  Year = {2014},
+  Location = {Doha, Qatar},
+}
+@inproceedings{yao-09,
+    Acmid = {1557121},
+    Author = {Yao, Limin and Mimno, David and McCallum, Andrew},
+    Booktitle = kdd,
+    Isbn = {978-1-60558-495-9},
+    Keywords = {inference, topic modeling},
+    Location = {Paris, France},
+    Numpages = {10},
+    Title = {Efficient methods for topic model inference on streaming document collections},
+    Year = {2009},
+    Bdsk-Url-1 = {http://doi.acm.org/10.1145/1557019.1557121}
+}
+
+@inproceedings{lau-14,
+  title={Representing topics labels for exploring digital libraries},
+  author={Aletras, Nikolaos and Baldwin, Timothy and Lau, Jey Han and Stevenson, Mark},
+  booktitle={Digital Libraries (JCDL), 2014 IEEE/ACM Joint Conference on},
+  pages={239--248},
+  year={2014},
+  organization={IEEE}
+}
+@inproceedings{lau-tealeaves-14,
+  author = {Lau, Jey Han and David Newman and Timothy Baldwin},
+  title = {Machine Reading Tea Leaves: Automatically Evaluating Topic Coherence and Topic Model
+  Quality},
+  booktitle = eacl,
+  year = {2014}
+}
+@inproceedings{chuang2012interpretation,
+  title={Interpretation and trust: Designing model-driven visualizations for text analysis},
+  author={Chuang, Jason and Ramage, Daniel and Manning, Christopher and Heer, Jeffrey},
+  booktitle={Proceedings of the SIGCHI Conference on Human Factors in Computing Systems},
+  pages={443--452},
+  year={2012},
+  organization={ACM}
+}
+
+@inproceedings{chang-09b,
+    Author = {Jonathan Chang and Jordan Boyd-Graber and Chong Wang and Sean Gerrish and David M. Blei},
+    Booktitle = nips,
+    Location = {Vancouver, British Columbia},
+    Title = {Reading Tea Leaves: How Humans Interpret Topic Models},
+    Year = {2009}
+}
+
+@inproceedings{andre2013community,
+  title={Community clustering: Leveraging an academic crowd to form coherent conference sessions},
+  author={Andr{\'e}, Paul and Zhang, Haoqi and Kim, Juho and Chilton, Lydia and Dow, Steven P and Miller, Robert C},
+  booktitle={First AAAI Conference on Human Computation and Crowdsourcing},
+  year={2013}
+}
+%how to evaluate annotations:evaluations in nlp???
+@article{sanchor,
+  title={Is Your Anchor Going Up or Down? Fast and Accurate Supervised Topic Models},
+  author={Nguyen, Thang and Boyd-Graber, Jordan and Graber, Jordan Boyd and Lund, Jeff and Seppi, Kevin and Ringger, Eric}
+}
+
+
+@misc{lingpipe,
+ author={Carpenter, Bob},
+  title = {LingPipe 4.1.0.},
+  howpublished = {\url{http://alias-i.com/lingpipe}},
+  year = {2008}
+}
+
+@inproceedings{lewis1994sequential,
+  title={A sequential algorithm for training text classifiers},
+  author={Lewis, David D and Gale, William A},
+  booktitle={Proceedings of the 17th annual international ACM SIGIR conference on Research and development in information retrieval},
+  pages={3--12},
+  year={1994},
+  organization={Springer-Verlag New York, Inc.}
+}
+
+@article{shannon2001mathematical,
+  title={A mathematical theory of communication},
+  author={Shannon, Claude Elwood},
+  journal={ACM SIGMOBILE Mobile Computing and Communications Review},
+  volume={5},
+  number={1},
+  pages={3--55},
+  year={2001},
+  publisher={ACM}
+}
+@article{strehl2003cluster,
+  title={Cluster ensembles---a knowledge reuse framework for combining multiple partitions},
+  author={Strehl, Alexander and Ghosh, Joydeep},
+  journal={The Journal of Machine Learning Research},
+  volume={3},
+  pages={583--617},
+  year={2003},
+  publisher={JMLR. org}
+}
+@article{rand1971objective,
+  title={Objective criteria for the evaluation of clustering methods},
+  author={Rand, William M},
+  journal={Journal of the American Statistical association},
+  volume={66},
+  number={336},
+  pages={846--850},
+  year={1971},
+  publisher={Taylor \& Francis Group}
+}
+@incollection{meilua2003comparing,
+  title={Comparing clusterings by the variation of information},
+  author={Meil{\u{a}}, Marina},
+  booktitle={Learning theory and kernel machines},
+  pages={173--187},
+  year={2003},
+  publisher={Springer}
+}
+@incollection{vitanyi2009normalized,
+  title={Normalized information distance},
+  author={Vit{\'a}nyi, Paul MB and Balbach, Frank J and Cilibrasi, Rudi L and Li, Ming},
+  booktitle={Information theory and statistical learning},
+  pages={45--82},
+  year={2009},
+  publisher={Springer}
+}
+@article{hart1988development,
+  title={Development of NASA-TLX (Task Load Index): Results of empirical and theoretical research},
+  author={Hart, Sandra G and Staveland, Lowell E},
+  journal={Advances in psychology},
+  volume={52},
+  pages={139--183},
+  year={1988},
+  publisher={Elsevier}
+}
+@inproceedings{seung1992query,
+  title={Query by committee},
+  author={Seung, H Sebastian and Opper, Manfred and Sompolinsky, Haim},
+  booktitle={Proceedings of the fifth annual workshop on Computational learning theory},
+  pages={287--294},
+  year={1992},
+  organization={ACM}
+}
+@inproceedings{wobbrock2011aligned,
+  title={The aligned rank transform for nonparametric factorial analyses using only anova procedures},
+  author={Wobbrock, Jacob O and Findlater, Leah and Gergle, Darren and Higgins, James J},
+  booktitle={Proceedings of the SIGCHI Conference on Human Factors in Computing Systems},
+  pages={143--146},
+  year={2011},
+  organization={ACM}
+}
+@article{adler2006congressional,
+  title={Congressional bills project},
+  author={Adler, E Scott and Wilkerson, John},
+  journal={NSF},
+  volume={880066},
+  pages={00880061},
+  year={2006}
+}
+
+@article{hwa2004sample,
+  title={Sample selection for statistical parsing},
+  author={Hwa, Rebecca},
+  journal={Computational linguistics},
+  volume={30},
+  number={3},
+  pages={253--276},
+  year={2004},
+  publisher={MIT Press}
+}
+
+@inproceedings{osborne2004ensemble,
+  title={Ensemble-based Active Learning for Parse Selection.},
+  author={Osborne, Miles and Baldridge, Jason},
+  booktitle={HLT-NAACL},
+  pages={89--96},
+  year={2004},
+  organization={Citeseer}
+}
+
+@inproceedings{ngai2000rule,
+  title={Rule writing or annotation: Cost-efficient resource usage for base noun phrase chunking},
+  author={Ngai, Grace and Yarowsky, David},
+  booktitle={Proceedings of the 38th Annual Meeting on Association for Computational Linguistics},
+  pages={117--125},
+  year={2000},
+  organization={Association for Computational Linguistics}
+}
+
+@inproceedings{ringger2008assessing,
+  title={Assessing the Costs of Machine-Assisted Corpus Annotation through a User Study.},
+  author={Ringger, Eric K and Carmen, Marc and Haertel, Robbie and Seppi, Kevin D and Lonsdale, Deryle and McClanahan, Peter and Carroll, James L and Ellison, Noel},
+  booktitle={LREC},
+  volume={8},
+  pages={3318--3324},
+  year={2008}
+}
+
+@inproceedings{haertel2008assessing,
+  title={Assessing the costs of sampling methods in active learning for annotation},
+  author={Haertel, Robbie and Ringger, Eric and Seppi, Kevin and Carroll, James and McClanahan, Peter},
+  booktitle={Proceedings of the 46th Annual Meeting of the Association for Computational Linguistics on Human Language Technologies: Short Papers},
+  pages={65--68},
+  year={2008},
+  organization={Association for Computational Linguistics}
+}
+
+@inproceedings{tomanek2007approach,
+  title={An Approach to Text Corpus Construction which Cuts Annotation Costs and Maintains Reusability of Annotated Data.},
+  author={Tomanek, Katrin and Wermter, Joachim and Hahn, Udo},
+  booktitle={EMNLP-CoNLL},
+  pages={486--495},
+  year={2007}
+}
+@book{joachims1998text,
+  title={Text categorization with support vector machines: Learning with many relevant features},
+  author={Joachims, Thorsten},
+  year={1998},
+  publisher={Springer}
+}
+
+@incollection{zhang-10,
+ author = {Tong Zhang},
+ title = {Fundamental Statistical Techniques},
+ editor = {Indurkhya, Nitin and Damerau, Fred J.},
+ booktitle = {Handbook of Natural Language Processing},
+ year = {2010},
+ edition = {2nd},
+ publisher = {Chapman \& Hall/CRC},
+}
+
+@inproceedings{mccallum1998comparison,
+  title={A comparison of event models for naive bayes text classification},
+  author={McCallum, Andrew and Nigam, Kamal and others},
+  booktitle={AAAI-98 workshop on learning for text categorization},
+  volume={752},
+  pages={41--48},
+  year={1998},
+  organization={Citeseer}
+}
+@article{nigam2000text,
+  title={Text classification from labeled and unlabeled documents using EM},
+  author={Nigam, Kamal and McCallum, Andrew Kachites and Thrun, Sebastian and Mitchell, Tom},
+  journal={Machine learning},
+  volume={39},
+  number={2-3},
+  pages={103--134},
+  year={2000},
+  publisher={Springer}
+}
+@inproceedings{lewis1992feature,
+  title={Feature selection and feature extraction for text categorization},
+  author={Lewis, David D},
+  booktitle={Proceedings of the workshop on Speech and Natural Language},
+  pages={212--217},
+  year={1992},
+  organization={Association for Computational Linguistics}
+}
+@article{jiang2010text,
+  title={Text classification using graph mining-based feature extraction},
+  author={Jiang, Chuntao and Coenen, Frans and Sanderson, Robert and Zito, Michele},
+  journal={Knowledge-Based Systems},
+  volume={23},
+  number={4},
+  pages={302--308},
+  year={2010},
+  publisher={Elsevier}
+}
+@inproceedings{dasgupta2008hierarchical,
+  title={Hierarchical sampling for active learning},
+  author={Dasgupta, Sanjoy and Hsu, Daniel},
+  booktitle={Proceedings of the 25th international conference on Machine learning},
+  pages={208--215},
+  year={2008},
+  organization={ACM}
+}
+@inproceedings{ramage2009labeled,
+  title={Labeled LDA: A supervised topic model for credit attribution in multi-labeled corpora},
+  author={Ramage, Daniel and Hall, David and Nallapati, Ramesh and Manning, Christopher D},
+  booktitle={Proceedings of the 2009 Conference on Empirical Methods in Natural Language Processing: Volume 1-Volume 1},
+  pages={248--256},
+  year={2009},
+  organization={Association for Computational Linguistics}
+}
+@inproceedings{yano2012textual,
+  title={Textual predictors of bill survival in congressional committees},
+  author={Yano, Tae and Smith, Noah A and Wilkerson, John D},
+  booktitle={Proceedings of the 2012 Conference of the North American Chapter of the Association for Computational Linguistics: Human Language Technologies},
+  pages={793--802},
+  year={2012},
+  organization={Association for Computational Linguistics}
+}
+@article{hubert1985comparing,
+  title={Comparing partitions},
+  author={Hubert, Lawrence and Arabie, Phipps},
+  journal={Journal of classification},
+  volume={2},
+  number={1},
+  pages={193--218},
+  year={1985},
+  publisher={Springer}
+}
+@article{settles2012active,
+  title={Active Learning (Synthesis Lectures on Artificial Intelligence and Machine Learning)},
+  author={Settles, Burr},
+  journal={Long Island, NY: Morgan \& Clay Pool},
+  year={2012}
+}
+@inproceedings{aletras2014labelling,
+  title={Labelling Topics using Unsupervised Graph-based Methods.},
+  author={Aletras, Nikolaos and Stevenson, Mark},
+  booktitle={ACL (2)},
+  pages={631--636},
+  year={2014}
+}
+@inproceedings{anand2011believe,
+  title={Believe Me-We Can Do This! Annotating Persuasive Acts in Blog Text.},
+  author={Anand, Pranav and King, Joseph and Boyd-Graber, Jordan L and Wagner, Earl and Martell, Craig H and Oard, Douglas W and Resnik, Philip},
+  booktitle={Computational Models of Natural Argument},
+  year={2011}
+}
+@inproceedings{iyyer2014political,
+  title={Political Ideology Detection Using Recursive Neural Networks.},
+  author={Iyyer, Mohit and Enns, Peter and Boyd-Graber, Jordan L and Resnik, Philip},
+  booktitle={ACL (1)},
+  pages={1113--1122},
+  year={2014}
+}
+@article{boyd2014care,
+  title={Care and feeding of topic models: Problems, diagnostics, and improvements},
+  author={Boyd-Graber, Jordan and Mimno, David and Newman, David},
+  journal={Handbook of Mixed Membership Models and Their Applications; CRC Press: Boca Raton, FL, USA},
+  year={2014}
+}
+@incollection{nikolova2011collecting,
+  title={Collecting semantic similarity ratings to connect concepts in assistive communication tools},
+  author={Nikolova, Sonya and Boyd-Graber, Jordan and Fellbaum, Christiane},
+  booktitle={Modeling, Learning, and Processing of Text Technological Data Structures},
+  pages={81--93},
+  year={2011},
+  publisher={Springer}
+}
