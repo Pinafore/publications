@@ -1,0 +1,140 @@
+
+\documentclass[11pt]{article}
+\usepackage{style/acl2016}
+\usepackage{titlesec}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{subfig}
+\usepackage{times}
+\usepackage{url}
+\usepackage{latexsym}
+\usepackage{breakurl}
+
+\makeatletter\newcommand{\@BIBLABEL}{\@emptybiblabel}\newcommand{\@emptybiblabel}[1]{}\makeatother
+
+\usepackage[bookmarks=false,
+pdfpagelabels=false,
+hyperfootnotes=false,
+hyperindex=false,
+pageanchor=false,
+]{hyperref}
+
+\makeatletter
+\let\saved@hyper@linkurl\hyper@linkurl
+
+\let\saved@hyper@link@\hyper@link@
+\AtBeginDocument{
+  
+  
+  \NoHyper
+  
+  
+  
+}
+
+
+
+\aclfinalcopy 
+
+
+
+
+
+
+\newif\ifcomment\commentfalse
+\input{style/preamble}
+\newcommand{\name}[0]{\abr{alto}}
+
+
+\addtolength\titlebox{.5in}
+
+
+ 
+\newcommand{\sect}[1]{\label{sec:#1} \input{sections/#1}}
+
+\newcommand\BibTeX{B{\sc ib}\TeX}
+\title{ALTO: Active Learning with Topic Overviews for Speeding Label Induction and Document Labeling}
+\author{Forough Poursabzi-Sangdeh, \\
+              {\bf Jordan Boyd-Graber} \\
+              Computer Science \\
+	     University of Colorado\\
+	    \smalltt{forough.poursabzisangdeh@colorado.edu} \\
+	    \smalltt{Jordan.Boyd.Graber@colorado.edu}
+	\And
+	 {\bf Leah Findlater}\\
+         iSchool and \abr{umiacs} \\
+	 University of Maryland\\
+	\smalltt{leahkf@umd.edu}
+	\And
+	 {\bf Kevin Seppi} \\
+         Computer Science \\
+	 Brigham Young University\\
+	\smalltt{kseppi@cs.byu.edu}
+	}
+
+
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+  Effective text classification requires experts to annotate data with
+  labels; these training data are time-consuming and expensive to
+  obtain. If you know what labels you want, active learning can reduce
+  the number of labeled documents needed.  However, establishing the label
+  set remains difficult. Annotators often lack the global knowledge
+  needed to induce a label set.  We introduce \name{}: Active Learning
+  with Topic Overviews, an interactive system to help humans annotate
+  documents: topic models provide a global overview of what labels to
+  create and active learning directs them to the right documents to
+  label.  Our user study with forty annotators shows that while active
+  learning by itself is best in extremely resource limited conditions,
+  topic models (even by themselves) lead to better label sets, and
+  \name{}'s combination is best overall.
+\end{abstract}
+
+\section{Introduction}
+\label{sec:introduction} \input{2016_acl_doclabel/sections/introduction}
+
+\section{\name{}: Active Learning with Topic Overviews}
+\label{sec:ALTO} \input{2016_acl_doclabel/sections/alto}
+
+\section{Study Conditions}
+\label{sec:conditions} \input{2016_acl_doclabel/sections/conditions}
+
+\section{Data and Evaluation Metrics}
+\label{sec:data_metrics} \input{2016_acl_doclabel/sections/data_metrics}
+
+\section{Synthetic Experiments}
+\label{sec:synthetic_exp}\input{2016_acl_doclabel/sections/synthetic_exp}
+
+\section{User Study}
+\label{sec:user_exp_results}\input{2016_acl_doclabel/sections/user_exp_results}
+
+\section{Related Work}
+\label{sec:related_work}\input{2016_acl_doclabel/sections/related_work}
+
+\section{Conclusion and Future Work}
+\label{sec:conclusion}\input{2016_acl_doclabel/sections/conclusion}
+
+\clearpage
+
+\section*{Acknowledgments}
+We thank the anonymous reviewers, Philip Resnik, and Burr Settles for
+their insightful comments. We also thank Nikolaos Aletras for
+providing the automatic topic labeling code.  Boyd-Graber and
+Poursabzi-Sangdeh's contribution is supported by \abr{nsf} Grant
+\abr{ncse}-1422492; Findlater, Seppi, and Boyd-Graber's contribution
+is supported by collaborative \abr{nsf} Grant \abr{iis}-1409287
+(\abr{umd}) and \abr{iis}-1409739 (\abr{byu}).  Any opinions,
+findings, results, or recommendations expressed here are of the
+authors and do not necessarily reflect the view of the sponsor.
+
+\bibliographystyle{style/acl2016}
+\bibliography{bib/journal-full,bib/jbg,bib/forough}
+
+
+
+
+\end{document}

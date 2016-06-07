@@ -1,0 +1,25 @@
+
+First, we are planning to use active learning to better aid classification. We
+expect that active learning will reduce the number of required labeled documents
+while retaining high quality and user satisfaction.
+
+Second, we will use supervised topic models~\cite[\abr{slda}]{slda} instead of \abr{lda} after the first round to update topics
+based on document labels. \abr{slda} uses
+labeled documents to find topics that explain both document content and their associated labels.
+We believe using \abr{slda} instead of \abr{lda} after the first round will give users more information about the overview of documents and help them further for applying labels to documents.
+
+Third, we want to allow the user to refine and correct labels further. Our existing
+interface allows the user to delete a label or edit a label. We believe it is also
+users should be able to merge several labels if they think the labels are too specific.
+ In addition, we believe a crucially important step is to generate the label set.
+ Giving the user some information about the range of documents can help them
+ generate a better label set. One other option is to suggest labels to users based
+ on topic models~\cite{lau-10}.
+
+Fourth, we will explore other corpora such as European Parliament corpus~\cite{europarl_corpus}. To our knowledge, there are no true labels for Europarl corpus and using our interactive tool can help users find the categorized information they need.
+
+Finally, for evaluating our method, in addition to using the correct labeling and purity score,
+we will conduct a user experiment. Since the task of
+labeling congress data set requires some political
+knowledge, we will choose annotators who have some political
+science background.

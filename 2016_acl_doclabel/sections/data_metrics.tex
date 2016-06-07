@@ -1,0 +1,194 @@
+
+In this section, we describe our data, the machine learning techniques
+to learn classifiers from examples, and the evaluation metrics to know
+whether the final labeling of the complete documents collection was
+successful.
+
+\subsection{Datasets}
+\label{sub:data}
+
+\paragraph {Data}
+
+Our experiments require corpora to compare user labels with gold
+standard labels. We experiment with two corpora:
+20Newsgroups~\cite{20news} and \abr{us} congressional
+bills from GovTrack.\footnote{\url{https://www.govtrack.us/}}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+For \abr{us} congressional bills, GovTrack provides bill information
+such as the title and text, while the Congressional Bills
+Project~\cite{adler2006congressional} provides labels and sub-labels
+for the bills. Examples of labels are \underline{agriculture} and
+\underline{health}, while sub-labels include \underline{agricultural
+  trade} and \underline{comprehensive health care reform}.  The
+twenty top-level labels have been developed by consensus over many
+years by a team of top political scientists to create a reliable,
+robust dataset.  We use the 112\textsuperscript{th} Congress; after
+filtering,\footnote{We remove bills that have less than fifty words, no
+  assigned gold label, duplicate titles, or have the gold label
+  \abr{government operations} or \abr{social welfare}, which are
+  broad and difficult for users to label.} this dataset has $5558$
+documents.  We use this dataset in both the synthetic experiments
+(Section~\ref{sec:synthetic_exp}) and the user study
+(Section~\ref{sec:user_exp_results}).
+
+
+ 
+
+The 20 Newsgroups corpus has $19,997$ documents grouped in twenty news
+groups that are further grouped into six more general topics. Examples
+are \underline{talk.politics.guns} and \underline{sci.electronics},
+which belong to the general topics of \underline{politics} and
+\underline{science}.  We use this dataset in synthetic experiments
+(Section~\ref{sec:synthetic_exp}).
+
+\subsection{Machine Learning Techniques}
+
+\paragraph{Topic Modeling}
+
+To choose the number of topics ($K$), we calculate average topic
+coherence~\cite{lau-tealeaves-14} on \abr{us} Congressional Bills, between ten and
+forty topics and choose $K=19$, as it has the maximum coherence
+score.  For consistency, we use the same number of topics ($K=19$) for 20 Newsgroups corpus. After filtering words based on \abr{tf-idf}, we use
+Mallet~\cite{mallet} with default options to learn topics. 
+
+
+
+\paragraph{Features and Classification}
+
+
+
+
+
+A logistic regression
+predicts labels for documents and provides the classification uncertainty for
+active learning.  To make classification and active learning updates efficient,
+we use incremental learning~\cite[LingPipe]{lingpipe}. We update classification parameters
+using stochastic gradient descent, restarting with the previously learned
+parameters as new labeled documents become available.\footnote{Exceptions are
+  when a new label is added, a document's label is deleted, or a label is
+  deleted. In those cases, we train the classifier from scratch. Also, for final
+  results in Section~\ref{sec:user_exp_results}, we train a classifier from
+  scratch.}  We use cross validation on prominent topic as labels to set the parameters for
+learning the classifier.\footnote{We use
+  \texttt{blockSize}=$\frac{1}{\#\mbox{examples}}$ \texttt{minEpochs}=100,
+  \texttt{learningRate}=0.1, \texttt{minImprovement}=0.01,
+  \texttt{maxEpochs}=1000, and \texttt{rollingAverageSize}=5. The regression is unregularized.}
+
+The features for classification include topic probabilities, unigrams,
+and the fraction of labeled documents in each document's prominent
+topic. The intuition behind adding this last feature is to allow
+active learning to suggest documents in a diverse range of topics if
+it finds this feature a useful indicator of
+uncertainty.\footnote{However, final classifier's coefficients suggested that this feature did not have a large
+  effect.}
+
+
+
+
+
+
+
+
+
+
+ 
+ 
+
+\subsection{Evaluation Metrics}
+\label{sub:eval}
+
+
+ 
+    Our goal is to create a system that allows users
+to quickly induce a high-quality label set.  We compare the
+user-created label sets against the data's gold label sets.  Comparing
+different clusterings is a difficult task, so we use three clustering
+evaluation metrics: purity~\cite{purity}, rand
+index~\cite[\abr{ri}]{rand1971objective}, and normalized mutual
+information~\cite[\abr{nmi}]{strehl2003cluster}.\footnote{We avoided using adjusted rand index~\cite{hubert1985comparing}, because it can yield negative values, which is not consistent with purity and \abr{nmi}. We also computed
+  variation of information~\cite{meilua2003comparing} and normalized
+  information distance~\cite{vitanyi2009normalized} and observed consistent trends. We omit these results for the sake of space.}
+
+\paragraph{Purity}
+
+Purity measures how ``pure'' user clusters are compared to gold
+clusters. Given each user cluster, it measures what fraction of the documents in a user
+cluster belong to the most frequent gold label in that cluster:
+\begin{equation}
+\label{eq:purity}
+\mbox{purity}(\mathbf{U},\mathbf{G}) = \frac{1}{N}\sum\limits_{l} \max\limits_{j}|U_l \cap G_j|,
+\end{equation}
+where $L$ is the number of labels user creates, $\mathbf{U} = \{U_1,
+U_2, \dots,U_L\}$ is the user clustering of documents, $\mathbf{G} =
+\{G_1, G_2, \dots, G_J\}$ is gold clustering of documents, and $N$ is
+the total number of documents. The user $U_l$ and gold $G_j$ labels
+are interpreted as sets containing all documents assigned to that label.
+
+\paragraph{Rand index (\abr{ri})}
+
+\abr{ri} is a \emph{pair counting based} measure, where cluster
+evaluation is considered as a series of decisions. If two documents
+have the same gold label and the same/different user label (\abr{tp}/\abr{fn}) and if
+they do not have the same gold label and are not/are assigned the same user
+label (\abr{tn}/\abr{fp}) the decision is right/wrong. \abr{ri} measures the
+percentage of decisions that are right:
+\begin{equation}
+\label{eq:ri}
+\mbox{RI} = \frac{TP+TN}{TP+FP+TN+FN}.
+\end{equation}
+
+\paragraph{Normalized mutual information (NMI)}
+\abr{nmi} is an \emph{information theoretic based} measure that
+measures the amount of information one gets about the gold clusters by
+knowing what the user clusters are:
+\begin{equation}
+\label{eq:nmi}
+	\mbox{NMI}(\mathbf{U},\mathbf{G})= \frac{2\mathbb{I}(\mathbf{U},\mathbf{G})}{\mathbb{H}_{\mathbf{U}}+\mathbb{H}_{\mathbf{G}}},
+\end{equation}
+where $\mathbf{U}$ and $\mathbf{G}$ are user and gold clusters,
+$\mathbb{H}$ is the entropy and $\mathbb{I}$ is mutual
+information~\cite{bouma-09}.
+
+
+While purity, \abr{ri}, and \abr{nmi} are all normalized within $[0,1]$
+(higher is better), they measure different things.  Purity measures
+the intersection between two clusterings, it is sensitive to the
+number of clusters, and it is not symmetric. 
+  
+  On the other hand, \abr{ri} and
+\abr{nmi} are less sensitive to the number of clusters and are
+symmetric. \abr{ri} measures pairwise agreement in contrast to purity
+that directly measures intersection. Moreover, \abr{nmi} measures
+shared information between two clusterings.
+
+None of these metrics are perfect: purity can be exploited by putting
+each document in its own label, \abr{ri} does not distinguish
+separating similar documents with distinct labels from giving dissimilar documents
+the same label, and \abr{nmi}'s ability to compare different numbers of clusters
+means that it sometimes gives high scores for clusterings by
+chance. Given the diverse nature of these metrics, if a labeling does
+well in all three of them, we can be relatively confident that it is not
+a degenerate solution that games the system.
+
+
+
+
+
+
+
+
