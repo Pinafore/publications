@@ -1,0 +1,31 @@
+\section{Conclusions and Future Work}
+\label{sec:conclusion}
+
+We introduce \lexwsbmedrtm, a discriminative topic model that jointly
+models topics and document links, detecting blocks in the document
+network probabilistically by embedding the weighted stochastic block
+model, rather via connected-components as in previous models.  A
+separate Dirichlet prior for each block captures its topic
+preferences, serving as an informed prior when inferring documents'
+topic distributions. Max-margin learning learns to predict links from
+documents' topic and word distributions and block assignments.
+
+Our model better captures the connections and content of paper abstracts,
+as measured by predictive link rank and topic quality.
+\lexwsbmedrtm yields topics with better coherence, though not all
+techniques contribute to the improvement. We support our
+quantitative results with qualitative analysis looking at a pair of
+example documents and at a pair of blocks, highlighting the robustness
+of embedded \wsbm over blocks defined as \scc.
+
+As next steps, we plan to explore model variations to support a wider range of
+use cases. For example, although we have presented a version of the model
+defined using undirected binary weight edges in the experiment, it would be
+straightforward to adapt to model both directed/undirected and
+binary/nonnegative real weight edges. We are also interested in modeling
+changing topics and vocabularies~\cite{blei-06b,zhai-13}.  In the spirit of
+treating links probabilistically, we plan to explore application of the model in
+suggesting links that do not exist but should, for example in discovering missed
+citations, marking social dynamics~\cite{nguyen-2014-sits-journal}, and identifying topically
+related content in multilingual networks of
+documents~\cite{Hu:Zhai:Eidelman:Boyd-Graber-2014}.

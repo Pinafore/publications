@@ -1,0 +1,35 @@
+\section{Related Work}
+\label{sec:related_work}
+
+Topic models are widely used in information retrieval~\cite{wei-2006-lda-ir},
+word sense disambiguation~\cite{boyd-graber-2007-tm-wsd}, dialogue
+segmentation~\cite{purver-2006-dialog-seg}, and collaborative
+filtering~\cite{marlin-2003-tm-cf}.
+
+Topic models can be extended in either \emph{upstream} or \emph{downstream} way.
+\emph{Upstream} models generate topics conditioned on supervisory
+information~\cite{daume-2009-mrtf,mimno-2012-dir-mult-reg,li-2005-tm-cv}.
+\emph{Downstream} models, on the contrary, generates topics and supervisory data
+simultaneously, which turns unsupervised topic models to (semi-)supervised ones.
+Supervisory data, like labels of documents and links between documents, can be
+generated from either a maximum likelihood estimation
+approach~\cite{mcauliffe-2008-slda,chang-2010-rtm,boyd-graber-2010-mlslda} or a
+maximum entropy discrimination
+approach~\cite{zhu-2012-medlda,Yang:Boyd-Graber:Resnik-2015}.
+
+In block detection literature, stochastic block
+model~\cite[\textsc{sbm}]{holland-1983-sbm,wang-1987-sbm-directed} is one of the
+most basic generative models dealing with binary-weighted edges.  \textsc{sbm}
+assumes that each node belongs to only one block and each link exists with a
+probability that depends on the block assignments of its connecting nodes.  It
+has been generalized for
+degree-correction~\cite{karrer-2011-sbm-degree-correction}, bipartite
+structure~\cite{larremore-2014-sbm-bipartite}, and categorial
+values~\cite{guimera-2013-sbm-categorical}, as well as nonnegative integer-weight
+network~\cite[\wsbm]{aicher-2014-wsbm}.
+
+Our model combines both topic model and block detection in a unified framework.
+It takes text, links, and the interaction between text and links into account
+simultaneously, contrast to the methods that only consider graph
+structure~\cite{kim-2012-lmmg,liben-2007-link-pred} or separate text and
+links~\cite{chaturvedi-2012-topical-graph-kernel}.

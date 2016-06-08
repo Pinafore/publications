@@ -1,0 +1,133 @@
+
+
+
+
+\documentclass[11pt]{article}
+\usepackage{style/acl2016}
+\usepackage{times}
+\usepackage{latexsym}
+\usepackage{bm,bbm}
+\usepackage{enumitem}
+\usepackage{amsmath,amssymb}
+\usepackage{xcolor,color}
+\usepackage{graphicx,subfigure}
+\usepackage{algorithm,algorithmicx,algpseudocode}
+\usepackage{xspace}
+\usepackage{multirow}
+\usepackage{hhline}
+
+\aclfinalcopy
+\def\aclpaperid{631}
+
+
+
+
+
+\newcommand\BibTeX{B{\sc ib}\TeX}
+
+
+
+
+
+
+
+
+\newcommand{\jbgcomment}[1]{}
+\newcommand{\wycomment}[1]{}
+\newcommand{\psrcomment}[1]{}
+\newcommand{\comment}[1]{}
+
+\newcommand{\ignore}[1]{}
+
+
+\newcommand{\lda}{\textsc{lda}\xspace}
+\newcommand{\lex}{\textsc{l}}
+\newcommand{\wsb}{\textsc{b}}
+\newcommand{\med}{\textsc{h}}
+\newcommand{\sccprefix}{\textsc{c}}
+\newcommand{\sigmoid}{\textsc{s}}
+\newcommand{\rtm}{\textsc{rtm}\xspace}
+\newcommand{\lexsccmedrtm}{\lex\sccprefix\med-\rtm}
+\newcommand{\wsbrtm}{\wsb\sigmoid-\rtm}
+\newcommand{\lexwsbrtm}{\lex\wsb\sigmoid-\rtm}
+\newcommand{\lexwsbmedrtm}{\lex\wsb\med-\rtm}
+\newcommand{\bplda}{\textsc{bp}-\lda}
+\newcommand{\vfrtm}{\textsc{vf}-\rtm}
+
+\newcommand{\sbm}{\textsc{sbm}\xspace}
+\newcommand{\wsbm}{\textsc{wsbm}\xspace}
+\newcommand{\scc}{\textsc{scc}\xspace}
+\newcommand{\cora}{\textsc{Cora}\xspace}
+\newcommand{\webkb}{\textsc{WebKB}\xspace}
+\newcommand{\plr}{\textsc{plr}\xspace}
+\newcommand{\fet}{\textsc{fet}\xspace}
+\newcommand{\llr}{\textsc{llr}\xspace}
+\newcommand{\nn}{\textsc{nn}\xspace}
+\newcommand{\mcmc}{\textsc{mcmc}\xspace}
+\newcommand{\lbfgs}{\textsc{l-bfgs}\xspace}
+
+
+\newcommand{\bigbrack}[1]{\left( #1 \right)}
+\newcommand{\prob}[2]{\Pr \bigbrack{#1 \,|\, #2}}
+\newcommand{\ind}[1]{\mathbbm{1}\bigbrack{#1}}
+
+
+\newcommand{\tabincell}[2]{\begin{tabular}{@{}#1@{}}#2\end{tabular}}
+
+
+\newcommand{\red}[1]{{\color{red}{#1}}}
+\newcommand{\blue}[1]{{\color{blue}{#1}}}
+\newcommand{\green}[1]{{\color{green}{#1}}}
+\newcommand{\magenta}[1]{{\color{magenta}{#1}}}
+
+\newcommand{\sectfile}[1]{\input{2016_acl_docblock/sections/#1}}
+
+\title{A Discriminative Topic Model using Document Network Structure}
+
+\author{Weiwei Yang\\
+  Computer Science \\
+  University of Maryland \\
+  College Park, MD \\
+  {\tt wwyang@cs.umd.edu} \\\And
+  Jordan Boyd-Graber \\
+  Computer Science \\
+  University of Colorado \\
+  Boulder, CO \\
+  {\tt Jordan.Boyd.Graber@} \\
+  {\tt colorado.edu}\\\And
+  Philip Resnik \\
+  Linguistics and \textsc{umiacs} \\
+  University of Maryland \\
+  College Park, MD \\
+  {\tt resnik@umd.edu} \\
+}
+
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\sectfile{00Abstract}
+
+\sectfile{01Introduction}
+
+\sectfile{01.5SBM_RTM}
+
+\sectfile{03Model}
+
+\sectfile{04Inference}
+
+\sectfile{05Experiments}
+
+\sectfile{02Related_Work}
+
+\sectfile{06Conclusions}
+
+\sectfile{Acknowledgement}
+
+\bibliography{bib/journal-full,bib/jbg,bib/wwyang}
+\bibliographystyle{style/acl2016}
+
+
+\end{document}
