@@ -1,0 +1,208 @@
+\section{Posterior Inference}
+\label{sec:inference}
+
+Posterior inference (Algorithm~\ref{alg:sampling}) consists of the sampling of
+topic and block assignments and the optimization of weight vectors and
+matrix.\footnote{More details about sampling procedures and equations in this
+  section (including the sampling and optimization equations using sigmoid loss)
+  are available in the supplementary material.}  We add an auxiliary variable
+$\bm{\lambda}$ for hinge loss (see Section~\ref{ssec:topic_sampling}), so the
+updating of~$\bm{\lambda}$ is not necessary when using sigmoid loss.
+
+\begin{algorithm}[t!]
+\caption{Sampling Process}\label{alg:sampling}
+\begin{algorithmic}[1]
+    \State Set $\bm{\lambda}=1$ and initialize topic assignments \label{alg-line:init}
+    \For{$m=1$ to $M$}
+        \State Optimize $\bm{\eta}$, $\bm{\tau}$, and $\bm{\rho}$ using \lbfgs \label{alg-line:opt}
+        \For{$d=1$ to $D$}
+            \State Draw block assignment $y_d$ \label{alg-line:block}
+            \For{each token $n$}
+                \State Draw a topic assignment $z_{d,n}$ \label{alg-line:topic}
+            \EndFor
+            \For{each explicit link $(d, d')$}
+                \State Draw $\lambda_{d,d'}^{-1}$ (and then $\lambda_{d,d'}$) \label{alg-line:lambda}
+            \EndFor
+        \EndFor
+    \EndFor
+\end{algorithmic}
+\end{algorithm}
+
+The sampling procedure is an iterative process after initialization
+(Line~\ref{alg-line:init}).  In each iteration, we first optimize the
+weight vectors and matrix (Line~\ref{alg-line:opt}) before updating
+documents' block assignments (Line~\ref{alg-line:block}) and topic
+assignments (Line~\ref{alg-line:topic}).  When using hinge loss, the
+auxiliary variable~$\bm{\lambda}$ for every explicit link needs to be
+updated (Line~\ref{alg-line:lambda}).
+
+\subsection{Sampling Block Assignments}
+\label{ssec:block_sampling}
+
+Block assignment sampling is done by Gibbs sampling, using the block
+assignments and links in~$\bm{A}$ excluding document~$d$ and its
+related links.\footnote{These equations deal with undirected edges,
+  but they can be adapted for directed edges. See supplementary
+  material.}  The probability that~$d$ is assigned to block~$l$
+is\par\nobreak
+\begin{small}
+\begin{align}
+\Pr ( &y_d=l \,|\, \bm{A}_{-d}, \bm{y}_{-d}, a, b, \gamma ) \propto \bigbrack{N_l^{-d}+\gamma} \times \notag\\
+&\prod_{l'} \frac {\bigbrack{S_e^{-d}(l,l') + b}^{S_w^{-d}(l,l') + a}} {\bigbrack{S_e^{-d}(l,l') + b + S_e(d,l')}^{S_w^{-d}(l,l') + a + S_w(d,l')}} \notag\\
+&\prod_{i=0}^{S_w(d,l') - 1} \bigbrack{S_w^{-d}(l,l') + a + i}, \label{equ:block_sampling}
+\end{align}
+\end{small}
+\noindent where~$N_l$ is the number of documents assigned to block~$l$;
+$^{-d}$ denotes that the count excludes document~$d$;
+$S_w(d,l)$ and~$S_w(l,l')$ are the sums of link weights from document~$d$ to block~$l$ and from block~$l$ to block~$l'$, respectively:\par\nobreak
+\begin{small}
+\begin{align}
+S_w(d,l) =& \sum_{d': y_{d'} = l} A_{d,d'}\\
+S_w(l,l') =& \sum_{d: y_d = l} S_w(d,l').
+\end{align}
+\end{small}
+
+\noindent $S_e(d,l)$ is the number of possible links from document~$d$
+to~$l$ (i.e., assuming document~$d$ connects to every document in
+block~$l$), which equals~$N_l$.  The number of possible links from
+block~$l$ to~$l'$ is~$S_e(l,l')$ (i.e., assuming every document in
+block~$l$ connects to every document in block~$l'$):
+\begin{equation}
+\small
+S_e(l,l')=
+\left\{
+    \begin{array}{cc}
+        N_l\times N_{l'} & l\neq l'\\
+        \frac{1}{2} N_l (N_l-1) & l=l'.
+    \end{array}
+\right.
+\end{equation}
+
+If we rearrange the terms of Equation~\ref{equ:block_sampling} and put
+the terms which have~$S_w(d,l')$ together, the value of~$S_w(d,l')$
+increases (i.e., document~$d$ is more densely connected with documents
+in block~$l'$), the probability of assigning~$d$ to block~$l$
+decreases exponentially. Thus if~$d$ is more densely connected with
+block~$l$ and sparsely connected with other blocks, it is
+more likely to be assigned to block~$l$.
+
+\subsection{Sampling Topic Assignments}
+\label{ssec:topic_sampling}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Following~\newcite{polson-2011-data}, by introducing an auxiliary
+variable~$\lambda_{d,d'}$, the conditional probability of assigning~$t_{d,n}$, the $n$-th token in document~$d$, to topic~$k$
+is\par\nobreak
+\begin{small}
+\begin{align}
+\Pr (z_{d,n}&=k \,|\,\bm{z}_{-d,n}, \bm{w}_{-d,n}, w_{d,n}=v, y_d=l) \notag\\
+\propto&\bigbrack{N_{d,k}^{-d,n} + \alpha \pi_{l,k}^{-d,n}} \frac {N_{k,v}^{-d,n} + \beta} {N_{k,\cdot}^{-d,n} + V\beta} \notag\\
+&\prod_{d'} \exp \bigbrack{- \frac {(\zeta_{d,d'}+\lambda_{d,d'})^2} {2\lambda_{d,d'}}}, \label{equ:topic_sampling}
+\end{align}
+\end{small}
+where~$N_{d,k}$ is the number of tokens in document~$d$ that are
+assigned to topic~$k$; $N_{k,v}$ denotes the count of word~$v$
+assigned to topic~$k$; Marginal counts are denoted by~$\cdot$;
+$^{-d,n}$ denotes that the count excludes~$t_{d,n}$; $d'$ denotes all
+documents that have explicit links with document~$d$.  The block topic
+prior~$\pi_{l,k}^{-d,n}$ is estimated based on the maximal path
+assumption~\cite{cowans-2006-thesis,wallach-2008-thesis}:
+\begin{equation}\label{equ:pi}
+\small
+\pi_{l,k}^{-d,n} = \frac {\sum_{d': y_{d'}=l} N_{d',k}^{-d,n} + \alpha'} {\sum_{d': y_{d'}=l} N_{d',\cdot}^{-d,n} + K\alpha'}.
+\end{equation}
+the link prediction argument $\zeta_{d,d'}$ is
+\begin{equation}\label{equ:zeta}
+\small
+\zeta_{d,d'} = 1 - B_{d,d'} \bigbrack{\frac{\eta_k}{N_{d,\cdot}} \frac{N_{d',k}}{N_{d',\cdot}} + R_{d,d'}^{-d,n}}.
+\end{equation}
+where\par\nobreak
+\begin{small}
+\begin{align}
+R_{d,d'}^{-d,n} =& \sum_{k=1}^{K} \eta_{k} \frac{N_{d,k}^{-d,n}}{N_{d,\cdot}} \frac{N_{d',k}}{N_{d',\cdot}} + \notag\\
+&\sum_{v=1}^{V} \tau_{v} \frac{N_{d,v}}{N_{d,\cdot}} \frac{N_{d',v}}{N_{d',\cdot}} + \rho_{y_d, y_{d'}} \Omega_{y_d, y_{d'}}.
+\end{align}
+\end{small}
+
+Looking at the first term of Equation~\ref{equ:topic_sampling}, the
+probability of assigning~$t_{d,n}$ to topic~$k$ depends not only on
+its own topic distribution, but also the topic distribution of the
+block it belongs to.  The links also matter: Equation~\ref{equ:zeta}
+gives us the intuition that a topic which could increase the
+likelihood of links is more likely to be selected, which forms an
+interaction between topics and the link graph---the links are guiding
+the topic sampling while updating topic assignments is maximizing the
+likelihood of the link graph.
+
+\subsection{Parameter Optimization}
+\label{ssec:opt}
+
+While topic assignments are updated iteratively, the weight vectors
+and matrix~$\bm{\eta}$,~$\bm{\tau}$, and~$\bm{\rho}$ are optimized in
+each global iteration over the whole corpus using
+\lbfgs~\cite{liu-1989-lbfgs}. It takes the likelihood of generating~$\bm{B}$ using~$\bm{\eta}$,~$\bm{\tau}$,~$\bm{\rho}$, and current topic
+and block assignments as the objective function, and optimizes it
+using the partial derivatives with respect to every weight
+vector/matrix element.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+The log likelihood of~$\bm{B}$ using hinge loss is\par\nobreak
+\begin{small}
+\begin{align}
+\mathcal{L} (\bm{B}) \propto& -\sum_{d,d'} \frac{R_{d,d'}^2 - 2(1+\lambda_{d,d'})B_{d,d'}R_{d,d'}}{2\lambda_{d,d'}} \notag\\
+&- \sum_{k=1}^{K} \frac{\eta_k^2}{2\nu^2} - \sum_{v=1}^{V} \frac{\tau_v^2}{2\nu^2} - \sum_{l=1}^{L} \sum_{l'=1}^{L} \frac{\rho_{l,l'}^2}{2\nu^2}.
+\end{align}
+\end{small}
+
+We also need to update the auxiliary variable~$\lambda_{d,d'}$.  Since
+the likelihood of~$\lambda_{d,d'}$ follows a generalized inverse
+Gaussian distribution $\mathrm{GIG} \bigbrack{\lambda_{d,d'};
+  \frac{1}{2}, 1, \zeta_{d,d'}^2}$, we sample its reciprocal~$\lambda_{d,d'}^{-1}$ from an inverse Gaussian distribution as
+\begin{equation}\label{equ:lambda}
+\small
+\prob{\lambda_{d,d'}^{-1}}{\bm{z}, \bm{w}, \bm{\eta}, \bm{\tau}, \bm{\rho}} = \mathrm{IG} \bigbrack{\lambda_{d,d'}^{-1}; \frac{1}{|\zeta_{d,d'}|}, 1}.
+\end{equation}

@@ -1,0 +1,82 @@
+\section{Introduction}
+\label{sec:intro}
+
+
+Documents often appear within a network structure: social media
+mentions, retweets, and follower relationships; Web
+pages by hyperlinks; scientific papers by citations. Network structure
+interacts with the topics in the text, in that documents linked in a
+network are more likely to have similar topic distributions.  For
+instance, a citation link between two papers suggests that they are
+about a similar field, and a mentioning link between two social media
+users often indicates common interests.  Conversely, documents'
+similar topic distributions can suggest links between them.  For
+example, topic model~\cite[\lda]{blei-2003-lda} and block detection
+papers~\cite{holland-1983-sbm} are relevant to our research, so we cite
+them.  Similarly, if a social media user~A finds another user~B with
+shared interests, then~A is more likely to follow~B.
+
+
+
+
+
+
+
+
+
+
+
+
+
+Our approach is part of a natural progression of network modeling in
+which models integrate more information in more sophisticated
+ways. Some past methods only consider the network
+itself~\cite{kim-2012-lmmg,liben-2007-link-pred}, which loses the rich
+information in text. In other cases, methods take both links and text
+into account~\cite{chaturvedi-2012-topical-graph-kernel}, but they are
+modeled separately, not jointly, limiting the model's ability to
+capture interactions between the two.  The \emph{relational topic
+  model}~\cite[\rtm]{chang-2010-rtm} goes further, jointly modeling
+topics and links, but it considers only pairwise document
+relationships, failing to capture network structure at the level of
+groups or \emph{blocks} of documents.  
+
+We propose a new joint model that makes fuller use of
+the rich link structure within a document network.  Specifically, our
+model embeds the \emph{weighted stochastic block
+  model}~\cite[\wsbm]{aicher-2014-wsbm} to identify blocks in which
+documents are densely connected.  \wsbm basically categorizes each
+item in a network probabilistically as belonging to one of~$L$ blocks,
+by reviewing its connections with each block. Our model can be viewed
+as a principled probabilistic extension
+of~\newcite{Yang:Boyd-Graber:Resnik-2015}, who identify blocks in a
+document network deterministically as \emph{strongly connected
+  components} (\scc). Like them, we assign a distinct Dirichlet prior
+to each block to capture its topical commonalities.  Jointly, a linear
+regression model with a discriminative, max-margin objective
+function~\cite{zhu-2012-medlda,zhu-2014-max-margin} is trained to
+reconstruct the links, taking into account the features of documents'
+topic and word distributions~\cite{nguyen-2013-lexical}, block
+assignments, and inter-block link
+rates. 
+
+We validate our approach on a scientific paper abstract dataset and collection of webpages,
+with citation links and hyperlinks respectively, to predict links among previously unseen documents and
+from those new documents to training documents. Embedding the \wsbm in
+a network/topic model leads to substantial improvements in link
+prediction over previous models; it also improves block detection and
+topic interpretability. The key advantage in embedding \wsbm is its
+flexibility and robustness in the face of noisy links. Our results
+also lend additional support for using max-margin learning for a
+``downstream'' supervised topic model~\cite{mcauliffe-2008-slda}, and
+that predictions from lexical as well as topic features improves
+performance~\cite{nguyen-2013-lexical}.
+
+The rest of this paper is organized as follows.  Section~\ref{sec:links}
+introduces two previous link-modeling methods, \wsbm and \rtm.
+Section~\ref{sec:model} presents our methods to incorporate block priors in
+topic modeling and include various features in link prediction, as well as the
+aggregated discriminative topic model whose posterior inference is introduced in
+Section~\ref{sec:inference}.  In Section~\ref{sec:experiments} we show how our
+model can improve link prediction and (often) improve topic coherence.
+
