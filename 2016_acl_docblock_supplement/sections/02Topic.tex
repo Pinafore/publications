@@ -1,0 +1,90 @@
+\section{Sampling Topic Assignments}
+\label{sec:topic}
+
+The joint probability of topic assignments $\prob {\bm{z}, \bm{w}} {\alpha, \beta, \bm{\pi}, \bm{y}}$ is
+\begin{eqnarray}
+&&\prob {\bm{z}, \bm{w}, \bm{B}} {\alpha, \beta, \bm{\pi}, \bm{y}, \bm{\Omega}, \bm{\eta}, \bm{\tau}, \bm{\rho}}\\
+&=& \int \int \prob {\bm{z}} {\bm{\theta}} \prob {\bm{\theta}} {\alpha, \bm{\pi}, \bm{y}} \prob {\bm{w}} {\bm{z}, \bm{\phi}} \prob {\bm{\phi}} {\beta} \mathrm{d} \bm{\theta} \mathrm{d} \bm{\phi} \cdot \prob {\bm{B}} {\bm{z}, \bm{w}, \bm{y}, \bm{\Omega}, \bm{\eta}, \bm{\tau}, \bm{\rho}}\\
+&=& \int \int \left( \prod_{d=1}^{D} \prod_{k=1}^{K} \theta_{d,k}^{N_{d,k}} \right) \left( \prod_{d=1}^{D} \frac {1} {\Delta(\alpha \bm{\pi_{y_d}})} \prod_{k=1}^{K} \theta_{d,k}^{\alpha \pi_{y_d,k} -1} \right) \left( \prod_{k=1}^{K} \prod_{v=1}^{V} \phi_{k,v}^{N_{k,v}} \right) \notag \\
+&&\left( \prod_{k=1}^{K} \frac {1} {\Delta(\beta)} \prod_{v=1}^{V} \phi_{k,v}^{\beta-1} \right) \mathrm{d} \bm{\theta} \mathrm{d} \bm{\phi} \cdot \prod_{d,d'} \Psi \left( B_{d,d'} \,|\, \bm{z_d}, \bm{z_{d'}}, \bm{w_d}, \bm{w_{d'}}, y_d, y_{d'}, \bm{\Omega}, \bm{\eta}, \bm{\tau}, \bm{\rho} \right)\\
+&=& \int \int \left( \prod_{d=1}^{D} \frac {1} {\Delta(\alpha \bm{\pi_{y_d}})} \prod_{k=1}^{K} \theta_{d,k}^{N_{d,k}+\alpha \pi_{y_d,k}-1} \right) \left( \prod_{k=1}^{K} \frac {1} {\Delta(\beta)} \prod_{v=1}^{V} \phi_{k,v}^{N_{k,v}+\beta-1} \right) \mathrm{d} \bm{\theta} \mathrm{d} \bm{\phi} \notag\\
+&& \prod_{d,d'} \Psi \left( B_{d,d'} \,|\, \bm{z_d}, \bm{z_{d'}}, \bm{w_d}, \bm{w_{d'}}, y_d, y_{d'}, \bm{\Omega}, \bm{\eta}, \bm{\tau}, \bm{\rho} \right)\\
+&=& \prod_{d=1}^{D} \frac {\Delta(\bm{N_d}+\alpha \bm{\pi_{y_d}})} {\Delta(\alpha \bm{\pi_{y_d}})} \prod_{k=1}^{K} \frac {\Delta(\bm{N_k}+\beta)} {\Delta(\beta)} \prod_{d,d'} \Psi \left( B_{d,d'} \,|\, \bm{z_d}, \bm{z_{d'}}, \bm{w_d}, \bm{w_{d'}}, y_d, y_{d'}, \bm{\Omega}, \bm{\eta}, \bm{\tau}, \bm{\rho} \right).
+\end{eqnarray}
+
+The Gibbs sampling equation is then derived as
+\begin{eqnarray}
+&&\prob {z_{d,n}=k} {\bm{z_{-d,n}}, w_{d,n}=v, \bm{w_{-d,n}}, \bm{B}, \alpha, \beta, \bm{\pi}, \bm{y_{-d}}, y_d=l, \bm{\Omega}, \bm{\eta}, \bm{\tau}, \bm{\rho}}\\
+&=& \frac {\prob {z_{d,n}=k, \bm{z_{-d,n}}, w_{d,n}=v, \bm{w_{-d,n}}, \bm{B}} {\alpha, \beta, \bm{\pi}, \bm{y_{-d}}, y_d=l, \bm{\Omega}, \bm{\eta}, \bm{\tau}, \bm{\rho}}} {\prob {\bm{z_{-d,n}}, \bm{w_{-d,n}}, \bm{B_{-d,n}}} {\alpha, \beta, \bm{\pi}, \bm{y_{-d}}, y_d=l, \bm{\Omega}, \bm{\eta}, \bm{\tau}, \bm{\rho}}}\\
+&=& \frac {\Delta(\bm{N_d}+\alpha \bm{\pi_l})} {\Delta(\bm{N_d^{-d,n}}+\alpha \bm{\pi_l})} \frac {\Delta(\bm{N_k} + \beta)} {\Delta(\bm{N_k^{-d,n}}+\beta)} \notag\\
+&&\prod_{d'} \frac {\Psi \left( B_{d,d'} \,|\, z_{d,n}=k, \bm{z_{-d,n}}, \bm{z_{d'}}, w_{d,n}=v, \bm{w_{-d,n}}, \bm{w_{d'}}, y_d, y_{d'}, \bm{\Omega}, \bm{\eta}, \bm{\tau}, \bm{\rho} \right)} {\Psi \left( B_{d,d'} \,|\, \bm{z_{-d,n}}, \bm{z_{d'}}, \bm{w_{-d,n}}, \bm{w_{d'}}, y_d, y_{d'}, \bm{\Omega}, \bm{\eta}, \bm{\tau}, \bm{\rho} \right)}\\
+&\propto& \left( N_{d,k}^{-d,n} + \alpha \pi_{l,k}^{-d,n} \right) \frac {N_{k,v}^{-d,n}+\beta} {N_{k,\cdot}^{-d,n}+V\beta} \notag\\
+&&\prod_{d'} \Psi \left( B_{d,d'} \,|\, z_{d,n}=k, \bm{z_{-d,n}}, \bm{z_{d'}}, w_{d,n}=v, \bm{w_{-d,n}}, \bm{w_{d'}}, y_d, y_{d'}, \bm{\Omega}, \bm{\eta}, \bm{\tau}, \bm{\rho} \right),
+\end{eqnarray}
+where $\pi_{l,k}^{-d,n}$ is estimated based on maximal path assumption~\cite{cowans-2006-thesis,wallach-2008-thesis}
+\begin{equation}
+\pi_{l,k}^{-d,n} = \frac {\sum_{d': y_{d'}=l} N_{d',k}^{-d,n} + \alpha'} {\sum_{d': y_{d'}=l} N_{d',\cdot}^{-d,n} + K\alpha'}.
+\end{equation}
+
+\subsection{Sigmoid Loss}
+\label{subsec:sigmoid_topic}
+
+We split $d'$ into two subsets: $\posd$ and $\negd$. $\posd$ denotes the documents that have positive links (observed links, with weight 1) with $d$. $\negd$ denotes the documents that have negative links (sampled from unobserved links, with weight 0). When using sigmoid loss, the probability of a positive link between documents $d$ and $\posd$ is
+\begin{eqnarray}
+&&\prob {B_{d,\posd}=1} {\bm{z_d}, \bm{z_{\posd}}, \bm{w_d}, \bm{w_{\posd}}, y_d, y_{\posd}, \bm{\Omega}, \bm{\eta}, \bm{\tau}, \bm{\rho}}\\
+&=& \sigma \left( \bm{\eta}^\mathrm{T} (\bm{\overline{z}_d} \circ \bm{\overline{z}_{\posd}}) + \bm{\tau}^\mathrm{T} (\bm{\overline{w}_d} \circ \bm{\overline{w}_{\posd}}) + \rho_{y_d, y_{\posd}} \Omega_{y_d,y_{\posd}} \right)\\
+&=& \sigma \left( \sum_{k=1}^{K} \eta_k \frac {N_{d,k}} {N_{d,\cdot}} \frac {N_{\posd,k}} {N_{\posd,\cdot}} + \sum_{v=1}^{V} \tau_v \frac {N_{d,v}} {N_{d,\cdot}} \frac {N_{\posd,v}} {N_{\posd,\cdot}} + \rho_{y_d, y_{\posd}} \Omega_{y_d,y_{\posd}} \right),
+\end{eqnarray}
+where $\sigma(x) = 1/ (1+\exp(-x))$.
+
+Contrarily, the probability of a negative link between documents $d$ and $\negd$ is
+\begin{eqnarray}
+&&\prob {B_{d,\negd}=0} {\bm{z_d}, \bm{z_{\negd}}, \bm{w_d}, \bm{w_{\negd}}, y_d, y_{\negd}, \bm{\Omega}, \bm{\eta}, \bm{\tau}, \bm{\rho}}\\
+&=& 1 - \sigma \left( \sum_{k=1}^{K} \eta_k \frac {N_{d,k}} {N_{d,\cdot}} \frac {N_{\negd,k}} {N_{\negd,\cdot}} + \sum_{v=1}^{V} \tau_v \frac {N_{d,v}} {N_{d,\cdot}} \frac {N_{\negd,v}} {N_{\negd,\cdot}} + \rho_{y_d, y_{\negd}} \Omega_{y_d,y_{\negd}} \right).
+\end{eqnarray}
+
+Therefore, the Gibbs sampling equation is
+\begin{eqnarray}
+&&\prob {z_{d,n}=k} {\mathrm{rest}}\\
+&\propto& \left( N_{d,k}^{-d,n} + \alpha \pi_{l,k}^{-d,n} \right) \frac {N_{k,v}^{-d,n}+\beta} {N_{k,\cdot}^{-d,n}+V\beta} \notag\\
+&&\prod_{\posd} \sigma \left( \frac {\eta_k} {N_{d,\cdot}} \frac {N_{\posd,k}} {N_{\posd,\cdot}} + \sum_{k'=1}^{K} \eta_{k'} \frac {N_{d,k'}^{-d,n}} {N_{d,\cdot}} \frac {N_{\posd,k'}} {N_{\posd,\cdot}} + \sum_{v=1}^{V} \tau_v \frac {N_{d,v}} {N_{d,\cdot}} \frac {N_{\posd,v}} {N_{\posd,\cdot}} + \rho_{y_d, y_{\posd}} \Omega_{y_d,y_{\posd}} \right) \label{eq:sigmoid_topic}\\
+&&\prod_{\negd} \left( 1 - \sigma \left( \frac {\eta_k} {N_{d,\cdot}} \frac {N_{\negd,k}} {N_{\negd,\cdot}} + \sum_{k'=1}^{K} \eta_{k'} \frac {N_{d,k'}^{-d,n}} {N_{d,\cdot}} \frac {N_{\negd,k'}} {N_{\negd,\cdot}} + \sum_{v=1}^{V} \tau_v \frac {N_{d,v}} {N_{d,\cdot}} \frac {N_{\negd,v}} {N_{\negd,\cdot}} + \rho_{y_d, y_{\negd}} \Omega_{y_d,y_{\negd}} \right) \right). \notag
+\end{eqnarray}
+
+\subsection{Hinge Loss}
+\label{subsec:hinge_topic}
+
+When using hinge loss, the probability of a link (either positive or negative, but the weight of a negative link is -1) between documents $d$ and $d'$ is
+\begin{equation}\label{equ:hinge}
+\prob {B_{d,d'}} {\bm{z_d}, \bm{z_{d'}}, \bm{w_d}, \bm{w_{d'}}, y_d, y_{d'}, \bm{\Omega}, \bm{\eta}, \bm{\tau}, \bm{\rho}} = \exp \left( -2c \max (0, \zeta_{d,d'}) \right),
+\end{equation}
+where $c$ is the regularization parameter (it's set to 1 in our experiments, so it does not appear in the paper); $\zeta_{d,d'}$ is defined as
+\begin{equation}
+\zeta_{d,d'} = 1 - B_{d,d'} R_{d,d'},
+\end{equation}
+$R_{d,d'}$ is defined in Equation~\ref{equ:w_def}.\\
+
+Equation~\ref{equ:hinge} can be rewritten by introducing a latent variable $\lambda_{d,d'}$~\cite{polson-2011-data} as
+\begin{equation}
+\prob {B_{d,d'}} {\bm{z_d}, \bm{z_{d'}}, \bm{w_d}, \bm{w_{d'}}, y_d, y_{d'}, \bm{\Omega}, \bm{\eta}, \bm{\tau}, \bm{\rho}} = \int_{0}^{\infty} \frac {1} {\sqrt{2\pi \lambda_{d,d'}}} \exp \left( -\frac {(c\zeta_{d,d'}+\lambda_{d,d'})^2} {2\lambda_{d,d'}} \right) \mathrm{d} \lambda_{d,d'}.
+\end{equation}
+
+Thus the Gibbs sampling equation is
+\begin{equation}\label{eq:hinge_topic}
+\prob {z_{d,n}=k} {\mathrm{rest}} \propto \left( N_{d,k}^{-d,n} + \alpha \pi_{l,k} \right) \frac {N_{k,v}^{-d,n}+\beta} {N_{k,\cdot}^{-d,n}+V\beta} \prod_{d'} \exp \left( -\frac {(c\zeta_{d,d'}+\lambda_{d,d'})^2} {2\lambda_{d,d'}} \right).
+\end{equation}
+
+The exponent of final term of the equation above can be expanded as
+\begin{eqnarray}
+&&-\frac {(c\zeta_{d,d'}+\lambda_{d,d'})^2} {2\lambda_{d,d'}}\\
+&\propto& -\frac {c^2 \zeta_{d,d'}^2 + 2c\lambda_{d,d'} \zeta_{d,d'}} {2\lambda_{d,d'}}\\
+&\propto& -\frac {c^2 (1 - B_{d,d'} R_{d,d'})^2 + 2c\lambda_{d,d'} (1 - B_{d,d'} R_{d,d'})} {2\lambda_{d,d'}}\\
+&\propto& -\frac {c^2 (-2B_{d,d'} R_{d,d'} + R_{d,d'}^2) - 2c\lambda_{d,d'} B_{d,d'} R_{d,d'}} {2\lambda_{d,d'}}\\
+&\propto& -\frac {c^2 R_{d,d'}^2} {2\lambda_{d,d'}} + \frac {cB_{d,d'} (c+\lambda_{d,d'}) R_{d,d'}} {\lambda_{d,d'}}\\
+&\propto& -\frac {c^2 \left( \frac {\eta_k} {N_{d,\cdot}} \frac {N_{d',k}} {N_{d',\cdot}} + \sum\limits_{k'=1}^{K} \eta_{k'} \frac {N_{d,k'}^{-d,n}} {N_{d,\cdot}} \frac {N_{d',k'}} {N_{d',\cdot}} + \sum\limits_{v=1}^{V} \tau_v \frac {N_{d,v}} {N_{d',\cdot}} \frac {N_{d',v}} {N_{d',\cdot}} + \rho_{y_d, y_{d'}} \Omega_{y_d, y_{d'}} \right)^2} {2\lambda_{d,d'}} \notag\\
+&& +\frac {cB_{d,d'} (c+\lambda_{d,d'}) \left( \frac {\eta_k} {N_{d,\cdot}} \frac {N_{d',k}} {N_{d',\cdot}} + \sum\limits_{k'=1}^{K} \eta_{k'} \frac {N_{d,k'}^{-d,n}} {N_{d,\cdot}} \frac {N_{d',k'}} {N_{d',\cdot}} + \sum\limits_{v=1}^{V} \tau_v \frac {N_{d,v}} {N_{d',\cdot}} \frac {N_{d',v}} {N_{d',\cdot}} + \rho_{y_d, y_{d'}} \Omega_{y_d, y_{d'}} \right)} {\lambda_{d,d'}}\\
+&\propto& -\frac {c^2 \left( \frac {\eta_k^2} {N_{d,\cdot}^2} \frac {N_{d',k}^2} {N_{d',\cdot}^2} + 2 \frac {\eta_k} {N_{d,\cdot}} \frac {N_{d',k}} {N_{d',\cdot}} \left( \sum\limits_{k'=1}^{K} \eta_{k'} \frac {N_{d,k'}^{-d,n}} {N_{d,\cdot}} \frac {N_{d',k'}} {N_{d',\cdot}} + \sum\limits_{v=1}^{V} \tau_v \frac {N_{d,v}} {N_{d',\cdot}} \frac {N_{d',v}} {N_{d',\cdot}} + \rho_{y_d, y_{d'}} \Omega_{y_d, y_{d'}} \right) \right)} {2\lambda_{d,d'}} \notag\\
+&& +\frac {cB_{d,d'} (c+\lambda_{d,d'}) \frac {\eta_k} {N_{d,\cdot}} \frac {N_{d',k}} {N_{d',\cdot}}} {\lambda_{d,d'}}\\
+&\propto& -\frac {c^2 \left( \eta_k^2 N_{d',k}^2 + 2\eta_k N_{d',k} \left( \sum\limits_{k'=1}^{K} \eta_{k'} N_{d,k'}^{-d,n} N_{d',k'} + \sum\limits_{v=1}^{V} \tau_v N_{d,v} N_{d',v} + \rho_{y_d, y_{d'}} \Omega_{y_d, y_{d'}} N_{d,\cdot} N_{d',\cdot} \right) \right)} {2\lambda_{d,d'} N_{d,\cdot}^2 N_{d',\cdot}^2} \notag\\
+&& + \frac {cB_{d,d'} (c+\lambda_{d,d'}) \eta_k N_{d',k}} {\lambda_{d,d'} N_{d,\cdot} N_{d',\cdot}}. \label{eq:hinge_topic_exp}
+\end{eqnarray} 

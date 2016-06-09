@@ -1,0 +1,80 @@
+\section{Optimizing Parameters}
+\label{sec:optimize}
+
+Let the regression value of documents $d$ and $d'$ be
+\begin{equation}\label{equ:w_def}
+R_{d,d'}=\bm{\eta}^\mathrm{T} (\bm{\overline{z}_d} \circ \bm{\overline{z}_{d'}}) + \bm{\tau}^\mathrm{T} (\bm{\overline{w}_d} \circ \bm{\overline{w}_{d'}}) + \rho_{y_d, y_{d'}} \Omega_{y_d,y_{d'}}.
+\end{equation}
+
+Its partial derivatives are
+\begin{eqnarray}
+\frac{\partial R_{d,d'}}{\partial \eta_k} &=& \frac {N_{d,k}} {N_{d,\cdot}} \frac {N_{d',k}} {N_{d',\cdot}}\\
+\frac{\partial R_{d,d'}}{\partial \tau_v} &=& \frac {N_{d,v}} {N_{d,\cdot}} \frac {N_{d',v}} {N_{d',\cdot}}\\
+\frac{\partial R_{d,d'}}{\partial \rho_{y_d, y_{d'}}} &=& \Omega_{y_d, y_{d'}}.
+\end{eqnarray}
+
+\subsection{Sigmoid Loss}
+\label{subsec:sigmoid_opt}
+
+To optimize regression parameters, we first compute the log likelihood of $\bm{B}$ as
+\begin{eqnarray}
+\mathcal{L}(\bm{B}) &=& \log \prob {\bm{B}} {\bm{z}, \bm{w}, \bm{y}, \bm{\Omega}, \bm{\eta}, \bm{\tau}, \bm{\rho}} + \log \prob {\bm{\eta}} {\nu} + \log \prob {\bm{\tau}} {\nu} +\log \prob {\bm{\rho}}{\nu}\\
+&\propto& -\sum_{d,\posd} \log \left( 1 + \exp \left( -R_{d,\posd} \right) \right) + \sum_{d,\negd} \left( \log \left( \exp \left( -R_{d,\negd} \right) \right) - \log \left( 1 + \exp \left( -R_{d,\negd} \right) \right) \right) \notag\\
+&&- \sum_{k=1}^{K} \frac {\eta_k^2} {2\nu^2} - \sum_{v=1}^{V} \frac {\tau_v^2} {2\nu^2} - \sum_{l=1}^{L} \sum_{l'=1}^{L} \frac {\rho_{l,l'}^2} {2\nu^2}\\
+&\propto& -\sum_{d,d'} \log \left( 1 + \exp \left( -R_{d,d'} \right) \right) - \sum_{d,\negd} R_{d,\negd} - \sum_{k=1}^{K} \frac {\eta_k^2} {2\nu^2} - \sum_{v=1}^{V} \frac {\tau_v^2} {2\nu^2} - \sum_{l=1}^{L} \sum_{l'=1}^{L} \frac {\rho_{l,l'}^2} {2\nu^2}. \label{eq:sigmoid_likelihood}
+\end{eqnarray}
+
+Its derivatives are
+\begin{eqnarray}
+\frac {\partial \mathcal{L}(\bm{B})} {\partial \eta_k} &\propto& - \frac {\eta_k} {\nu^2} + \sum_{d,d'} \frac {\exp \left( -R_{d,d'} \right)} {1 + \exp \left( -R_{d,d'} \right)} \frac {N_{d,k}} {N_{d,\cdot}} \frac {N_{d',k}} {N_{d',\cdot}} - \sum_{d,\negd} \frac {N_{d,k}} {N_{d,\cdot}} \frac {N_{\negd,k}} {N_{\negd,\cdot}} \label{eq:sigmoid_eta}\\
+\frac {\partial \mathcal{L}(\bm{B})} {\partial \tau_v} &\propto& - \frac {\tau_v} {\nu^2} + \sum_{d,d'} \frac {\exp \left( -R_{d,d'} \right)} {1 + \exp \left( -R_{d,d'} \right)} \frac {N_{d,v}} {N_{d,\cdot}} \frac {N_{d',v}} {N_{d',\cdot}} - \sum_{d,\negd} \frac {N_{d,v}} {N_{d,\cdot}} \frac {N_{\negd,v}} {N_{\negd,\cdot}} \label{eq:sigmoid_tau}\\
+\frac {\partial \mathcal{L}(\bm{B})} {\partial \rho_{l,l'}} &\propto& - \frac {\rho_{l,l'}} {\nu^2} + \sum_{d\in l,d'\in l'} \frac {\exp \left( -R_{d,d'} \right)} {1 + \exp \left( -R_{d,d'} \right)} \Omega_{l,l'} - \sum_{d\in l, \negd \in l'} \Omega_{l,l'}. \label{eq:sigmoid_rho}
+\end{eqnarray}
+
+\subsection{Hinge Loss}
+\label{subsec:hinge_opt}
+
+The log likelihood of $\bm{B}$ is
+\begin{eqnarray}
+\mathcal{L}(\bm{B}) &=& \log \prob {\bm{B}} {\bm{z}, \bm{w}, \bm{y}, \bm{\Omega}, \bm{\eta}, \bm{\tau}, \bm{\rho}} + \log \prob {\bm{\eta}} {\nu} + \log \prob {\bm{\tau}} {\nu} +\log \prob {\bm{\rho}}{\nu}\\
+&\propto& -\sum_{d,d'} \frac {(c\zeta_{d,d'} + \lambda_{d,d'})^2} {2\lambda_{d,d'}} - \sum_{k=1}^{K} \frac {\eta_k^2} {2\nu^2} - \sum_{v=1}^{V} \frac {\tau_v^2} {2\nu^2} - \sum_{l=1}^{L} \sum_{l'=1}^{L} \frac {\rho_{l,l'}^2} {2\nu^2}\\
+&\propto& -\sum_{d,d'} \frac {c^2 \zeta_{d,d'}^2 + 2c\lambda_{d,d'} \zeta_{d,d'}} {2\lambda_{d,d'}} - \sum_{k=1}^{K} \frac {\eta_k^2} {2\nu^2} - \sum_{v=1}^{V} \frac {\tau_v^2} {2\nu^2} - \sum_{l=1}^{L} \sum_{l'=1}^{L} \frac {\rho_{l,l'}^2} {2\nu^2}\\
+&\propto& -\sum_{d,d'} \frac {c^2 (1 - B_{d,d'} R_{d,d'})^2 + 2c\lambda_{d,d'} (1 - B_{d,d'} R_{d,d'})} {2\lambda_{d,d'}} \notag\\
+&&- \sum_{k=1}^{K} \frac {\eta_k^2} {2\nu^2} - \sum_{v=1}^{V} \frac {\tau_v^2} {2\nu^2} - \sum_{l=1}^{L} \sum_{l'=1}^{L} \frac {\rho_{l,l'}^2} {2\nu^2}\\
+&\propto& -\sum_{d,d'} \frac {c^2 R_{d,d'}^2 - 2c (c+\lambda_{d,d'}) B_{d,d'} R_{d,d'}} {2\lambda_{d,d'}} - \sum_{k=1}^{K} \frac {\eta_k^2} {2\nu^2} - \sum_{v=1}^{V} \frac {\tau_v^2} {2\nu^2} - \sum_{l=1}^{L} \sum_{l'=1}^{L} \frac {\rho_{l,l'}^2} {2\nu^2}. \label{eq:hinge_likelihood}
+\end{eqnarray}
+
+The partial derivatives of $R_{d,d'}^2$ are
+\begin{eqnarray}
+\frac {\partial R_{d,d'}^2} {\partial \eta_k} &=& 2R_{d,d'} \frac {\partial R_{d,d'}} {\partial \eta_k} = 2R_{d,d'} \frac {N_{d,k}} {N_{d,\cdot}} \frac {N_{d',k}} {N_{d',\cdot}}\\
+\frac {\partial R_{d,d'}^2} {\partial \tau_v} &=& 2R_{d,d'} \frac {\partial R_{d,d'}} {\partial \tau_v} = 2R_{d,d'} \frac {N_{d,v}} {N_{d,\cdot}} \frac {N_{d',v}} {N_{d',\cdot}}\\
+\frac {\partial R_{d,d'}^2} {\partial \rho_{y_d, y_{d'}}} &=& 2R_{d,d'} \frac {\partial R_{d,d'}} {\partial \rho_{y_d, y_{d'}}} = 2R_{d,d'} \Omega_{y_d, y_{d'}}.
+\end{eqnarray}
+
+So the partial derivatives of $\mathcal{L}(\bm{B})$ are
+\begin{eqnarray}
+\frac {\partial \mathcal{L}(\bm{B})} {\partial \eta_k} &\propto& -\sum_{d,d'} \frac {c N_{d,k} N_{d',k} (cR_{d,d'} - (c + \lambda_{d,d'}) B_{d,d'})} {\lambda_{d,d'} N_{d,\cdot} N_{d',\cdot}} - \frac {\eta_k} {\nu^2} \label{eq:hinge_eta}\\
+\frac {\partial \mathcal{L}(\bm{B})} {\partial \tau_v} &\propto& -\sum_{d,d'} \frac {c N_{d,v} N_{d',v} (cR_{d,d'} - (c + \lambda_{d,d'}) B_{d,d'})} {\lambda_{d,d'} N_{d,\cdot} N_{d',\cdot}} - \frac {\tau_v} {\nu^2} \label{eq:hinge_tau}\\
+\frac {\partial \mathcal{L}(\bm{B})} {\partial \rho_{l,l'}} &\propto& -\sum_{d\in l,d'\in l'} \frac {c \Omega_{l,l'} (cR_{d,d'} - (c + \lambda_{d,d'}) B_{d,d'})} {\lambda_{d,d'}} - \frac {\rho_{l,l'}} {\nu^2}. \label{eq:hinge_rho}
+\end{eqnarray}
+
+The likelihood of latent variable $\lambda_{d,d'}$ is
+\begin{eqnarray}
+\prob {\lambda_{d,d'}} {\bm{z}, \bm{w}, \bm{y}, \bm{\Omega}, \bm{B}, \bm{\eta}, \bm{\tau}, \bm{\rho}} &\propto& \frac {1} {\sqrt{2\pi \lambda_{d,d'}}} \exp \left( -\frac {(\lambda_{d,d'} + c\zeta_{d,d'})^2} {2\lambda_{d,d'}} \right)\\
+&\propto& \frac {1} {\sqrt{2\pi \lambda_{d,d'}}} \exp \left( -\frac {c^2 \zeta_{d,d'}^2} {2\lambda_{d,d'}} - \frac {\lambda_{d,d'}} {2} \right)\\
+&\propto& \mathrm{GIG} \left( \lambda_{d,d'} \,;\, \frac{1}{2}, 1, c^2 \zeta_{d,d'}^2 \right),
+\end{eqnarray}
+where GIG denotes inverse Gaussian distribution which is defined as
+\begin{equation}
+\mathrm{GIG} (x \,;\, p, a, b) = C(p, a, b) x^{p-1} \exp \left( -\frac{1}{2} \left( \frac{b}{x} + ax \right) \right).
+\end{equation}
+
+We can sample $\lambda_{d,d'}^{-1}$ (then $\lambda_{d,d'}$) from an inverse Gaussian distribution
+\begin{equation}\label{eq:lambda_sampling}
+\prob {\lambda_{d,d'}^{-1}} {\bm{z}, \bm{w}, \bm{y}, \bm{\Omega}, \bm{B}, \bm{\eta}, \bm{\tau}, \bm{\rho}} \propto \mathrm{IG} \left( \lambda_{d,d'}^{-1} \,;\, \frac{1}{c|\zeta_{d,d'}|}, 1 \right),
+\end{equation}
+where
+\begin{equation}
+\mathrm{IG} (x \,;\, a, b) = \sqrt{\frac{b}{2\pi x^3}} \exp \left( -\frac {b (x-a)^2} {2a^2 x} \right),
+\end{equation}
+for $a>0$ and $b>0$. 

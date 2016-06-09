@@ -1,0 +1,39 @@
+\section{Sampling Process}
+\label{sec:sampling}
+
+The sampling process in the paper is very brief due to space limit, so we give detailed ones here.
+
+\begin{algorithm}[H]
+\caption{Sampling Process of \textsc{lbs-rtm}}\label{alg:sigmoid_sampling}
+\begin{algorithmic}[1]
+    \State Initialize every topic assignment $z_{d,n}$ from a uniform distribution
+    \For{$m=1$ to $M$}
+        \State Optimize $\bm{\eta}$, $\bm{\tau}$, and $\bm{\rho}$ using \textsc{l-bfgs} (Equations~\ref{eq:sigmoid_likelihood},~\ref{eq:sigmoid_eta},~\ref{eq:sigmoid_tau}, and~\ref{eq:sigmoid_rho})
+        \For{each document $d=1$ to $D$}
+            \State Draw block assignment $y_d$ from the multinomial distribution (Equation~\ref{eq:block_sampling})
+            \For{each token $n$ in document $d$}
+                \State Draw a topic assignment $z_{d,n}$ from the multinomial distribution (Equations~\ref{eq:sigmoid_topic})
+            \EndFor
+        \EndFor
+    \EndFor
+\end{algorithmic}
+\end{algorithm}
+
+\begin{algorithm}[H]
+\caption{Sampling Process of \textsc{lbh-rtm}}\label{alg:hinge_sampling}
+\begin{algorithmic}[1]
+    \State Set every $\lambda_{d,d'}=1$ and initialize every topic assignment $z_{d,n}$ from a uniform distribution
+    \For{$m=1$ to $M$}
+        \State Optimize $\bm{\eta}$, $\bm{\tau}$, and $\bm{\rho}$ using \textsc{l-bfgs} (Equations~\ref{eq:hinge_likelihood},~\ref{eq:hinge_eta},~\ref{eq:hinge_tau}, and~\ref{eq:hinge_rho})
+        \For{each document $d=1$ to $D$}
+            \State Draw block assignment $y_d$ from the multinomial distribution (Equation~\ref{eq:block_sampling})
+            \For{each token $n$ in document $d$}
+                \State Draw a topic assignment $z_{d,n}$ from the multinomial distribution (Equations~\ref{eq:hinge_topic} and~\ref{eq:hinge_topic_exp})
+            \EndFor
+            \For{each document $d'$ which document $d$ explicitly links}
+                \State Draw $\lambda_{d,d'}^{-1}$ (and then $\lambda_{d,d'}$) from the inverse Gaussian distribution (Equation~\ref{eq:lambda_sampling})
+            \EndFor
+        \EndFor
+    \EndFor
+\end{algorithmic}
+\end{algorithm} 

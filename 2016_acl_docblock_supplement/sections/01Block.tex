@@ -1,0 +1,81 @@
+\section{Sampling Block Assignments}
+\label{sec:block}
+
+The joint probability of ALL link weights $\bm{A}$ and document block assignments $\bm{y}$ is
+\begin{equation}
+\prob {\bm{A}, \bm{y}} {a, b, \gamma} = \prob {\bm{A}} {\bm{y}, a, b} \prob {\bm{y}} {\gamma}.
+\end{equation}
+
+\subsection{Undirected Links}
+\label{ssec:undirected}
+
+We further expand $\prob {\bm{A}, \bm{y}} {a, b, \gamma}$ for undirected graph as
+\begin{eqnarray}
+&&\prob {\bm{A}, \bm{y}} {a, b, \gamma} \\
+&=& \int \int \prob {\bm{A}} {\bm{y}, \bm{\Omega}} \prob {\bm{\Omega}} {a, b} \prob {\bm{y}} {\bm{\mu}} \prob {\bm{\mu}} {\gamma} \mathrm{d} \bm{\Omega} \mathrm{d} \bm{\mu}\\
+&=&\int \int \prod_{l\leq l'} \prod_{d\in l, d' \in l'} \frac {\Omega_{l,l'}^{A_{d,d'}}} {A_{d,d'}!} \exp \left( -\Omega_{l,l'} \right) \prod_{l\leq l'} \frac {b^a} {\Gamma(a)} \Omega_{l, l'}^{a-1} \exp \left( -b \Omega_{l,l'} \right) \prod_{l=1}^{L} \mu_l^{N_l} \frac {1} {\Delta(\gamma)} \prod_{l=1}^{L} \mu_l^{\gamma-1} \mathrm{d} \bm{\Omega} \mathrm{d} \bm{\mu}\\
+&\propto&\int \int \prod_{l\leq l'} \Omega_{l,l'}^{S_w(l,l')+a-1} \exp \left( -(S_e(l,l')+b) \Omega_{l,l'} \right) \prod_{l=1}^{L} \mu_l^{N_l+\gamma-1} \mathrm{d} \bm{\Omega} \mathrm{d} \bm{\mu}\\
+&\propto& \Delta(\bm{N_l}+\gamma)\prod_{l\leq l'} \frac {\Gamma(S_w(l,l')+a)} {(S_e(l,l')+b)^{S_w(l,l')+a}},
+\end{eqnarray}
+where $S_w(l,l')$ is the weight sum of OBSERVED links between blocks $l$ and $l'$; $S_e(l,l')$ is the number of ALL POSSIBLE links (i.e. assuming all links are observed) between blocks $l$ and $l'$. Specifically, $S_e(l,l')$ is defined as
+\begin{equation}
+S_e(l,l')=
+\left\{
+    \begin{array}{cc}
+        N_l\times N_{l'} & l\neq l'\\
+        \frac{1}{2} N_l (N_l-1) & l=l'
+    \end{array}
+\right.
+\end{equation}
+where $N_l$ denotes the number of documents assigned the block $l$.\\
+
+$\Delta(\bm{N_l}+\gamma)$ is defined as
+\begin{equation}
+\Delta(\bm{N_l}+\gamma) = \frac {\prod\limits_{l=1}^{L} \Gamma(N_l+\gamma)} {\Gamma(\sum\limits_{l=1}^{L} N_l + L\gamma)}.
+\end{equation}
+
+We then derive the Gibbs sampling equation for document $d$, given the block assignments of other documents and link weights excluding $d$, as
+\begin{eqnarray}
+&&\prob {y_{d}=l} {\bm{A}_{-d}, \bm{y}_{-d}, a, b, \gamma} \\
+&=& \frac {\prob {\bm{A}, \bm{y}} {a, b, \gamma}} {\prob {\bm{A}_{-d}, \bm{y}_{-d}} {a, b, \gamma}}\\
+&\propto& \prod_{l'=1}^L \frac {\Gamma(S_w (l,l')+a)} {(S_e (l,l')+b)^{S_w (l,l')+a}} \frac {(S_e^{-d} (l,l')+b)^{S_w^{-d} (l,l')+a}} {\Gamma(S_w^{-d} (l,l')+a)} \frac {\Gamma(D-1+L\gamma)} {\Gamma(D+L\gamma)} \frac {\Gamma(N_l+\gamma)} {\Gamma(N_l^{-d}+\gamma)} \\
+&\propto& \prod_{l'=1}^L \frac {(S_e^{-d} (l,l')+b)^{S_w^{-d} (l,l')+a}} {(S_e (l,l')+b)^{S_w (l,l')+a}} \prod_{i=0}^{S_w(d,l')-1} (S_w^{-d}(l,l')+a+i) \frac {N_l^{-d}+\gamma} {D-1+L\gamma}\\
+&\propto& (N_l^{-d}+\gamma) \prod_{l'=1}^L \frac {(S_e^{-d} (l,l')+b)^{S_w^{-d} (l,l')+a}} {(S_e^{-d} (l,l')+b+ S_e(d,l'))^{S_w^{-d} (l,l')+a+ S_w(d,l')}} \prod_{i=0}^{S_w(d,l')-1} (S_w^{-d}(l,l')+a+i), \label{eq:block_sampling}
+\end{eqnarray}
+where $S_w(d,l')$ denotes the weight sum of OBSERVED links between document $d$ and block $l'$; $S_e(d,l')$ denotes the number of ALL POSSIBLE links between document $d$ and block $l'$. Namely, $S_e(d,l')=N_{l'}$.
+
+\subsection{Directed Links}
+\label{ssec:directed}
+
+The expansion of $\prob {\bm{A}, \bm{y}} {a, b, \gamma}$ for directed graph is
+\begin{eqnarray}
+&&\prob {\bm{A}, \bm{y}} {a, b, \gamma} \\
+&\propto& \int \int \prod_{l,l'} \prod_{d\in l, d' \in l'} \frac {\Omega_{l,l'}^{A_{d,d'}}} {A_{d,d'}!} \exp \left( -\Omega_{l,l'} \right) \prod_{l,l'} \frac {b^a} {\Gamma(a)} \Omega_{l, l'}^{a-1} \exp \left( -b \Omega_{l,l'} \right) \prod_{l=1}^{L} \mu_l^{N_l} \frac {1} {\Delta(\gamma)} \prod_{l=1}^{L} \mu_l^{\gamma-1} \mathrm{d} \bm{\Omega} \mathrm{d} \bm{\mu}\\
+&\propto& \Delta(\bm{N_l}+\gamma) \prod_{l,l'} \frac {\Gamma(S_w(l,l')+a)} {(S_e(l,l')+b)^{S_w(l,l')+a}},
+\end{eqnarray}
+where $S_e(l,l')$ is defined as
+\begin{equation}
+S_e(l,l')=
+\left\{
+    \begin{array}{cc}
+        N_l\times N_{l'} & l\neq l'\\
+        N_l (N_l-1) & l=l'
+    \end{array}
+\right.
+\end{equation}
+
+The Gibbs sampling equation is derived as
+\begin{eqnarray}
+&&\prob {y_{d}=l} {\bm{A}_{-d}, \bm{y}_{-d}, a, b, \gamma} \\
+&=& \frac {\prob {\bm{A}, \bm{y}} {a, b, \gamma}} {\prob {\bm{A}_{-d}, \bm{y}_{-d}} {a, b, \gamma}}\\
+&\propto& \prod_{l'=1, l'\neq l}^L \frac {\Gamma(S_w (l,l')+a)} {(S_e (l,l')+b)^{S_w (l,l')+a}} \frac {(S_e^{-d} (l,l')+b)^{S_w^{-d} (l,l')+a}} {\Gamma(S_w^{-d} (l,l')+a)} \notag\\
+&& \prod_{l'=1, l'\neq l}^L \frac {\Gamma(S_w (l',l)+a)} {(S_e (l',l)+b)^{S_w (l',l)+a}} \frac {(S_e^{-d} (l',l)+b)^{S_w^{-d} (l',l)+a}} {\Gamma(S_w^{-d} (l',l)+a)} \notag\\
+&& \frac {\Gamma(S_w (l,l)+a)} {(S_e (l,l)+b)^{S_w (l,l)+a}} \frac {(S_e^{-d} (l,l)+b)^{S_w^{-d} (l,l)+a}} {\Gamma(S_w^{-d} (l,l)+a)} \frac {\Gamma(D-1+L\gamma)} {\Gamma(D+L\gamma)} \frac {\Gamma(N_l+\gamma)} {\Gamma(N_l^{-d}+\gamma)} \\
+&\propto& \prod_{l'=1, l'\neq l}^L \frac {(S_e^{-d} (l,l')+b)^{S_w^{-d} (l,l')+a}} {(S_e (l,l')+b)^{S_w (l,l')+a}} \prod_{i=0}^{S_w(d,l')-1} (S_w^{-d}(l,l')+a+i) \notag\\
+&& \prod_{l'=1, l'\neq l}^L \frac {(S_e^{-d} (l',l)+b)^{S_w^{-d} (l',l)+a}} {(S_e (l',l)+b)^{S_w (l',l)+a}} \prod_{i=0}^{S_w(l',d)-1} (S_w^{-d}(l',l)+a+i) \notag\\
+&& \frac {(S_e^{-d} (l,l)+b)^{S_w^{-d} (l,l)+a}} {(S_e (l,l)+b)^{S_w (l,l)+a}} \prod_{i=0}^{S_w(d,l)+S_w(l,d)-1} (S_w^{-d}(l,l)+a+i)\frac {N_l^{-d}+\gamma} {D-1+L\gamma}\\
+&\propto& \prod_{l'=1, l'\neq l}^L \frac {(S_e^{-d} (l,l')+b)^{S_w^{-d} (l,l')+a}} {(S_e^{-d} (l,l')+b+ S_e(d,l'))^{S_w^{-d} (l,l')+a+ S_w(d,l')}} \prod_{i=0}^{S_w(d,l')-1} (S_w^{-d}(l,l')+a+i) \notag\\
+&& \prod_{l'=1, l'\neq l}^L \frac {(S_e^{-d} (l',l)+b)^{S_w^{-d} (l',l)+a}} {(S_e^{-d} (l',l)+b+ S_e(l',d))^{S_w^{-d} (l',l)+a+ S_w(l',d)}} \prod_{i=0}^{S_w(l',d)-1} (S_w^{-d}(l',l)+a+i) \notag\\
+&& \frac {(S_e^{-d} (l,l)+b)^{S_w^{-d} (l,l)+a}} {(S_e^{-d} (l,l)+b+ S_e(l,d) +S_e(d,l))^{S_w^{-d} (l,l)+a+ S_w(d,l)+ S_w(l,d)}} \notag\\
+&& (N_l^{-d}+\gamma) \prod_{i=0}^{S_w(d,l)+S_w(l,d)-1} (S_w^{-d}(l,l)+a+i).
+\end{eqnarray} 
