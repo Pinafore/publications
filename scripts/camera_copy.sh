@@ -3,6 +3,9 @@
 # > ./scripts/camera_copy.sh 20XX_CONF_PAPER ~/repositories/publications
 # If the directories aren't the same, you might break stuff
 
+# clean up cruft
+make clean
+
 # Copy any of the shared files
 cp Makefile $2
 
