@@ -32,6 +32,14 @@ clean:
 	cp $@ ~/public_html/temp
 	./scripts/style-check.rb $(<:.tex=)/*.tex $(<:.tex=)/sections/*.tex
 
+%.nsf.pdf: %.paper.pdf
+	cd $(<:.paper.pdf=)/supporting && pdflatex summary
+	cd $(<:.paper.pdf=)/supporting && pdflatex jbg_bio
+	cd $(<:.paper.pdf=)/supporting && pdflatex data_plan
+	mkdir -p $(<:.paper.pdf=)/output
+	mv $(<:.paper.pdf=)/supporting/*.pdf $(<:.paper.pdf=)/output
+	cp $< $(<:.paper.pdf=)/output
+
 %.paper.ps: %.tex %.bbl style/preamble.tex $(TEX) $(GFX)
 	latex $<
 	latex $<
