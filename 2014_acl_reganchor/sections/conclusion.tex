@@ -1,0 +1,29 @@
+\section{Conclusion}
+\label{sec:conclusion}
+
+A topic model is a popular tool for quickly getting the gist of large
+corpora.  However, running such an analysis on these large corpora
+entail a substantial computational cost.  While techniques such as
+{\bf anchor} algorithms offer faster solutions, it comes at the cost
+of the expressive priors common in Bayesian formulations.
+
+This paper introduces two different regularizations that offer users more
+interpretable models and the ability to inject prior knowledge without
+sacrificing the speed and generalizability of the underlying approach.  However,
+one sacrifice that this approach does make is the beautiful theoretical
+guarantees of previous work.  An important piece of future work is a theoretical
+understanding of generalizability in extensible, regularized models.
+
+Incorporating other regularizations could further improve performance
+or unlock new applications.  Our regularizations do not explicitly
+encourage sparsity; applying other regularizations such as $L_1$ could
+encourage true sparsity~\cite{Tibshirani-1994}, and structured
+priors~\cite{andrzejewski-09} could efficiently incorporate
+constraints on topic models.
+
+These regularizations could improve spectral
+algorithms for latent variables models, improving the performance for
+other \abr{nlp} tasks such as latent variable
+\abr{pcfg}s~\cite{cohen-13b} and \abr{hmm}s~\cite{anandkumar-12:hmm},
+combining the flexibility and robustness offered by priors with the
+speed and accuracy of new, scalable algorithms.

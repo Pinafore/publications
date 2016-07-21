@@ -1,0 +1,120 @@
+%
+% File acl2014.tex
+%
+% Contact: koller@ling.uni-potsdam.de, yusuke@nii.ac.jp
+%%
+%% Based on the style files for ACL-2013, which were, in turn,
+%% Based on the style files for ACL-2012, which were, in turn,
+%% based on the style files for ACL-2011, which were, in turn,
+%% based on the style files for ACL-2010, which were, in turn,
+%% based on the style files for ACL-IJCNLP-2009, which were, in turn,
+%% based on the style files for EACL-2009 and IJCNLP-2008...
+
+%% Based on the style files for EACL 2006 by
+%%e.agirre@ehu.es or Sergi.Balari@uab.es
+%% and that of ACL 08 by Joakim Nivre and Noah Smith
+
+\documentclass[11pt]{article}
+\usepackage{style/acl2014}
+\usepackage{times}
+\usepackage{url}
+\usepackage{latexsym}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\usepackage{booktabs}
+\usepackage{algorithm}
+\usepackage[noend]{algorithmic}
+%\usepackage[caption=false]{subfig}
+\usepackage[table]{xcolor}
+\usepackage{subfigure}
+
+\usepackage{style/mfirstuc}
+\newcommand{\etal}[2]{\makefirstuc{#1}~et~al.~\cite{#1-#2}}
+\newcommand{\cd}[1]{\bar{\bm{Q}}_{#1, \cdot}  }
+\newcommand{\citet}[1]{\newcite{#1}}
+
+\newif\ifcomment\commentfalse
+\input{style/preamble}
+
+\newcommand{\red}[1]{{\color{red}{\bf #1}}}
+\newcommand{\blue}[1]{{\color{blue}{\bf #1}}}
+\newcommand{\green}[1]{{\color{green}{\bf #1}}}
+\newcommand{\purple}[1]{{\color{purple}{\bf #1}}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\title{Anchors Regularized: Adding Robustness and Extensibility \\
+to Scalable Topic-Modeling Algorithms}
+
+\author{Thang Nguyen  \\
+  iSchool and \abr{umiacs}, \\
+  University of Maryland \\
+  and National Library of Medicine, \\
+  National Institutes of Health \\
+  \email{daithang@umiacs.umd.edu} \\\And
+  Yuening Hu \\
+  Computer Science \\
+  University of Maryland \\
+  \email{ynhu@cs.umd.edu} \\ \And
+  Jordan Boyd-Graber \\
+  iSchool and \abr{umiacs} \\
+  University of Maryland \\
+  \email{jbg@umiacs.umd.edu} \\
+}
+
+\date{}
+
+
+
+\begin{document}
+
+%\maketitle
+
+% TODO
+% 1.  Explain different corpora for TI
+% 2.  Hyperparameter selection for HL
+% 3.  Discussion of HL equivalence, VB and Gibbs competitive
+% 4.  Explain why NIPS has poor WIKITI
+% 5.  Remove informed prior equation
+% 6.  Rewrite final discussion
+
+%\jbgcomment{Took a stab at improving the abstract, but not sure it's all the way
+%there yet.}
+
+\begin{abstract}
+  Spectral methods offer scalable alternatives to Markov chain Monte
+  Carlo and expectation maximization.  However, these new methods lack
+  the rich priors associated with probabilistic models.  We examine
+  Arora et al.'s anchor words algorithm for topic modeling and develop
+  new, regularized algorithms that not only mathematically resemble
+  Gaussian and Dirichlet priors but also improve the interpretability
+  of topic models.  Our new regularization approaches make these
+  efficient algorithms more flexible; we also show that these methods can
+  be combined with informed priors.
+\end{abstract}
+
+\input{2014_acl_reganchor/sections/intro}
+\input{2014_acl_reganchor/sections/background}
+\input{2014_acl_reganchor/sections/model}
+\input{2014_acl_reganchor/sections/experiments}
+\input{2014_acl_reganchor/sections/discussion}
+\input{2014_acl_reganchor/sections/conclusion}
+
+\section*{Acknowledgments}
+
+We would like to thank the anonymous reviewers, Hal Daum\'e III, Ke Wu,
+and Ke Zhai for their helpful comments.  This work was supported by
+\abr{nsf} Grant IIS-1320538.  Boyd-Graber is also supported by
+\abr{nsf} Grant CCF-1018625.  Any opinions, findings, conclusions, or
+recommendations expressed here are those of the authors and do not
+necessarily reflect the view of the sponsor.
+
+\newpage
+
+%\bibliographystyle{style/icml2013}
+\bibliographystyle{style/acl2014}
+%\bibliographystyle{apalike}
+%\footnotesize
+\bibliography{bib/journal-full,bib/thang,bib/jbg,bib/ynhu}
+
+\end{document}
