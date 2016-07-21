@@ -1,0 +1,242 @@
+\documentclass{article}
+
+
+
+\newcommand{\LectureTitle}{Regularizers for Anchor Word Method}
+
+\newcommand{\LectureDate}{August\ 7,\ 2013}
+\newcommand{\LectureClassName}{CLIP}
+\newcommand{\LatexerName}{Thang\ Nguyen}
+
+
+
+\usepackage{amsmath,amsfonts,amsthm,amssymb}
+\usepackage{setspace}
+\usepackage{Tabbing}
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+\usepackage{extramarks}
+\usepackage{chngpage}
+\usepackage{soul,color}
+\usepackage{graphicx,float,wrapfig}
+\usepackage{afterpage}
+\usepackage{abstract}
+\usepackage[version=3]{mhchem} 
+\usepackage{chemfig} 
+\usepackage{pgfplots} 
+\usepackage{hyperref}
+
+\topmargin=-0.45in
+\evensidemargin=0in
+\oddsidemargin=0in
+\textwidth=6.5in
+\textheight=9.0in
+\headsep=0.25in
+
+
+\pagestyle{fancy}
+\lhead{\LatexerName}
+\chead{\LectureClassName: \LectureTitle}
+\rhead{\LectureDate}
+\lfoot{\lastxmark}
+\cfoot{}
+\rfoot{Page\ \thepage\ of\ \pageref{LastPage}}
+\renewcommand\headrulewidth{0.4pt}
+\renewcommand\footrulewidth{0.4pt}
+
+
+
+\newcommand{\enterTopicHeader}[1]{\nobreak\extramarks{#1}{#1 continued on next page\ldots}\nobreak
+                                    \nobreak\extramarks{#1 (continued)}{#1 continued on next page\ldots}\nobreak}
+\newcommand{\exitTopicHeader}[1]{\nobreak\extramarks{#1 (continued)}{#1 continued on next page\ldots}\nobreak
+                                   \nobreak\extramarks{#1}{}\nobreak}
+
+\newlength{\labelLength}
+\newcommand{\labelAnswer}[2]
+  {\settowidth{\labelLength}{#1}
+   \addtolength{\labelLength}{0.25in}
+   \changetext{}{-\labelLength}{}{}{}
+   \noindent\fbox{\begin{minipage}[c]{\columnwidth}#2\end{minipage}}
+   \marginpar{\fbox{#1}}
+
+   
+   
+   \changetext{}{+\labelLength}{}{}{}}
+
+\setcounter{secnumdepth}{0}
+\newcommand{\TopicName}{}
+\newcounter{TopicCounter}
+\newenvironment{Topic}[1][Problem \arabic{TopicCounter}]
+  {\stepcounter{TopicCounter}
+   \renewcommand{\TopicName}{#1}
+   \section{\TopicName}
+   \enterTopicHeader{\TopicName}}
+  {\exitTopicHeader{\TopicName}}
+  
+\setcounter{secnumdepth}{0}
+\newcommand{\ExampleSectionName}{}
+\newcounter{ExampleSectionCounter}[TopicCounter]
+\newenvironment{ExampleSection}[1][Example \arabic{ExampleSectionCounter}]
+  {\stepcounter{ExampleSectionCounter}
+   \renewcommand{\ExampleSectionName}{#1}
+   \section{\ExampleSectionName}
+   \enterTopicHeader{\ExampleSectionName}}
+  {\exitTopicHeader{\ExampleSectionName}}
+
+\setcounter{secnumdepth}{0}
+\newcounter{ExampleBoxCounter}[TopicCounter]
+\newcommand{\examplebox}[1]
+  {
+  
+   
+   \stepcounter{ExampleBoxCounter}
+   \noindent\fbox{\begin{minipage}[c]{\columnwidth}#1\end{minipage}}\enterTopicHeader{\ExampleSectionName}\exitTopicHeader{\ExampleSectionName}\marginpar{\fbox{\#\arabic{ExampleBoxCounter}}}
+   
+   
+   \vskip10pt
+   }
+
+\renewcommand{\contentsname}{{\normalsize Topics Covered}}
+\renewcommand{\abstractname}{\LectureTitle\ Summary}
+\renewcommand{\absnamepos}{flushleft}
+
+
+
+\begin{document}
+\begin{spacing}{1.1}
+\newpage
+\begin{Topic}[Notations]
+$V$	vocabulary size \\
+$K$	number of topics/anchor words \\
+$S =s_1,s_2,\ldots,s_K$	anchor word indices \\
+$A$	topic word matrix of size $VxK$, $A_{i,j} = p(w=i|z=j)$ \\
+$Q$	word co-occurence matrix of size $VxV$, $Q_{i,j} = p(w_1=i,w_2=j)$ \\
+$\bar{Q}$	row normalized $Q$, $\bar{Q}_{i,j} = p(w_2=j|w_1=i$ \\
+$C$	matrix of size $VxK$ used to find $A$ in anchor word method, $C_{i,j} = p(z=j|w=i)$ \\
+$C_{i.}$	row $i$ of matrix $C$ \\
+$\lambda$	regularizer weight
+$[U]_i$		the $i^th$ element of a vector $U$
+$M^T$		the transpose matrix of a matrix $M$
+Given a vector $\textbf{x} = (x_1,x_2,\ldots, x_n)$ of $\textbf{R}^n$, L2 norm is defined as:
+$$
+\|x\|_2 \:=\sqrt{x_1^2+\ldots+x_n^2}.
+$$ 
+A probability density function of the beta distribution, for $0\le x\le1$, and with two parameters $\alpha>0$ and $\beta>0$ is defined as:
+$$
+Beta(x;\alpha,\beta) \:=\frac{x^{\alpha -1}(1-x)^{\beta-1}}{BETA(\alpha,\beta)}
+$$
+where $BETA(\alpha,\beta) = \frac{\gamma(\alpha)\gamma(\beta)}{\gamma(\alpha+\beta)}$, and $\gamma(z)$ is the gamma function.
+\end{Topic}
+
+\section{Adding regularizers}
+The objective function which is induced by the \textbf{anchor} is:
+\begin{equation}
+\label{eq:anchor}
+C_i. = argmin_{\vec{C_i}} D_{KL}(\bar{Q}_i || \sum_{k\in S} C_{i,k} \bar{Q}_{s_k}).
+\end{equation}
+Solving (1) directly involves inverse operation which makes it ill-posed and therefore regularizers are needed to prevent overfitting. Our purpose is to enforce different priors on the matrix $C$ by applying different regularizations. We apply L2 regularization which is equivalent to Gaussian prior, and Beta regularization (equivalent to Dirichlet prior) to Equation~\ref{eq:anchor}.
+
+\begin{Topic}[L2-Norm]
+The objective in L2 norm is:
+\begin{equation}
+\label{eq:l2_anchor}
+C_i. = argmin_{\vec{C_i}} D_{KL}(\bar{Q}_i || \sum_{k\in S} C_{i,k} \bar{Q}_{s_k}) + \lambda \|C_i.\|_2.
+\end{equation}
+Define $J = D_{KL}(\bar{Q}_i || \sum_{k\in S} C_{i,k} \bar{Q}_{s_k}) + \lambda \|C_i.\|_2$, we have:
+$$ 
+J = D_{KL}\left(\big{[}\bar{Q}_{i,1},\bar{Q}_{i,2}, \ldots, \bar{Q}_{i,V}\big{]} \| \big{[}\sum_{k \in S} C_{i,k} \bar{Q}_{s_k,1}, \sum_{k \in S} C_{i,k} \bar{Q}_{s_k,2}, \ldots, \sum_{k \in S} C_{i,k} \bar{Q}_{s_k, V}\big{]}\right) +\lambda \|C_i.\|_2
+$$
+$$
+J = \sum_{v=1}^{V} \bar{Q}_{i,v} (log(\bar{Q}_{i,v})  -  log (\sum_{k \in S}C_{i,k} \bar{Q}_{s_k,v})) +\lambda \|C_i.\|_2
+$$
+So
+$$
+\frac{dJ}{dC_{i,k}} = -\sum_{v=1}^{V} \bar{Q}_{s_k,v} \frac{\bar{Q}_{i,v}}{\sum_{k \in S}C_{i,k} \bar{Q}_{s_k,v}} + \lambda\frac{C_{i,k}}{\|C_i.\|_2}
+$$ 
+\begin{equation}
+\label{eq:l2_anchor}
+\frac{dJ}{dC_{i,k}} = \left[ -\left[\frac{\bar{Q}_i}{C_{i}\bar{Q}_S}\right][\bar{Q}_S]^{T} +\lambda \frac{C_i.}{\|C_i.\|_2} \right]_{k}, \mbox{$\forall k \in S$}
+\end{equation}
+The Equation \ref{eq:l2_anchor} shows that we can compute the gradient of $J$ by first computing the matrix in the bracket.
+
+\end{Topic}
+
+\begin{Topic}[Log of L2-Norm]
+For log of L2-Norm, the objective function becomess $J = D_{KL}(\bar{Q}_i \| \sum_{k \in S} C_{i,k} \bar{Q}_{s_k}) +\lambda log(\|C_i.\|_2)$. Similarly, we have
+
+\begin{equation}
+\label{eq:logl2_anchor}
+\frac{dJ}{dC_{i,k}} = \left[ -\left[\frac{\bar{Q}_i}{C_{i}\bar{Q}_S}\right][\bar{Q}_S]^{T} +\lambda \frac{C_i.}{\|C_i.\|_2^2} \right]_{k}, \mbox{$\forall k \in S$}
+\end{equation}
+
+\end{Topic}
+
+\begin{Topic}[Beta-Norm]
+In this section, we add Dirichlet prior by applying Beta regularization to Equation \ref{eq:anchor}. Define:
+$$
+\beta_{k,i} = p(w=i|z=k), \mbox{$j \in V$ and $k \in S$}
+$$
+The object function we would like to minimize in this case is:
+$$
+J = D_{KL}(\bar{Q}_i \| \sum_{k \in S} C_{i,k} \bar{Q}_{s_k})- \lambda \sum_{k\in S}\mbox{log (Beta}(\beta_{k,i};\alpha,(V-1)\alpha)) = \mbox{$J_1 - \lambda J_2$}
+$$
+By definition:
+$$
+\mbox{Beta}(\beta_{k,i};\alpha,(V-1)\alpha) = \frac{\beta_{k,i}^{\alpha - 1} (1 - \beta_{k,i})^{(V-1)\alpha -1}}{\mbox{BETA}(\alpha, (V-1)\alpha)}
+$$
+Since for each $i$, the value of $\mbox{BETA}(\alpha, (V-1)\alpha)$ is a constant, we only need to care about the numerator.
+$$
+J_2 = \sum_{k \in S} (\alpha-1)\mbox{log}\beta_{k,i} + ((V-1)\alpha-1)\mbox{log}(1-\beta_{k,i}) - CONST
+$$
+By definition
+$$
+\beta_{k,i} = p(w=i|z=k) = \frac{p(z=k|w=i)p(w=i)}{\sum_{v=1}^{V} p(z=k|w=v)p(w=v)}
+$$
+Or
+$$
+\beta_{k,i} = \frac{C_{i,k} \sum_{v=1}^{V} Q_{i,v}}{\mbox{SUM OF NUMERATOR}}
+$$
+Set $T_i = \sum_{v=1}^{V} Q_{i,v}$, we have
+$$
+\beta_{ki} = \frac{C_{i,k}T_i}{\sum_{v=1}^{V}C_{v,k} T_v}
+$$
+Define $T = [T_1, T_2, \ldots, T_V]$ and 
+\[ C = \left( \begin{array}{ccc}
+C_1 \\
+C_2\ \\
+\vdots \\
+C_V \end{array} \right)\] 
+Then $\sum_{v=1}^{V}C_{v,k}T_v = [TC]_k$, and so $\beta_{k,i} = \frac{T_i C_{i,k} }{[TC]_k}$. We have:
+$$
+J_2 = \sum_{k\in S}\left \{(\alpha-1)(\mbox{log}(T_iC_{i,k}) - \mbox{log}([TC]_k)) + ((V-1)\alpha -1)\mbox{log} (1 - \frac{T_iC_{i,k}}{[TC]_k})\right \}
+$$ 
+
+$$
+J_2 = \sum_{k\in S}\left\{(\alpha-1) \mbox{log} (T_iC_{i,k}) + ((V-1)\alpha -1) \mbox{log}([TC]_k - T_iC_{i,k}) +(2-\alpha V) \mbox{log} ([TC]_k) \right\}
+$$
+take derivative for a given $C_{i,k}$:
+$$
+\frac{dJ_2}{dC_{i,k}} = \left [\frac{\alpha-1}{C_i} + T_i\frac{2 -\alpha V }{TC} \right ]_k, \forall k\in S
+$$
+Using the result from 2-Norm, we have the final formula of gradient:
+$$
+\frac{dJ}{dC_{i,k}} = \left[ - \left[\frac{\bar{Q}_i}{C_{i}\bar{Q}_S}\right][\bar{Q}_S]^T - \lambda \left (\frac{\alpha-1}{C_i} + T_i\frac{2 -\alpha V }{TC}\right ) \right]_{k}, \mbox{$\forall k \in S$}
+$$
+
+\end{Topic}
+
+\begin{Topic}[What I did]
+I have been playing with Anchor Word python code to incorporate regularizations into \textbf{Algorithm 3}. For testing different versions of algorithm, I use LDAC and topic interpretability (TI) score to measure them. Details are below:
+\begin{enumerate}
+  \item Derive formulas for L2 and Beta regularization
+  \item Created script for the experiment
+  \item Tested original, L2, and Beta regularized versions of \textbf{Algorithm 3}
+\end{enumerate}
+
+On going.
+
+
+
+\end{Topic}
+\end{spacing}
+\end{document}

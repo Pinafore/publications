@@ -1,0 +1,14 @@
+\section{Notation}
+$V$	vocabulary size
+$K$	number of topics/anchor words
+$N$    number of documents
+$\mathfrak{D} $
+$S =s_1,s_2,\ldots,s_K$	anchor word indices
+$A$	topic word matrix of size $VxK$, $A_{i,j} = p(w=i|z=j)$
+$Pairs$ second-order moment or word co-occurance matrix of size $VxV$, $Pairs_{i,j} = p(w_1=i,w_2=j)$
+$Triples$ third-order moment or word co-occurance matrix of size $VxVxV$, $Triples_{i,j,k} = p(w_1=i,w_2=j,w_3=k)$
+$Q$	word co-occurence matrix of size $VxV$, $Q_{i,j} = p(w_1=i,w_2=j)$
+$\bar{Q}$	row normalized $Q$, $\bar{Q}_{i,j} = p(w_2=j|w_1=i$
+$C$	matrix of size $VxK$ used to find $A$ in anchor word method, $C_{i,j} = p(z=j|w=i)$
+$C_{i.}$	row $i$ of matrix $C$
+
