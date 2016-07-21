@@ -1,0 +1,13 @@
+\section{Future Work}
+\label{sec:future}
+In Section~\ref{sec:discussion}, we showed that the performance of our \dan\ model
+worsens on sentences that contain lingustic phenomena such as double
+negation. One promising future direction is to cascade classifiers such that syntactic models are used only when a \dan\ is not confident
+in its prediction. We can also extend the \dan 's success at incorporating out-of-domain training data to sentiment analysis: imagine training a \dan\ on labeled tweets for classification on newspaper reviews. Another potentially interesting application is to add gated units to a \dan,as has been done for recurrent and recursive neural networks~\cite{hochreiter1997long,cho2014learning,sutskever2014sequence,taiacl15}, to drop useless words rather than randomly-selected ones.
+
+
+
+
+\section{Conclusion}
+\label{sec:conclusion}
+In this paper, we introduce the deep averaging network, which feeds an unweighted average of word vectors through multiple hidden layers before classification. The \dan\ performs competitively with more complicated neural networks that explicitly model semantic and syntactic compositionality. It is further strengthened by word dropout, a regularizer that reduces input redundancy. \dan s obtain close to state-of-the-art accuracy on both sentence and document-level sentiment analysis and factoid question-answering tasks with much less training time than competing methods; in fact, all experiments were performed in a matter of minutes on a single laptop core. We find that both \dan s and syntactic functions make similar errors given syntactically-complex input, which motivates research into more powerful models of compositionality.

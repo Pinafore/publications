@@ -1,0 +1,36 @@
+\section{Related Work}
+\label{sec:related}
+
+
+
+
+
+
+
+
+Our \dan\ model builds on the successes of both
+simple vector operations and neural network-based models for compositionality.
+
+There are a variety of element-wise vector operations that could replace the average used in the \dan.~\newcite{MitchellL08} experiment with many of them to model the compositionality of short phrases. Later, their work was extended to take into account the
+syntactic relation between
+words~\cite{erk08,baroni2010nouns,kartsaklis2013prior} and
+grammars~\cite{coecke2010mathematical,grefenstette2011experimental}. While the average works best for the tasks that we consider,~\newcite{simcompass} find that simply summing \texttt{word2vec} embeddings outperforms all other methods on the SemEval 2014 phrase-to-word and sentence-to-phrase similarity tasks.
+
+Once we compute the embedding average in a \dan, we feed it to a deep neural
+network. In contrast, most previous work on neural network-based methods for
+\abr{nlp} tasks explicitly model word order. Outside of sentiment analysis, \recnn-based approaches have been
+successful for tasks such as parsing~\cite{SocherEtAl2013:CVG}, machine translation~\cite{liu2014recursive}, and paraphrase
+detection~\cite{SocherEtAl2011:PoolRAE}. Convolutional networks also model word order in
+local windows and have achieved performance comparable to or better than that of
+\recnn s on many tasks~\cite{collobert2008unified,kim:2014:EMNLP2014}. Meanwhile, feed-forward architectures like that of the \dan\ have been used for language modeling~\cite{Bengio03aneural}, selectional preference acquisition~\cite{van2014neural}, and dependency parsing~\cite{chen2014fast}.
+
+
+
+
+
+
+
+
+
+
+
