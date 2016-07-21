@@ -1,0 +1,65 @@
+\section{Introduction}
+\label{sec:intro}
+
+Topic models are of practical and theoretical interest.  Practically,
+they have been used to understand political
+perspective~\cite{paul-10}, improve machine
+translation~\cite{Eidelman-12}, reveal literary
+trends~\cite{jockers-13}, and understand scientific
+discourse~\cite{hall-08}.  Theoretically, their latent variable
+formulation has served as a foundation for more robust models of other
+linguistic phenomena~\cite{brody-09}.
+
+Modern topic models are formulated as a latent variable model.  Like
+hidden Markov models~\cite[\abr{hmm}]{rabiner-89}, each token comes
+from one of $K$ unknown distributions.  Unlike a \abr{hmm}, topic
+models assume that each document is an \emph{admixture} of these
+hidden components called topics.  Posterior inference discovers the
+hidden variables that best explain a dataset.  Typical solutions use
+\abr{mcmc}~\cite{griffiths-04} or variational \abr{em}~\cite{blei-03},
+which can be viewed as local optimization: searching for the latent
+variables that maximize the data likelihood.
+
+An exciting vein of new research provides provable polynomial-time
+alternatives.  These approaches provide solutions to hidden Markov
+models~\cite{anandkumar-12:hmm}, mixture models~\cite{kannan-05}, and
+latent variable grammars~\cite{cohen-13b}. The key insight is not to
+directly optimize observation likelihood but to instead discover
+latent variables that can reconstruct statistics of the assumed
+generative model.  Unlike search-based methods, which can be caught in
+local minima, these techniques are often guaranteed to find global
+optima.
+
+These general techniques can be improved by making reasonable
+assumptions about the models.  For example, Arora et
+al.~\shortcite{Arora-2012b}'s approach for inference in topic models
+assume that each topic has a unique ``anchor'' word (thus, we call
+this approach {\bf anchor}).  This approach is fast and effective;
+because it only uses word co-occurrence information, it can scale to
+much larger datasets than \abr{mcmc} or \abr{em} alternatives.  We
+review the {\bf anchor} method in Section~\ref{sec:anchor}.
+
+Despite their advantages, these techniques are not a panacea.  They do
+not accommodate the rich priors that modelers have come to expect.
+Priors can improve performance~\cite{wallach-09b}, provide domain
+adaptation~\cite{daume-07,finkel-09}, and guide models to reflect
+users' needs~\cite{hu-13:itm}.  In Section~\ref{sec:prior}, we
+regularize the {\bf anchor} method to trade-off the reconstruction
+fidelity with the penalty terms that mimic Gaussian and Dirichlet
+priors.
+
+Another shortcoming is that these models have not been scrutinized
+using standard \abr{nlp} evaluations.  Because these approaches
+emerged from the theory community, {\bf anchor}'s evaluations, when
+present, typically use training reconstruction.  In
+Section~\ref{sec:experiments}, we show that our regularized models can
+generalize to previously unseen data---as measured by held-out
+likelihood~\cite{blei-03}---and are more
+interpretable~\cite{chang-09b,newman-10}.  We also show that our
+extension to the {\bf anchor} method enables new applications: for
+example, using an informed priors to discover concepts of interest.
+
+Having shown that regularization does improve performance,
+in Section~\ref{sec:disc} we explore why.  We discuss the trade-off
+of training data reconstruction with sparsity and why regularized
+topics are more interpretable.

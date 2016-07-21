@@ -1,0 +1,179 @@
+\documentclass{article} 
+\usepackage{../style/nips13submit,times}
+\usepackage{amsfonts}
+
+\usepackage{algorithm, algorithmic}
+\usepackage{graphicx}
+
+\renewcommand{\algorithmicrequire}{\textbf{Input:}}
+\renewcommand{\algorithmicensure}{\textbf{Output:}}
+
+
+\title{Incorporating Prior to \\ Spectral Latent Dirichlet Allocation}
+
+
+\author{
+David S.~Hippocampus\thanks{ Use footnote for providing further information
+about author (webpage, alternative address)---\emph{not} for acknowledging
+funding agencies.} \\
+Department of Computer Science\\
+Cranberry-Lemon University\\
+Pittsburgh, PA 15213 \\
+\texttt{hippo@cs.cranberry-lemon.edu} \\
+\And
+Coauthor \\
+Affiliation \\
+Address \\
+\texttt{email} \\
+\AND
+Coauthor \\
+Affiliation \\
+Address \\
+\texttt{email} \\
+\And
+Coauthor \\
+Affiliation \\
+Address \\
+\texttt{email} \\
+\And
+Coauthor \\
+Affiliation \\
+Address \\
+\texttt{email} \\
+(if needed)\\
+}
+
+
+
+
+
+
+
+
+
+\newcommand{\fix}{\marginpar{FIX}}
+\newcommand{\new}{\marginpar{NEW}}
+
+
+
+\newenvironment{packed_enum}{
+\begin{enumerate}
+  \setlength{\itemsep}{1pt}
+  \setlength{\parskip}{0pt}
+  \setlength{\parsep}{0pt}
+}{\end{enumerate}}
+
+\begin{document}
+
+
+\maketitle
+
+
+
+
+
+\section{Excess Correlation Analysis (ECA)}
+
+\begin{algorithm}
+\caption{Excess Correlation Analysis (ECA) with skewed factors.}
+\begin{algorithmic}[1]
+\REQUIRE word-document matrix $ \mathfrak{D} \in \mathbb{R}^{d \times n}$, desired latent topic dimension $K$.
+\ENSURE  The new word-document matrix $\hat{O}$.
+\STATE  Find $ U \in \mathbb{R}^{d \times k}$   s.t. $Range(U) = Range(Pairs)$.
+\STATE  Find $ V \in \mathbb{R}^{k \times k}$   where $V^T(U^T$ $Pairs$ $U)V = \mathbb{I}$.
+\STATE  Normalize $W = UV$.
+\STATE  Find $S \in \mathbb{R}^{k \times k}$   s.t. $Range(\Lambda) = Range(W^T$ $Triples$ $(W\theta)W)$.
+\STATE  Reconstruct $\hat{O} =( W^+)^TS / normalizer$.
+\RETURN $\hat{O}$.
+\end{algorithmic}
+\end{algorithm}
+
+\subsection{Algorithm Summary}
+
+Excess Correlation Analysis (ECA) \cite{anandkumar2012spectral} uses a spectral decomposition to uncover the parameters of topic models including Latent Dirichlet Allocation (LDA). ECA tries to recover both word and topic distribution by using Singular Value Decomposition (SVD) once for each distribution. Finding the distribution of topic is scalable since it carries on just a $K \times K$ matrix where $K$ is the number of latent factors (topics). ECA algorithm is summarized in algorithm.1.
+
+There are two optimization problems in ECA in line.1 and line.4 of algorithm.1. First, in line.1, ECA perform Latent Semantic Indexing (LSI) on word-document matrix to find the word distribution. The objective function is as follows;
+\begin{equation}
+\max_{U^TU = 1} U^T Pairs U,
+\end{equation}
+where $Pairs$ denotes the second order moment of the data, in other words, the covariance matrix. $U$ is a matrix of dimension $d \times K$ which will be the word distribution $W$ after a normalization step in line.2 of algorithm.1.
+
+Second, in line.4, ECA maximize the non-Gaussianity of the data by finding the dimension that will maximize the cross covariance or skewness when projected on $W$. The objective function is as follows;
+\begin{equation}
+\max_{\Lambda^T\Lambda = 1} \Lambda^T (W^T Triples (W\theta)W) \Lambda,
+\end{equation}
+where $Triples$ denotes the third order moment of the data , in other words, skewness. $\Lambda$ is a matrix of dimension $k \times k$ which is the word distribution over projected skewness. $\theta$ is a perturbation parameter.
+
+Finally, in line 5, the pseudo-inverse of $W$ denoted as $W^+$ will transform the word distribution over projected skewness $\Lambda$ to recover the word distribution parameters $\hat{O}$.
+
+\subsection{Equivalent Generative Story}
+ECA has two settings based on the data encoding, Mixture of Gaussians and Mixture of Poissons.
+
+The generative process is as follows:
+\begin{itemize}
+\item
+For each document n
+\begin{itemize}
+\item
+For each token position i \\
+Choose topic k $\sim$ Gaussian or Poisson($h$) \\
+Choose word d  $\sim$ Gaussian or Poisson($\hat{O}$) \\
+\end{itemize}
+\end{itemize}
+
+
+
+
+
+\section{Adding Prior/Regularizer to ECA}
+\subsection{Regularization on Word-Topic distribution}
+We want to incorporate a prior distribution to the word distribution. There are many possible candidates. First, L1 norm can be a good candidate since it introduces sparsity which is what topic models prefer and L1 norm is computational tractable. L1 norm assumes that the data is generated from Laplace distribution. Second, L2 norm can also be a good candidate since ECA assumes the data to be generated from Gaussian distribution. 
+
+We try to explicitly regularize the word distribution parameters $\hat{O}$ by regularizing $\Lambda$ in the second decomposition of ECA. Adding L1 Regularization term to the equation.2 is equivalent to perform L1PCA on a matrix that is from projecting each slice of $Triples$ with $W$. The objective function becomes,
+\begin{equation}
+\max_{\Lambda^T\Lambda = 1} \Lambda^T (W^T Triples (W\theta)W) \Lambda - \lambda\|\Lambda\|_1,
+\end{equation}
+where $\lambda$ is a positive scalar parameter which controls the strictness of regularization. However, explicitly creating $Triples$ may easily cause memory overflow. To overcome memory overflow, the tensor power iteration will be used instead \cite{anandkumar2012tensor}. This approach finds uncorrelated topics since the parameters are orthogonal. 
+
+Note: The details are highly practical so I did not add it here. 
+
+Adding L2 regularization term to the equation.2 is equivalent to perform L2PCA on a matrix that is from projecting each slice of $Triples$ with $W$. The objective function becomes,
+\begin{equation}
+\max_{\Lambda^T\Lambda = 1} \Lambda^T (W^T Triples (W\theta)W) \Lambda - \lambda\|\Lambda\|_2,
+\end{equation}
+
+Note: I think L2PCA is equivalent to a vanilla PCA???
+
+\section{Related works}
+First, TMLearn \cite{anandkumar2013learning} uses only $Pairs$ to recover the word distribution. To perform whitening, TMLearn follows the same procedure as ECA. However TWMLearn will be performed on $Pairs$ instead of performing an SVD or an eigendecomposition on $Triples$. To be specific, TWMLearn is an instance of dictionary learning with least norm minimization on L1 for exact sparse recovery. Therefore, TWMLearn tries to recover the same parameter set as ECA but TWMLearn maximizes non-Gaussianity of the data on $Pairs$ instead. Note that, since the parameters from ECA are orthogonal to each other, the topics recovered from ECA are uncorrelated but the topics will be correlated in case of TWMLearn because TMLearn does not restrict the parameters to be orthogonal.
+
+\begin{algorithm}
+\caption{TMLearn : Learning topic models with correlated topics}
+\begin{algorithmic}[1]
+\REQUIRE word-document matrix $ \mathfrak{D} \in \mathbb{R}^{d \times n}$, desired latent topic dimension $K$.
+\ENSURE  The new word-document matrix $\hat{A}$.
+\STATE  Find $W$ and $S$ from ECA.
+\STATE  Find $\hat{A} = TWMLearn(Pairs)$
+\STATE  Let $\tilde{C} = LU(\hat{A}^{-1}S)$
+\STATE  Let $\hat{\Lambda} = \mathbb{I} - diag(\tilde{C})\tilde{C}^{-1}$
+\RETURN $\hat{A}$ and $\hat{\Lambda}$.
+\end{algorithmic}
+\end{algorithm}
+
+$\Lambda$ encodes dependencies between latent variables.
+
+
+
+
+\section{Experiment with Test Data}
+\subsection{Out-of-sample Extension}
+To do inference on new documents, LDA will do a variational inference to find the topic-document distribution for the new document. The evaluation is measured by Pointwise Mutual Information (PMI).
+
+
+
+
+\bibliographystyle{plain}
+
+\bibliography{bib/peratham}
+
+\end{document}
