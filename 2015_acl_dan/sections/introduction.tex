@@ -1,0 +1,54 @@
+\section{Introduction}
+\label{sec:introduction}
+
+Vector space models for natural language processing (\abr{nlp}) represent
+words using low dimensional vectors called embeddings. To apply vector space models to sentences or documents, one must first select an appropriate \emph{composition function}, which is a mathematical process for combining multiple words into a single vector.  
+
+Composition functions fall into two classes:
+\emph{unordered} and \emph{syntactic}. Unordered functions treat input texts
+as bags of word embeddings, while syntactic functions take word order and
+sentence structure into account. Previously published experimental results have
+shown that syntactic functions outperform unordered functions on many
+tasks~\cite{socher2013recursive,nal2013conv}.
+
+However, there is a tradeoff: syntactic functions require more training time
+than unordered composition functions and are prohibitively expensive in the
+case of huge datasets or limited computing resources. For example, the recursive
+neural network (Section~\ref{sec:model}) computes costly matrix/tensor products
+and nonlinearities at every node of a syntactic parse tree, which limits it to
+smaller datasets that can be reliably parsed.
+
+We introduce a deep unordered model that obtains near state-of-the-art
+accuracies on a variety of sentence and document-level tasks with just minutes
+of training time on an average laptop computer. This model, the
+deep averaging network (\dan), works in three simple steps:
+\begin{enumerate*}
+\item take the vector average of the embeddings associated with an input sequence of tokens
+\item pass that average through one or more feed-forward layers
+\item perform (linear) classification on the final layer's representation
+\end{enumerate*}
+
+
+
+\noindent The model can be improved by applying a novel dropout-inspired regularizer: for
+each training instance, randomly drop some of the tokens' embeddings before
+computing the average. 
+
+We evaluate \dan s on sentiment analysis and factoid
+question answering tasks at both the sentence and document level in
+Section~\ref{sec:experiments}. Our model's successes demonstrate that for these tasks, the choice of composition
+function is not as important as initializing with pretrained embeddings and using a deep network. Furthermore, \dan s, unlike more
+complex composition functions, can be effectively trained on data that have high
+syntactic variance. A qualitative analysis of the learned layers suggests that
+the model works by magnifying tiny but meaningful differences in the vector
+average through multiple hidden layers, and a detailed error analysis shows that syntactically-aware models actually make very similar errors to those of the more na\"{\i}ve \dan.
+
+
+
+
+
+
+
+
+
+
