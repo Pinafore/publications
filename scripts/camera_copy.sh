@@ -31,7 +31,7 @@ fi
 python scripts/sanitize.py $1/sections
 echo "------------"
 
-for DIR in figures sections data
+for DIR in figures sections data tables
 do
     # rm -r $1/$DIR
     # git checkout $1/$DIR
