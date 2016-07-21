@@ -1,0 +1,66 @@
+
+Title:
+
+Interactive Incremental Question Answering
+
+Technology:
+
+We propose to exhibit a computer system that can answer trivia questions that
+are incrementally revealed, a game called "quiz bowl".  Unlike Jeopardy or other
+trivia games where the players must wait until the end of the question, "quiz
+bowl" questions are written in a way to reward players who can answer the
+question earlier than their opponents.
+
+Our system works in two stages: a deep learning system generates candidates and
+a classifier determines whether any of the guesses should be provided as an
+answer.  The techniques are described in the papers below.
+
+Mohit Iyyer, Varun Manjunatha, Jordan Boyd-Graber, and Hal Daumé III. Deep Unordered Composition Rivals Syntactic Methods for Text Classification. Association for Computational Linguistics, 2015.
+http://www.cs.colorado.edu/~jbg/docs/2015_acl_dan.pdf
+
+Mohit Iyyer, Jordan Boyd-Graber, Leonardo Claudino, Richard Socher, and Hal Daumé III. A Neural Network for Factoid Question Answering over Paragraphs. Empirical Methods in Natural Language Processing, 2014.
+http://www.cs.colorado.edu/~jbg/docs/2014_emnlp_qb_rnn.pdf
+
+Jordan Boyd-Graber, Brianna Satinoff, He He, and Hal Daumé III. Besting the Quiz Master: Crowdsourcing Incremental Classification Games. Empirical Methods in Natural Language Processing, 2012.
+http://www.cs.colorado.edu/~jbg/docs/qb_emnlp_2012.pdf
+
+Audience/Attendee Experience:
+
+Our system is able to attract relatively large crowds.  We recently demoed the
+system for 600 high school students as the system faced off against four
+Jeopardy champions, and we will compete against Ken Jennings in Seattle on
+October 2.  https://www.youtube.com/watch?v=LqsUaprYMOw
+
+Players hold a buzzer and a question is read by a moderator.  When the player
+knows the answer, they can press a button to give an answer.  The computer can
+also interrupt the question to answer the question.
+
+While the computer is thinking, it displays the features and predictions of
+its component systems, making it an enjoyable experience even for players not
+directly playing the game.  The element of competition also engages the audience
+to root for (or against) the human players.
+
+Players can compete against the computer system in matches of 20 questions
+ranging over history, science, literature, and popular culture.  We will have a
+leaderboard to encourage teams of audience members to participate in the
+demonstration.
+
+Equipment:
+
+We will bring a laptop and a small buzzer system (handheld).
+
+Readiness:
+
+The system has been demoed in May 2015 and October 2015.  We will continue
+improving the system until NIPS.
+
+Abstract:
+We present a machine learning system that plays a trivia game called "quiz bowl", in which questions are incrementally revealed to players. This task requires players (both human and computer) to decide not only what answer to guess but also when to interrupt the moderator ("buzz in") with that guess. Our system uses a recently-introduced deep learning model called the deep averaging network (or DAN) to generate a set of candidate guesses given a partially-revealed question. For each candidate guess, features are generated from language models and fed to a classifier that decides whether to buzz in with that guess. Previous demonstrations have shown that our system can compete with skilled human players (it earned a tie against a team of four former Jeopardy champions in May). 
+
+
+Special Needs:
+
+We would need two tables (one for the laptop and one for the players).
+
+It would also be helpful to have a monitor or a projector to display the thought
+process of the question answering system (and to also display the score).
