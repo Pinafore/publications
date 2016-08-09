@@ -1,0 +1,114 @@
+\section{Deep Averaging Networks}\label{sec:dan}
+
+
+
+
+
+
+The intuition behind deep feed-forward neural networks is that each layer learns
+a more abstract representation of the input than the previous
+one~\cite{bengio2013representation}. We can apply this concept to the
+\nbow\ model discussed in Section~\ref{sec:nbow} with the expectation that each
+layer will increasingly magnify small but meaningful differences in the word
+embedding average. To be more concrete, take $s_1$ as the sentence ``I really
+loved Rosamund Pike's performance in the movie Gone Girl'' and generate $s_2$
+and $s_3$ by replacing ``loved'' with ``liked'' and then again by
+``despised''. The vector averages of these three sentences are almost
+identical, but the averages associated with the synonymous sentences $s_1$ and
+$s_2$ are slightly more similar to each other than they are to $s_3$'s average.
+
+
+
+
+
+
+
+Could adding depth to \nbow\ make small such distinctions 
+as this one more apparent? In Equation~\ref{eq:ave}, we compute
+$\boldsymbol{z}$, the vector representation for input text $X$, by
+averaging the word vectors $\boldsymbol{v}_{w \in X}$. Instead of
+directly passing this representation to an output layer, we can
+further transform $\boldsymbol{z}$ by adding more layers before
+applying the softmax. Suppose we have $n$ layers,
+$\boldsymbol{z}_{1\dots n}$. We compute each layer 
+\begin{equation}
+\label{eq:dan}
+	\boldsymbol{z}_i = g(\boldsymbol{z}_{i - 1}) = f(\text{\textbf{W}}_i\cdot \boldsymbol{z}_{i - 1} + \boldsymbol{b}_i)
+\end{equation}
+and feed the final layer's representation, $\boldsymbol{z}_n$, to a softmax
+layer for prediction (Figure~\ref{fig:dan}, right).
+
+This model, which we call a deep averaging network (\dan), is still unordered,
+but its depth allows it to capture subtle variations in the input better than
+the standard \nbow\ model. Furthermore, computing each layer requires just a
+single matrix multiplication, so the complexity scales with the number of layers
+rather than the number of nodes in a parse tree. In practice, we find no
+significant difference between the training time of a \dan\ and that of the
+shallow \nbow\ model.
+
+\subsection{Word Dropout Improves Robustness}
+
+
+
+
+Dropout regularizes neural networks by randomly setting hidden and/or input
+units to zero with some probability
+$p$~\cite{hintondropout,srivastava2014dropout}. Given a neural network with $n$
+units, dropout prevents overfitting by creating an ensemble of $2^n$ different
+networks that share parameters, where each network consists of some combination
+of dropped and undropped units. Instead of dropping units,
+a natural extension for the \dan\ model is to randomly drop word tokens' entire
+\emph{word embeddings} from the vector average. Using this method, which we call
+\emph{word dropout}, our network theoretically sees $2^{|X|}$ different token sequences for each
+input $X$.
+
+We posit a vector $\boldsymbol{r}$ with $|X|$ independent Bernoulli trials, each
+of which equals 1 with probability $p$. The embedding $\boldsymbol{v}_w$ for
+token $w$ in $X$ is dropped from the average if $\boldsymbol{r}_w$ is 0, which
+exponentially increases the number of unique examples the network sees during
+training.  This allows us to modify Equation~\ref{eq:ave}:
+\begin{align}\label{eq:dropped}
+&\boldsymbol{r}_w \sim \text{Bernoulli}(p) \\
+&\hat X = \{w | w \in X \text{ and } \boldsymbol{r}_w > 0\} \\
+& \boldsymbol{z} = g(w \in X) = \frac{\sum_{w \in \hat X} \boldsymbol{v}_w}{\norm{\hat X}}.
+\end{align}
+
+Depending on the choice of $p$, many of the ``dropped'' versions of an original
+training instance will be very similar to each other, but for shorter inputs
+this is less likely. We might drop a very important token, such as ``horrible''
+in ``the crab rangoon was especially horrible''; however, since the number of
+word types that are predictive of the output labels is low compared to
+non-predictive ones (e.g., neutral words in sentiment analysis), we always see
+improvements using this technique.
+
+Theoretically, word dropout can also be applied to other neural
+network-based approaches. However, we observe no significant
+performance differences in preliminary experiments when applying word
+dropout to leaf nodes in \recnn s for sentiment analysis (dropped leaf
+representations are set to zero vectors), and it slightly hurts
+performance on the question answering task. 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

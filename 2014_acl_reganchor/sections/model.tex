@@ -1,0 +1,130 @@
+\section{Adding Regularization}
+\label{sec:prior}
+
+In this section, we add regularizers to the {\bf anchor} objective
+(Equation~\ref{eq:anchor}).  In this section, we briefly review regularizers and
+then add two regularizers, inspired by Gaussian ($L_2$, Section~\ref{sec:l2})
+and Dirichlet priors (Beta, Section~\ref{sec:beta}), to the {\bf anchor}
+objective function (Equation~\ref{eq:anchor}).
+
+Regularization terms are ubiquitous.  They typically appear as an
+additional term in an optimization problem.  Instead of optimizing a
+function just of the data $x$ and parameters $\beta$, $f(x, \beta)$,
+one optimizes an objective function that includes a regularizer that
+is only a function of parameters: $f(w, \beta) + r(\beta)$.
+Regularizers are critical in staid methods like linear
+regression~\cite{ng-04}, in workhorse methods such as maximum entropy
+modeling~\cite{dudik-04}, and also in emerging fields such as deep
+learning~\cite{wager-13}.
+
+In addition to being useful, regularization terms are appealing
+theoretically because they often correspond to probabilistic
+interpretations of parameters.  For example, if we are seeking the
+\abr{mle} of a probabilistic model parameterized by $\beta$, $p(x|
+\beta)$, adding a regularization term $r(\beta) = \sum_{i=1}^L
+\beta_i^2$ corresponds to adding a Gaussian prior
+\begin{equation}
+f(\beta_i) = \frac{1}{\sqrt{2\pi\sigma^2}} \ex{-\frac{\beta_i^2}{2\sigma^2}}
+\end{equation}
+and maximizing log probability of the posterior (ignoring constant
+terms)~\cite{Rennie03onl2-norm}.
+
+\subsection{$L_2$ Regularization}
+\label{sec:l2}
+
+The simplest form of regularization we can add is $L_2$
+regularization.  This is similar to assuming that probability of a
+word given a topic comes from a Gaussian distribution.  While the
+distribution over topics is typically Dirichlet, Dirichlet
+distributions have been replaced by logistic normals in topic modeling
+applications~\cite{blei-06} and for probabilistic grammars of
+language~\cite{cohen-09}.
+
+Augmenting the {\bf anchor} objective with an $L_2$ penalty yields
+\begin{align}
+\label{eq:anchorl2}
+\bm{C}_{i,\cdot} =& \text{argmin}_{C_{i,\cdot} } \kl{\bar{\bm{Q}}_{i,\cdot}}{\sum_{s_k \in S} C_{i,k} \bar{\bm{Q}}_{s_k,\cdot}} \notag \\
+&+\lambda \|\bm{C}_{i,\cdot}\ - \mu_{i, \cdot} \|_2^2,
+\end{align}
+where regularization weight $\lambda$ balances the importance of a
+high-fidelity reconstruction against the regularization, which
+encourages the anchor coefficients to be close to the vector
+$\mu$. When the mean vector $\mu$ is zero, this encourages the topic
+coefficients to be zero.  In Section~\ref{sec:informed}, we use a
+non-zero mean $\mu$ to encode an informed prior to encourage topics to
+discover specific concepts.
+
+
+\begin{table}[t]
+   \begin{center}
+   \begin{tabular}{c c c c c}
+   \hline\hline
+   Corpus & Train & Dev & Test & Vocab  \\
+   \hline
+   \abr{nips} & 1231 & 247 & 262 & 12182\\
+   \abr{20news} & 11243 & 3760 &3726 &81604\\
+   \abr{nyt} & 9255 & 2012 & 1959 & 34940\\
+   \hline
+   \end{tabular}
+   \end{center}
+\caption{The number of documents in the train, development, and test folds in
+  our three datasets.}
+   \label{tab:corpus}
+\end{table}
+
+
+\subsection{Beta Regularization}
+\label{sec:beta}
+
+The more common prior for topic models is a Dirichlet
+prior~\cite{minka-00}.  However, we cannot apply this directly because the
+optimization is done on a row-by-row basis of the anchor coefficient matrix $\bm{C}$,
+optimizing $\bm{C}$ for a fixed word $w$ for and all topics.  If we want to model the
+probability of a word, it must be the probability of word $w$ in a topic versus all
+other words.
+
+Modeling this dichotomy (one versus all others in a topic) is possible.
+The constructive definition of the Dirichlet
+distribution~\cite{sethuraman-94} states that if one has a
+$V$-dimensional multinomial $\theta \sim \dir{\alpha_1 \dots
+  \alpha_V}$, then the marginal distribution of $\theta_w$ follows
+$\theta_w \sim \bet{\alpha_w, \sum_{i \not = w} \alpha_i}$.  This is
+the tool we need to consider the distribution of a single word's
+probability.
+
+This requires including the topic matrix as part of the objective function.  The
+topic matrix is a linear transformation of the coefficient matrix
+(Equation~\ref{eq:coef-to-topic}).  The objective for beta regularization
+becomes
+\begin{align}
+\label{eq:anchorbeta}
+\bm{C}_{i,\cdot} = &\text{argmin}_{C_{i,\cdot}} \kl{\cd{i} }{\sum_{s_k \in S} C_{i,k} \cd{s_k}} \notag \\
+   &- \lambda \sum_{s_k\in S}\mbox{log (Beta}(A_{i,k};a,b)),
+\end{align}
+where $\lambda$ again balances reconstruction against the regularization.  To
+ensure the tractability of this algorithm, we enforce a convex regularization
+function, which requires that $a >1$ and $b>1$.  If
+we enforce a uniform prior---$\e{\bet{a,b}}{ A_{i,k}} = \frac{1}{V}$---and
+that the \emph{mode} of the distribution is also $\frac{1}{V}$,\footnote{For
+  $a,b < 1$, the expected value is still the uniform distribution but the mode
+  lies at the boundaries of the simplex.  This corresponds to a sparse Dirichlet
+  distribution, which our optimization cannot at present model.} this gives us
+the following parametric form for $a$ and $b$:
+\begin{equation}
+a =\frac{x}{V} +1, \mbox{ and } b=\frac{(V-1)x}{V}+1
+\end{equation}
+for real $x$ greater than zero.
+
+\subsection{Initialization and Convergence}
+
+Equation~\ref{eq:anchorl2} and Equation~\ref{eq:anchorbeta} are optimized using
+\abr{l-bfgs} gradient optimization~\cite{galassi-03}.  We initialize $\bm {C}$
+randomly from $\dir{\alpha}$ with $\alpha = \frac{60}{V}$ ~\cite{wallach-09b}.
+We update $\bm{C}$ after optimizing all $V$ rows. The newly updated $\bm {C}$
+replaces the old topic coefficients.  We track how much the topic coefficients
+$\bm{C}$ change between two consecutive iterations $i$ and $i+1$ and represent
+it as $\Delta \bm{C} \equiv \|\bm{C}^{i+1}- \bm{C}^i \|_2$.  We stop
+optimization when $\Delta \bm{C} \le \delta$.  When $\delta=0.1$, the $L_2$ and
+unregularized anchor algorithm converges after a single iteration, while beta
+regularization typically converges after fewer than ten iterations (Figure
+~\ref{fig:convergence}).

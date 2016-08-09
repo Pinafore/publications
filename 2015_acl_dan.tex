@@ -1,0 +1,140 @@
+%
+% File acl2014.tex
+%
+% Contact: koller@ling.uni-potsdam.de, yusuke@nii.ac.jp
+%%
+%% Based on the style files for ACL-2013, which were, in turn,
+%% Based on the style files for ACL-2012, which were, in turn,
+%% based on the style files for ACL-2011, which were, in turn,
+%% based on the style files for ACL-2010, which were, in turn,
+%% based on the style files for ACL-IJCNLP-2009, which were, in turn,
+%% based on the style files for EACL-2009 and IJCNLP-2008....
+
+%% Based on the style files for EACL 2006 by
+%%e.agirre@ehu.es or Sergi.Balari@uab.es
+%% and that of ACL 08 by Joakim Nivre and Noah Smith
+
+\documentclass[11pt,letterpaper]{article}
+\usepackage{style/acl2015}
+\usepackage{times}
+\usepackage{latexsym}
+\usepackage{booktabs}
+\makeatletter
+\newcommand{\@BIBLABEL}{\@emptybiblabel}
+\newcommand{\@emptybiblabel}[1]{}
+\makeatother
+\usepackage{hyperref}
+\usepackage[usenames,dvipsnames]{color}
+\usepackage[utf8]{inputenc}
+\usepackage{bbm}
+\usepackage{titlesec}
+\usepackage{booktabs}
+\usepackage{tablefootnote}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage{color,soul}
+\usepackage{tikz}
+\usepgflibrary{shapes.multipart}
+
+\newif\ifcomment\commenttrue
+\input{style/preamble}
+\let\originaleqref\eqref
+\setlength\titlebox{6.5cm}
+
+
+\definecolor{a}{rgb}{0,1,1} %cyan
+\definecolor{e}{rgb}{0.8,1,1} %light cyan
+
+\definecolor{h}{rgb}{1,0.4,0.4} % dark red
+\definecolor{k}{rgb}{1,0.8,0.8} % light red
+\definecolor{salmon}{rgb}{0.91,0.59,0.48}
+\newcommand{\hlc}[2][yellow]{ {\sethlcolor{#1} \hl{#2}} }
+\newcommand*{\aemph}[1]{%
+  \tikz[baseline=(X.base)] \node[rectangle, fill=a, rounded corners, inner sep=0.5mm] (X) {#1};%
+  }
+\newcommand*{\eemph}[1]{%
+  \tikz[baseline=(X.base)] \node[rectangle, fill=e, rounded corners, inner sep=0.5mm] (X) {#1};%
+  }
+\newcommand*{\hemph}[1]{%
+  \tikz[baseline=(X.base)] \node[rectangle, fill=h, rounded corners, inner sep=0.5mm] (X) {#1};%
+  }
+\newcommand*{\kemph}[1]{%
+  \tikz[baseline=(X.base)] \node[rectangle, fill=k, rounded corners, inner sep=0.5mm] (X) {#1};%
+  }
+
+
+\newcommand{\norm}[1]{| #1 |}
+\newcommand{\dan}[0]{{\bf \textsc{dan}}}
+\newcommand{\nbow}[0]{{\bf \textsc{nbow}}}
+\newcommand{\nbowr}[0]{{\bf \textsc{nbow-rand}}}
+\newcommand{\danr}[0]{{\bf \textsc{dan-rand}}}
+\newcommand{\danroot}[0]{{\bf \textsc{dan-root}}}
+
+\newcommand{\rnn}[0]{{\bf \textsc{rnn}}}
+\newcommand{\recnn}[0]{{\bf \textsc{r}ec\textsc{nn}}}
+\newcommand{\rntn}[0]{{\bf \textsc{r}ec\textsc{ntn}}}
+\newcommand{\dcnn}[0]{{\bf \textsc{dcnn}}}
+\newcommand{\drnn}[0]{{\bf \textsc{dr}ec\textsc{nn}}}
+\newcommand{\cnnmc}[0]{{\bf \textsc{cnn-mc}}}
+\newcommand{\pvec}[0]{{\bf \textsc{pvec}}}
+\newcommand{\qanta}[0]{{\bf \textsc{qanta}}}
+\newcommand{\nbsvm}[0]{{\bf \textsc{nbsvm-bi}}}
+\newcommand{\binb}[0]{{\bf \textsc{binb}}}
+\newcommand{\wrrbm}[0]{{\bf \textsc{wrrbm}}}
+\newcommand{\danw}[0]{{\bf \textsc{dan-wiki}}}
+\newcommand{\irw}[0]{{\bf \textsc{ir-wiki}}}
+\newcommand{\tlstm}[0]{{\bf \textsc{tree-lstm}}}
+\newcommand{\qantaw}[0]{{\bf \textsc{qanta-wiki}}}
+
+
+\title{Deep Unordered Composition Rivals Syntactic Methods \\for Text Classification}
+\author{
+	Mohit Iyyer,$^{1}$ Varun Manjunatha,$^{1}$ Jordan Boyd-Graber,$^{2}$ Hal Daumé III$^{1}$\\
+	$^1$University of Maryland, Department of Computer Science and \abr{umiacs}\\
+        $^2$University of Colorado, Department of Computer Science \\
+  	{\tt \{miyyer,varunm,hal\}@umiacs.umd.edu}, {\tt Jordan.Boyd.Graber@colorado.edu} \\
+}
+
+
+\begin{document}
+\maketitle
+\begin{abstract}
+  Many existing deep learning models for natural language processing
+  tasks focus on learning the \emph{compositionality} of their inputs,
+  which requires many expensive computations. We present a simple deep
+  neural network that competes with and, in some cases, outperforms
+  such models on sentiment analysis and factoid question answering
+  tasks while taking only a fraction of the training time. While our
+  model is syntactically-ignorant, we show significant improvements
+  over previous bag-of-words models by deepening our network and
+  applying a novel variant of dropout. Moreover, our model performs
+  better than syntactic models on datasets with high syntactic
+  variance. We show that our model makes similar errors to
+  syntactically-aware models, indicating that for the tasks we
+  consider, nonlinearly transforming the input is more important than
+  tailoring a network to incorporate word order and syntax.
+
+% \jbgcomment{The sentence about dropout could be better integrated with the rest
+%   of the abstract.  I.e., talk more about \emph{why} these gains are possible
+%   because of the new tricks that you do.  If there are things that you could
+%   mention with the regularization, that would be good.  I suspect that many
+%   folks will be asking \emph{why}}
+
+\end{abstract}
+
+\input{2015_acl_dan/sections/introduction}
+\input{2015_acl_dan/sections/model}
+\input{2015_acl_dan/sections/dan}
+\input{2015_acl_dan/sections/experiments}
+\input{2015_acl_dan/sections/discussion}
+\input{2015_acl_dan/sections/related}
+\input{2015_acl_dan/sections/conclusion}
+\input{2015_acl_dan/sections/acknowledgments}
+
+\clearpage
+
+\bibliographystyle{style/acl2015}
+\footnotesize
+\bibliography{bib/journal-full,bib/miyyer,bib/jbg}
+
+\end{document}
