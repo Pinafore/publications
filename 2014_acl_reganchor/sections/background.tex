@@ -1,0 +1,121 @@
+\section{Anchor Words: Scalable Topic Models}
+
+\label{sec:anchor}
+\begin{table}[t!]
+\begin{center}
+
+\begin{small}
+\rowcolors{1}{}{lightgray}
+\begin{tabular}{|l p{6.25cm}| }
+\hline
+$K$ & number of topics\\
+$V$ & vocabulary size\\
+$M$ & document frequency: minimum documents an anchor word
+candidate must appear in \\
+$\bm{Q}$ & word co-occurrence matrix\newline  $Q_{i,j} = p(w_1 = i, w_2 = j) $\\
+$\bm{\bar{ Q}}$ & conditional distribution of $Q$\newline  ${\bar Q}_{i,j} = p(w_1 = j \g w_2= i)$ \\
+$ \cd{i} $ & row $i$ of ${\bar Q}$ \\
+$\bm{A}$ & topic matrix, of size $V \times K$ \newline  $A_{j,k} = p(w=j \g z=k)$ \\
+$\bm{C}$ & anchor coefficient of size $K \times V$\newline $C_{j,k} = p(z=k\g
+w=j)$ \\
+$\mathcal{S}$ & set of anchor word indexes $\{s_1, \dots s_K\}$ \\
+$\lambda$ &regularization weight\\
+\hline
+\end{tabular}
+\end{small}
+\end{center}
+\caption{Notation used.  Matrices are in bold ($\bm{Q}, \bm{C}$), sets are in
+  script $\mathcal{S}$}
+\label{tab:TableOfNotation}
+\end{table}
+
+In this section, we briefly review the {\bf anchor} method and place it in the
+context of topic model inference.  Once we have established the {\bf anchor}
+objective function, in the next section we regularize the objective function.
+
+\paragraph{Rethinking Data: Word Co-occurrence}
+
+Inference in topic models can be viewed as a black box: given a set of
+documents, discover the topics that best explain the data.  The difference
+between {\bf anchor} and conventional inference is that while
+conventional methods take a collection of documents as input, {\bf anchor}
+takes \emph{word co-occurrence} statistics.  Given a vocabulary of size
+$V$, we represent this joint distribution as $\bm{Q}_{i,j} = p(w_1 =i, w_2=j)$,
+each cell represents the probability of words appearing together in a document.
+
+Like other topic modeling algorithms, the output of the {\bf anchor} method is
+the topic word distributions $\bm{A}$ with size $V*K$, where $K$ is the total number
+of topics desired, a parameter of the algorithm.  The $k^{th}$ column of $A$
+will be the topic distribution over all words for topic $k$, and $\bm{A}_{w,k}$ is
+the probability of observing type $w$ given topic $k$.
+
+\paragraph{Anchors: Topic Representatives}
+
+The {\bf anchor} method~\cite{Arora-2012} is based on the separability
+assumption~\cite{Donoho-2003}, which assumes that each topic contains at least
+one namesake ``anchor word'' that has non-zero probability only in that topic.
+Intuitively, this means that each topic has unique, specific word that, when
+used, identifies that topic.  For example, while ``run'', ``base'', ``fly'', and
+``shortstop'' are associated with a topic about \underline{baseball},
+only ``shortstop'' is unambiguous, so it could serve as this topic's anchor word.
+
+Let's assume that we knew what the anchor words were: a set $\mathcal{S}$ that
+indexes rows in $\bm{Q}$.  Now consider the {\bf conditional distribution} of word
+$i$, the probability of the rest of the vocabulary given an observation of word
+$i$; we represent this as $\cd{i}$, as we can construct this by
+normalizing the rows of $\bm{Q}$.  For an anchor word $s_a \in
+\mathcal{S}$, this will look like a topic; $\cd{\mbox{``shortstop''}}$ will have
+high probability for words associated with \underline{baseball}.
+
+The key insight of the {\bf anchor} algorithm is that the conditional
+distribution of polysemous non-anchor words can be reconstructed as a
+linear combination of the conditional distributions of anchor words.
+For example, $\cd{\mbox{``fly''}}$ could be reconstructed by combining
+the anchor words ``insecta'', ``boeing'', and ``shortshop''.  We
+represent the coefficients of this reconstruction as a matrix
+$\bm{C}$, where $C_{i,k} = p(z=k \g w=i)$.  Thus, for any word $i$,
+\begin{equation}
+  \bar{\bm{Q}}_{i,\cdot} \approx \sum_{s_k \in \mathcal{S}} C_{i,k} \bar{\bm{Q}}_{s_k, \cdot}.
+\label{eq:lincomb}
+\end{equation}
+The coefficient matrix is {\bf not} the usual output of a topic modeling
+algorithm.  The usual output is the probability of a word \emph{given a topic}.
+The coefficient matrix $C$ is the probability of a topic \emph{given a word}.
+We use Bayes rule to recover the topic distribution $p(w=i|z=k) \equiv $
+\begin{align}
+A_{i,k}  & \propto p(z=k|w=i) p(w=i)  \notag \\
+   & = C_{i,k} \sum_{j}
+{\bar{Q}_{i,j}}
+\label{eq:coef-to-topic}
+\end{align}
+where $p(w)$ is the normalizer of $\bm{Q}$ to obtain $\cd{w}$.
+
+The geometric argument for finding the anchor words is one of the key
+contributions of \citet{Arora-2012} and is beyond the scope of
+this paper.  The algorithms in Section~\ref{sec:prior} use the anchor selection
+subroutine unchanged.  The difference in our approach is in how we discover the
+anchor coefficients $C$.
+
+\paragraph{From Anchors to Topics}
+
+After we have the anchor words, we need to find the coefficients that
+best reconstruct the data $\bar{Q}$ (Equation~\ref{eq:lincomb}).
+\citet{Arora-2012} chose the $C$ that minimizes the \abr{kl}
+divergence between $\bar{Q}_{i,\cdot}$ and the reconstruction based on
+the anchor word's conditional word vectors $\sum_{s_k \in \mathcal{S}}
+C_{i,k} \cd{s_k}$,
+\begin{equation}
+\label{eq:anchor}
+\begin{small}
+\bm{C}_{i,\cdot} = \text{argmin}_{\bm{C}_{i,\cdot}} \kl{\cd{i}}{\sum_{s_k \in S} C_{i,k} \cd{s_k}}.
+\end{small}
+\end{equation}
+
+The {\bf anchor} method is fast, as it only depends on the size of the
+vocabulary once the co-occurrence statistics $\bm Q$ are obtained.  However, it does
+not support rich priors for topic models, while \abr{mcmc}~\cite{griffiths-04} and
+variational \abr{em}~\cite{blei-03} methods can.  This prevents models from
+using priors to guide the models to discover particular themes~\cite{zhai-12},
+or to encourage sparsity in the models~\cite{yao-09}.  In the rest of this
+paper, we correct this lacuna by adding regularization inspired by Bayesian
+priors to the {\bf anchor} algorithm.

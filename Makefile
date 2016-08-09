@@ -31,13 +31,21 @@ clean:
 	cp $(<:.tex=.pdf) $@
 	cp $@ ~/public_html/temp
 
+# cd $(<:.paper.pdf=)/supporting && pdflatex summary
 %.nsf.pdf: %.paper.pdf
-	cd $(<:.paper.pdf=)/supporting && pdflatex summary
+	cd $(<:.paper.pdf=)/supporting && pdflatex facilities
 	cd $(<:.paper.pdf=)/supporting && pdflatex jbg_bio
+	cd $(<:.paper.pdf=)/supporting && pdflatex collaborators
 	cd $(<:.paper.pdf=)/supporting && pdflatex data_plan
+	cd $(<:.paper.pdf=)/supporting && pdflatex justification
+	cd $(<:.paper.pdf=)/supporting && pdflatex jbg_current_and_pending
 	mkdir -p $(<:.paper.pdf=)/output
 	mv $(<:.paper.pdf=)/supporting/*.pdf $(<:.paper.pdf=)/output
-	cp $< $(<:.paper.pdf=)/output
+	scripts/split_pdf.py $< 15
+	mv $(<:.paper.pdf=).paper.part*.pdf $(<:.paper.pdf=)/output
+	wc $(<:.paper.pdf=)/supporting/summary.txt
+	cat $(<:.paper.pdf=)/supporting/summary.txt
+	cp $(<:.paper.pdf=)/supporting/summary.txt $(<:.paper.pdf=)/output
 
 %.paper.ps: %.tex %.bbl style/preamble.tex $(TEX) $(GFX)
 	latex $<
