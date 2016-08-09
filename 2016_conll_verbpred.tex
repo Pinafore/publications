@@ -1,0 +1,162 @@
+\documentclass[11pt]{article}
+\usepackage{authblk}
+\usepackage[hidelinks]{hyperref}
+\usepackage{style/acl2016}
+
+\usepackage{times}
+\usepackage{url}
+\usepackage{latexsym}
+\usepackage{amsmath}
+
+%\usepackage{apacite}
+\usepackage{graphicx}
+\usepackage{epstopdf}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{enumerate}
+\usepackage{mdwlist}
+\usepackage{nomencl}
+%\usepackage[table]{xcolor}
+\usepackage{CJKutf8}
+\usepackage[utf8]{inputenc}
+
+\usepackage{newunicodechar}
+\def\aclpaperid{55}
+\aclfinalcopy
+\DeclareUnicodeCharacter{FFFD}{?????}
+% Comment
+\usepackage[usenames]{color}
+
+%\newif\ifcomment\commenttrue
+\newif\ifcomment\commentfalse
+
+\setlength\titlebox{6cm}
+
+\input{style/preamble}
+
+\DeclareMathOperator*{\argmax}{arg\,max}
+
+\newcommand{\listsep}[0]{ \setlength{\parskip}{-0.2cm}}
+
+% gloss
+\newcommand{\gl}[2]{%
+\leavevmode\vtop{\hbox{#1}%
+\hbox{#2\lower1.4ex\rlap{}}}}
+
+\title{Incremental Prediction of Sentence-final Verbs: Humans versus Machines}
+
+\author{
+  Alvin C. {Grissom II}$^{1}$, Naho Orita$^{2}$, and Jordan {Boyd-Graber}$^{1}$\\
+  $^1$University of Colorado Boulder, Department of Computer Science \\
+  $^2$Tohoku University, Graduate School of Information Sciences \\
+  {\tt\small\{Alvin.Grissom,Jordan.Boyd.Graber\}@colorado.edu}\\
+  % {\tt\small\protect\url{Alvin.Grissom@colorado.edu}},\\
+   {\tt\small \protect\url{naho@ecei.tohoku.ac.jp}}\\
+  % {\tt\small\protect\url{Jordan.Boyd.Graber@colorado.edu}}
+}
+
+
+% \author[1]{Alvin C. {Grissom II}}
+
+% \author[2]{Naho Orita}
+% \author[1]{Jordan {Boyd-Graber}}
+
+
+% \affil[1]{Department of Computer Science \\
+% University of Colorado, Boulder \\
+% \url{Alvin.Grissom@colorado.edu}\\
+% \email{Jordan.Boyd.Graber@colorado.edu}}
+
+% \affil[2]{Tohoku University \\
+% Graduate School of Information Sciences \\
+% \url{naho@ecei.tohoku.ac.jp} }
+
+% \author{Alvin C. {Grissom II} \\
+%   Computer Science \\
+%   University of Colorado \\
+%   %Boulder, CO \\
+%   {\tt Alvin.Grissom} \\
+%   {\tt @colorado.edu} \\\And
+%   Naho Orita \\
+%   Graduate School of Information Sciences \\
+%   Tohoku University \\
+%   {\tt naho@ecei.tohoku.ac.jp} \\\And
+%   Jordan {Boyd-Graber} \\
+%   Computer Science \\
+%   University of Colorado \\
+%   %Boulder, CO \\
+%   {\tt Jordan.Boyd.Graber} \\
+%   {\tt @colorado.edu}}
+% \author{Alvin C. Grissom II \\
+% University of Colorado \\
+% {\tt Alvin.Grissom@colorado.edu}\\\And
+
+% Naho Orita \\
+% Tohoku University \\
+% {\tt naho@ecei.tohoku.ac.jp} \\\And
+
+% Jordan Boyd-Graber \\
+% University of Colorado \\
+% {\tt Jordan.Boyd.Graber@colorado.edu}
+% }
+
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+  Verb prediction is important in human sentence processing and,
+  practically, in simultaneous machine translation.  In verb-final
+  languages, speakers select the final verb before it is uttered, and
+  listeners predict it before it is uttered. Simultaneous interpreters
+  must do the same to translate in real-time.  Motivated by the
+  problem of \abr{sov}-\abr{svo} simultaneous machine translation, we
+  provide a study of incremental verb prediction in verb-final
+  languages. As a basis of comparison, we examine incremental verb
+  prediction with human participants in a multiple choice setting
+  using crowdsourcing to gain insight into incremental human
+  performance in a constrained setting.  We then examine a
+  computational approach to incremental verb prediction using
+  discriminative classification with shallow features.  Both humans
+  and machines predict verbs more accurately as more of a sentence
+  becomes available, and case markers---when available---help humans
+  and sometimes machines predict final verbs.
+\end{abstract}
+\begin{CJK}{UTF8}{min}
+
+\section{The Importance of Verb Prediction}
+
+\input{2016_conll_verbpred/sections/intro}
+
+\section{Human Verb Prediction}
+\label{sec:human}
+\input{2016_conll_verbpred/sections/human}
+
+
+\section{Machine Verb Prediction}
+\label{sec:language_model}
+
+\input{2016_conll_verbpred/sections/classification}
+
+\clearpage
+
+\section{Related Work}
+\label{sec:related}
+\input{2016_conll_verbpred/sections/relwork}
+
+\section{Conclusion}
+\label{sec:conclusion}
+
+\input{2016_conll_verbpred/sections/conc}
+\section{Acknowledgments}
+\input{2016_conll_verbpred/sections/ack}
+\end{CJK}
+% include your own bib file like this:
+
+\clearpage
+
+\bibliographystyle{style/acl2016}
+\bibliography{bib/journal-full,bib/jbg,bib/alvin,bib/alvin_prelims}
+\end{document}

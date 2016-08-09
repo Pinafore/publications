@@ -30,7 +30,6 @@ clean:
 	mkdir -p ~/public_html/temp
 	cp $(<:.tex=.pdf) $@
 	cp $@ ~/public_html/temp
-	./scripts/style-check.rb $(<:.tex=)/*.tex $(<:.tex=)/sections/*.tex
 
 %.nsf.pdf: %.paper.pdf
 	cd $(<:.paper.pdf=)/supporting && pdflatex summary
