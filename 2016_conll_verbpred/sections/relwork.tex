@@ -1,0 +1,57 @@
+
+While to our knowledge our work is the first in-depth study of
+incremental verb prediction, it is not the first study of verb
+prediction in humans or machines.  This section reviews that related
+work.
+
+\paragraph{Human Verb Prediction}
+
+Prediction is easier with more context and explicit case markings.
+\newcite{teramura-1987} shows that \emph{next word prediction} in
+Japanese improves as more words are incrementally revealed.  While
+only looking at verb prediction given the \emph{complete} preceding
+context, \newcite{yamashita1997effects} finds that scrambling word
+order in Japanese---a case rich language that allows such
+scrambling---does not harm final verb prediction, but that explicit
+case marking helps final verb prediction. Our results show that this
+is true even for incremental verb
+prediction. \newcite{levy2013expectation} also find that dative
+markers aid German verb prediction.
+
+Neurolinguistic measurements by \newcite{friederici2000verb} suggest
+processing verb-final clauses in German use both semantic and
+syntactic information, but that they are processed differently.  In
+Japanese, \newcite{koso2011event} measure the effect of case markings
+on predicting verbs with strong case preferences.  This is consistent
+with our use of case-based features and suggests that further gains
+are possible using richer syntactic
+representations. \newcite{chow2015bag} use \abr{n400} measurements to
+investigate two competing hypotheses for the initial prediction of an
+upcoming verb: whether predictions are dependent on all words equally
+(the Bag-of-words hypothesis), or alternatively, whether prediction is
+selectively modulated by the final verb's arguments (the
+Bag-of-arguments hypothesis).  They argue for the latter.
+
+The literature on incremental verb prediction is sparse. A key finding
+of \newcite{matsubara2002bilingual} is that Japanese-English simultaneous
+interpreters, when given access to lecture slides, would refer to them
+to predict the next phrase.
+
+\paragraph{Prediction for Simultaneous Machine~Translation}
+
+  The Verbmobil simultaneous translation
+system~\cite{kay1992verbmobil} uses deleted
+interpolation~\cite{jelinek1990self} to create a weighted $n$-gram
+models to predict dialogue acts---almost identical to predicting the
+next word~\cite{reithinger1996predicting}.
+\newcite{konieczny2003anticipation} predict verbs with a recurrent
+neural network, but \newcite{matsubara-00} was the first to use verb predictions
+as part of a simultaneous interpretation system.  They use pattern
+matching-based predictions of English verbs.  In contrast, \newcite{grissom2014}
+use a statistical approach, using $n$-gram models to predict German verbs and
+particles (in Section~\ref{sec:language_model} we show that this model predicts
+verbs poorly).  However, their simultaneous translation system is able to learn
+when to trust these predictions. \newcite{oda2015acl} extend the idea of using
+prediction by predicting entire syntactic constituents for English-Japanese
+simultaneous machine translation.  Both systems will likely benefit from our
+improved verb prediction presented here.

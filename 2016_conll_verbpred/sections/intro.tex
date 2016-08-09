@@ -1,0 +1,48 @@
+Humans predict future linguistic input before it is
+observed~\cite{kutas-11}. This predictability has been formalized in
+information theory~\cite{shannon-1948}---the more predictable a word
+is, the lower the entropy---and has explained various linguistic
+phenomena, such as garden path ambiguity~\cite{den-1997,hale-2001}.
+
+Such instances of linguistic prediction are fundamental to statistical
+\abr{nlp}. Auto-complete from search engines has made next-word
+prediction one of best known \abr{nlp} applications.
+
+
+
+
+
+Long-distance word prediction, such as verb prediction in \abr{sov}
+languages~\cite{levy2013expectation,momma2015timing,chow2015bag}, is
+important in simultaneous machine translation from
+subject-object-verb~(\abr{sov}) languages to
+subject-verb-object~(\abr{svo}) languages.  In \abr{svo} languages
+such as English, for example, the main verb phrase usually comes after
+the first noun phrase---the main subject---in a sentence, while in
+verb-final languages such as Japanese or German, it comes very last.
+Human simultaneous translators must make predictions about the
+unspoken final verb to incrementally translate the sentence.
+Minimizing interpretation delay thus requires making constant
+predictions and deciding when to trust those predictions and commit to
+translating in real-time.
+
+Such prediction can also aid machines.  \newcite{matsubara-00} use
+pattern-matching rules; \newcite{grissom2014} use a
+statistical \ngram{} approach; and \newcite{oda2015acl} extend the
+idea of using prediction by predicting entire syntactic constituents
+for English-Japanese translation.  These systems require fast,
+accurate verb prediction to further improve simultaneous translation
+systems.  We focus on verb prediction in verb-final languages such as
+Japanese with this motivation in mind.
+
+In Section~\ref{sec:human}, we present what is, to our knowledge, the
+first study of humans' ability to incrementally predict the verbs in
+Japanese.  We use these human data as a yardstick to which to compare
+computational incremental verb prediction.  Incorporating some of the
+key insights from our human study into a discriminative
+model---namely, the importance of case markers---
+Section~\ref{sec:language_model} presents a better incremental verb
+classifier than existing verb prediction schemes.  Having established
+both human and computer performance on this challenging and
+interesting task, Section~\ref{sec:related} reviews our work's
+relationship to other studies in \abr{nlp} and linguistics.
