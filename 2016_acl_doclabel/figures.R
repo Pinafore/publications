@@ -49,6 +49,75 @@ user_exp_plot <- ggplot(data=congress_user, aes(x=time, y=median_value, group=co
 ggsave(user_exp_plot, filename = gfxdir("user_exp_plot.pdf"), height=4, width=4)
 
 
+###################### Plots for talk version of user experiments ############
+
+# Only look at purity
+all_data <- subset(congress_user, congress_user$metric %in% c("Purity"))
+
+# Change the order
+all_data$condition <- factor(congress_user$condition, levels = c("LR", "LA", "TA", "TR"))
+
+# Rename the conditions
+d1 <- subset(all_data, all_data$condition %in% c("LR"))
+d2 <- subset(all_data, all_data$condition %in% c("LR", "LA"))
+d3 <- subset(all_data, all_data$condition %in% c("LR", "LA", "TA"))
+d4 <- all_data
+
+d1$condition <- mapvalues(d1$condition, from=c("TA", "TR", "LA", "LR"), to=c("Topics with Active Learning", "Topics, no Active Learning", "No Organization with Active Learning", "No Organization, no Active Learning"))
+d2$condition <- mapvalues(d2$condition, from=c("TA", "TR", "LA", "LR"), to=c("Topics with Active Learning", "Topics, no Active Learning", "No Organization with Active Learning", "No Organization, no Active Learning"))
+d3$condition <- mapvalues(d3$condition, from=c("TA", "TR", "LA", "LR"), to=c("Topics with Active Learning", "Topics, no Active Learning", "No Organization with Active Learning", "No Organization, no Active Learning"))
+d4$condition <- mapvalues(d4$condition, from=c("TA", "TR", "LA", "LR"), to=c("Topics with Active Learning", "Topics, no Active Learning", "No Organization with Active Learning", "No Organization, no Active Learning"))
+
+talk_width <- 6
+talk_height <- 3.5
+
+pal <- c("#000000", "#CFB87C", "#56B4E9", "#009E73")
+
+user_exp_plot <- ggplot(data=d1, aes(x=time, y=median_value, group=condition, colour=condition)) +
+    geom_errorbar(aes(ymin=median_value-se, ymax=median_value+se), width=1, position=pd) +
+    geom_line(size=1, position=pd) +
+    geom_point(size=2, aes(shape = condition), position=pd)+
+     xlab("Elapsed Time (min)") +
+    scale_y_continuous(limits = c(.2, .52)) +
+    ylab("Median (over participants)") +
+     theme(legend.position="right") +
+    scale_color_manual(values = pal)
+ggsave(user_exp_plot, filename = gfxdir("user_talk_1.pdf"), height=talk_height, width=talk_width)
+
+user_exp_plot <- ggplot(data=d2, aes(x=time, y=median_value, group=condition, colour=condition)) +
+    geom_errorbar(aes(ymin=median_value-se, ymax=median_value+se), width=1, position=pd) +
+    geom_line(size=1, position=pd) +
+    geom_point(size=2, aes(shape = condition), position=pd)+
+     xlab("Elapsed Time (min)") +
+    scale_y_continuous(limits = c(.2, .52)) +
+    ylab("Median (over participants)") +
+     theme(legend.position="right") +
+    scale_color_manual(values = pal)
+ggsave(user_exp_plot, filename = gfxdir("user_talk_2.pdf"), height=talk_height, width=talk_width)
+
+user_exp_plot <- ggplot(data=d3, aes(x=time, y=median_value, group=condition, colour=condition)) +
+    geom_errorbar(aes(ymin=median_value-se, ymax=median_value+se), width=1, position=pd) +
+    geom_line(size=1, position=pd) +
+    geom_point(size=2, aes(shape = condition), position=pd)+
+     xlab("Elapsed Time (min)") +
+    scale_y_continuous(limits = c(.2, .52)) +
+    ylab("Median (over participants)") +
+     theme(legend.position="right") +
+    scale_color_manual(values = pal)
+ggsave(user_exp_plot, filename = gfxdir("user_talk_3.pdf"), height=talk_height, width=talk_width)
+
+user_exp_plot <- ggplot(data=d4, aes(x=time, y=median_value, group=condition, colour=condition)) +
+    geom_errorbar(aes(ymin=median_value-se, ymax=median_value+se), width=1, position=pd) +
+    geom_line(size=1, position=pd) +
+    geom_point(size=2, aes(shape = condition), position=pd)+
+     facet_grid(metric ~ ., scale="free")+
+     xlab("Elapsed Time (min)") +
+    scale_y_continuous(limits = c(.2, .52)) +
+    ylab("Median (over participants)") +
+     theme(legend.position="right") +
+    scale_color_manual(values = pal)
+ggsave(user_exp_plot, filename = gfxdir("user_talk_4.pdf"), height=talk_height, width=talk_width)
+
 ###################### Plots for synthetic experiments #######################
 #newsgroups
 all_data <- read.csv(datadir('synthetic_exp/newsgroups_syn_data.csv'), sep=',', quote="\"")
