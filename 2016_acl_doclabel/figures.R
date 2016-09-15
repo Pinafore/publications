@@ -173,7 +173,6 @@ mean_vote_data <- summarySE(condition_vote_data, measurevar="value", groupvars=c
 #mean_vote_data
 eval_votes_plot <- ggplot(data=mean_vote_data, aes(condition, y=value, fill=best_worst)) +
              geom_bar(position=position_dodge(), stat="identity", colour='black')+
-             scale_fill_manual(values=c("springgreen3", "orangered2"))+
             geom_errorbar(aes(ymin=value-se, ymax=value+se), width=.2,position=position_dodge(.9))+
             theme(legend.position="top", legend.title=element_blank())+
             ylab("Number of Votes (mean)") +
