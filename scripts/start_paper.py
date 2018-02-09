@@ -40,21 +40,23 @@ This paper~\\cite{Nguyen:Boyd-Graber:Lund:Seppi:Ringger-2015} should be cited mo
 
 kR_TEMPLATE = """
 # Script to create plots for your paper
-library(ggplot2)
+import pandas as pd
+import numpy as np
 
-directory <- "~~NAME~~/"
+from plotnine import *
 
-print(getwd())
+palette = {2: ["#000000", "#CFB87C"],
+           3: ["#000000", "#FACD00", "#DA1D2B"],
+           4: ["#FACD00", "#CFB87C", "#b2df8a", "#33a02c"]}
 
-datadir <- function(filename){
-    val <- paste(directory, 'data/', filename, sep='')
-    return(val)
-}
+kROOT_DIR = "~~NAME~~"
 
-gfxdir <- function(filename) {
-    val <- paste(directory, 'auto_fig/', filename, sep='')
-    return(val)
-}
+def datadir(filename):
+    return "%s/data/%s" % (kROOT_DIR, filename)
+
+def gfxdir(filename):
+    return "%s/auto_fig/%s" % (kROOT_DIR, filename)
+
 """
 
 def mkdir(dir):
@@ -79,6 +81,6 @@ if __name__ == "__main__":
         o.write("%% %s" % jj)
         o.close()
 
-    o = open("%s/figures.R" % paper_name, 'w')
+    o = open("%s/figures.py" % paper_name, 'w')
     o.write(kR_TEMPLATE.replace("~~NAME~~", paper_name))
     o.close()
