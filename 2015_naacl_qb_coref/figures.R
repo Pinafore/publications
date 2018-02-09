@@ -28,7 +28,7 @@ active <- ggplot(active_data, aes(color=Method, y=Precision, x=Iteration)) + geo
 density <- ggplot(density_data, aes(color=Data, size=Data, x=Tokens, y=Count, linetype=Coref)) + geom_line() + theme(legend.position="top") + scale_size_discrete(range = c(0.75, 1.5)) + scale_colour_manual(values=palette)
 
 # Comparing performance
-compare <- ggplot(compare_data, aes(x=Formula, y=Score, linetype=Coreference, fill=Coreference)) + facet_grid(Metric ~ Mentions) + geom_bar(stat="identity", position="dodge") + xlab("") + theme(legend.position="top") + scale_fill_manual(values=palette)
+compare <- ggplot(compare_data, aes(x=Formula, y=Score, linetype=Coreference, fill=Coreference)) + facet_grid("Metric ~ Mentions") + geom_bar(stat="identity", position="dodge") + xlab("") + theme(legend.position="top") + scale_fill_manual(values=palette)
 
 ggsave(active, filename = gfxdir("active.pdf"), scale=0.6, height=6, width=8)
 
