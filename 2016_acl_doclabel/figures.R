@@ -10,7 +10,7 @@ palette2 <- c("#000000", "#CFB87C")
 palette3 <- c("#000000", "#FACD00", "#DA1D2B")
 palette4 <- c("#FACD00", "#CFB87C", "#b2df8a", "#33a02c")
 
-directory <- "./"
+directory <- "2016_acl_doclabel/"
 
 print(getwd())
 
