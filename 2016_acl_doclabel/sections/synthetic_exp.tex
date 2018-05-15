@@ -1,6 +1,12 @@
 
  
-
+\begin{figure}[t!]
+\includegraphics[width=\linewidth]{2016_acl_doclabel/auto_fig/synthetic}
+\caption{Synthetic results on \abr{us} Congressional
+  Bills and 20 Newsgroups data sets.  Topic models help guide annotation
+  attention to diverse segments of the data.}
+\label{fig:syn_results}
+\end{figure}
 Before running a user study, we test our hypothesis that topic
 model overviews and active learning selection improve final cluster quality compared to standard baselines: list overview and random
 selection. We simulate the four conditions on Congressional
@@ -27,13 +33,6 @@ Synthetic results validate our hypothesis that topic overview and active learnin
 (Figure~\ref{fig:syn_results}).  \abr{la} shows early gains, but
 tends to falter eventually compared to both topic overview and topic overview  combined with active learning selection (\abr{tr} and \abr{ta}).
 
-\begin{figure}[t!]
-\includegraphics[width=\linewidth]{2016_acl_doclabel/auto_fig/synthetic}
-\caption{Synthetic results on \abr{us} Congressional
-  Bills and 20 Newsgroups data sets.  Topic models help guide annotation
-  attention to diverse segments of the data.}
-\label{fig:syn_results}
-\end{figure}
 
 However, these experiments do not validate \name{}.  Not all documents
 require the same time or effort to label, and active learning focuses

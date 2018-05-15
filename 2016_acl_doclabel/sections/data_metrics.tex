@@ -84,10 +84,7 @@ parameters as new labeled documents become available.\footnote{Exceptions are
   deleted. In those cases, we train the classifier from scratch. Also, for final
   results in Section~\ref{sec:user_exp_results}, we train a classifier from
   scratch.}  We use cross validation on prominent topic as labels to set the parameters for
-learning the classifier.\footnote{We use
-  \texttt{blockSize}=$\frac{1}{\#\mbox{examples}}$ \texttt{minEpochs}=100,
-  \texttt{learningRate}=0.1, \texttt{minImprovement}=0.01,
-  \texttt{maxEpochs}=1000, and \texttt{rollingAverageSize}=5. The regression is unregularized.}
+learning the classifier.\footnote{We use \texttt{blockSize} = $1/\#\textrm{examples}$, \texttt{minEpochs} = 100, \texttt{learningRate} = 0.1, \texttt{minImprovement} = 0.01, \texttt{maxEpochs} = 1000, and \texttt{rollingAverageSize} = 5. The regression is unregularized.}
 
 The features for classification include topic probabilities, unigrams,
 and the fraction of labeled documents in each document's prominent

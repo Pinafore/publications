@@ -13,30 +13,7 @@
 \label{fig:UI-overview}
 \end{figure*}
 
-\begin{figure}[t!]
 
-  \begin{center}
-  \includegraphics[width=.7\linewidth]{2016_acl_doclabel/figures/UI_labeling}
-  \end{center}
-
-	\caption{After clicking on a document from the list or
-          topic overview, the user inspects the text and provides
-          a label.  If the classifier has a guess at the
-          label, the user can confirm the guess.}
-\label{fig:UI-label}
-\end{figure}
-
-\begin{figure}[t!]
-
-  \begin{center}
-  \includegraphics[width=\linewidth]{2016_acl_doclabel/figures/ui_doc_highlight}
-  \end{center}
-  \caption{After the user has labeled some documents, the system can
-    automatically label other documents and select which documents
-    would be most helpful to annotate next.  In the random selection
-    setting, random documents are selected.}
-\label{fig:UI-highlight}
-\end{figure}
 
 Our goal is to characterize how local and global knowledge can aid
 users in annotating a dataset.  This section describes our four
@@ -90,7 +67,7 @@ list overview obviously provides no topic information.
 
 
 
-To provide consistency across the four conditions, they all use a
+To provide consistency across the four conditions,  all of the conditions use a
 document preference function $U$ to direct the user's attention to a document to label.  For the random selection
 conditions, \abr{tr} and \abr{lr}, document selection is random, within a topic or globally.
 We expect this to be less useful than active
@@ -158,7 +135,24 @@ That is the topic with the maximum median $U$. Median encodes how ``confusing'' 
 
 \subsection{User Labeling Process}\label{sub:interaction}
 
-
+%\begin{figure*}[t!]
+	%\centering
+     \begin{figure}[t!]%{0.45\textwidth}
+        \centering
+        \imagebox{97mm}{\includegraphics[width=\linewidth]{2016_acl_doclabel/figures/UI_labeling}}
+  		\caption{Document view: after clicking on a document from the list or topic overview, the user inspects the text and provides a label.  If the classifier has a guess at the label, the user can confirm the guess.}
+  		\label{fig:UI-label}
+        \end{figure}%
+       % \begin{subfigure}{0.03\textwidth}
+        %  { \  }
+      %\end{subfigure}
+      \begin{figure}[t!]%{0.45\textwidth}
+        \centering
+       	\imagebox{45mm}{\includegraphics[width=\linewidth]{2016_acl_doclabel/figures/ui_doc_highlight}}
+      	\caption{After the user has labeled some documents, the system can automatically label other documents and select which documents would be most helpful to annotate next.  In the random selection setting, random documents are selected.}
+ 		 \label{fig:UI-highlight}
+       \end{figure}%  
+%\end{figure*}
 
 
 

@@ -4,13 +4,15 @@
 \usepackage{titlesec}
 \usepackage{graphicx}
 \usepackage{amsmath}
-\usepackage{subfig}
+%\usepackage{subfig}
 \usepackage{times}
 \usepackage{url}
 \usepackage{latexsym}
 \usepackage{breakurl}
+\usepackage{subcaption}
 
 \makeatletter\newcommand{\@BIBLABEL}{\@emptybiblabel}\newcommand{\@emptybiblabel}[1]{}\makeatother
+\def\imagebox#1#2{\vtop to #1{\null\hbox{#2}\vfill}}
 
 \usepackage[bookmarks=false,
 pdfpagelabels=false,
@@ -119,7 +121,7 @@ pageanchor=false,
 \section{Conclusion and Future Work}
 \label{sec:conclusion}\input{2016_acl_doclabel/sections/conclusion}
 
-\clearpage
+%\clearpage
 
 \section*{Acknowledgments}
 We thank the anonymous reviewers, Philip Resnik, and Burr Settles for
@@ -133,7 +135,7 @@ findings, results, or recommendations expressed here are of the
 authors and do not necessarily reflect the view of the sponsor.
 
 \bibliographystyle{style/acl2016}
-\bibliography{bib/journal-full,bib/jbg,bib/forough}
+\bibliography{bib/forough,bib/journal-full,bib/jbg}
 
 
 
