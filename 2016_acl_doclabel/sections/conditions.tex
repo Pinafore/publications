@@ -79,7 +79,7 @@ learning. The document preference functions are:
 	U_{d}^{\mbox{\abr{la}}} = \h{C}{Y_d},
 \end{equation}
  where
-$\h{C}{y_d} = -\sum_{i} P(y_i|d)log P(y_i|d)$ is the classifier entropy. Entropy measures how confused (uncertain) classifier $C$ is about its prediction of a document $d$'s label $y$. Intuitively, it prefers documents that most of the labels are likely to be predicted to documents that only one of the labels is highly likely to be chosen.
+$\h{C}{y_d} = -\sum_{i} P(y_i \g d)log P(y_i \g d)$ is the classifier entropy. Entropy measures how confused (uncertain) classifier $C$ is about its prediction of a document $d$'s label $y$. Intuitively, it prefers documents that most of the labels are likely to be predicted to documents that only one of the labels is highly likely to be chosen.
 \noindent
 \textbf{\abr{lr}}: \abr{lr}'s approach is the same as \abr{la}'s
 except we replace $\h{C}{y_d}$ with a uniform random number:
