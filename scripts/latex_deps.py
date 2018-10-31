@@ -13,4 +13,4 @@ if __name__ == "__main__":
                         for ll in glob("%s*" % kk):
                             dependencies.add(ll)
 
-    print " ".join(dependencies)
+    print(" ".join(dependencies))
