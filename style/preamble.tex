@@ -21,6 +21,8 @@
 % comment out the following line, as it conflicts with aistats2012.sty
 %\usepackage{caption}
 
+
+% Below should be safe
 \usepackage{mdwlist}
 \usepackage{latexsym}
 \usepackage{nicefrac}
@@ -28,25 +30,20 @@
 \usepackage{amsfonts}
 \usepackage{bold-extra}
 \usepackage{amsmath}
+\usepackage{dsfont}
 \usepackage{amssymb}
 \usepackage{bm}
-\usepackage{xcolor}
-\usepackage{comment}
-\usepackage{tabularx}
-\usepackage{environ}
-\usepackage{dsfont}
-\usepackage{textcomp}
-\usepackage{float}
 \usepackage{graphicx}
 \usepackage{mathtools}
 \usepackage{microtype}
 \usepackage{multirow}
 \usepackage{multicol}
-\usepackage{url}
-\usepackage{latexsym}
+%\usepackage{url}
+\usepackage{latexsym,comment}
 
 \newcommand{\breakalign}{\right. \nonumber \\ & \left. \hspace{2cm}}
 
+\newcommand{\qb}[0]{Quizbowl}
 \newcommand{\feat}[1]{{\small \texttt{#1}}}
 \newcommand{\act}[1]{{\small \texttt{#1}}}
 \newcommand{\ngram}[0]{$n$-gram}
@@ -88,31 +85,34 @@
 
 \ifcomment
 \newcommand{\nahocomment}[1]{
-  \colorbox{yellow}{   \parbox{.8\linewidth}{\scriptsize NAHO: #1}  }}
+\colorbox{yellow}{   \parbox{.8\linewidth}{\scriptsize NAHO: #1}  }}
 \newcommand{\shcomment}[1]{ \colorbox{green}{  \parbox{.8\linewidth}{ SH:  #1}}}
 \newcommand{\mjpcomment}[1]{   \colorbox{blue}{MJP: #1}}
 \newcommand{\jbgcomment}[1]{  \colorbox{red}{   \parbox{.8\linewidth}{ JBG: #1}  }}
+\newcommand{\ffcomment}[1]{  \colorbox{yellow}{   \parbox{.8\linewidth}{ FF: #1}  }}
 \newcommand{\fpcomment}[1]{  \colorbox{green}{   \parbox{.8\linewidth}{ FP: #1}  }}
 
 \newcommand{\yhcomment}[1]{  \colorbox{green}{  \parbox{.8\linewidth}{ YH:  #1}
-  }}
+}}
 \newcommand{\hhecomment}[1]{  \colorbox{blue}{  \parbox{.8\linewidth}{ HH:  #1}
-  }}
+}}
 \newcommand{\jjmcomment}[1]{  \colorbox{green}{  \parbox{.8\linewidth}{ John:  #1}
-  }}
+}}
 \newcommand{\tncomment}[1]{  \colorbox{blue}{  \parbox{.8\linewidth}{ TN:  #1}
-  }}
+}}
 \newcommand{\mnicomment}[1]{  \colorbox{green}{  \parbox{.8\linewidth}{ Mohit:  #1}  }}
+\newcommand{\prcomment}[1]{  \colorbox{lightblue}{  \parbox{.8\linewidth}{ Pedro:  #1}  }}
+\newcommand{\fscomment}[1]{  \colorbox{orange}{  \parbox{.8\linewidth}{ Shi:  #1}  }}
 \newcommand{\vmcomment}[1]{  \colorbox{yellow}{  \parbox{.8\linewidth}{ Varun:  #1}  }}
 \newcommand{\rscomment}[1]{  \colorbox{yellow}{  \parbox{.8\linewidth}{ Richard:  #1}  }}
 \newcommand{\jszcomment}[1]{  \colorbox{green}{  \parbox{.8\linewidth}{ JSG:  #1}  }}
 \newcommand{\ascomment}[1]{  \colorbox{blue}{  \parbox{.8\linewidth}{ AS:  #1}
-  }}
+}}
 \newcommand{\vecomment}[1]{  \colorbox{blue}{  \parbox{.8\linewidth}{ VE:  #1}  }}
 \newcommand{\halcomment}[1]{  \colorbox{magenta!20}{  \parbox{.8\linewidth}{ Hal:  #1}  }}
 \newcommand{\kgcomment}[1]{  \colorbox{blue}{  \parbox{.8\linewidth}{ Kim:  #1}  }}
 \newcommand{\vancomment}[1]{
-  \colorbox{green}{  \parbox{.8\linewidth}{ VAN:  #1}  }}
+\colorbox{green}{  \parbox{.8\linewidth}{ VAN:  #1}  }}
 \newcommand{\thangcomment}[1]{  \colorbox{green}{  \parbox{.8\linewidth}{ Thang:  #1}  }}
 \newcommand{\alvincomment}[1]{  \colorbox{cyan}{  \parbox{.8\linewidth}{ Alvin:  #1}  }}
 \newcommand{\reviewercomment}[1]{  \colorbox{blue}{  \parbox{.8\linewidth}{Reviewer:  #1}  }}
@@ -120,23 +120,32 @@
 \newcommand{\psrcomment}[1]{  \colorbox{yellow}{  \parbox{.8\linewidth}{PSR:  #1}  }}
 \newcommand{\zkcomment}[1]{  \colorbox{cyan}{  \parbox{.8\linewidth}{ZK:  #1}  }}
 \newcommand{\ctcomment}[1]{
-  \colorbox{blue}{  \parbox{.8\linewidth}{CT:  #1}  }}
+\colorbox{blue}{  \parbox{.8\linewidth}{CT:  #1}  }}
 \newcommand{\swcomment}[1]{ \colorbox{yellow}{ \parbox{.8\linewidth}{ SW: #1}
-  }}
+}}
 \newcommand{\shaycomment}[1]{  \colorbox{yellow}{  \parbox{.8\linewidth}{SBC:  #1}  }}
 \newcommand{\jlundcomment}[1]{  \colorbox{cyan}{  \parbox{.8\linewidth}{J:  #1}  }}
 \newcommand{\kdscomment}[1]{  \colorbox{ceil}{  \parbox{.8\linewidth}{KDS:  #1}  }}
 \newcommand{\lkfcomment}[1]{  \colorbox{yellow}{  \parbox{.8\linewidth}{LF:  #1}  }}
+\newcommand{\yfcomment}[1]{
+  \colorbox{brown}{  \parbox{.8\linewidth}{YF:  #1}  }}
+\newcommand{\ewcomment}[1]{      \colorbox{lightblue}{   \parbox{.8\linewidth}{ Eric: #1}  }}
 \else
+% Don't delete this!  This makes comments disappear if you set the if
+% correctly.  If you delete it, it will generate errors when people
+% turn off comments.
+\newcommand{\ewcomment}[1]{  }
 \newcommand{\nahocomment}[1]{ }
 \newcommand{\shcomment}[1]{ }
 \newcommand{\alvincomment}[1]{ }
 \newcommand{\jbgcomment}[1]{ }
+\newcommand{\ffcomment}[1]{ }
 \newcommand{\yhcomment}[1]{ }
 \newcommand{\jjmcomment}[1]{ }
 \newcommand{\hhecomment}[1]{ }
 \newcommand{\tncomment}[1]{ }
 \newcommand{\mnicomment}[1]{ }
+\newcommand{\prcomment}[1]{ }
 \newcommand{\ascomment}[1]{ }
 \newcommand{\vecomment}[1]{ }
 \newcommand{\halcomment}[1]{ }
@@ -155,22 +164,16 @@
 \newcommand{\lkfcomment}[1]{ }
 \newcommand{\mjpcomment}[1]{ }
 \newcommand{\fpcomment}[1]{ }
+\newcommand{\yfcomment}[1]{ }
 \fi
 
 \newcommand{\smalltt}[1]{ {\tt \small #1 }}
-\newcommand{\smallurl}[1]{ \begin{scriptsize}\url{#1}\end{scriptsize}}
+\newcommand{\smallurl}[1]{ \begin{tiny}\url{#1}\end{tiny}}
+%\newcommand{\smallurl}[1]{ \begin{tiny} HIDDEN \end{tiny}}
 \newenvironment{compactenum}{ \begin{enumerate*} \small }{ \end{enumerate*} }
 
-\NewEnviron{smalign}{
-\vspace{-.6cm}
-\begin{small}
-\begin{align}
-  \BODY
-\end{align}
-\end{small}
-\vspace{-.6cm}
-}
-
+\definecolor{lightblue}{HTML}{3cc7ea}
 \definecolor{CUgold}{HTML}{CFB87C}
 \definecolor{grey}{rgb}{0.95,0.95,0.95}
 \definecolor{ceil}{rgb}{0.57, 0.63, 0.81}
+
