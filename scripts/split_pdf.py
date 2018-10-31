@@ -14,7 +14,7 @@ from CoreGraphics import *
 
 
 def Usage ():
-  print """
+  print("""
 Usage: splitPDF.py inputFN splitPageNum1 splitPageNum2 ...
 
   - inputFN: the path to the input pdf file.
@@ -34,7 +34,7 @@ pages long):
   
   - input.part3.6_10.pdf contains page 6-10.
 
-  """
+  """)
 
 
 if len(sys.argv) < 3:
@@ -48,22 +48,22 @@ else:
 
   if inputDoc:
     maxPages = inputDoc.getNumberOfPages()
-    print '%s has %d pages' % (inputFN, maxPages)
+    print('%s has %d pages' % (inputFN, maxPages))
   else:
     sys.exit(2)
 
   try:
     splitPageNums = map(int,  sys.argv[2:])
   except:
-    print 'Error: invalid split page number(s).'
+    print('Error: invalid split page number(s).')
 
   for i, splitPageNum in enumerate(splitPageNums):
     if splitPageNum < 1 or splitPageNum > maxPages:
-      print 'Error: a split page number must be >= 1 and <= %d.' % \
-            maxPages
+      print('Error: a split page number must be >= 1 and <= %d.' % \
+            maxPages)
       sys.exit(3)
     elif i and splitPageNums[i - 1] >= splitPageNum:
-      print 'Error: split page numbers must be increasing.'
+      print('Error: split page numbers must be increasing.')
       sys.exit(4)
     
 baseFN = os.path.splitext(os.path.basename(inputFN))[0]
@@ -78,8 +78,8 @@ for i, splitPageNum in enumerate(splitPageNums):
              (baseFN, i + 1, startPageNum, splitPageNum)
   writeContext = CGPDFContextCreateWithFilename(outputFN, pageRect)
 
-  print 'Writing page %d-%d to %s...' % \
-        (startPageNum, splitPageNum, outputFN)
+  print('Writing page %d-%d to %s...' % \
+        (startPageNum, splitPageNum, outputFN))
 
   for pageNum in xrange(startPageNum, splitPageNum + 1):
     mediaBox = inputDoc.getMediaBox(pageNum)
@@ -89,4 +89,4 @@ for i, splitPageNum in enumerate(splitPageNums):
 
   startPageNum = splitPageNum + 1
 
-print 'Done: %d file(s) generated.' % len(splitPageNums)
+print('Done: %d file(s) generated.' % len(splitPageNums))
