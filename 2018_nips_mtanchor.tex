@@ -1,0 +1,112 @@
+\documentclass{article}
+
+% if you need to pass options to natbib, use, e.g.:
+ \PassOptionsToPackage{numbers, compress}{natbib}
+% before loading nips_2018
+
+% ready for submission
+%\usepackage{style/nips_2018}
+
+% to compile a preprint version, e.g., for submission to arXiv, add
+% add the [preprint] option:
+% \usepackage[preprint]{nips_2018}
+
+% to compile a camera-ready version, add the [final] option, e.g.:
+ \usepackage[final]{style/nips_2018}
+
+% to avoid loading the natbib package, add option nonatbib:
+% \usepackage[nonatbib]{nips_2018}
+
+\usepackage[utf8]{inputenc} % allow utf-8 input
+\usepackage[T1]{fontenc}    % use 8-bit T1 fonts
+\usepackage{hyperref}       % hyperlinks
+\usepackage{url}            % simple URL typesetting
+\usepackage{booktabs}       % professional-quality tables
+\usepackage{amsfonts}       % blackboard math symbols
+\usepackage{nicefrac}       % compact symbols for 1/2, etc.
+\usepackage{microtype}      % microtypography
+\usepackage{CJKutf8}
+
+
+
+\usepackage{xcolor}
+\usepackage{times}
+\usepackage{latexsym}
+\usepackage{amsmath}
+\usepackage{algorithm}
+\usepackage[noend]{algpseudocode}
+\usepackage{lipsum}
+\usepackage{multirow}
+\usepackage{framed}
+\usepackage{graphicx}
+\usepackage{longtable}
+\usepackage{subfig}
+\usepackage{makecell}
+\usepackage{xspace}
+
+\graphicspath{{2018_nips_mtanchor/figures/}}
+
+
+\newcommand{\kl}[2]{D_{\mbox{\textsc{KL}}} \left( #1 \,||\, #2 \right)}
+\newcommand{\norm}[1]{\left\lVert #1 \right\rVert}
+\DeclareMathOperator*{\argmin}{\arg\!\min}
+\DeclareMathOperator*{\argmax}{\arg\!\max}
+\DeclareMathOperator*{\substr}{substr}
+\DeclareMathOperator*{\subseq}{subseq}
+\DeclareMathOperator*{\len}{len}
+\newcommand{\qspan}[3]{\text{span} \left( {#1}_{#2}, ..., {#1}_{#3}\right )  }
+
+\newcommand{\g}{\, | \,}
+\newcommand{\abr}[1]{\textsc{#1}}
+\newcommand{\mtanchor}{\textsc{MT}Anchor\xspace}
+\newcommand{\etalcite}[2]{#1 et al.\,\cite{#2}}
+
+
+%\newcommand{\jbgcomment}[1]{  \colorbox{yellow}{   \parbox{.8\linewidth}{ JBG: #1}  }}
+\newcommand{\jbgcomment}[1]{}
+%\newcommand{\mycomment}[1]{  \colorbox{pink}{   \parbox{.8\linewidth}{ MY: #1}  }}
+\newcommand{\mycomment}[1]{}
+
+%\newcommand{\zhs}[1]{\begin{CJK*}{UTF8}{gbsn}{#1}\end{CJK*}}
+\newcommand{\zh}[2][]{\begin{CJK*}{UTF8}{bsmi}{#1}{#2}\end{CJK*}}
+
+\title{Multilingual Anchoring: Interactive Topic Modeling and Alignment  Across Languages}
+
+\author{
+	Michelle Yuan \\
+	University of Maryland\\
+	{\tt myuan@cs.umd.edu} \\\And
+	Benjamin Van Durme \\
+	John Hopkins University \\
+	{\tt vandurme@jhu.edu} \\\And
+	Jordan Boyd-Graber \\
+	University of Maryland \\
+	{\tt jbg@umiacs.umd.edu} \\
+}
+
+
+
+\begin{document}
+
+
+\maketitle
+
+\begin{abstract}
+ 	\input{2018_nips_mtanchor/sections/00-abstract.tex}
+\end{abstract}
+%
+\input{2018_nips_mtanchor/sections/10-introduction.tex}
+\input{2018_nips_mtanchor/sections/20-background.tex}
+\input{2018_nips_mtanchor/sections/30-mtanchor.tex}
+\input{2018_nips_mtanchor/sections/40-experiments.tex}
+\input{2018_nips_mtanchor/sections/50-discussion.tex}
+\input{2018_nips_mtanchor/sections/60-conclusion.tex}
+\input{2018_nips_mtanchor/sections/70-acknowledgments.tex}
+
+\nocite{hao-2018}
+\nocite{nguyen-2014}
+
+\bibliography{bib/journal-abbrv,bib/journal-full,bib/jbg,bib/michelle}
+\bibliographystyle{style/nips}
+
+\end{document}

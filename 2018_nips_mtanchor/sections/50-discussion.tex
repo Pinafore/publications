@@ -1,0 +1,39 @@
+\section{Related work and discussion}
+\label{sec:discussion}
+
+
+Prior work on multilingual topic models mainly follow a generative approach.  The Polylingual Topic Model~\citep{mimno-2009} assumes that documents are topically aligned to track topic trends across languages.  Joint\abr{lda}~\citep{jagarlamudi-2010} makes use of a bilingual dictionary and introduces ``concepts" as a way to connect words from different languages.  The model learns better monolingual models through optimizing cross-lingual corpora than \abr{lda} does when trained only on monolingual data.  The Polylingual Tree-based Topic Model~\citep{hu-2014-ptlda} builds tree priors to incorporate word correlation and document alignment information. \abr{mcta}~\citep{shi-2016} is another generative, multilingual model, but uses dictionary entries to capture ``cultural-common'' topics.
+
+\begin{table}
+\caption{Top seven words of sample English and Chinese topics are shown with anchors bolded. Topics from multilingual anchoring and \mtanchor are more relevant to document labels, thereby making them more useful as features for classification.} 
+\centering
+\begin{tabular}{lllllll} \\
+Dataset & Method & Topic \\
+\midrule
+Wikipedia & \abr{mcta} & dog san movie mexican fighter novel california \\
+& & \zh{主演} \zh{改編} \zh{本} \zh{小說} \zh{拍攝} \zh{角色} \zh{戰士}\\
+& Multilingual anchoring & \textbf{adventure} daughter bob kong hong robert movie \\
+& & \zh{主演} \zh{改編} \zh{本片} \zh{飾演} \textbf{\zh{冒險}} \zh{講述} \zh{編劇} \\
+& \mtanchor & \textbf{kong hong movie} office martial box reception \\
+& & \zh{主演} \zh{改編} \zh{飾演} \zh{本片} \textbf{\zh{演員}} \textbf{\zh{編劇}} \zh{講述} \\
+\midrule
+Amazon & \abr{mcta} & woman food eat person baby god chapter \\
+& & \zh{來貨} \zh{頂頂} \zh{水} \zh{耳機} \zh{貨物} \zh{張傑} \zh{傑} \zh{同樣} \\
+& Multilingual anchoring & eat diet food recipe \textbf{healthy} lose weight \\
+& & \textbf{\zh{健康}} \zh{幫} \zh{吃} \zh{身體} \zh{全面} \zh{同事} \zh{中醫}\\
+\midrule
+\abr{lorelei} & \abr{mcta} & help need floodrelief please families needed victim \\
+& Multilingual anchoring & aranayake warning landslide site missing nbro areas \\
+\end{tabular}
+\label{table:topics}
+\end{table}
+
+Multilingual anchoring is a spectral approach to modeling multilingual topics.  The algorithm converges much faster than generative methods (Figure~\ref{fig:convergence}) and resulting topics form better vector representations for documents (Table~\ref{table:results}).  An advantage of anchoring over generative models is its robustness and practicality~\citep{arora-2013}.  Generative methods need long documents to correctly estimate topic-word distributions, but anchoring handles documents of any size~\citep{arora-2012-anchor}.  This is evident in models built on the Amazon dataset, which contains reviews with only one to three sentences.  The \underline{health} topic for multilingual anchoring is more interpretable than that of \abr{mcta} (Table~\ref{table:topics}). 
+
+\etalcite{Arora}{arora-2013} observe that more specific words appear in the top words of anchor-based topics.   This is clearly shown in the \abr{lorelei} experiments; a topic from \abr{mcta} has general words like ``help'' and ``need'', while a topic from multilingual anchoring has specific words like ``aranayanke'' and ``nbro'' (Table~\ref{table:topics}).  Both topics are about the 2016 Sri Lankan floods, but the topic from \abr{mcta} cannot specify the ``need'' type of documents.  So, accuracy is higher when using topics from multilingual anchoring to classify documents.  However, \abr{lorelei} experiments show that multilingual anchoring topics are less interpretable than \abr{mcta} topics.  This might be caused by the obscure top topic words.  Arayanake is a Sri Lankan town and ``nbro'' stands for National Building Research Organization.  These words may have lowered coherence because they do not co-occur frequently with other top topic words. In this case, using \mtanchor can possibly increase topic coherence.
+
+In the user study, a few participants create topics that are more applicable for specific tasks.  In one experiment, a user finds the topic with anchor words ``adventure'' and ``\zh{冒險}{(màoxiǎn)}'' too vague.  The user knows that the task is to classify Wikipedia articles into one of six categories, so they add movie-related terms as anchors, like ``movie'', ``\zh{演員}{(yǎnyuán)}'', and ``\zh{編劇}{(biānjù)}''.  Afterward, their topics significantly improves in classification accuracy and coherence.  Other participants do not significantly change the topic model through interactive updates.  More work can look into improving \mtanchor so that updates change topic distributions more drastically.   
+
+Interestingly, the scores for English topics increase considerably after user interaction compared to Chinese topics (Table~\ref{table:results}).  The participants are anonymous MTurk workers, so we are not aware of their language skills.  We believe that workers are most likely fluent in English because the MTurk website is only available in English.  If this fact holds true, then it can explain why the English topics have much higher scores than the Chinese ones.  It also shows that people can improve topic models with prior knowledge, which supports the need for human-in-the-loop algorithms.  In the future, it would be interesting to observe how language fluency affects quality of multilingual topics. 
+
+

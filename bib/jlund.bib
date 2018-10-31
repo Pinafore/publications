@@ -1,0 +1,1080 @@
+% Macros {{{
+
+@String{aaai="Association for the Advancement of Artificial Intelligence"}
+@String{acl="Proceedings of the Association for Computational Linguistics"}
+@String{aistats="Proceedings of Artificial Intelligence and Statistics"}
+@String{coling="Proceedings of International Conference on Computational Linguistics"}
+@String{conll="Conference on Computational Natural Language Learning"}
+@String{ecml="Proceedings of European Conference of Machine Learning"}
+@String{emnlp="Proceedings of Empirical Methods in Natural Language Processing"}
+@String{icml="Proceedings of the International Conference of Machine Learning"}
+@String{jmlr="Journal of Machine Learning Research"}
+@String{kdd="Knowledge Discovery and Data Mining"}
+@String{naacl="Conference of the North American Chapter of the Association for Computational Linguistics"}
+@String{nips="Proceedings of Advances in Neural Information Processing Systems"}
+@String{pnas="Proceedings of the National Academy of Sciences"}
+@String{sigir="Proceedings of the ACM SIGIR Conference on Research and Development in Information Retrieval"}
+@String{uai="Proceedings of Uncertainty in Artificial Intelligence"}
+
+%}}}
+% Anchor Algorithm {{{
+
+@inproceedings{anchors-practical,
+  title={A Practical Algorithm for Topic Modeling with Provable Guarantees},
+  author={Arora, Sanjeev and Ge, Rong and Halpern, Yonatan and Mimno, David and Moitra, Ankur and Sontag, David and Wu, Yichen and Zhu, Michael},
+  booktitle=icml,
+  year={2013}
+}
+
+@inproceedings{beyond-svd,
+  title={Learning topic models--going beyond SVD},
+  author={Arora, Sanjeev and Ge, Rong and Moitra, Ankur},
+  booktitle={Foundations of Computer Science},
+  year={2012},
+}
+
+@inproceedings{anchors-seperability,
+  title={When does non-negative matrix factorization give a correct decomposition into parts?},
+  author={Donoho, David and Stodden, Victoria},
+  booktitle=nips,
+  pages={None},
+  year={2003}
+}
+
+@inproceedings{nmf-provably,
+  title={Computing a nonnegative matrix factorization--provably},
+  author={Arora, Sanjeev and Ge, Rong and Kannan, Ravindran and Moitra, Ankur},
+  booktitle={Symposium on the Theory of Computing},
+  year={2012},
+}
+
+@inproceedings{spectral-slda,
+  title={Spectral Methods for Supervised Topic Models},
+  author={Wang, Yining and Zhu, Jun},
+  booktitle=nips,
+  year={2014}
+}
+
+@inproceedings{anchors-regularized,
+  title={Anchors Regularized: Adding Robustness and Extensibility to Scalable Topic-Modeling Algorithms.},
+  author={Nguyen, Thang and Hu, Yuening and Boyd-Graber, Jordan L},
+  booktitle=acl,
+  year={2014}
+}
+
+@inproceedings{supervised-anchors,
+  title={Is your anchor going up or down? {F}ast and accurate supervised topic models},
+  author={Nguyen, Thang and Boyd-Graber, Jordan and Lund, Jeffrey and Seppi, Kevin and Ringger, Eric},
+  booktitle=naacl,
+  year={2015}
+}
+
+@inproceedings{anchors-tsne,
+    title={Low-dimensional embeddings for interpretable anchor-based topic inference},
+    author={Lee, Moontae and Mimno, David},
+    booktitle={Proceedings of Empirical Methods in Natural Language Processing},
+    year={2014}
+}
+
+%}}}
+% Dirichlet-Multinomial Topic Models {{{
+
+@article{lda,
+  author={David M. Blei and Andrew Ng and Michael Jordan},
+  title={Latent Dirichlet allocation},
+  journal={Journal of Machine Learning Research},
+  year={2003},
+  volume={3},
+  pages={993-1022},
+}
+
+@article{lda-gibbs,
+  title={Finding scientific topics},
+  author={Griffiths, Thomas L and Steyvers, Mark},
+  journal={Proceedings of the National academy of Sciences of the United States of America},
+  volume={101},
+  number={Suppl 1},
+  pages={5228--5235},
+  year={2004},
+  publisher={National Acad Sciences}
+}
+
+@inproceedings{lda-ep,
+  title={Expectation-propagation for the generative aspect model},
+  author={Minka, Thomas and Lafferty, John},
+  booktitle={Proceedings of the Eighteenth conference on Uncertainty in artificial intelligence},
+  pages={352--359},
+  year={2002},
+  organization={Morgan Kaufmann Publishers Inc.}
+}
+
+@inproceedings{sparse-lda,
+  title={Efficient methods for topic model inference on streaming document collections},
+  author={Yao, Limin and Mimno, David and McCallum, Andrew},
+  booktitle={Proceedings of the 15th ACM SIGKDD international conference on Knowledge discovery and data mining},
+  pages={937--946},
+  year={2009},
+  organization={ACM}
+}
+
+@inproceedings{online-lda,
+  title={Online learning for latent Dirichlet allocation},
+  author={Hoffman, Matthew and Bach, Francis R and Blei, David M},
+  booktitle=nips,
+  year={2010}
+}
+
+@inproceedings{itm,
+  title={Interactive Topic Modeling.},
+  author={Hu, Yuening and Boyd-Graber, Jordan L and Satinoff, Brianna},
+  booktitle={ACL},
+  pages={248--257},
+  year={2011}
+}
+
+@inproceedings{itm-fast,
+  title={Efficient tree-based topic modeling},
+  author={Hu, Yuening and Boyd-Graber, Jordan},
+  booktitle=acl,
+  year={2012},
+}
+
+@article{slda,
+  title={Supervised topic models},
+  author={Blei, David M and McAuliffe, Jon D},
+  journal={arXiv preprint arXiv:1003.0783},
+  year={2010}
+}
+
+@inproceedings{topic-sentiment,
+    title={A Joint Model of Text and Aspect Ratings for Sentiment
+    Summarization.},
+    author={Titov, Ivan and McDonald, Ryan T},
+    booktitle=acl,
+    year={2008},
+}
+
+@inproceedings{labeled-lda,
+  title={Labeled LDA: A supervised topic model for credit attribution in multi-labeled corpora},
+  author={Ramage, Daniel and Hall, David and Nallapati, Ramesh and Manning, Christopher D},
+  booktitle={Proceedings of the 2009 Conference on Empirical Methods in Natural Language Processing: Volume 1-Volume 1},
+  pages={248--256},
+  year={2009},
+  organization={Association for Computational Linguistics}
+}
+
+@inproceedings{author-topic,
+  title={The author-topic model for authors and documents},
+  author={Rosen-Zvi, Michal and Griffiths, Thomas and Steyvers, Mark and Smyth, Padhraic},
+  booktitle=uai,
+  year={2004},
+}
+
+@inproceedings{pachinko,
+  title={Pachinko allocation: DAG-structured mixture models of topic correlations},
+  author={Li, Wei and McCallum, Andrew},
+  booktitle={Proceedings of the 23rd international conference on Machine learning},
+  pages={577--584},
+  year={2006},
+  organization={ACM}
+}
+
+@article{topic-classification,
+  title={Statistical topic models for multi-label document classification},
+  author={Rubin, Timothy and Chambers, America and Smyth, Padhraic and Steyvers, Mark},
+  journal={Machine Learning},
+  volume={1},
+  number={88},
+  pages={157--208},
+  year={2012}
+}
+
+@inproceedings{lda-ir,
+  title={{LDA}-based document models for ad-hoc retrieval},
+  author={Wei, Xing and Croft, W Bruce},
+  booktitle=sigir,
+  year={2006},
+}
+
+@article{hlda,
+  title={Hierarchical topic models and the nested chinese restaurant process},
+  author={Griffiths, DMBTL and Tenenbaum, MIJJB},
+  journal=nips,
+  volume={16},
+  pages={17},
+  year={2004},
+  publisher={The MIT Press}
+}
+
+@inproceedings{hmm-lda,
+  title={Integrating topics and syntax},
+  author={Griffiths, Thomas L and Steyvers, Mark and Blei, David M and Tenenbaum, Joshua B},
+  booktitle=nips,
+  pages={537--544},
+  year={2004}
+}
+
+@inproceedings{syntactic-tm,
+  title={Syntactic topic models},
+  author={Boyd-Graber, Jordan L and Blei, David M},
+  booktitle=nips,
+  pages={185--192},
+  year={2009}
+}
+
+@inproceedings{cop-lda,
+  title={Modeling topic dependencies in semantically coherent text spans with copulas},
+  author={Balikas, Georgios and Amoualian, Hesam and Clausel, Marianne and Gaussier, Eric and Amini, Massih-Reza},
+  booktitle={Proceedings of the 26th International Conference on Computational Linguistics},
+  pages={151--160},
+  year={2016},
+  organization={Association for Computational Linguistics}
+}
+
+@inproceedings{ldawn,
+  title={A Topic Model for Word Sense Disambiguation.},
+  author={Boyd-Graber, Jordan L and Blei, David M and Zhu, Xiaojin},
+  booktitle={EMNLP-CoNLL},
+  pages={1024--1033},
+  year={2007}
+}
+
+%}}}
+% Other Probabalistic Topic Model {{{
+
+@article{ctm,
+  title={A correlated topic model of science},
+  author={Blei, David M and Lafferty, John D},
+  journal={The Annals of Applied Statistics},
+  pages={17--35},
+  year={2007},
+  publisher={JSTOR}
+}
+
+@inproceedings{mg-lda,
+  title={Modeling online reviews with multi-grain topic models},
+  author={Titov, Ivan and McDonald, Ryan},
+  booktitle={Proceedings of the 17th international conference on World Wide Web},
+  pages={111--120},
+  year={2008},
+  organization={ACM}
+}
+
+@inproceedings{sam,
+  title={Spherical topic models},
+  author={Reisinger, Joseph and Waters, Austin and Silverthorn, Bryan and Mooney, Raymond J},
+  booktitle={Proceedings of the 27th International Conference on Machine Learning (ICML-10)},
+  pages={903--910},
+  year={2010}
+}
+
+@inproceedings{sage,
+  title={Sparse additive generative models of text},
+  author={Eisenstein, Jacob and Ahmed, Amr and Xing, Eric P},
+  booktitle={Proceedings of the 28th International Conference on Machine Learning (ICML-11)},
+  pages={1041--1048},
+  year={2011}
+}
+
+%}}}
+% Probabalistic Topic Modeling Theory {{{
+
+@inproceedings{priors-matter,
+  title={Rethinking LDA: Why Priors Matter.},
+  author={Wallach, Hanna M and Mimno, David M and McCallum, Andrew},
+  booktitle={NIPS},
+  volume={22},
+  pages={1973--1981},
+  year={2009}
+}
+
+@inproceedings{lda-smoothing,
+  title={On smoothing and inference for topic models},
+  author={Asuncion, Arthur and Welling, Max and Smyth, Padhraic and Teh, Yee Whye},
+  booktitle={Proceedings of the Twenty-Fifth Conference on Uncertainty in Artificial Intelligence},
+  pages={27--34},
+  year={2009},
+  organization={AUAI Press}
+}
+
+@article{dirichlet-optimization,
+  title={Structured topic models for language},
+  author={Wallach, Hanna M},
+  journal={Unpublished doctoral dissertation, Univ. of Cambridge},
+  year={2008}
+}
+
+@misc{dirichlet,
+  title={Estimating a Dirichlet distribution},
+  author={Minka, Thomas},
+  year={2000},
+  publisher={Technical report, MIT}
+}
+
+@inproceedings{topic-complexity,
+  title={Complexity of inference in topic models},
+  author={Sontag, David and Roy, Daniel M},
+  booktitle={NIPS Workshop on Applications for Topic Models: Text and Beyond},
+  year={2009}
+}
+
+@article{topic-complexity2,
+  title={The computational complexity of probabilistic inference using Bayesian belief networks},
+  author={Cooper, Gregory F},
+  journal={Artificial intelligence},
+  volume={42},
+  number={2},
+  pages={393--405},
+  year={1990},
+  publisher={Elsevier}
+}
+
+
+@article{hdp,
+  title={Hierarchical dirichlet processes},
+  author={Teh, Yee Whye and Jordan, Michael I and Beal, Matthew J and Blei, David M},
+  journal={Journal of the american statistical association},
+  volume={101},
+  number={476},
+  year={2006}
+}
+
+@inproceedings{tree-constraints,
+  title={Incorporating domain knowledge into topic modeling via Dirichlet forest priors},
+  author={Andrzejewski, David and Zhu, Xiaojin and Craven, Mark},
+  booktitle=icml,
+  year={2009},
+}
+
+@inproceedings{scalable-lda,
+  title={Scalable inference in max-margin topic models},
+  author={Zhu, Jun and Zheng, Xun and Zhou, Li and Zhang, Bo},
+  booktitle=kdd,
+  year={2013},
+}
+
+@article{parallel-lda,
+  title={An architecture for parallel topic models},
+  author={Smola, Alexander and Narayanamurthy, Shravan},
+  journal={Proceedings of the VLDB Endowment},
+  volume={3},
+  number={1-2},
+  pages={703--710},
+  year={2010},
+  publisher={VLDB Endowment}
+}
+
+
+%}}}
+% Topic Modeling History {{{
+
+@article{lsi,
+  title={Indexing by latent semantic analysis},
+  author={Deerwester, Scott and Dumais, Susan T and Furnas, George W and Landauer, Thomas K and Harshman, Richard},
+  journal={Journal of the American society for information science},
+  volume={41},
+  number={6},
+  pages={391},
+  year={1990},
+  publisher={American Documentation Institute}
+}
+
+@inproceedings{lsi-topic,
+  title={Latent semantic indexing: A probabilistic analysis},
+  author={Papadimitriou, Christos H and Tamaki, Hisao and Raghavan, Prabhakar and Vempala, Santosh},
+  booktitle={Proceedings of the seventeenth ACM SIGACT-SIGMOD-SIGART symposium on Principles of database systems},
+  pages={159--168},
+  year={1998},
+  organization={ACM}
+}
+
+@inproceedings{plsi,
+  title={Probabilistic latent semantic indexing},
+  author={Hofmann, Thomas},
+  booktitle={Proceedings of the 22nd annual international ACM SIGIR conference on Research and development in information retrieval},
+  pages={50--57},
+  year={1999},
+  organization={ACM}
+}
+
+%}}}
+% Dirichlet-Process Theory {{{
+
+@article{dpm,
+  title={Mixtures of Dirichlet processes with applications to Bayesian nonparametric problems},
+  author={Antoniak, Charles E and others},
+  journal={The Annals of Statistics},
+  volume={2},
+  number={6},
+  pages={1152--1174},
+  year={1974},
+  publisher={Institute of Mathematical Statistics}
+}
+
+@article{dpm-gibbs,
+  title={Markov chain sampling methods for Dirichlet process mixture models},
+  author={Neal, Radford M},
+  journal={Journal of computational and graphical statistics},
+  volume={9},
+  number={2},
+  pages={249--265},
+  year={2000},
+  publisher={Taylor \& Francis Group}
+}
+
+
+@article{dpm-vb,
+  title={Variational inference for Dirichlet process mixtures},
+  author={Blei, David M and Jordan, Michael I and others},
+  journal={Bayesian analysis},
+  volume={1},
+  number={1},
+  pages={121--143},
+  year={2006},
+  publisher={International Society for Bayesian Analysis}
+}
+
+@article{dpm-sis,
+  title={Sequential importance sampling for nonparametric Bayes models: The next generation},
+  author={MacEachern, Steven N and Clyde, Merlise and Liu, Jun S},
+  journal={Canadian Journal of Statistics},
+  volume={27},
+  number={2},
+  pages={251--267},
+  year={1999},
+  publisher={Wiley Online Library}
+}
+
+@article{dpm-sugs,
+  title={Fast Bayesian inference in Dirichlet process mixture models},
+  author={Wang, Lianming and Dunson, David B},
+  journal={Journal of Computational and Graphical Statistics},
+  volume={20},
+  number={1},
+  pages={196--216},
+  year={2011},
+  publisher={Taylor \& Francis}
+}
+
+@article{dp-crp,
+  title={Ferguson distributions via P{\'o}lya urn schemes},
+  author={Blackwell, David and MacQueen, James B},
+  journal={The Annals of Statistics},
+  pages={353--355},
+  year={1973},
+  publisher={JSTOR}
+}
+
+@article{dpm-astar,
+  title={Fast search for Dirichlet process mixture models},
+  author={Daum{\'e} III, Hal},
+  journal={arXiv preprint arXiv:0907.1812},
+  year={2009}
+}
+
+@article{dpm-pr,
+  title={A recursive algorithm for nonparametric analysis with missing data},
+  author={Newton, Michael A and Zhang, Yunlei},
+  journal={Biometrika},
+  volume={86},
+  number={1},
+  pages={15--26},
+  year={1999},
+  publisher={Biometrika Trust}
+}
+
+%}}}
+% Topic Modeling Evaluation {{{
+
+@inproceedings{tealeaves,
+  title={Reading tea leaves: How humans interpret topic models},
+  author={Chang, Jonathan and Gerrish, Sean and Wang, Chong and Boyd-graber, Jordan L and Blei, David M},
+  booktitle=nips,
+  pages={288--296},
+  year={2009}
+}
+
+@inproceedings{machine-tealeaves,
+  title={Machine Reading Tea Leaves: Automatically Evaluating Topic Coherence and Topic Model Quality},
+  author={Lau, Jey Han and Newman, David and Baldwin, Timothy},
+  booktitle={Proceedings of the 14th Conference of the European Chapter of the Association for Computational Linguistics},
+  pages={530--539},
+  year={2014}
+}
+
+@inproceedings{coherence-automatic,
+  title={Automatic evaluation of topic coherence},
+  author={Newman, David and Lau, Jey Han and Grieser, Karl and Baldwin, Timothy},
+  booktitle=acl,
+  year={2010},
+}
+
+@inproceedings{coherence-optimize,
+  title={Optimizing semantic coherence in topic models},
+  author={Mimno, David and Wallach, Hanna M and Talley, Edmund and Leenders, Miriam and McCallum, Andrew},
+  booktitle={Proceedings of the Conference on Empirical Methods in Natural Language Processing},
+  pages={262--272},
+  year={2011},
+  organization={Association for Computational Linguistics}
+}
+
+@inproceedings{coherence-n,
+  title={The Sensitivity of Topic Coherence Evaluation to Topic Cardinality},
+  author={Lau, Jey Han and Baldwin, Timothy},
+  booktitle={Proceedings of the NAACL HLT 2010 Sixth Web as Corpus Workshop},
+  year={2016},
+  organization={Association for Computational Linguistics}
+}
+
+@inproceedings{junk-topic,
+  title={Topic significance ranking of {LDA} generative models},
+  author={AlSumait, Loulwah and Barbar{\'a}, Daniel and Gentle, James and Domeniconi, Carlotta},
+  booktitle=ecml,
+  year={2009},
+}
+
+%}}}
+% Topic Modeling Visualization {{{
+
+@inproceedings{topical-guide,
+  title={The topic browser: An interactive tool for browsing topic models},
+  author={Gardner, Matthew J and Lutes, Joshua and Lund, Jeff and Hansen, Josh and Walker, Dan and Ringger, Eric and Seppi, Kevin},
+  booktitle={NIPS Workshop on Challenges of Data Visualization},
+  year={2010}
+}
+
+@inproceedings{termite,
+  title={Termite: Visualization techniques for assessing textual topic models},
+  author={Chuang, Jason and Manning, Christopher D and Heer, Jeffrey},
+  booktitle={Proceedings of the International Working Conference on Advanced Visual Interfaces},
+  year={2012},
+}
+
+@inproceedings{visualize-topic,
+  title={Visualizing Topic Models.},
+  author={Chaney, Allison June-Barlow and Blei, David M},
+  booktitle={ICWSM},
+  year={2012}
+}
+
+@article{utopian,
+  title={{U}topian: User-driven topic modeling based on interactive nonnegative matrix factorization},
+  author={Choo, Jaegul and Lee, Changhyun and Reddy, Chandan K and Park, Heejung},
+  journal={Visualization and Computer Graphics, IEEE Transactions on},
+  volume={19},
+  number={12},
+  pages={1992--2001},
+  year={2013},
+  publisher={IEEE}
+}
+
+%}}}
+% Model-based Document Clustering {{{
+
+@article{mm-comparison,
+  title={An experimental comparison of model-based clustering methods},
+  author={Meila, Marina and Heckerman, David},
+  journal={Machine learning},
+  volume={42},
+  number={1-2},
+  pages={1--2},
+  year={2001},
+  publisher={Springer}
+}
+
+@article{mm-clustering,
+  title={Generative model-based document clustering: a comparative study},
+  author={Zhong, S. and Ghosh, J.},
+  journal={Knowledge and Information Systems},
+  volume={8},
+  number={3},
+  pages={374--384},
+  year={2005},
+  publisher={Springer}
+}
+
+@inproceedings{mm-gibbs,
+  title={Model-based document clustering with a collapsed gibbs sampler},
+  author={Walker, Daniel David and Ringger, Eric K.},
+  booktitle={Proceedings of the 14th ACM SIGKDD international conference on Knowledge discovery and data mining},
+  pages={704--712},
+  year={2008},
+  organization={ACM}
+}
+
+@article{mm-gibbs2,
+  title={Inference and evaluation of the multinomial mixture model for text clustering},
+  author={Rigouste, Lo{\"\i}s and Capp{\'e}, Olivier and Yvon, Fran{\c{c}}ois},
+  journal={Information processing \& management},
+  volume={43},
+  number={5},
+  pages={1260--1280},
+  year={2007},
+  publisher={Elsevier}
+}
+
+@phdthesis{mm-extended,
+  title={Bayesian text analytics for document collections},
+  author={Walker, Daniel David},
+  year={2012},
+  school={Brigham Young University}
+}
+
+@inproceedings{dpm-doccluster,
+  title={Document clustering via dirichlet process mixture model with feature selection},
+  author={Yu, Guan and Huang, Ruizhang and Wang, Zhaojun},
+  booktitle={Proceedings of the 16th ACM SIGKDD international conference on Knowledge discovery and data mining},
+  pages={763--772},
+  year={2010},
+  organization={ACM}
+}
+
+%}}}
+% Web Search Result Clustering {{{
+
+@article{wsrc-survey,
+  title={A survey of web clustering engines},
+  author={Carpineto, Claudio and Osi{\'n}ski, Stanislaw and Romano, Giovanni and Weiss, Dawid},
+  journal={ACM Computing Surveys (CSUR)},
+  volume={41},
+  number={3},
+  pages={17},
+  year={2009},
+  publisher={ACM}
+}
+
+@incollection{wsrc-mst,
+  title={Clustering web search results with maximum spanning trees},
+  author={Di Marco, Antonio and Navigli, Roberto},
+  booktitle={AI* IA 2011: Artificial Intelligence Around Man and Beyond},
+  pages={201--212},
+  year={2011},
+  publisher={Springer}
+}
+
+@inproceedings{wsrc-sense,
+  title={Inducing word senses to improve web search result clustering},
+  author={Navigli, Roberto and Crisafulli, Giuseppe},
+  booktitle={Proceedings of the 2010 conference on empirical methods in natural language processing},
+  pages={116--126},
+  year={2010},
+  organization={Association for Computational Linguistics}
+}
+
+@article{wsrc-graph,
+  title={Clustering and diversifying web search results with graph-based word sense induction},
+  author={Di Marco, Antonio and Navigli, Roberto},
+  year={2012},
+  publisher={MIT Press}
+}
+
+@incollection{lingo,
+  title={Lingo: Search results clustering algorithm based on singular value decomposition},
+  author={Osi{\'n}ski, Stanis{\l}aw and Stefanowski, Jerzy and Weiss, Dawid},
+  booktitle={Intelligent information processing and web mining},
+  pages={359--368},
+  year={2004},
+  publisher={Springer}
+}
+
+@inproceedings{keysrc,
+  title={Full-subtopic retrieval with keyphrase-based search results clustering},
+  author={Bernardini, Andrea and Carpineto, Claudio and D'Amico, Massimiliano},
+  booktitle={Web Intelligence and Intelligent Agent Technologies, 2009. WI-IAT'09. IEEE/WIC/ACM International Joint Conferences on},
+  volume={1},
+  pages={206--213},
+  year={2009},
+  organization={IET}
+}
+
+%}}}
+% Clustering Evaluation {{{
+
+@article{ari,
+  title={Details of the adjusted Rand index and clustering algorithms, supplement to the paper “An empirical study on principal component analysis for clustering gene expression data”},
+  author={Yeung, Ka Yee and Ruzzo, Walter L},
+  journal={Bioinformatics},
+  volume={17},
+  number={9},
+  pages={763--774},
+  year={2001}
+}
+
+@article{rand,
+  title={Objective criteria for the evaluation of clustering methods},
+  author={Rand, William M},
+  journal={Journal of the American Statistical association},
+  volume={66},
+  number={336},
+  pages={846--850},
+  year={1971},
+  publisher={Taylor \& Francis Group}
+}
+
+@incollection{vi,
+  title={Comparing clusterings by the variation of information},
+  author={Meil{\u{a}}, Marina},
+  booktitle={Learning theory and kernel machines},
+  year={2003},
+}
+
+%}}}
+% Expectation Maximization {{{
+
+@article{em,
+  title={Maximum likelihood from incomplete data via the EM algorithm},
+  author={Dempster, Arthur P and Laird, Nan M and Rubin, Donald B},
+  journal={Journal of the Royal Statistical Society. Series B (Methodological)},
+  pages={1--38},
+  year={1977},
+  publisher={JSTOR}
+}
+
+@article{daem,
+  title={Deterministic annealing EM algorithm},
+  author={Ueda, Naonori and Nakano, Ryohei},
+  journal={Neural Networks},
+  volume={11},
+  number={2},
+  pages={271--282},
+  year={1998},
+  publisher={Elsevier}
+}
+
+@article{ecm,
+  title={Maximum likelihood estimation via the ECM algorithm: A general framework},
+  author={Meng, Xiao-Li and Rubin, Donald B},
+  journal={Biometrika},
+  volume={80},
+  number={2},
+  pages={267--278},
+  year={1993},
+  publisher={Biometrika Trust}
+}
+
+%}}}
+% MCMC Theory {{{
+
+@article{gibbs,
+  title={Stochastic relaxation, Gibbs distributions, and the Bayesian restoration of images},
+  author={Geman, Stuart and Geman, Donald},
+  journal={Pattern Analysis and Machine Intelligence, IEEE Transactions on},
+  number={6},
+  pages={721--741},
+  year={1984},
+  publisher={IEEE}
+}
+
+@book{collapsed-gibbs,
+  title={Monte Carlo methods in Bayesian computation},
+  author={Ming-Hui. Chen and Shao, Qi-Man and Ibrahim, Joseph G},
+  year={2000},
+  publisher={Springer New York}
+}
+
+@article{collapsed-gibbs2,
+  title={The collapsed Gibbs sampler in Bayesian computations with applications to a gene regulation problem},
+  author={Liu, Jun S},
+  journal={Journal of the American Statistical Association},
+  volume={89},
+  number={427},
+  pages={958--966},
+  year={1994},
+  publisher={Taylor \& Francis Group}
+}
+
+@incollection{gibbs-convergence,
+  title={Implementing mcmc},
+  author={Raftery, Adrian E and Lewis, Steven M},
+  booktitle={Markov chain Monte Carlo in practice},
+  pages={115--130},
+  year={1996},
+  publisher={Springer}
+}
+
+%}}}
+% Variational Inference {{{
+
+@inbook{murphy-vb,
+  title={Machine learning: a probabilistic perspective},
+  author={Murphy, Kevin P},
+  year={2012},
+  publisher={MIT Press},
+  pages={744}
+}
+
+@inproceedings{ep,
+  title={Expectation propagation for approximate Bayesian inference},
+  author={Minka, Thomas P},
+  booktitle={Proceedings of the Seventeenth conference on Uncertainty in artificial intelligence},
+  pages={362--369},
+  year={2001},
+  organization={Morgan Kaufmann Publishers Inc.}
+}
+
+@article{variational-monster,
+  title={Graphical models, exponential families, and variational inference},
+  author={Wainwright, Martin J and Jordan, Michael I},
+  journal={Foundations and Trends{\textregistered} in Machine Learning},
+  volume={1},
+  number={1-2},
+  pages={1--305},
+  year={2008},
+  publisher={Now Publishers Inc.}
+}
+
+@book{bp,
+  title={Probabilistic reasoning in intelligent systems: networks of plausible inference},
+  author={Pearl, Judea},
+  year={1988},
+  publisher={Morgan Kaufmann}
+}
+
+@book{jta,
+  title={Probabilistic graphical models: principles and techniques},
+  author={Koller, Daphne and Friedman, Nir},
+  year={2009},
+  publisher={MIT press}
+}
+
+@article{graphcuts,
+  title={Fast approximate energy minimization via graph cuts},
+  author={Boykov, Yuri and Veksler, Olga and Zabih, Ramin},
+  journal={Pattern Analysis and Machine Intelligence, IEEE Transactions on},
+  volume={23},
+  number={11},
+  pages={1222--1239},
+  year={2001},
+  publisher={IEEE}
+}
+
+@article{dual-decomposition,
+  title={Introduction to dual decomposition for inference},
+  author={Sontag, David and Globerson, Amir and Jaakkola, Tommi},
+  journal={Optimization for Machine Learning},
+  volume={1},
+  pages={219--254},
+  year={2011},
+  publisher={MIT Press Cambridge, MA}
+}
+
+@article{stochastic-variational,
+  title={Stochastic variational inference.},
+  author={Hoffman, Matthew D and Blei, David M and Wang, Chong and Paisley, John William},
+  journal={Journal of Machine Learning Research},
+  volume={14},
+  number={1},
+  pages={1303--1347},
+  year={2013}
+}
+
+%}}}
+% Other Inference {{{
+
+@article{icm,
+  title={On the statistical analysis of dirty pictures},
+  author={Besag, Julian},
+  journal={Journal of the Royal Statistical Society. Series B (Methodological)},
+  pages={259--302},
+  year={1986},
+  publisher={JSTOR}
+}
+
+@inproceedings{icm-interaction,
+  title={Fast Inference for Interactive Models of Text},
+  author={Lund, Jeffrey and Felt, Paul and Seppi, Kevin and Ringger, Eric K.},
+  booktitle={Proceedings of the 26th International Conference on Computational Linguistics},
+  pages={2997--3006},
+  year={2016},
+  organization={Association for Computational Linguistics}
+}
+
+%}}}
+% Noisy Annotation {{{
+
+@InProceedings{momresp,
+  author = {Paul Felt and Robbie Haertel and Eric Ringger and Kevin Seppi},
+  title = {Momresp: A Bayesian Model for Multi-Annotator Document Labeling},
+  booktitle = {Proceedings of the Ninth International Conference on Language Resources and Evaluation (LREC'14)},
+  year = {2014},
+  month = {May},
+  date = {26-31},
+  address = {Reykjavik, Iceland},
+  publisher = {European Language Resources Association (ELRA)},
+  language = {english}
+ }
+
+@article{item-response,
+  title={Multilevel bayesian models of categorical data annotation},
+  author={Carpenter, Bob},
+  journal={Unpublished manuscript},
+  year={2008},
+  publisher={Citeseer}
+}
+
+@inproceedings{bayes-item-response,
+  title={Knowing what to believe (when you already know something)},
+  author={Pasternack, Jeff and Roth, Dan},
+  booktitle={Proceedings of the 23rd International Conference on Computational Linguistics},
+  pages={877--885},
+  year={2010},
+  organization={Association for Computational Linguistics}
+}
+
+%}}}
+% Data and Code {{{
+
+@unpublished{mallet,
+      author = "Andrew Kachites McCallum",
+      title = "MALLET: A Machine Learning for Language Toolkit",
+      note = "http://mallet.cs.umass.edu",
+      year = 2002
+}
+
+@article{web1t,
+  title={Web 1{T} 5-gram Version 1},
+  author={Brants, Thorsten and Franz, Alex},
+  year={2006},
+  publisher={Linguistic Data Consortium, Philadelphia}
+}
+
+@inproceedings{use-web1t-1,
+  title={Managing the Google Web 1T 5-gram data set},
+  author={Islam, Aminul and Inkpen, Diana},
+  booktitle={Natural Language Processing and Knowledge Engineering, 2009. NLP-KE 2009. International Conference on},
+  pages={1--5},
+  year={2009},
+  organization={IEEE}
+}
+
+@inproceedings{use-web1t-2,
+  title={Google Web 1T 5-Grams Made Easy (but not for the computer)},
+  author={Evert, Stefan},
+  booktitle={Proceedings of the NAACL HLT 2010 Sixth Web as Corpus Workshop},
+  pages={32--40},
+  year={2010},
+  organization={Association for Computational Linguistics}
+}
+
+@article{ambiant,
+  title={Mobile information retrieval with search results clustering: Prototypes and evaluations},
+  author={Carpineto, Claudio and Mizzaro, Stefano and Romano, Giovanni and Snidero, Matteo},
+  journal={Journal of the American Society for Information Science and Technology},
+  volume={60},
+  number={5},
+  pages={877--895},
+  year={2009},
+  publisher={Wiley Online Library}
+}
+
+
+%}}}
+% Miscellaneous {{{
+
+@techreport{user-wait,
+  title={Illuminating the path: The research and development agenda for visual analytics},
+  author={Cook, Kristin A. and Thomas, James J.},
+  year={2005},
+  institution={Pacific Northwest National Laboratory (PNNL), Richland, WA (US)}
+}
+
+@book{bishop,
+  title={Pattern recognition and machine learning},
+  author={Bishop, Christopher M},
+  volume={1},
+  year={2006},
+  publisher={Springer New York}
+}
+
+@inbook{bishop-limit,
+  title={Pattern recognition and machine learning},
+  author={Bishop, Christopher M},
+  volume={1},
+  year={2006},
+  publisher={Springer New York},
+  pages={443-444}
+}
+
+@book{murphy,
+  title={Machine learning: a probabilistic perspective},
+  author={Murphy, Kevin P},
+  year={2012},
+  publisher={MIT Press},
+}
+
+@inbook{murphy-rephil,
+  title={Machine learning: a probabilistic perspective},
+  author={Murphy, Kevin P},
+  year={2012},
+  publisher={MIT Press},
+  pages={928-929}
+}
+
+@inproceedings{ambiguous-search,
+  title={Identifying ambiguous queries in web search},
+  author={Song, Ruihua and Luo, Zhenxiao and Wen, Ji-Rong and Yu, Yong and Hon, Hsiao-Wuen},
+  booktitle={Proceedings of the 16th international conference on World Wide Web},
+  pages={1169--1170},
+  year={2007},
+  organization={ACM}
+}
+
+@inproceedings{search-behavior,
+  title={A large scale study of wireless search behavior: Google mobile search},
+  author={Kamvar, Maryam and Baluja, Shumeet},
+  booktitle={Proceedings of the SIGCHI conference on Human Factors in computing systems},
+  pages={701--709},
+  year={2006},
+  organization={ACM}
+}
+
+@inproceedings{subtopic-recall,
+  title={Beyond independent relevance: methods and evaluation metrics for subtopic retrieval},
+  author={Zhai, Cheng Xiang and Cohen, William W and Lafferty, John},
+  booktitle={Proceedings of the 26th annual international ACM SIGIR conference on Research and development in informaion retrieval},
+  pages={10--17},
+  year={2003},
+  organization={ACM}
+}
+
+@article{scipy-normaltest,
+  title={Tests for departure from normality. {E}mpirical results for the distributions of b2 and b1},
+  author={D'Agostino, Ralph and Pearson, Egon S},
+  journal={Biometrika},
+  volume={60},
+  number={3},
+  pages={613--622},
+  year={1973},
+  publisher={Biometrika Trust}
+}
+
+@article{wilcoxon-test,
+  title={Individual comparisons by ranking methods},
+  author={Wilcoxon, Frank},
+  journal={Biometrics bulletin},
+  volume={1},
+  number={6},
+  pages={80--83},
+  year={1945},
+  publisher={JSTOR}
+}
+
+@inproceedings{info-coref,
+  title={An integrated, conditional model of information extraction and coreference with application to citation matching},
+  author={Wellner, Ben and McCallum, Andrew and Peng, Fuchun and Hay, Michael},
+  booktitle={Proceedings of the 20th conference on Uncertainty in artificial intelligence},
+  pages={593--601},
+  year={2004},
+  organization={AUAI Press}
+}
+
+@inbook{heaps-law,
+    title={Information retrieval: Computational and theoretical aspects},
+    author={Heaps, Harold Stanley},
+    year={1978},
+    publisher={Academic Press, Inc.},
+    pages={206-208},
+}
+
+%}}}
+% vim: foldmethod=marker

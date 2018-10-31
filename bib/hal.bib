@@ -1,0 +1,798 @@
+@InProceedings{daume05laso,
+  author =       {Hal {Daum\'e III} and Daniel Marcu},
+  title =        {Learning as Search Optimization: Approximate Large Margin Methods for Structured Prediction},
+  booktitle =    icml,
+  year =         {2005},
+  abstract =     {
+    Mappings to structured output spaces (strings, trees, partitions,
+    etc.) are typically learned using extensions of classification
+    algorithms to simple graphical structures (eg., linear chains) in
+    which search and parameter estimation can be performed exactly.
+    Unfortunately, in many complex problems, it is rare that exact search
+    or parameter estimation is tractable.  Instead of learning exact
+    models and searching via heuristic means, we embrace this difficulty
+    and treat the structured output problem in terms of approximate
+    search.  We present a framework for learning as search optimization,
+    and two parameter updates with convergence theorems and bounds.
+    Empirical evidence shows that our integrated approach to learning and
+    decoding can outperform exact models at smaller computational cost.
+  },
+  keywords = {ml sp},
+  tagline = {We describe a machine learning framework for producing structured outputs (such as sequences, parse trees, sentences, etc.) when search is intractable. The framework is based on combining online updates with a generic search algorithm, and leads to very efficient, very effective models. Slides in <a href="docs/daume05laso-slides.odp">OpenOffice</a> or <a href="docs/daume05laso-slides.pdf">PDF</a> format. (NOTE: See <a href="http://web.engr.oregonstate.edu/~afern/">Alan Fern</a>'s web page for follow-up work.)},
+  url = {http://pub.hal3.name/#daume05laso}
+}
+
+
+@article{daume09searn,
+  author =       {Hal {Daum\'e III} and John Langford and Daniel Marcu},
+  title =        {Search-based Structured Prediction},
+  year =         {2009},
+  journal =    mlj,
+  abstract =     {
+    We present Searn, an algorithm for integrating search and
+    learning to solve complex structured prediction problems such
+    as those that occur in natural language, speech, computational
+    biology, and vision.  Searn is a meta-algorithm that transforms
+    these complex problems into simple classification problems to which
+    any binary classifier may be applied.  Unlike current algorithms for
+    structured learning that require decomposition of both the loss
+    function and the feature functions over the predicted structure,
+    Searn is able to learn prediction functions for any loss
+    function and any class of features.  Moreover, Searn comes
+    with a strong, natural theoretical guarantee: good performance on the
+    derived classification problems implies good performance on the
+    structured prediction problem.
+  },
+  url = {http://pub.hal3.name/#daume06searn}
+}
+
+
+@InProceedings{daume08flat,
+  author =       {Percy Liang and Hal {Daum\'e III} and Dan Klein},
+  title =        {Structure Compilation: Trading Structure for Features},
+  booktitle =    icml,
+  year =         {2008},
+  abstract =     {
+    Structured models often achieve excellent performance but can be
+    slow at test time.  We investigate structure compilation, where we
+    replace structure with features, which are often computationally
+    simpler but unfortunately statistically more complex.  We analyze this
+    tradeoff theoretically and empirically on three natural language
+    processing tasks.  We also introduce a simple method to transfer
+    predictive power from structure to features via unlabeled data, while
+    incurring a minimal statistical penalty.
+  },
+  keywords = {nlp ml sp},
+  tagline = {We investigate the trade-off between structured models and feature-rich models, empirically and theoretically. We also present a way to trade structure for features using unlabeled data.},
+  url = {http://pub.hal3.name/#daume08flat}
+}
+
+
+@InProceedings{daume08hints,
+  author =       {Hal {Daum\'e III}},
+  title =        {Cross-Task Knowledge-Constrained Self Training},
+  booktitle =    {Empirical Methods in Natural Language Processing (EMNLP)},
+  year =         {2008},
+  abstract =     {
+    We present an algorithmic framework for learning multiple related
+    tasks.  Our framework exploits a form of prior knowledge that relates
+    the output spaces of these tasks.  We present PAC learning results
+    that analyze the conditions under which such learning is possible.
+    We present results on learning a shallow parser and named-entity
+    recognition system that exploits our framework, showing consistent
+    improvements over baseline methods.
+  },
+  keywords = {nlp ml sp da},
+  tagline = {We present a simple algorithm for self-training with knowledge that tells us when outputs for multiple tasks are "compatible." We can learn to do NER on a tiny amount of labeled data by this method.},
+  url = {http://pub.hal3.name/#daume08hints}
+}
+
+
+@InProceedings{daume08transliterate,
+  author =       {Ulf Hermjakob and Kevin Knight and Hal {Daum\'e III}},
+  title =        {Name Translation in Statistical Machine Translation: Learning When to Transliterate},
+  booktitle =    acl,
+  year =         {2008},
+  abstract =     {
+    We present a method to transliterate names in the framework of
+    end-to-end statistical machine translation.  The system is trained
+    to learn when to transliterate.  For Ararbic to English MT, we
+    developed and trained a transliterator on a bitext of 7 million
+    sentences and Google's English terabyte ngrams and achieved better
+    name translation accuracy than 3 out of 4 professional
+    translators.  The paper also includes a discussion of challenges
+    in name translation evaluation.
+  },
+  keywords = {nlp},
+  tagline = {We transliterate names in an end-to-end MT system, where names are explicitly tagged with there to transliterate or not. Our transliterator outperforms 3 of 4 human translators.},
+  url = {http://pub.hal3.name/#daume08transliterate}
+}
+
+
+@InProceedings{daume09mrtf,
+  author =       {Hal {Daum\'e III}},
+  title =        {Markov Random Topic Fields},
+  booktitle =    acl,
+  year =         {2009},
+  abstract =     {
+    Most approaches to topic modeling assume an independence between
+    documents that is frequently violated.  We present an topic model
+    that makes use of one or more user-specified graphs describing
+    relationships between documents.  These graph are encoded in the
+    form of a Markov random field over topics and serve to encourage
+    related documents to have similar topic structures.  Experiments on
+    show upwards of a $10\%$ improvement in modeling performance.
+  },
+  keywords = {nlp bayes ml},
+  tagline = {We show how to integrate topic models in an undirected graph for topic mining in -- for instance -- scientific publications. We explore several different model parameterizations.},
+  url = {http://pub.hal3.name/#daume09mrtf}
+}
+
+
+
+@InProceedings{daume09unsearn,
+  author =       {Hal {Daum\'e III}},
+  title =        {Unsupervised Search-based Structured Prediction},
+  booktitle =    icml,
+  year =         {2009},
+  abstract =     {
+    We describe an adaptation and application of a search-based
+    structured prediction algorithm "Searn" to unsupervised learning
+    problems.  We show that it is possible to reduce unsupervised
+    learning to supervised learning and demonstrate a high-quality
+    unsupervised shift-reduce parsing model.  We additionally show a
+    close connection between unsupervised Searn and expectation
+    maximization.  Finally, we demonstrate the efficacy of a
+    semi-supervised extension.  The key idea that enables this
+    is an application of the predict-self idea for
+    unsupervised learning.
+  },
+  keywords = {nlp ml sp},
+  tagline = {We extend the <a href="http://searn.hal3.name">Searn</a> algorithm to handle unsupervised learning; experiments on dependency parsing are promising and easy to implement.},
+  url = {http://pub.hal3.name/#daume09unsearn}
+}
+
+
+@InProceedings{daume10multilingual,
+  author =       {Jagadeesh Jagarlamudi and Hal {Daum\'e III}},
+  title =        {Extracting Multilingual Topics from Unaligned Corpora},
+  booktitle =    {Proceedings of the European Conference on Information Retrieval},
+  year =         {2010},
+  abstract =     {
+    Topic models have been studied extensively in the context of
+    monolingual corpora. Though there are some attempts to mine topical
+    structure from cross-lingual corpora, they require clues about document
+    alignments. In this paper we present a generative model called JointLDA
+    which uses a bilingual dictionary to mine multilingual topics from an
+    unaligned corpus. Experiments conducted on different data sets confirm
+    our conjecture that jointly modeling the cross-lingual corpora offers several
+    advantages compared to individual monolingual models. Since the
+    JointLDA model merges related topics in different languages into a single
+    multilingual topic: a) it can fit the data with relatively fewer topics. b)
+    it has the ability to predict related words from a language different than
+    that of the given document. In fact it has better predictive power compared
+    to the bag-of-word based translation model leaving the possibility
+    for JointLDA to be preferred over bag-of-word model for cross-lingual
+    IR applications. We also found that the monolingual models learnt while
+    optimizing the cross-lingual copora are more effective than the corresponding
+    LDA models.
+  },
+  keywords = {nlp ml},
+  tagline = {We show how topic models can be used to model unaligned multilingual corpora, such as Wikipedia.},
+  url = {http://pub.hal3.name/#daume10multilingual}
+
+}
+
+
+@InProceedings{daume11interlingual,
+  author =       {Jagadeesh Jagarlamudi and Hal {Daum\'e III} and Raghavendra Udupa},
+  title =        {From Bilingual Dictionaries to Interlingual Document Representations},
+  booktitle =    acl,
+  year =         {2011},
+  abstract =     {
+    Mapping documents into an interlingual representation
+    can help bridge the language barrier
+    of a cross-lingual corpus. Previous approaches
+    use aligned documents as training
+    data to learn an interlingual representation,
+    making them sensitive to the domain of the
+    training data. In this paper, we learn an interlingual
+    representation in an unsupervised
+    manner using only a bilingual dictionary. We
+    first use the bilingual dictionary to find candidate
+    document alignments and then use them
+    to find an interlingual representation. Since
+    the candidate alignments are noisy, we develop
+    a robust learning algorithm to learn
+    the interlingual representation. We show that
+    bilingual dictionaries generalize to different
+    domains better: our approach gives better performance
+    than either a word by word translation
+    method or Canonical Correlation Analysis
+    (CCA) trained on a different domain.
+  },
+  keywords = {nlp},
+  url = {http://pub.hal3.name/#daume11interlingual}
+
+}
+
+
+@InProceedings{daume11lexicaladapt,
+  author =       {Hal {Daum\'e III} and Jagadeesh Jagarlamudi},
+  title =        {Domain Adaptation for Machine Translation by Mining Unseen Words},
+  booktitle =    acl,
+  year =         {2011},
+  abstract =     {
+    We show that unseen words account for a
+    large part of the translation error when moving
+    to new domains. Using an extension of
+    a recent approach to mining translations from
+    comparable corpora (Haghighi et al., 2008),
+    we are able to find translations for otherwise
+    OOV terms. We show several approaches
+    to integrating such translations into a phrasebased
+    translation system, yielding consistent
+    improvements in translations quality (between
+    0.5 and 1.5 Bleu points) on four domains and
+    two language pairs.
+  },
+  keywords = {nlp},
+  url = {http://pub.hal3.name/#daume11lexicaladapt}
+
+}
+
+
+@InProceedings{daume11sparse,
+  author =       {Jagadeesh Jagarlamudi and Raghavendra Udupa and Hal {Daum\'e III} and Abhijit Bhole},
+  title =        {Improving Bilingual Projections via Sparse Covariance Matrices},
+  booktitle =    emlnp,
+  year =         {2011},
+  keywords = {nlp},
+}
+
+@InProceedings{daume11tradeoffs,
+  author =       {Jason Eisner and Hal {Daum\'e III}},
+  title =        {Speed-Accuracy Tradeoffs in Nondeterministic Inference Algorithms},
+  booktitle =    {Proceedings of COST: NIPS 2011 Workshop on Computational Trade-offs in Statistical Learning},
+  year =         {2011},
+  abstract =     {
+    Statistical learning has led to great advances in building
+    models that achieve high accuracy. However, test-time
+    inference in these models can be slow, for example in
+    structured prediction problems. This is frequently addressed
+    by using test-time heuristics to guide and prune the search
+    for a good structured output. In this high-level paper, we
+    ask: Could we explicitly train such heuristics to trade off
+    accuracy and efficiency? And how does this relate to existing
+    learning problems?
+  },
+  keywords = {ml nlp},
+  url = {http://pub.hal3.name/#daume11tradeoffs}
+
+}
+
+
+@inproceedings{daume12seeded,
+  title = {Incorporating Lexical Priors into Topic Models},
+  author = {Jagadeesh Jagarlamudi and Hal {Daum\'e III} and Raghavendra Udupa},
+  booktitle =    eacl,
+  year =         {2012},
+  abstract =     {
+    Topic models have great potential for helping users understand
+    document corpora. This potential is stymied by their purely
+    unsupervised nature, which often leads to topics that are neither
+    entirely meaningful nor effective in extrinsic tasks (Chang et
+    al., 2009). We propose a simple and effective way to guide topic
+    models to learn topics of speciﬁc interest to a user. We achieve
+    this by providing sets of seed words that a user believes are
+    representative of the underlying topics in a corpus. Our model
+    uses these seeds to improve both topicword distributions (by
+    biasing topics to produce appropriate seed words) and to improve
+    document-topic distributions (by biasing documents to select
+    topics related to the seed words they contain). Extrinsic
+    evaluation on a document clustering task reveals a signiﬁcant
+    improvement when using seed information, even over other models
+    that use seed information navely.
+  },
+  keywords = {nlp},
+  url = {http://pub.hal3.name/#daume12seeded}
+
+}
+
+@inproceedings{daume12dynafea,
+  title = {Cost-sensitive Dynamic Feature Selection},
+  author = {He He and Hal {Daum\'e III} and Jason Eisner},
+  booktitle =    {ICML 2012 Workshop on Interactions between Inference and Learning (Inferning)},
+  year =         {2012},
+  abstract =     {
+    We present an instance-specific dynamic feature
+    selection algorithm at test time, which
+    sequentially chooses features given values of
+    already selected features and stops to make
+    a prediction according to a user-specified
+    speed-accuracy trade-off. We apply imitation
+    learning techniques to address the problem
+    of learning and inference jointly in a simple
+    multiclass classification setting. Our feature
+    selection method treats the given solver (e.g.
+    a classifier trained with a full set of features)
+    as a black box and does not have any constraint
+    on it. Experimental results show that
+    using a dynamic instance-specific feature set
+    can significantly improve accuracy at a low
+    cost.
+  },
+  keywords = {ml},
+  url = {http://pub.hal3.name/#daume12dynafeat}
+}
+
+@inproceedings{daume12prioritization,
+  title = {Learned Prioritization for Trading Off Accuracy and Speed},
+  author = {Jiarong Jiang and Adam Teichert and Hal {Daum\'e III} and Jason Eisner},
+  booktitle = NIPS,
+  year = {2012},
+  url = {http://books.nips.cc/papers/files/nips25/NIPS2012_0650.pdf}
+}
+
+@inproceedings{NIPS2012_1449,
+  title = {Imitation Learning by Coaching},
+  author = {He He and Hal {Daum\'e III} and Jason Eisner},
+  booktitle = NIPS,
+  year = {2012},
+  url = {http://books.nips.cc/papers/files/nips25/NIPS2012_1449.pdf}
+}
+
+@InProceedings{	  branavan09rl,
+  author	= {S.R.K. Branavan and Harr Chen and Luke S. Zettlemoyer and
+		  Regina Barzilay},
+  title		= {Reinforcement Learning for Mapping Instructions to
+		  Actions},
+  booktitle	= acl,
+  year		= {2009}
+}
+
+@inproceedings{carpuat07psd,
+  author = {Marine Carpuat and Dekai Wu},
+  title = {Improving statistical machine translation using word sense disambiguation},
+  booktitle = EMNLP,
+  year = {2007}
+}
+
+@TechReport{daume12damt,
+  author =       {Marine Carpuat and Hal Daum\'e III and Alexander Fraser and Chris Quirk and Fabienne Braune and Ann Clifton and Ann Irvine and Jagadeesh Jagarlamudi and John Morgan and Majid Razmara and Ales Tamchyna and Katharine Henry and Rachel Rudinger},
+  title =        {Domain Adaptation in Machine Translation: Final Report},
+  year =         {2012},
+  note = {\url{http://hal3.name/damt/}}
+}
+
+
+
+
+@article{sandrelli2007impact,
+  title={The impact of information and communication technology on interpreter training: State-of-the-art and future prospects},
+  author={Sandrelli, Annalisa and Jerez, Jesus De Manuel},
+  journal={The Interpreter and translator trainer},
+  volume={1},
+  number={2},
+  pages={269--303},
+  year={2007},
+  url={http://www.tandfonline.com/doi/abs/10.1080/1750399X.2007.10798761},
+  publisher={Taylor \& Francis},
+}
+
+
+@article{merlini1996interprit,
+  title={Interprit-consecutive interpretation module},
+  author={Merlini, Raffaella},
+  year={1996},
+  journal={The Interpreters' Newsletter},
+  url={http://www.openstarts.units.it/dspace/handle/10077/8989},
+  publisher={LINT}
+}
+
+
+@article{gran2002computer,
+  title={Computer-assisted interpreter training},
+  author={Gran, Laura and Carabelli, Angela and Merlini, Raffaela},
+  journal={Benjamins Translation Library},
+  volume={43},
+  pages={277--294},
+  year={2002},
+  publisher={John Benjamins BV}
+}
+
+@book{de2003nuevas,
+  title={Nuevas tecnolog{\'\i}as y formaci{\'o}n de int{\'e}rpretes},
+  author={de Manuel Jerez, Jes{\'u}s},
+  year={2003},
+  publisher={Atrio}
+}
+
+@article{cervato1995interprit,
+  title={‘Interprit’: A computerised self-access course for beginners in interpreting},
+  author={Cervato, Emanuela and De Ferra, Donatella},
+  journal={Perspectives: studies in translatology},
+  volume={3},
+  number={2},
+  pages={191--204},
+  year={1995},
+  url={http://www.tandfonline.com/doi/abs/10.1080/0907676X.1995.9961260},
+  publisher={Taylor \& Francis}
+}
+
+@article{carabelli1999multimedia,
+  title={Multimedia technologies for the use of interpreters and translators},
+  author={Carabelli, Angela},
+  year={1999},
+  journal={The Interpreters' Newsletter},
+  url={http://etabeta.univ.trieste.it/dspace/handle/10077/2217},
+  publisher={EUT-Edizioni Universit{\`a} di Trieste}
+}
+
+
+@techreport{hewitt98interpreting,
+  author = {William Hewitt and Paula Hannaford and Catherine Gill and Melissa Cantrell},
+  title = {Court Interpreting Services in State and Federal Courts: Reasons and Options for Inter-court Coordination},
+  year = {1998},
+  }
+
+
+@article{jescheniak1994word,
+  title={Word frequency effects in speech production: Retrieval of syntactic information and of phonological form.},
+  author={Jescheniak, J{\"o}rg D and Levelt, Willem JM},
+  journal={Journal of Experimental Psychology: Learning, Memory, and Cognition},
+  volume={20},
+  number={4},
+  pages={824},
+  year={1994},
+  publisher={American Psychological Association}
+}
+
+
+@article{griffin1998constraint,
+  title={Constraint, word frequency, and the relationship between lexical processing levels in spoken word production},
+  author={Griffin, Zenzi M and Bock, Kathryn},
+  journal={Journal of Memory and Language},
+  volume={38},
+  number={3},
+  pages={313--338},
+  year={1998},
+  publisher={Elsevier}
+}
+
+
+@article{balota1985locus,
+  title={The locus of word-frequency effects in the pronunciation task: Lexical access and/or production?},
+  author={Balota, David A and Chumbley, James I},
+  journal={Journal of Memory and Language},
+  volume={24},
+  number={1},
+  pages={89--106},
+  year={1985},
+  publisher={Elsevier}
+}
+
+@incollection{lederer1978simultaneous,
+  title={Simultaneous interpretation—units of meaning and other features},
+  author={Lederer, Marianne},
+  booktitle={Language interpretation and communication},
+  pages={323--332},
+  year={1978},
+  publisher={Springer}
+}
+
+
+@article{daro1994verbal,
+  title={Verbal memory during simultaneous interpretation: Effects of phonological interference},
+  author={Dar{\`o}, Valeria and Fabbro, Franco},
+  journal={Applied Linguistics},
+  volume={15},
+  number={4},
+  pages={365--381},
+  year={1994},
+  publisher={Am Assoc Appl Ling}
+}
+
+@inproceedings{ziebart-maxent,
+  author = {Brian D. Ziebart and Andrew Maas and J.Andrew Bagnell and Anind K. Dey},
+  title = {Maximum entropy inverse reinforcement learning},
+  booktitle = aaai,
+  year = {2008}
+  }
+
+@inproceedings{abbeel04al,
+  title = {Apprenticeship learning via inverse reinforcement learning},
+  author = {Pieter Abbeel and Andrew Ng},
+  booktitle = ICML,
+  year = {2004}
+}
+
+@article{neu09parserirl,
+  title = {Training Parsers by Inverse Reinforcement Learning},
+  author = {G. Neu and Cs. Szepesv\'ari},
+  journal = {Machine Learning},
+  volume = {77},
+  year = {2009}
+}
+
+@inproceedings{ng00irl,
+  title = {Algorithms for inverse reinforcement learning},
+  author = {Andrew Ng and Stuart Russell},
+  booktitle = ICML,
+  year = {2000}
+}
+
+@article{kalman68ioc,
+  author = {R. Kalman},
+  year = {1968},
+  title = {Contributions to the theory of optimal control},
+  journal = {Bol. Soc. Mat. Mexicana},
+  volume = {5},
+  pages = {558--563}
+}
+
+@article{boyd94ioc,
+  author = {S. Boyd and L. El Ghaoui and E. Feron and V. Balakrishnan},
+  year = {1994},
+  title = {Linear matrix inequalities in system and control theory},
+  journal = {SIAM},
+  volume = {15}
+}
+
+
+@article{ganchev10pr,
+  title = {Posterior Regularization for Structured Latent Variable Models},
+  author = {K. Ganchev and J. Gra\c ca and J. Gillenwater and B. Taskar},
+  journal = JMLR,
+  year = {2010},
+}
+
+@inproceedings{bellare09ec,
+  title = {Alternating Projections for Learning with Expectation Constraints},
+  author = {Kedar Bellare and Gregory Druck and Andrew McCallum},
+  booktitle = UAI,
+  year = {2009}
+}
+
+
+@TechReport{mccallum07gec,
+  author =       {Andrew McCallum and Gideon Mann and Gregory Druck},
+  title =        {Generalized Expectation Criteria},
+  institution =  {University of Massachusetts Amhert},
+  year =         {2007},
+  key =          {2007-60},
+}
+
+@inproceedings{liang09measurements,
+  title = {Learning from measurements in exponential families},
+  author = {Percy Liang and Michael I. Jordan and Dan Klein},
+  booktitle = ICML,
+  year = {2009}
+}
+
+@article{finn2016guided,
+  title={Guided Cost Learning: Deep Inverse Optimal Control via Policy Optimization},
+  author={Finn, Chelsea and Levine, Sergey and Abbeel, Pieter},
+  journal={arXiv preprint arXiv:1603.00448},
+  year={2016}
+}
+
+@article{rusu2016progressive,
+  title={Progressive neural networks},
+  author={Rusu, Andrei A and Rabinowitz, Neil C and Desjardins, Guillaume and Soyer, Hubert and Kirkpatrick, James and Kavukcuoglu, Koray and Pascanu, Razvan and Hadsell, Raia},
+  journal={arXiv preprint arXiv:1606.04671},
+  year={2016}
+}
+
+@article{agarwal2014taming,
+  title={Taming the Monster: A Fast and Simple Algorithm for Contextual Bandits},
+  author={Agarwal, Alekh and Hsu, Daniel and Kale, Satyen and Langford, John and Li, Lihong and Schapire, Robert E},
+  journal={arXiv preprint arXiv:1402.0555},
+  year={2014}
+}
+
+@article{beygelzimer10exp4,
+  title={Contextual bandit algorithms with supervised learning guarantees},
+  author={Beygelzimer, Alina and Langford, John and Li, Lihong and Reyzin, Lev and Schapire, Robert E},
+  journal={arXiv preprint arXiv:1002.4058},
+  year={2010}
+}
+
+@inproceedings{kakade08banditron,
+  title = {Efficient Bandit Algorithms for Online Multiclass Prediction},
+  author = {Sham M. Kakade and Shai Shalev-Shwart and Ambuj Tewari},
+  year = {2008},
+  booktitle = ICML
+}
+@article{guha13bayesian,
+  title={Approximation algorithms for bayesian multi-armed bandit problems},
+  author={Guha, Sudipto and Munagala, Kamesh},
+  journal={arXiv preprint arXiv:1306.3525},
+  year={2013}
+}
+@inproceedings{mandel15queue,
+  title={The Queue Method: Handling Delay, Heuristics, Prior Data, and Evaluation in Bandits.},
+  author={Mandel, Travis and Liu, Yun-En and Brunskill, Emma and Popovic, Zoran},
+  booktitle=aaai,
+  ;;pages={2849--2856},
+  year={2015}
+}
+
+@inproceedings{joulani13delayed,
+  title={Online Learning under Delayed Feedback.},
+  author={Joulani, Pooria and Gy{\"o}rgy, Andr{\'a}s and Szepesv{\'a}ri, Csaba},
+  booktitle=icml,
+  ;;pages={1453--1461},
+  year={2013}
+}
+
+@inproceedings{beygelzimer09active,
+  author = {Alina Beygelzimer and Sanjoy Dasgupta and and John Langford},
+  title = {Importance Weighted Active Learning},
+  booktitle = ICML,
+  year = 2009
+}
+
+@inproceedings{carpuat2012trouble,
+  title={The trouble with {SMT} consistency},
+  author={Carpuat, Marine and Simard, Michel},
+  booktitle={Proceedings of the Seventh Workshop on Statistical Machine Translation},
+  ;;pages={442--449},
+  year={2012},
+  ;;organization={Association for Computational Linguistics}
+}
+
+@phdthesis{hardmeier2014discourse,
+  title={Discourse in statistical machine translation},
+  author={Hardmeier, Christian},
+  year={2014},
+  school={Acta Universitatis Upsaliensis}
+}
+
+@inproceedings{ture2012encouraging,
+  title={Encouraging consistent translation choices},
+  author={Ture, Ferhan and Oard, Douglas W and Resnik, Philip},
+  booktitle=naacl,
+  ;;pages={417--426},
+  year={2012},
+  ;;organization={Association for Computational Linguistics}
+}
+
+@inproceedings{banerjee05meteor,
+  author = {Satanjeev Banerjee and Alon Lavie},
+  title = {METEOR: An Automatic Metric for {MT} Evaluation with Improved Correlation with Human Judgments},
+  booktitle = {In Proceedings of Workshop on Intrinsic and Extrinsic Evaluation Measures for MT and/or Summarization at ACL},
+  year = {2005},
+  location = {Ann Arbor, MI}
+}
+
+@article{tamar2016value,
+  title={Value Iteration Networks},
+  author={Tamar, Aviv and Levine, Sergey and Abbeel, Pieter},
+  journal={arXiv preprint arXiv:1602.02867},
+  year={2016}
+}
+@inproceedings{chang16compiler,
+author = {Kai-Wei Chang and He He and Hal {Daum\'e III} and John Lanford and St\'ephane Ross},
+title = {A Credit Assignment Compiler for Joint Prediction},
+booktitle = nips,
+year = {2016}
+}
+
+@inproceedings{chang15lols,
+author = {Kai-Wei Chang and Akshay Krishnamurthy and Alekh Agarwal and Hal {Daum\'e III} and John Langford},
+title = {Learning to Search Better than Your Teacher},
+booktitle = icml,
+year = {2015},
+}
+
+@inproceedings{kim2013learning,
+  title={Learning from limited demonstrations},
+  author={Kim, Beomjoon and Massoud Farahmand, Amir and Pineau, Joelle and Precup, Doina},
+  booktitle=nips,
+  ;;pages={2859--2867},
+  year={2013}
+}
+
+@article{ross14aggrevate,
+  author = {St\'ephane Ross and J. Andrew Bagnell},
+  title = {Reinforcement and Imitation Learning via Interactive No-Regret Learning},
+  journal = {arXiv preprint arXiv:1406.5979},
+  year = 2014
+}
+
+@inproceedings{bennett2012modeling,
+  title={Modeling the impact of short-and long-term behavior on search personalization},
+  author={Bennett, Paul N and White, Ryen W and Chu, Wei and Dumais, Susan T and Bailey, Peter and Borisyuk, Fedor and Cui, Xiaoyuan},
+  booktitle={Proceedings of the 35th international ACM SIGIR conference on Research and development in information retrieval},
+  pages={185--194},
+  year={2012},
+  organization={ACM}
+}
+
+@inproceedings{daume18reslope,
+    title = {Residual Loss Prediction: Reinforcement Learning with no Incremental
+                    Feedback},
+    author    = {Hal {Daum\'e III} and John Langford and Amr Sharaf},
+    booktitle = {ICLR},
+    year      = {2018},
+}
+
+@inproceedings{dmitriev16pitfalls,
+  title={Pitfalls of long-term online controlled experiments},
+  author={Dmitriev, Pavel and Frasca, Brian and Gupta, Somit and Kohavi, Ron and Vaz, Garnet},
+  booktitle={Big Data (Big Data), 2016 IEEE International Conference on},
+  pages={1367--1376},
+  year={2016},
+  organization={IEEE}
+}
+
+@article{mann18delayed,
+  title={Learning from Delayed Outcomes with Intermediate Observations},
+  author={Mann, Timothy A and Gowal, Sven and Jiang, Ray and Hu, Huiyi and Lakshminarayanan, Balaji and Gyorgy, Andras},
+  journal={arXiv preprint arXiv:1807.09387},
+  year={2018}
+}
+
+@inproceedings{wu17longterm,
+  title={Returning is believing: Optimizing long-term user engagement in recommender systems},
+  author={Wu, Qingyun and Wang, Hongning and Hong, Liangjie and Shi, Yue},
+  booktitle={Proceedings of the 2017 ACM on Conference on Information and Knowledge Management},
+  pages={1927--1936},
+  year={2017},
+  organization={ACM}
+}
+
+@article{schulman2017proximal,
+  title={Proximal policy optimization algorithms},
+  author={Schulman, John and Wolski, Filip and Dhariwal, Prafulla and Radford, Alec and Klimov, Oleg},
+  journal={arXiv preprint arXiv:1707.06347},
+  year={2017}
+}
+
+@inproceedings{mnih2016asynchronous,
+  title={Asynchronous methods for deep reinforcement learning},
+  author={Mnih, Volodymyr and Badia, Adria Puigdomenech and Mirza, Mehdi and Graves, Alex and Lillicrap, Timothy and Harley, Tim and Silver, David and Kavukcuoglu, Koray},
+  booktitle=icml,
+  pages={1928--1937},
+  year={2016}
+}
+
+@inproceedings{daume17coal,
+    title     = {Active Learning for Cost-Sensitive Classification},
+    author = {Akshay Krishnamurthy and Alekh Agarwal and Tzu-Kuo Huang and Hal
+                    {Daum\'e III} and John Langford},
+    booktitle = {Proceedings of the International Conference on Machine Learning
+                    (ICML)},
+    year      = {2017},
+ }
+
+@inproceedings{fang2017learning,
+  title={Learning how to Active Learn: A Deep Reinforcement Learning Approach},
+  author={Fang, Meng and Li, Yuan and Cohn, Trevor},
+  booktitle={EMNLP},
+  year={2017}
+}
+
+@inproceedings{bachman2017learning,
+  title={Learning algorithms for active learning},
+  author={Bachman, Philip and Sordoni, Alessandro and Trischler, Adam},
+  booktitle={ICML},
+  year={2017}
+}
+
+@inproceedings{konyushkova2017metaactive,
+  author={Ksenia Konyushkova and Raphael Sznitman and Pascal Fua},
+  title={Learning Active Learning from Data},
+  booktitle={Advances in Neural Information Processing Systems},
+  year={2017},
+  }
+
+@inproceedings{daume18melee,
+author = {Amr Sharaf and Hal {Daum\'e III}},
+title = {Meta-Learning for Contextual Bandit Exploration},
+booktitle = {Under Review at ICLR},
+year = {2018},
+url = {https://openreview.net/forum?id=rJxug2R9Km}
+}
+

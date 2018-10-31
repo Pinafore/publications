@@ -1,0 +1,58 @@
+\section{Introduction: Exploring multilingual document collections}
+\label{sec:intro}
+
+
+Modeling multilingual topics aids exploration of large corpora across
+languages~\citep{mimno-2009}.  These models help align topics
+cross-lingually and uncover latent relationships between languages,
+such as observing the differences in describing economic issues
+between English and Spanish speakers~\citep{gutierrez-2016}.
+Incorporating multilingual information also forms better monolingual
+topics~\citep{jagarlamudi-2010}.
+
+
+
+
+Multilingual topic models usually depend on some resource to bridge languages.  These resources include word
+alignments~\citep{zhao-2006}, dictionaries~\citep{jagarlamudi-2010,
+  boyd-graber-2010}, topic alignments in documents~\citep{ni-09}, or
+all of the above~\citep{hu-2014-ptlda}.  Existing
+multilingual models have several shortcomings; they assume
+  extensive knowledge about languages, preclude human
+  refinement, and are slow. Thus, a topic model may not be
+appropriate in emergent sitations on low resource languages when time
+is of the essence: e.g., when relief workers must triage relief
+messages in Hatian Creole~\citep{morrow-2011}.
+
+
+Beyond these practical concerns, adding interactivity to topic
+modeling allows machine learning non-experts to build models better
+suited to their needs~\citep{choo-2013, hu-2014-itm, lee-2017}.  One way to quickly
+incorporate human knowledge into the model is through 
+anchor words~\citep{lund-2017}.  Inference in anchor-based topic
+models is driven by anchors, which are words that have high
+probability in one topic and low probability in remaining
+topics~\citep{arora-2012-anchor, arora-2013}.  The anchoring algorithm scales with the number of unique word types, making it fast enough for interactive updates.
+
+We present two contributions for modeling multilingual topics.  First,
+we develop a multilingual anchoring algorithm, which is an extension to
+anchor-based topic inference for comparable corpora.\footnote{Comparable corpora across
+  languages are collections of documents about the same themes but
+  that are \emph{not} translations.  Compared to more typical parallel
+  data~\citep{mauro-2012,graff-1994}, comparable data are more
+  challenging.}  Second, we introduce \mtanchor, a human-in-the-loop
+system that uses multilingual anchoring to align topics and enables
+users to make further adjustments to the model.\footnote{\url{http://github.com/forest-snow/mtanchor_demo}.} Through interaction, the model produces
+\emph{interpretable}, low-dimensional representations of documents.
+These vector representations improve intra-lingual or
+cross-lingual text classification. The topic model generates
+coherent topic aligments for comparable corpora
+because users themselves align topics.
+
+
+
+
+
+
+
+
