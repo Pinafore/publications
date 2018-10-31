@@ -1,0 +1,76 @@
+\section{Anchor-based topic models}
+\label{sec:background}
+
+A topic model discovers topics: a distribution over words that evinces a coherent theme~\citep{boyd-graber-2017}.  Well-known methods for constructing topic models are latent Dirichlet allocation~\cite[\abr{lda}]{blei-2003} and latent semantic analysis~\cite[\abr{lsa}]{landauer-1998}.  Another computationally attractive option is the anchor word algorithm~\citep{arora-2012-anchor} that uses the row-normalized word co-occurrence matrix~$\bar{Q}$ , where~$\bar{Q}_{i,j} = p(w_2 = j \g w_1 = i)$. The vector~$\bar{Q}_i$ is the~$i^{th}$ row of~$\bar{Q}$ and represents the conditional distribution of words in a document given that word~$i$ has occurred.  Anchor word $s$ appears with high probability in only one topic, so~$\bar{Q}_{s}$
+resembles a topic's word distribution in topic models like~\abr{lda}.  For example, if ``concealer'' is an anchor word for a \underline{cosmetics} topic,
+then its conditional distribution will have high probability for
+\underline{cosmetics}-related words and low probability for other words.  Still, these are not the distributions that typically define probabilistic topic models: the probability of a word given a topic.
+
+
+\subsection{Anchoring}
+\label{sec:anchoring}
+To discover topic distributions, anchor word approaches~\citep{arora-2013} search for coefficients that describe non-anchor words' document contexts with anchor words' conditional distributions.  The word ``liner'' has meanings that are explained by ``album'' in a \underline{music} topic, ``concealer'' in a \underline{cosmetics} topic, and ``carburetor'' in an \underline{automotive} topic.  Then, the conditional distribution
+of ``liner'' can be expressed as a convex combination of the
+conditional distributions of ``album'', ``concealer'', and
+``carburetor''.  Given anchor words~$s_1,\dots,s_K$, the conditional
+distribution of word~$i$ can be approximated as 
+\begin{equation}
+ \label{eq:anchor} 
+\bar{Q}_{i} \approx \sum \limits_{k=1}^{K}
+C_{i,k} \bar{Q}_{s_k} \quad \mbox{subject to } \sum\limits_{k=1}^K
+C_{i,k} = 1 \mbox{ and } C_{i,k} \ge 0.  
+\end{equation} 
+The coefficient~$C_{i,k}$ represents~$p(z=k \g w=i)$, the probability
+of topic~$k$ given a word~$i$.  These coefficients are recovered using
+the RecoverL2 algorithm~\citep{arora-2013}, which minimizes the quadratic loss between~\(\bar{Q}_{i}\) and~\( \sum_{k=1}^K C_{i,k} \bar{Q}_{s_k}\). Using Bayes' rule,
+we can obtain the standard topic matrix~$A$,
+\begin{equation}
+\label{eq:topic} 
+A_{i,k} =
+p(w=i \g z=k) \propto p(z=k \g w=i) p(w=i) =
+C_{i,k} \sum\limits_{j=1}^V \bar{Q}_{i,j}. 
+\end{equation}
+For a large vocabulary size $V$, finding these anchor words is a challenge,
+but understanding the geometric intuition behind the anchoring
+algorithm can help us select the right words.  Points inside a convex hull
+are expressed as the convex combination of their vertices. If we want
+to approximate~$\bar{Q}_{i}$ as the convex combination
+of~$\bar{Q}_{s_1},\dots,\bar{Q}_{s_K}$ (Equation~\ref{eq:anchor}),
+then~$\bar{Q}_{s_1},\dots,\bar{Q}_{s_K}$ should be the vertices of the
+convex hull of~$\bar{Q}$.  However, finding the vertices to
+a~$V$-dimensional convex hull is time-consuming~\citep{arora-2012-anchor}.
+Instead, \etalcite{Arora}{arora-2013} use FastAnchorWords, a
+greedy approach similar to Gram-Schmidt orthogonalization, to
+construct an approximate convex hull of~$\bar{Q}$ and expand it as
+much as possible with each choice of anchor word.  Other methods
+include projecting~$\bar{Q}$ to a low-dimensional space and finding
+the vertices of its exact convex hull~\citep{lee-14}, adding another dimension to capture metadata~\citep{nguyen-2015}, or finding
+nonparametric anchor words~\citep{yurochkin-2017}.
+
+
+
+
+
+
+
+\subsection{Multiword anchoring}
+    \label{sec:multiword}
+
+Finding topics in anchor-based models is fast, so it can be used in an
+interactive setting where users iteratively choose anchor words for
+every topic~\citep{lund-2017}.  Nevertheless, users may want to choose
+multiple anchor words for a topic, such as selecting both
+``concealer'' and ``lipstick'' for a \underline{cosmetics} topic.
+Therefore, \etalcite{Lund}{lund-2017} propose multiword anchoring:
+users select a set~$\mathcal{G}_k$ of multiple anchor
+words for topic~$k$.  After users select~$\mathcal{G}_1,\dots,\mathcal{G}_K$, $\bar{Q}$
+is augmented so that new rows~$\bar{Q}_{V+1},\dots,\bar{Q}_{V+K}$
+represent these pseudo-anchors in the conditional word co-occurrence
+space.  \etalcite{Lund}{lund-2017} construct these vectors~$\bar{Q}_{V+k}$ as 
+    \begin{equation}
+        \label{eq:multiword}
+        \bar{Q}_{V+k, j} = 
+        \left( 
+        \frac{\sum \limits_{i\in \mathcal{G}_k} \bar{Q}_{i, j}^{-1}}{ |\mathcal{G}_k|} \right)^{-1}.
+    \end{equation}
+The motivation for using the harmonic mean (Equation~\ref{eq:multiword}) is that the function can centralize input values and ignore large outliers. Finding topics follows the same algorithm as before using single word anchors.  Instead of modeling~$\bar{Q}_i$ as the convex combination of~$\bar{Q}_{s_1},\dots,\bar{Q}_{s_K}$, a convex combination of~$\bar{Q}_{V+1},\dots,\bar{Q}_{V+K}$ models~$\bar{Q}_i$ with minimal quadratic loss.

@@ -1,0 +1,109 @@
+@article{Newman2009,
+author = {Newman, David and Asuncion, Arthur and Smyth, Padhraic and Welling, Max},
+file = {:home/yi/.local/share/data/Mendeley Ltd./Mendeley Desktop/Downloaded/Newman et al. - 2009 - Distributed Algorithms for Topic Models.pdf:pdf},
+issn = {1532-4435},
+journal = {The Journal of Machine Learning Research},
+month = dec,
+pages = {1801--1828},
+publisher = {JMLR.org},
+title = {{Distributed Algorithms for Topic Models}},
+url = {http://dl.acm.org/citation.cfm?id=1577069.1755845},
+volume = {10},
+year = {2009}
+}
+@inproceedings{Li2014,
+address = {New York, New York, USA},
+author = {Li, Aaron Q. and Ahmed, Amr and Ravi, Sujith and Smola, Alexander J.},
+booktitle = {Proceedings of the 20th ACM SIGKDD international conference on Knowledge discovery and data mining - KDD '14},
+doi = {10.1145/2623330.2623756},
+file = {:home/yi/.local/share/data/Mendeley Ltd./Mendeley Desktop/Downloaded/Li et al. - 2014 - Reducing the sampling complexity of topic models.pdf:pdf},
+isbn = {9781450329569},
+keywords = {alias method,sampling,scalability,topic models},
+month = aug,
+pages = {891--900},
+publisher = {ACM Press},
+title = {{Reducing the sampling complexity of topic models}},
+url = {http://dl.acm.org/citation.cfm?id=2623330.2623756},
+year = {2014}
+}
+@article{Yuan2014,
+abstract = {When building large-scale machine learning (ML) programs, such as big topic models or deep neural nets, one usually assumes such tasks can only be attempted with industrial-sized clusters with thousands of nodes, which are out of reach for most practitioners or academic researchers. We consider this challenge in the context of topic modeling on web-scale corpora, and show that with a modest cluster of as few as 8 machines, we can train a topic model with 1 million topics and a 1-million-word vocabulary (for a total of 1 trillion parameters), on a document collection with 200 billion tokens -- a scale not yet reported even with thousands of machines. Our major contributions include: 1) a new, highly efficient O(1) Metropolis-Hastings sampling algorithm, whose running cost is (surprisingly) agnostic of model size, and empirically converges nearly an order of magnitude faster than current state-of-the-art Gibbs samplers; 2) a structure-aware model-parallel scheme, which leverages dependencies within the topic model, yielding a sampling strategy that is frugal on machine memory and network communication; 3) a differential data-structure for model storage, which uses separate data structures for high- and low-frequency words to allow extremely large models to fit in memory, while maintaining high inference speed; and 4) a bounded asynchronous data-parallel scheme, which allows efficient distributed processing of massive data via a parameter server. Our distribution strategy is an instance of the model-and-data-parallel programming model underlying the Petuum framework for general distributed ML, and was implemented on top of the Petuum open-source system. We provide experimental evidence showing how this development puts massive models within reach on a small cluster while still enjoying proportional time cost reductions with increasing cluster size, in comparison with alternative options.},
+annote = {introduce metroplis-hasting method for fast Gibbs sampling},
+archivePrefix = {arXiv},
+arxivId = {1412.1576},
+author = {Yuan, Jinhui and Gao, Fei and Ho, Qirong and Dai, Wei and Wei, Jinliang and Zheng, Xun and Xing, Eric P. and Liu, Tie-Yan and Ma, Wei-Ying},
+eprint = {1412.1576},
+file = {:home/yi/.local/share/data/Mendeley Ltd./Mendeley Desktop/Downloaded/lightlda.pdf:pdf},
+month = dec,
+title = {{LightLDA: Big Topic Models on Modest Compute Clusters}},
+url = {http://arxiv.org/abs/1412.1576},
+year = {2014}
+}
+@article{Wang2014,
+abstract = {Latent Dirichlet allocation (LDA) is a popular topic modeling technique in academia but less so in industry, especially in large-scale applications involving search engine and online advertising systems. A main underlying reason is that the topic models used have been too small in scale to be useful; for example, some of the largest LDA models reported in literature have up to \$10\^{}3\$ topics, which cover difficultly the long-tail semantic word sets. In this paper, we show that the number of topics is a key factor that can significantly boost the utility of topic-modeling systems. In particular, we show that a "big" LDA model with at least \$10\^{}5\$ topics inferred from \$10\^{}9\$ search queries can achieve a significant improvement on industrial search engine and online advertising systems, both of which serving hundreds of millions of users. We develop a novel distributed system called Peacock to learn big LDA models from big data. The main features of Peacock include hierarchical distributed architecture, real-time prediction and topic de-duplication. We empirically demonstrate that the Peacock system is capable of providing significant benefits via highly scalable LDA topic models for several industrial applications.},
+archivePrefix = {arXiv},
+arxivId = {1405.4402},
+author = {Wang, Yi and Zhao, Xuemin and Sun, Zhenlong and Yan, Hao and Wang, Lifeng and Jin, Zhihui and Wang, Liubin and Gao, Yang and Law, Ching and Zeng, Jia},
+eprint = {1405.4402},
+file = {:home/yi/.local/share/data/Mendeley Ltd./Mendeley Desktop/Downloaded/peacock.pdf:pdf},
+month = may,
+pages = {23},
+title = {{Peacock: Learning Long-Tail Topic Features for Industrial Applications}},
+url = {http://arxiv.org/abs/1405.4402},
+year = {2014}
+}
+@inproceedings{Yang2015,
+address = {New York, New York, USA},
+author = {Yang, Yi and Pan, Shimei and Song, Yangqiu and Lu, Jie and Topkara, Mercan},
+booktitle = {Proceedings of the 20th International Conference on Intelligent User Interfaces - IUI '15},
+doi = {10.1145/2678025.2701396},
+file = {:home/yi/.local/share/data/Mendeley Ltd./Mendeley Desktop/Downloaded/Yang et al. - 2015 - User-directed Non-Disruptive Topic Model Update for Effective Exploration of Dynamic Content.pdf:pdf},
+isbn = {9781450333061},
+keywords = {dynamic content,non-disruptive topic model update,statistical topic model,user input},
+month = mar,
+pages = {158--168},
+publisher = {ACM Press},
+title = {{User-directed Non-Disruptive Topic Model Update for Effective Exploration of Dynamic Content}},
+url = {http://dl.acm.org/citation.cfm?id=2678025.2701396},
+year = {2015}
+}
+
+@inproceedings{Roder2015,
+author = {R\"{o}der, Michael and Both, Andreas and Hinneburg, Alexander},
+booktitle = wsdm,
+title = {{Exploring the Space of Topic Coherence Measures}},
+year = {2015}
+}
+
+@inproceedings{xie2015incorporating,
+  title={Incorporating Word Correlation Knowledge into Topic Modeling},
+  author={Xie, Pengtao and Yang, Diyi and Xing, Eric P},
+  booktitle=naacl,
+  year={2015}
+}
+@article{word2vec,
+  added-at = {2013-02-18T00:00:00.000+0100},
+  author = {Mikolov, Tomas and Chen, Kai and Corrado, Greg and Dean, Jeffrey},
+  biburl = {http://www.bibsonomy.org/bibtex/29665b85e8756834ac29fcbd2c6ad0837/dblp},
+  ee = {http://arxiv.org/abs/1301.3781},
+  interhash = {e92df552b17e9f952226a893b84ad739},
+  intrahash = {9665b85e8756834ac29fcbd2c6ad0837},
+  journal = {CoRR},
+  keywords = {dblp},
+  timestamp = {2013-02-19T11:36:05.000+0100},
+  title = {Efficient Estimation of Word Representations in Vector Space},
+  url = {http://dblp.uni-trier.de/db/journals/corr/corr1301.html#abs-1301-3781},
+  volume = {abs/1301.3781},
+  year = 2013
+}
+
+@inproceedings{doug15,
+  author    = {Doug Downey and
+               Chandra Bhagavatula and
+               Yi Yang},
+  title     = {Efficient Methods for Inferring Large Sparse Topic Hierarchies},
+  booktitle = {ACL},
+  pages     = {774--784},
+  year      = {2015},
+}
+}
