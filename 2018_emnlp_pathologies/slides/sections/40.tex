@@ -1,0 +1,259 @@
+\begin{frame}{Mitigating Pathologies by Entropy Regularization}
+\begin{itemize}
+\item Ideally, model should say ``I don't know''.
+\item Uniform distribution over classes.
+\pause
+\item Maximize the output entropy on \textbf{reduced examples}:  
+\begin{equation}
+\sum_{(\mb{x}, y)}\log(f(y \g \mb{x})) \
++ \lambda\sum_{\tilde{\mb{x}}\in \tilde{\mathcal{X}}}
+\mathbb{H}\left(f(y \g \tilde{\mb{x}})\right) \nonumber
+\end{equation}
+where $\tilde{\mathcal{X}}$ is the set of reduced training examples.
+\item Fine-tune models with both MLE and entropy regularization.
+\end{itemize}
+\end{frame}
+
+\begin{frame}[c]
+\begin{figure}
+\small
+\tikz\node[fill=white!90!colorsquad,inner sep=1pt,rounded corners=0.3cm]{
+\begin{tabular}{lp{0.7\columnwidth}}
+Context & In 1899, John Jacob Astor IV invested \$100,000 for Tesla to further
+develop and produce a new lighting system. Instead, Tesla used the
+money to fund his \mybox{coloranswer}{Colorado Springs experiments}. \\
+Original & What did Tesla spend Astor's money on ? \\
+\textbf{Before} & \textbf{did} \\
+\textbf{After} & \textbf{spend Astor money on ?} \\
+Confidence & 0.78 $\to$ 0.91 $\to$ 0.52 \\
+\end{tabular}
+}; % end of tikz
+\pause
+\tikz\node[fill=white!80!colorvqa,inner sep=1pt,rounded corners=0.3cm]{
+\begin{tabular}{lp{0.5\columnwidth}p{0.17\columnwidth}}
+Original & What color is the flower ? 
+& \multirow{4}{*}{\includegraphics[height=2cm]{vqa_example}}\\ 
+Answer & yellow \\
+\textbf{Before} & \textbf{flower ?} \\
+\textbf{After} & \textbf{What color is flower ?} \\
+Confidence & 0.847 $\to$ 0.918 $\to$ 0.745 \\
+\end{tabular}
+}; % end of tikz
+\pause
+\tikz\node[fill=white!90!colorsnli,inner sep=1pt,rounded corners=0.3cm]{
+\begin{tabular}{lp{0.7\columnwidth}}
+Premise & Well dressed man and woman dancing in the street \\
+Original & Two man is dancing on the street \\
+Answer & Contradiction \\
+\textbf{Before} & \textbf{dancing} \\
+\textbf{After} & \textbf{two man dancing} \\
+Confidence & 0.977 $\to$ 0.706 $\to$ 0.717 \\
+\end{tabular}
+}; % end of tikz
+\end{figure}
+\end{frame}
+
+% \begin{frame}
+% \begin{tabular}{lp{0.7\columnwidth}}
+% \textbf{\squad} & \\
+% Context & In 1899, John Jacob Astor IV invested \$100,000 for Tesla to further
+% develop and produce a new lighting system. Instead, Tesla used the
+% money to fund his \mybox{coloranswer}{Colorado Springs experiments}. \\
+% Original & What did Tesla spend Astor's money on ? \\
+% Answer & Colorado Springs experiments \\
+% \textbf{Before} & \textbf{did} \\
+% \textbf{After} & \textbf{spend Astor money on ?} \\
+% Confidence & 0.78 $\to$ 0.91 $\to$ 0.52 \\
+% \end{tabular}
+% \end{frame}
+% 
+% \begin{frame}{}
+% \begin{figure}
+% \tikz\node[fill=white!80!colorvqa,inner sep=1pt,rounded corners=0.3cm]{
+% \begin{tabular}{lp{0.7\columnwidth}}
+% \textbf{\vqa} & \\
+% & \includegraphics[height=1in]{vqa_example} \\
+% Original & What color is the flower ? \\
+% Answer & yellow \\
+% \textbf{Before} & \textbf{flower ?} \\
+% \textbf{After} & \textbf{What color is flower ?} \\
+% Confidence & 0.847 $\to$ 0.918 $\to$ 0.745 \\
+% \end{tabular}
+% }; % end of tikz
+% \end{figure}
+% 
+% \pause
+% 
+% \begin{figure}
+% \small
+% \tikz\node[fill=white!90!colorsnli,inner sep=1pt,rounded corners=0.3cm]{
+% \begin{tabular}{lp{0.7\columnwidth}}
+% \textbf{\snli} & \\
+% Premise & Well dressed man and woman dancing in the street \\
+% Original & Two man is dancing on the street \\
+% Answer & Contradiction \\
+% \textbf{Before} & \textbf{dancing} \\
+% \textbf{After} & \textbf{two man dancing} \\
+% Confidence & 0.977 $\to$ 0.706 $\to$ 0.717 \\
+% \end{tabular}
+% }; % end of tikz
+% \end{figure}
+% \end{frame}
+
+% \begin{frame}{}
+% \begin{table}[t]
+% \centering
+% \begin{tabular}{lcccc}
+% & \multicolumn{2}{c}{Accuracy} & \multicolumn{2}{c}{Reduced length} \\
+% \cmidrule(l){2-3} \cmidrule(l){4-5}
+% & Before & After & Before & After \\\midrule
+% \squad & 77.41 & 78.03 & 2.27 & 4.97 \\
+% \snli  & 85.71 & 85.72 & 1.50 & 2.20 \\
+% \vqa   & 61.61 & 61.54 & 2.30 & 2.87
+% \end{tabular}
+% \end{table}
+% \end{frame}
+
+% \begin{frame}{}
+% \begin{table}[t]
+% \centering
+% \resizebox{\linewidth}{!}{\begin{tabular}{lcccc}
+% & \multicolumn{2}{c}{Accuracy} & \multicolumn{2}{c}{vs.\ Random} \\
+% \cmidrule(l){2-3} \cmidrule(l){4-5}
+% & \multicolumn{1}{l}{Before} & \multicolumn{1}{l}{After} & \multicolumn{1}{l}{Before} & \multicolumn{1}{l}{After} \\\midrule
+% \squad  & 31.72 & 51.61 & 53.70 & 62.75 \\
+% \snli-E & 27.66 & 32.37 & 42.31 & 50.62 \\
+% \snli-N & 52.66 & 50.50 & 50.64 & 58.94 \\
+% \snli-C & 60.60 & 63.90 & 49.87 & 56.92 \\
+% \vqa    & 40.60 & 51.85 & 61.60 & 61.88 \\
+% \end{tabular}}
+% \end{table}
+% \end{frame}
+
+\begin{frame}{Input Reduction After Regularization}
+\begin{center}
+\begin{minipage}{.5\columnwidth}
+\begin{table}[t]
+\centering
+\begin{tabular}{lcc}
+& \multicolumn{2}{c}{Accuracy} \\
+\cmidrule(l){2-3}
+& Before & After \\\midrule
+\squad   & 77.41 & 78.03\\
+\snli    & 85.71 & 85.72\\
+\vqa     & 61.61 & 61.54  
+\end{tabular}
+\end{table}
+\end{minipage}%
+\pause
+\begin{minipage}{.3\columnwidth}
+\begin{table}[t]
+\centering
+\begin{tabular}{lc}
+\multicolumn{2}{c}{Reduced Lengths} \\
+\cmidrule(l){1-2}
+Before & After \\\midrule
+2.27 & 4.97 \\
+1.50 & 2.20 \\
+2.30 & 2.87
+\end{tabular}
+\end{table}
+\end{minipage}
+\end{center}
+\pause
+\begin{itemize}
+\item Regularization does not hurt normal accuracy.
+\pause
+\item Input reduction leads to longer examples after regularization.
+\pause
+%\item \textbf{But are they more meaningful?}
+\item Human studies show examples are more meaningful.
+\end{itemize}
+\end{frame}
+
+% \begin{frame}{Reduced Examples Become More Meaningful}
+% \begin{center}
+% \begin{minipage}{0.5\columnwidth}
+% \begin{table}[t]
+% \begin{tabular}{lcc}
+% & \multicolumn{2}{c}{Accuracy} \\
+% \cmidrule(l){2-3}
+% & \multicolumn{1}{l}{Before} & \multicolumn{1}{l}{After} \\\midrule
+% \squad  & 31.72 & 51.61 \\
+% \snli-E & 27.66 & 32.37 \\
+% \snli-N & 52.66 & 50.50 \\
+% \snli-C & 60.60 & 63.90 \\
+% \vqa    & 40.60 & 51.85 \\
+% \end{tabular}
+% \end{table}
+% \end{minipage}%
+% \pause
+% \begin{minipage}{0.2\columnwidth}
+% \begin{table}[t]
+% \begin{tabular}{cc}
+% \multicolumn{2}{c}{vs.\ Random} \\
+% \cmidrule(l){1-2}
+% \multicolumn{1}{l}{Before} & \multicolumn{1}{l}{After} \\\midrule
+% 53.70 & 62.75 \\ 
+% 42.31 & 50.62 \\ 
+% 50.64 & 58.94 \\ 
+% 49.87 & 56.92 \\ 
+% 61.60 & 61.88 \\ 
+% \end{tabular}
+% \end{table}
+% \end{minipage}
+% \end{center}
+% \begin{itemize}
+% \item Input reduction leads to more meaningful examples after regularization.
+% \item Entropy regularization helps mitigate the pathology.
+% \end{itemize}
+% \end{frame}
+
+\begin{frame}{Summary}
+\begin{itemize}
+\item Neural models are overconfident $\to$ interpretation is difficult.
+\SubItem{Poor uncertainty estimates from MLE training.}
+\SubItem{Entropy regularization on reduced examples helps mitigate.}
+\pause
+\item Gradient interpretations assume linear model (bag-of-words).
+\SubItem {Neglects curvature (Hessian) and higher-order terms.}
+\end{itemize}      
+\end{frame}
+
+\begin{frame}{Reduced Examples Become More Meaningful}
+\begin{center}
+\begin{minipage}{0.5\columnwidth}
+\begin{table}[t]
+\begin{tabular}{lcc}
+& \multicolumn{2}{c}{Accuracy} \\
+\cmidrule(l){2-3}
+& \multicolumn{1}{l}{Before} & \multicolumn{1}{l}{After} \\\midrule
+\squad  & 31.72 & 51.61 \\
+\snli-E & 27.66 & 32.37 \\
+\snli-N & 52.66 & 50.50 \\
+\snli-C & 60.60 & 63.90 \\
+\vqa    & 40.60 & 51.85 \\
+\end{tabular}
+\end{table}
+\end{minipage}%
+\pause
+\begin{minipage}{0.2\columnwidth}
+\begin{table}[t]
+\begin{tabular}{cc}
+\multicolumn{2}{c}{vs.\ Random} \\
+\cmidrule(l){1-2}
+\multicolumn{1}{l}{Before} & \multicolumn{1}{l}{After} \\\midrule
+53.70 & 62.75 \\ 
+42.31 & 50.62 \\ 
+50.64 & 58.94 \\ 
+49.87 & 56.92 \\ 
+61.60 & 61.88 \\ 
+\end{tabular}
+\end{table}
+\end{minipage}
+\end{center}
+\begin{itemize}
+\item Input reduction leads to more meaningful examples after regularization.
+\item Entropy regularization helps mitigate the pathology.
+\end{itemize}
+\end{frame}

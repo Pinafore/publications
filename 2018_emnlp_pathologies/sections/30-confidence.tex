@@ -1,0 +1,145 @@
+\section{Making Sense of Reduced Inputs}
+\label{sec:confidence}
+
+Having established the incongruity of our definition of importance
+\textit{vis-\`a-vis}
+human judgements, we now investigate possible explanations for these results.
+We explain why model confidence can empower methods such as \loo{} to
+generate reasonable interpretations but also lead to
+pathologies under input reduction. We attribute these results to two
+issues of neural models.
+
+\subsection{Model Overconfidence}
+\label{sec:overconfidence}
+
+Neural models are overconfident in their
+predictions~\cite{guo2017calibration}.  One explanation for
+overconfidence is overfitting: the model overfits the negative
+log-likelihood loss by learning to output low-entropy distributions
+over classes.  Neural models are also overconfident on examples
+outside the training data distribution.  As
+\citet{goodfellow2014explaining} observe for image classification,
+samples from pure noise can sometimes trigger highly confident
+predictions. These so-called \emph{rubbish examples} are degenerate
+inputs that a human would trivially classify as not belonging to any
+class but for which the model predicts with high confidence.
+\citet{goodfellow2014explaining} argue that the rubbish examples exist
+for the same reason that adversarial examples do: the surprising
+linear nature of neural models. In short, the confidence of a neural
+model is not a robust estimate of its prediction uncertainty.
+
+Our reduced inputs satisfy the definition of rubbish examples: humans have a
+hard time making predictions based on the reduced inputs
+(Table~\ref{table:human_results}), but models make predictions with high
+confidence (Figure~\ref{fig:confidence_density}). Starting from a valid example,
+input reduction transforms it into a rubbish example.
+
+
+\begin{figure}[t]
+\scriptsize
+\tikz\node[fill=white!90!colorsquad,inner sep=1pt,rounded corners=0.3cm]{
+\begin{tabular}{p{.95\columnwidth}}
+\textbf{\squad{}}\\
+Context: The Panthers used the San Jose State practice facility and stayed at the San
+Jose Marriott. The Broncos practiced at
+\mybox{coloranswer}{Stanford University}
+and stayed at the Santa Clara Marriott.\\\\
+Question:\\
+(0.90, 0.89) Where did the \underline{Broncos} practice for the Super Bowl ? \\
+(0.92, 0.88) Where did \underline{the} practice for the Super Bowl ? \\
+(0.91, 0.88) Where did practice \underline{for} the Super Bowl ? \\
+(0.92, 0.89) Where did practice the Super \underline{Bowl} ? \\
+(0.94, 0.90) Where did practice \underline{the} Super ? \\
+(0.93, 0.90) \underline{Where} did practice Super ?\\
+(0.40, 0.50) did practice Super ? \\
+\end{tabular}
+}; 
+\caption{A reduction path for a \squad{} example. The model
+    prediction is always correct and its confidence stays high (shown
+    on the left in parentheses) throughout the reduction.  Each line
+    shows the input at that step with an \underline{underline}
+    indicating the word to remove next. The question becomes
+    unanswerable immediately after ``Broncos'' is removed in the first
+    step. However, in the context of the original question,
+    ``Broncos'' the input gradient considers it the least important word.}
+\label{fig:path}
+\end{figure}
+
+
+The nonsensical, almost random results are best explained by looking at a
+complete reduction path (Figure~\ref{fig:path}). In this example, the transition
+from valid to rubbish happens immediately after the first step: following the removal of
+``Broncos'', humans can no longer determine which team the question
+is asking about, but model confidence remains high.  Not being able to lower its
+confidence on rubbish examples---as it is not trained to do so---the model
+neglects ``Broncos'' and eventually the process generates nonsensical
+results.
+
+In this example, the \loo{} method will not highlight ``Broncos''. However, this
+is not a failure of the interpretation method but of the model itself.  The model
+assigns a low importance to ``Broncos'' in the first step,
+causing it to be removed---\loo{} would be able to expose this
+by not highlighting ``Broncos''.  However, in cases where a similar issue
+only appears after a few unimportant words are removed,
+\loo{} would fail to expose the unreasonable model behavior.
+
+Input reduction can expose deeper issues of model overconfidence and
+can stress test a model's uncertainty estimation and interpretability.
+
+\begin{figure}[t]
+\scriptsize
+\tikz\node[fill=white!90!colorsquad,inner sep=1pt,rounded corners=0.3cm]{
+\begin{tabular}{p{.95\columnwidth}}
+\textbf{\squad{}} \\
+Context: QuickBooks sponsored a ``Small Business Big Game'' contest, in
+which Death Wish Coffee had a 30-second commercial aired free of
+charge courtesy of QuickBooks. \mybox{coloranswer}{Death Wish
+Coffee} beat out nine other contenders from across the United
+States for the free advertisement.\\\\
+Question:\\
+\input{2018_emnlp_pathologies/sections/figure_4}
+\end{tabular}
+}; 
+\caption{Heatmap generated with \loo{} shifts drastically despite only
+    removing the least important word (\underline{underlined}) at each step.
+    For instance, ``advertisement'', is the most important word in step two but
+    becomes the least important in step three.}
+\label{fig:heatmap}
+\end{figure}
+
+\subsection{Second-order Sensitivity}
+\label{sec:secondorder}
+
+Thus far, we have seen that a neural model's output changes wildly
+with small changes in its input. We call this \emph{first-order}
+sensitivity, because interpretation based on input gradient is a
+first-order Taylor expansion of the model near the
+input~\cite{simonyan2013deep}.  However, the \emph{interpretation}
+(e.g., which words are important) also shifts drastically with small
+input changes (Figure~\ref{fig:heatmap}). We call this
+\emph{second-order} sensitivity.
+
+The shifting heatmap suggests a mismatch between the model's first- and
+second-order sensitivities. The heatmap shifts when, with respect to the removed
+word, the model has low first-order sensitivity but high second-order
+sensitivity.
+
+Similar issues complicate comparable interpretation methods for image
+classification models. For example, \citet{ghorbani2017interpretation}
+modify image inputs so the highlighted features in the interpretation
+change while maintaining the same prediction. To achieve this, they
+iteratively modify the input to maximize changes in the distribution
+of feature importance.  In contrast, our shifting heatmap occurs by
+only removing the \emph{least} impactful features without a targeted
+optimization.  They speculate that the steepest gradient direction for
+the first- and second-order sensitivity values are generally
+orthogonal. Loosely speaking, the shifting heatmap suggests that the
+direction of the smallest gradient value can sometimes align with very
+steep changes in second-order sensitivity.
+
+When explaining individual model predictions, the heatmap
+suggests that the prediction is made based on a weighted combination of words, as
+in a linear model, which is not true unless the model is indeed taking a
+weighted sum such as in a \abr{dan}~\cite{iyyer2015deep}. When the model
+composes representations by a non-linear combination of words, a linear
+interpretation oblivious to second-order sensitivity can be misleading.

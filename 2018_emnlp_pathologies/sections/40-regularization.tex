@@ -1,0 +1,148 @@
+\section{Mitigating Model Pathologies}
+\label{sec:entropy_training}
+
+The previous section explains the observed pathologies from the perspective of
+overconfidence: models are too certain on rubbish examples when they should not make
+\emph{any} prediction. Human experiments (Section~\ref{sec:human})
+confirm that reduced examples fit the definition of rubbish examples. Hence, a
+natural way to mitigate pathologies is maximizing model uncertainty on the
+reduced examples.
+
+\subsection{Regularization on Reduced Inputs}
+
+To maximize model uncertainty on reduced examples, we use the entropy of the output
+distribution as an objective.  Given a model~$f$ trained on a
+dataset~$(\mathcal{X}, \mathcal{Y})$, we generate reduced examples
+using input reduction
+for all training examples $\mathcal{X}$. Beam search often yields multiple
+reduced versions with the same minimum length for each input $\mb{x}$, and we
+collect all of these versions together to form $\tilde{\mathcal{X}}$ as the
+``negative'' example set.
+
+Let $\mathbb{H}\left(\cdot\right)$ denote the entropy and $f(y \g \mb{x})$
+the probability of the model predicting $y$ given $\mb{x}$.
+We fine-tune a model to
+maximize log-likelihood on regular examples \emph{and}
+entropy on reduced examples: \begin{equation}
+\sum_{(\mb{x}, y)}\log(f(y \g \mb{x})) \
++ \lambda\sum_{\tilde{\mb{x}}\in \tilde{\mathcal{X}}}
+\mathbb{H}\left(f(y \g \tilde{\mb{x}})\right), \label{regularizer}
+\end{equation}
+where hyperparameter $\lambda$ trades-off between the two
+terms. Similar entropy regularization is used by
+\citet{pereyra2017regularizing}, but not in combination with input
+reduction; their entropy term is calculated on regular examples rather
+than reduced examples.
+
+\subsection{Regularization Mitigates Pathologies}
+
+On regular examples, entropy regularization does no harm to model accuracy, with
+a slight increase for \squad{} (\emph{Accuracy} in
+Table~\ref{table:tuned_machine}).
+
+After entropy regularization, input reduction produces more reasonable
+reduced inputs (Figure~\ref{fig:tuned_examples}).
+In the \squad{} example from Figure~\ref{fig:intro_example}, the reduced
+question changed from ``did'' to ``spend Astor money on ?'' after fine-tuning.
+The average length of reduced examples also increases across all tasks
+(\emph{Reduced length} in Table~\ref{table:tuned_machine}).
+To verify that model overconfidence is indeed mitigated---that the reduced
+examples are less ``rubbish'' compared to before fine-tuning---we repeat the
+human experiments from Section~\ref{sec:human}.
+
+Human accuracy increases across all three tasks (Table~\ref{table:tuned_human}).
+We also repeat the \emph{vs.\ Random} experiment: we re-generate the random
+examples to match the lengths of the new reduced examples from input
+reduction, and find humans now prefer the reduced examples to random ones.
+The increase in both human accuracy and preference suggests that the reduced
+examples are more reasonable; model pathologies have been mitigated.
+
+This is promising, but do we need input reduction to reduce
+overconfidence?  To provide a baseline, we fine-tune
+models using randomly reduced inputs (with the same lengths as input
+reduction). This baseline improves neither model accuracy on nor
+interpretability (i.e., the reduced examples are just as short).
+Input reduction provides negative examples that
+curb overconfidence.
+
+\begin{figure}[t]
+\small
+\tikz\node[fill=white!90!colorsquad,inner sep=1pt,rounded corners=0.3cm]{
+\begin{tabular}{lp{0.7\columnwidth}}
+\textbf{\squad} & \\
+Context & In 1899, John Jacob Astor IV invested \$100,000 for Tesla to further
+develop and produce a new lighting system. Instead, Tesla used the
+money to fund his \mybox{coloranswer}{Colorado Springs experiments}. \\
+Original & What did Tesla spend Astor's money on ? \\
+Answer & Colorado Springs experiments \\
+Before & did \\
+After & spend Astor money on ? \\
+Confidence & 0.78 $\to$ 0.91 $\to$ 0.52 \\
+\end{tabular}
+}; 
+
+\tikz\node[fill=white!90!colorsnli,inner sep=1pt,rounded corners=0.3cm]{
+\begin{tabular}{lp{0.7\columnwidth}}
+\textbf{\snli} & \\
+Premise & Well dressed man and woman dancing in the street \\
+Original & Two man is dancing on the street \\
+Answer & Contradiction \\
+Before & dancing \\
+After & two man dancing \\
+Confidence & 0.977 $\to$ 0.706 $\to$ 0.717 \\
+\end{tabular}
+}; 
+
+\tikz\node[fill=white!90!colorvqa,inner sep=1pt,rounded corners=0.3cm]{
+\begin{tabular}{lp{0.7\columnwidth}}
+\textbf{\vqa} & \\
+Original & What color is the flower ? \\
+Answer & yellow \\
+Before & flower ? \\
+After & What color is flower ? \\
+Confidence & 0.847 $\to$ 0.918 $\to$ 0.745 \\
+\end{tabular}
+}; 
+\caption{\squad{} example from Figure~\ref{fig:intro_example}, \snli{} and
+    \vqa{} (image omitted) examples from Figure~\ref{fig:reduced_examples}. We
+    apply input reduction to models both \emph{Before} and \emph{After} entropy
+    regularization. The models still predict the same \emph{Answer}, but the
+    reduced examples after fine-tuning appear more reasonable to humans.}
+\label{fig:tuned_examples}
+\end{figure}
+
+\begin{table}[t]
+\centering
+\begin{tabular}{lcccc}
+& \multicolumn{2}{c}{Accuracy} & \multicolumn{2}{c}{Reduced length} \\
+\cmidrule(l){2-3} \cmidrule(l){4-5}
+& Before & After & Before & After \\\midrule
+\squad & 77.41 & 78.03 & 2.27 & 4.97 \\
+\snli  & 85.71 & 85.72 & 1.50 & 2.20 \\
+\vqa   & 61.61 & 61.54 & 2.30 & 2.87
+\end{tabular}
+\caption{Model \emph{Accuracy} on regular validation
+    examples remains largely unchanged after fine-tuning. However, the length of the reduced
+    examples (\emph{Reduced length}) increases on all three tasks, making them
+    less likely to appear nonsensical to humans.}
+\label{table:tuned_machine}
+\end{table}
+
+\begin{table}[t]
+\centering
+\resizebox{\linewidth}{!}{\begin{tabular}{lcccc}
+& \multicolumn{2}{c}{Accuracy} & \multicolumn{2}{c}{vs.\ Random} \\
+\cmidrule(l){2-3} \cmidrule(l){4-5}
+& \multicolumn{1}{l}{Before} & \multicolumn{1}{l}{After} & \multicolumn{1}{l}{Before} & \multicolumn{1}{l}{After} \\\midrule
+\squad  & 31.72 & 51.61 & 53.70 & 62.75 \\
+\snli-E & 27.66 & 32.37 & 42.31 & 50.62 \\
+\snli-N & 52.66 & 50.50 & 50.64 & 58.94 \\
+\snli-C & 60.60 & 63.90 & 49.87 & 56.92 \\
+\vqa    & 40.60 & 51.85 & 61.60 & 61.88 \\
+\end{tabular}}
+\caption{Human \emph{Accuracy} increases after fine-tuning the
+    models. Humans also prefer gradient-based reduced examples over
+    randomly reduced ones, indicating that the reduced examples are more
+    meaningful to humans after regularization.}
+\label{table:tuned_human}
+\end{table}

@@ -1,0 +1,139 @@
+\begin{frame}
+\begin{itemize}
+\item Neural networks make strong text classifiers.\pause
+\item But, are they doing the ``right'' things?
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Highlighting Important Words}
+\begin{figure}
+\centering
+% \tikz\node[fill=white!96!colorsquad,inner sep=1pt,rounded corners=0.3cm]{
+\begin{tabular}{lp{0.7\columnwidth}}
+\textbf{\squad{}} \\
+Context & In 1899, John Jacob Astor IV invested \$100,000 for Tesla to further
+develop and produce a new lighting system. Instead, Tesla used the money to fund
+his \mybox{coloranswer}{Colorado Springs experiments}. \\\\
+Question & \mybox{color0}{\strut{What}} \mybox{color0}{\strut{did}}
+    \mybox{color0}{\strut{Tesla}} \mybox{color0}{\strut{spend}}
+    \mybox{color0}{\strut{Astor's}} \mybox{color0}{\strut{money}}
+    \mybox{color0}{\strut{on}} \mybox{color0}{\strut{?}} \\
+Highlights & \mybox{color2}{\strut{What}} \mybox{color1}{\strut{did}}
+    \mybox{color2}{\strut{Tesla}} \mybox{color1}{\strut{spend}}
+    \mybox{color1}{\strut{Astor's}} \mybox{color5}{\strut{money}}
+    \mybox{color1}{\strut{on}} \mybox{color1}{\strut{?}}
+\end{tabular}
+% }; % end of tikz
+\end{figure}
+\end{frame}
+
+\begin{frame}{Importance of Words}
+
+Leave-one-out: remove a word and measure the decrease in
+confidence~\citep{li2016visualizing}
+
+\begin{figure}
+\centering
+\small
+\begin{tabular}{p{0.6\columnwidth}cc}
+Question & Confidence & Highlight \\\midrule
+\mybox{color0}{\strut{What}} \mybox{color0}{\strut{did}}
+\mybox{color0}{\strut{Tesla}} \mybox{color0}{\strut{spend}}
+\mybox{color0}{\strut{Astor's}} \mybox{color0}{\strut{money}}
+\mybox{color0}{\strut{on}} \mybox{color0}{\strut{?}} & \textbf{0.78} 
+\pause\\
+\mybox{color0}{\strut{\sout{What}}} \mybox{color0}{\strut{did}}
+\mybox{color0}{\strut{Tesla}} \mybox{color0}{\strut{spend}}
+\mybox{color0}{\strut{Astor's}} \mybox{color0}{\strut{money}}
+\mybox{color0}{\strut{on}} \mybox{color0}{\strut{?}} & 0.67 &
+\mybox{color2}{\strut{What}} 
+\pause\\
+\mybox{color0}{\strut{What}} \mybox{color0}{\strut{\sout{did}}}
+\mybox{color0}{\strut{Tesla}} \mybox{color0}{\strut{spend}}
+\mybox{color0}{\strut{Astor's}} \mybox{color0}{\strut{money}}
+\mybox{color0}{\strut{on}} \mybox{color0}{\strut{?}} & 0.72 &
+\mybox{color1}{\strut{did}} 
+\pause\\
+\mybox{color0}{\strut{What}} \mybox{color0}{\strut{did}}
+\mybox{color0}{\strut{\sout{Tesla}}} \mybox{color0}{\strut{spend}}
+\mybox{color0}{\strut{Astor's}} \mybox{color0}{\strut{money}}
+\mybox{color0}{\strut{on}} \mybox{color0}{\strut{?}} & 0.66 &
+\mybox{color2}{\strut{Tesla}} \\
+
+\mybox{color0}{\strut{What}} \mybox{color0}{\strut{did}}
+\mybox{color0}{\strut{Tesla}} \mybox{color0}{\strut{\sout{spend}}}
+\mybox{color0}{\strut{Astor's}} \mybox{color0}{\strut{money}}
+\mybox{color0}{\strut{on}} \mybox{color0}{\strut{?}} & 0.74 &
+\mybox{color1}{\strut{spend}} \\
+
+\mybox{color0}{\strut{What}} \mybox{color0}{\strut{did}}
+\mybox{color0}{\strut{Tesla}} \mybox{color0}{\strut{spend}}
+\mybox{color0}{\strut{\sout{Astor's}}} \mybox{color0}{money}
+\mybox{color0}{\strut{on}} \mybox{color0}{\strut{?}} & 0.76 &
+\mybox{color1}{\strut{Astor's}} \\
+
+\mybox{color0}{\strut{What}} \mybox{color0}{\strut{did}}
+\mybox{color0}{\strut{Tesla}} \mybox{color0}{\strut{spend}}
+\mybox{color0}{\strut{Astor's}} \mybox{color0}{\strut{\sout{money}}}
+\mybox{color0}{\strut{on}} \mybox{color0}{\strut{?}} & \textbf{0.48} &
+\mybox{color5}{\strut{money}} \\
+
+\mybox{color0}{\strut{What}} \mybox{color0}{\strut{did}}
+\mybox{color0}{\strut{Tesla}} \mybox{color0}{\strut{spend}}
+\mybox{color0}{\strut{Astor's}} \mybox{color0}{\strut{money}}
+\mybox{color0}{\strut{\sout{on}}} \mybox{color0}{\strut{?}} & 0.72 &
+\mybox{color1}{\strut{on}} \\
+
+\mybox{color0}{\strut{What}} \mybox{color0}{\strut{did}}
+\mybox{color0}{\strut{Tesla}} \mybox{color0}{\strut{spend}}
+\mybox{color0}{\strut{Astor's}} \mybox{color0}{\strut{money}}
+\mybox{color0}{\strut{on}} \mybox{color0}{\strut{\sout{?}}} & 0.73 &
+\mybox{color1}{\strut{?}} \\
+\end{tabular}
+\end{figure}
+\pause
+\vspace{0.2cm}
+\begin{center}
+\mybox{color2}{\strut{What}} \mybox{color1}{\strut{did}}
+\mybox{color2}{\strut{Tesla}} \mybox{color1}{\strut{spend}}
+\mybox{color1}{\strut{Astor's}} \mybox{color5}{\strut{money}}
+\mybox{color1}{\strut{on}} \mybox{color1}{\strut{?}}
+\end{center}
+\end{frame}
+
+\begin{frame}{Gradient-based Approximation}
+Approximate a word's removal using the input gradient~\citep{simonyan2013deep}:
+\begin{equation*}
+\frac{\partial f}{\partial w_i} \
+% =\frac{\partial f}{\partial \bm{v}_i}\frac{\partial \bm{v}_i}{\partial w_i} \ 
+% =I(w_i \mid \mb{x}, y)
+=\frac{\partial f}{\partial \bm{v}_i} \cdot \bm{v}_i
+\end{equation*}
+Computes importance for all words in one backward pass.
+\end{frame}
+
+% \begin{frame}{Feature Importance Estimates}
+% % an intelligent fiction about learning through cultural clash. \\
+% % an \mybox{l10_color1}{intelligent} fiction about learning through cultural clash.
+% \begin{itemize}
+% 	\item Assign each feature an importance value
+% 	\item Visualize importance values in saliency map
+% 	
+% 	\pause
+% 	\vspace{0.3cm} Schweiger is talented and terribly charismatic. \\
+% 	Schweiger is \mybox{l10_color1}{talented} and terribly \mybox{l10_color1}{charismatic}.
+% 	\pause
+% 
+% 	\item Leave-one-out: remove a word and measure the confidence decrease~\cite{li2016visualizing}:
+% 	\begin{equation*}
+%     	I(w_i \mid \mb{x}, y) = f(y\mid\mb{x}) - f(y\mid\mb{x}_{-i})
+% 	\end{equation*}	
+% 	\pause
+% 	\item Gradient: approximate a word's removal using the input gradient~\cite{simonyan2013deep}:
+% 	\begin{equation*}
+% 	    % \frac{\partial f}{\partial w_i} \
+% 	    % = \frac{\partial f}{\partial \bm{v}_i}\frac{\partial \bm{v}_i}{\partial w_i} \ 
+% 	    I(w_i \mid \mb{x}, y) = \frac{\partial f}{\partial \bm{v}_i} \cdot \bm{v}_i
+% 	\end{equation*}
+% \end{itemize}		
+% \end{frame}

@@ -1,0 +1,376 @@
+\begin{frame}{Input Reduction }
+What if we remove the unimportant words?
+\begin{figure}
+\centering
+\small
+\begin{tabular}{p{0.6\columnwidth}c}
+Question & Confidence \\\midrule
+\mybox{color2}{\strut{What}} \mybox{color1}{\strut{did}}
+\mybox{color2}{\strut{Tesla}} \mybox{color1}{\strut{\sout{spend}}}
+\mybox{color1}{\strut{Astor's}} \mybox{color5}{\strut{money}}
+\mybox{color1}{\strut{on}} \mybox{color1}{\strut{?}} & 0.78 \pause\\
+
+% remove spend
+\mybox{color1}{\strut{What}} \mybox{color1}{\strut{did}}
+\mybox{color2}{\strut{Tesla}} \mybox{color0}{\strut{\textcolor{white}{spend}}}
+\mybox{color1}{\strut{Astor's}} \mybox{color0}{\strut{\sout{money}}}
+\mybox{color1}{\strut{on}} \mybox{color5}{\strut{?}} & 0.74 \pause\\
+
+% remove money
+\mybox{color1}{\strut{What}} \mybox{color1}{\strut{did}}
+\mybox{color3}{\strut{Tesla}} \mybox{color0}{\strut{\textcolor{white}{spend}}}
+\mybox{color1}{\strut{Astor's}} \mybox{color0}{\strut{\textcolor{white}{money}}}
+\mybox{color1}{\strut{\sout{on}}} \mybox{color5}{\strut{?}} & 0.76 \pause\\
+
+% remove on
+\mybox{color1}{\strut{\sout{What}}} \mybox{color1}{\strut{did}}
+\mybox{color3}{\strut{Tesla}} \mybox{color0}{\strut{\textcolor{white}{spend}}}
+\mybox{color1}{\strut{Astor's}} \mybox{color0}{\strut{\textcolor{white}{money}}}
+\mybox{color0}{\strut{\textcolor{white}{on}}} \mybox{color5}{\strut{?}} & 0.80 \\
+
+% remove What
+\mybox{color0}{\strut{\textcolor{white}{What}}} \mybox{color1}{\strut{did}}
+\mybox{color2}{\strut{Tesla}} \mybox{color0}{\strut{\textcolor{white}{spend}}}
+\mybox{color1}{\strut{Astor's}} \mybox{color0}{\textcolor{white}{money}}
+\mybox{color0}{\strut{\textcolor{white}{on}}} \mybox{color0}{\strut{\sout{?}}} & 0.87 \\
+
+% remove ?
+\mybox{color0}{\strut{\textcolor{white}{What}}} \mybox{color1}{\strut{did}}
+\mybox{color1}{\strut{\sout{Tesla}}} \mybox{color0}{\strut{\textcolor{white}{spend}}}
+\mybox{color1}{\strut{Astor's}} \mybox{color0}{\textcolor{white}{money}}
+\mybox{color0}{\strut{\textcolor{white}{on}}}
+\mybox{color0}{\strut{\textcolor{white}{?}}} & 0.82 \\
+
+% remove Tesla
+\mybox{color0}{\strut{\textcolor{white}{What}}} \mybox{color1}{\strut{did}}
+\mybox{color0}{\strut{\textcolor{white}{Tesla}}} \mybox{color0}{\strut{\textcolor{white}{spend}}}
+\mybox{color1}{\strut{\sout{Astor's}}} \mybox{color0}{\strut{\textcolor{white}{money}}}
+\mybox{color0}{\strut{\textcolor{white}{on}}} \mybox{color0}{\strut{\textcolor{white}{?}}} & 0.89 \\
+
+% remove Astor's
+\mybox{color0}{\strut{\textcolor{white}{What}}} \mybox{color1}{\strut{did}}
+\mybox{color0}{\strut{\textcolor{white}{Tesla}}} \mybox{color0}{\strut{\textcolor{white}{spend}}}
+\mybox{color0}{\strut{\textcolor{white}{Astor's}}} \mybox{color0}{\strut{\textcolor{white}{money}}}
+\mybox{color0}{\strut{\textcolor{white}{on}}}
+\mybox{color0}{\strut{\textcolor{white}{?}}} & 0.91 \\
+\end{tabular}
+\end{figure}
+\end{frame}
+
+\begin{frame}{Input Reduction }
+What if we remove the unimportant words?
+\begin{figure}
+\centering
+\small
+\begin{tabular}{p{0.6\columnwidth}c}
+Question & Confidence \\\midrule
+\mybox{color2}{\strut{What}} \mybox{color1}{\strut{did}}
+\mybox{color2}{\strut{Tesla}} \mybox{color1}{\strut{\sout{spend}}}
+\mybox{color1}{\strut{Astor's}} \mybox{color5}{\strut{money}}
+\mybox{color1}{\strut{on}} \mybox{color1}{\strut{?}} & 0.78 \\
+
+% remove spend
+\mybox{color1}{\strut{What}} \mybox{color1}{\strut{did}}
+\mybox{color2}{\strut{Tesla}} \mybox{color0}{\strut{\textcolor{white}{spend}}}
+\mybox{color1}{\strut{Astor's}} \mybox{color0}{\strut{\sout{money}}}
+\mybox{color1}{\strut{on}} \mybox{color5}{\strut{?}} & 0.74 \\
+
+% remove money
+\mybox{color1}{\strut{What}} \mybox{color1}{\strut{did}}
+\mybox{color3}{\strut{Tesla}} \mybox{color0}{\strut{\textcolor{white}{spend}}}
+\mybox{color1}{\strut{Astor's}} \mybox{color0}{\strut{\textcolor{white}{money}}}
+\mybox{color1}{\strut{\sout{on}}} \mybox{color5}{\strut{?}} & 0.76 \\
+
+% remove on
+\mybox{color1}{\strut{\sout{What}}} \mybox{color1}{\strut{did}}
+\mybox{color3}{\strut{Tesla}} \mybox{color0}{\strut{\textcolor{white}{spend}}}
+\mybox{color1}{\strut{Astor's}} \mybox{color0}{\strut{\textcolor{white}{money}}}
+\mybox{color0}{\strut{\textcolor{white}{on}}} \mybox{color5}{\strut{?}} & 0.80 \\
+
+% remove What
+\mybox{color0}{\strut{\textcolor{white}{What}}} \mybox{color1}{\strut{did}}
+\mybox{color2}{\strut{Tesla}} \mybox{color0}{\strut{\textcolor{white}{spend}}}
+\mybox{color1}{\strut{Astor's}} \mybox{color0}{\textcolor{white}{money}}
+\mybox{color0}{\strut{\textcolor{white}{on}}} \mybox{color0}{\strut{\sout{?}}} & 0.87 \\
+
+% remove ?
+\mybox{color0}{\strut{\textcolor{white}{What}}} \mybox{color1}{\strut{did}}
+\mybox{color1}{\strut{\sout{Tesla}}} \mybox{color0}{\strut{\textcolor{white}{spend}}}
+\mybox{color1}{\strut{Astor's}} \mybox{color0}{\textcolor{white}{money}}
+\mybox{color0}{\strut{\textcolor{white}{on}}}
+\mybox{color0}{\strut{\textcolor{white}{?}}} & 0.82 \\
+
+% remove Tesla
+\mybox{color0}{\strut{\textcolor{white}{What}}} \mybox{color1}{\strut{did}}
+\mybox{color0}{\strut{\textcolor{white}{Tesla}}} \mybox{color0}{\strut{\textcolor{white}{spend}}}
+\mybox{color1}{\strut{\sout{Astor's}}} \mybox{color0}{\strut{\textcolor{white}{money}}}
+\mybox{color0}{\strut{\textcolor{white}{on}}} \mybox{color0}{\strut{\textcolor{white}{?}}} & 0.89 \\
+
+% remove Astor's
+\mybox{color0}{\strut{\textcolor{white}{What}}} \mybox{color1}{\strut{did}}
+\mybox{color0}{\strut{\textcolor{white}{Tesla}}} \mybox{color0}{\strut{\textcolor{white}{spend}}}
+\mybox{color0}{\strut{\textcolor{white}{Astor's}}} \mybox{color0}{\strut{\textcolor{white}{money}}}
+\mybox{color0}{\strut{\textcolor{white}{on}}}
+\mybox{color0}{\strut{\textcolor{white}{?}}} & 0.91 \\
+\end{tabular}
+\end{figure}
+\center{\textbf{Prediction remains the same.}}
+\end{frame}
+
+
+\begin{frame}{Input Reduction }
+What if we remove the unimportant words?
+\begin{figure}
+\centering
+\small
+\begin{tabular}{p{0.6\columnwidth}c}
+Question & Confidence \\\midrule
+\mybox{color2}{\strut{What}} \mybox{color1}{\strut{did}}
+\mybox{color2}{\strut{Tesla}} \mybox{color1}{\strut{\sout{spend}}}
+\mybox{color1}{\strut{Astor's}} \mybbox{color5}{\strut{money}}
+\mybox{color1}{\strut{on}} \mybox{color1}{\strut{?}} & 0.78 \\
+
+% remove spend
+\mybox{color1}{\strut{What}} \mybox{color1}{\strut{did}}
+\mybox{color2}{\strut{Tesla}} \mybox{color0}{\strut{\textcolor{white}{spend}}}
+\mybox{color1}{\strut{Astor's}} \mybox{color0}{\strut{\sout{money}}}
+\mybox{color1}{\strut{on}} \mybox{color5}{\strut{?}} & 0.74 \\
+
+% remove money
+\mybox{color1}{\strut{What}} \mybox{color1}{\strut{did}}
+\mybox{color3}{\strut{Tesla}} \mybox{color0}{\strut{\textcolor{white}{spend}}}
+\mybox{color1}{\strut{Astor's}} \mybox{color0}{\strut{\textcolor{white}{money}}}
+\mybox{color1}{\strut{\sout{on}}} \mybox{color5}{\strut{?}} & 0.76 \\
+
+% remove on
+\mybox{color1}{\strut{\sout{What}}} \mybox{color1}{\strut{did}}
+\mybox{color3}{\strut{Tesla}} \mybox{color0}{\strut{\textcolor{white}{spend}}}
+\mybox{color1}{\strut{Astor's}} \mybox{color0}{\strut{\textcolor{white}{money}}}
+\mybox{color0}{\strut{\textcolor{white}{on}}} \mybox{color5}{\strut{?}} & 0.80 \\
+
+% remove What
+\mybox{color0}{\strut{\textcolor{white}{What}}} \mybox{color1}{\strut{did}}
+\mybox{color2}{\strut{Tesla}} \mybox{color0}{\strut{\textcolor{white}{spend}}}
+\mybox{color1}{\strut{Astor's}} \mybox{color0}{\textcolor{white}{money}}
+\mybox{color0}{\strut{\textcolor{white}{on}}} \mybox{color0}{\strut{\sout{?}}} & 0.87 \\
+
+% remove ?
+\mybox{color0}{\strut{\textcolor{white}{What}}} \mybox{color1}{\strut{did}}
+\mybox{color1}{\strut{\sout{Tesla}}} \mybox{color0}{\strut{\textcolor{white}{spend}}}
+\mybox{color1}{\strut{Astor's}} \mybox{color0}{\textcolor{white}{money}}
+\mybox{color0}{\strut{\textcolor{white}{on}}}
+\mybox{color0}{\strut{\textcolor{white}{?}}} & 0.82 \\
+
+% remove Tesla
+\mybox{color0}{\strut{\textcolor{white}{What}}} \mybox{color1}{\strut{did}}
+\mybox{color0}{\strut{\textcolor{white}{Tesla}}} \mybox{color0}{\strut{\textcolor{white}{spend}}}
+\mybox{color1}{\strut{\sout{Astor's}}} \mybox{color0}{\strut{\textcolor{white}{money}}}
+\mybox{color0}{\strut{\textcolor{white}{on}}} \mybox{color0}{\strut{\textcolor{white}{?}}} & 0.89 \\
+
+% remove Astor's
+\mybox{color0}{\strut{\textcolor{white}{What}}} \mybbox{color1}{\strut{did}}
+\mybox{color0}{\strut{\textcolor{white}{Tesla}}} \mybox{color0}{\strut{\textcolor{white}{spend}}}
+\mybox{color0}{\strut{\textcolor{white}{Astor's}}} \mybox{color0}{\strut{\textcolor{white}{money}}}
+\mybox{color0}{\strut{\textcolor{white}{on}}}
+\mybox{color0}{\strut{\textcolor{white}{?}}} & 0.91 \\
+\end{tabular}
+\end{figure}
+\center{What remains does not match what was considered important.}
+\end{frame}
+
+\begin{frame}{Input Reduction }
+What if we remove the unimportant words?
+\begin{figure}
+\centering
+\small
+\begin{tabular}{p{0.6\columnwidth}c}
+Question & Confidence \\\midrule
+\mybox{color2}{\strut{What}} \mybox{color1}{\strut{did}}
+\mybox{color2}{\strut{Tesla}} \mybox{color1}{\strut{\sout{spend}}}
+\mybox{color1}{\strut{Astor's}} \mybox{color5}{\strut{money}}
+\mybox{color1}{\strut{on}} \mybox{color1}{\strut{?}} &
+\mybbox{white}{\strut{\textbf{0.78}}} \\
+
+% remove spend
+\mybox{color1}{\strut{What}} \mybox{color1}{\strut{did}}
+\mybox{color2}{\strut{Tesla}} \mybox{color0}{\strut{\textcolor{white}{spend}}}
+\mybox{color1}{\strut{Astor's}} \mybox{color0}{\strut{\sout{money}}}
+\mybox{color1}{\strut{on}} \mybox{color5}{\strut{?}} & 0.74 \\
+
+% remove money
+\mybox{color1}{\strut{What}} \mybox{color1}{\strut{did}}
+\mybox{color3}{\strut{Tesla}} \mybox{color0}{\strut{\textcolor{white}{spend}}}
+\mybox{color1}{\strut{Astor's}} \mybox{color0}{\strut{\textcolor{white}{money}}}
+\mybox{color1}{\strut{\sout{on}}} \mybox{color5}{\strut{?}} & 0.76 \\
+
+% remove on
+\mybox{color1}{\strut{\sout{What}}} \mybox{color1}{\strut{did}}
+\mybox{color3}{\strut{Tesla}} \mybox{color0}{\strut{\textcolor{white}{spend}}}
+\mybox{color1}{\strut{Astor's}} \mybox{color0}{\strut{\textcolor{white}{money}}}
+\mybox{color0}{\strut{\textcolor{white}{on}}} \mybox{color5}{\strut{?}} & 0.80 \\
+
+% remove What
+\mybox{color0}{\strut{\textcolor{white}{What}}} \mybox{color1}{\strut{did}}
+\mybox{color2}{\strut{Tesla}} \mybox{color0}{\strut{\textcolor{white}{spend}}}
+\mybox{color1}{\strut{Astor's}} \mybox{color0}{\textcolor{white}{money}}
+\mybox{color0}{\strut{\textcolor{white}{on}}} \mybox{color0}{\strut{\sout{?}}} & 0.87 \\
+
+% remove ?
+\mybox{color0}{\strut{\textcolor{white}{What}}} \mybox{color1}{\strut{did}}
+\mybox{color1}{\strut{\sout{Tesla}}} \mybox{color0}{\strut{\textcolor{white}{spend}}}
+\mybox{color1}{\strut{Astor's}} \mybox{color0}{\textcolor{white}{money}}
+\mybox{color0}{\strut{\textcolor{white}{on}}}
+\mybox{color0}{\strut{\textcolor{white}{?}}} & 0.82 \\
+
+% remove Tesla
+\mybox{color0}{\strut{\textcolor{white}{What}}} \mybox{color1}{\strut{did}}
+\mybox{color0}{\strut{\textcolor{white}{Tesla}}} \mybox{color0}{\strut{\textcolor{white}{spend}}}
+\mybox{color1}{\strut{\sout{Astor's}}} \mybox{color0}{\strut{\textcolor{white}{money}}}
+\mybox{color0}{\strut{\textcolor{white}{on}}} \mybox{color0}{\strut{\textcolor{white}{?}}} & 0.89 \\
+
+% remove Astor's
+\mybox{color0}{\strut{\textcolor{white}{What}}} \mybox{color1}{\strut{did}}
+\mybox{color0}{\strut{\textcolor{white}{Tesla}}} \mybox{color0}{\strut{\textcolor{white}{spend}}}
+\mybox{color0}{\strut{\textcolor{white}{Astor's}}} \mybox{color0}{\strut{\textcolor{white}{money}}}
+\mybox{color0}{\strut{\textcolor{white}{on}}}
+\mybox{color0}{\strut{\textcolor{white}{?}}} &
+\mybbox{white}{\strut{\textbf{0.91}}} \\
+\end{tabular}
+\end{figure}
+\center{Model is confident when no reasonable prediction can be made.}
+\end{frame}
+
+\begin{frame}[c]
+\begin{figure}
+\small
+\tikz\node[fill=white!90!colorsquad,inner sep=1pt,rounded corners=0.3cm]{
+\begin{tabular}{lp{0.7\columnwidth}}
+\textbf{\squad{}} \\
+    Context & In 1899, John Jacob Astor IV invested \$100,000 for Tesla to further
+develop and produce a new lighting system. Instead, Tesla used the
+money to fund his \mybox{coloranswer}{Colorado Springs experiments}. \\
+Original & What did Tesla spend Astor's money on ? \\
+\textbf{Reduced} & \textbf{did}  \\
+Confidence & 0.78 $\to$ 0.91 \\
+\end{tabular}
+}; % end of tikz
+\pause
+\tikz\node[fill=white!80!colorvqa,inner sep=1pt,rounded corners=0.3cm]{
+\begin{tabular}{lp{0.5\columnwidth}p{0.17\columnwidth}}
+\textbf{\vqa} & & \multirow{4}{*}{\includegraphics[height=2cm]{vqa_example}}\\ 
+Original & What color is the flower ? \\
+Answer & yellow \\
+\textbf{Reduced} & \textbf{flower ?} \\
+Confidence & 0.827 $\to$ 0.819  \\
+\end{tabular}
+}; % end of tikz
+\pause
+\tikz\node[fill=white!90!colorsnli,inner sep=1pt,rounded corners=0.3cm]{
+\begin{tabular}{lp{0.7\columnwidth}}
+\textbf{\snli} & \\
+Premise & Well dressed man and woman dancing in the street \\
+Original & Two man is dancing on the street \\
+Answer & Contradiction \\
+\textbf{Reduced} & \textbf{dancing} \\
+Confidence & 0.977 $\to$ 0.706 \\
+\end{tabular}
+}; % end of tikz
+\end{figure}
+\end{frame}
+
+% \begin{frame}
+%   \frametitle{Input Reduction}  
+%   \begin{itemize}
+%     % \item Instead of visualizing ``important'' words, we remove ``unimportant'' words    
+%     \item Iteratively remove \emph{least} important word
+%     \item Stop immediately before prediction change
+%     \item Appears complementary: removing ``unimportant'' words should leave ``important'' words    
+%   \end{itemize}
+% \end{frame}
+
+\begin{frame}{All Examples are Drastically Reduced}
+\begin{figure}
+\centering
+\includegraphics[width=0.8\textwidth]{length_histogram}
+\end{figure}
+\begin{itemize}
+\item Consistently reduce examples to very short lengths without changing the model prediction. \pause
+\item \textbf{But how about the confidence?}
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Confidence Remains High}
+\begin{figure}
+\centering
+\includegraphics[width=0.7\textwidth]{confidence}
+\end{figure}
+\begin{itemize}
+\item Model confidence remains high on reduced examples. \pause
+\item \textbf{But is it really an unreasonable behavior?}
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Humans Are Confused by Reduced Inputs}
+\begin{center}
+\visible<1->{
+\begin{minipage}{0.5\columnwidth}
+\begin{table}[t]
+\centering
+\begin{tabular}{lcc}
+Dataset & Original & Reduced \\
+\midrule
+\squad  & 80.58 & 31.72 \\
+\snli-E & 76.40 & 27.66 \\
+\snli-N & 55.40 & 52.66 \\
+\snli-C & 76.20 & 60.60 \\
+\vqa    & 76.11 & 40.60 \\
+\end{tabular}
+\end{table}
+\end{minipage}%
+}
+\visible<3->{
+\begin{minipage}{0.2\columnwidth}
+\begin{table}[t]
+\centering
+\begin{tabular}{c}
+vs.\ Random \\
+\midrule
+53.70 \\
+42.31 \\
+50.64 \\
+49.87 \\
+61.60 \\
+\end{tabular}
+\end{table}
+\end{minipage}
+}
+
+\visible<2->{
+\begin{table}[0.8\columnwidth]
+\begin{tabular}{>{\centering\arraybackslash}p{0.4\columnwidth}|>{\centering\arraybackslash}p{0.4\columnwidth}}
+\multicolumn{2}{c}{What did Tesla spend Astor's money on ?} \\
+did & spend \pause\\
+& \bluecheck
+\end{tabular}
+\end{table}
+}
+\end{center}
+
+\visible<4->{
+\begin{itemize}
+\item Reduced examples are uninformative and appear random.
+%\item Models are unreasonably confident on the reduced examples.
+%\pause
+%\item \textbf{How did input reduction lead to these pathological examples?}
+\item \textbf{How did input reduction lead to this?}
+\end{itemize}
+}
+\end{frame}
+
+
+
+% & & 
+% Original & if the man steps forward, will he fall onto the track \\
+% Answer & no \\
+% Before & if the fall the \\
+% After & if the steps forward, fall onto the \\\hline\\

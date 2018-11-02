@@ -1,0 +1,96 @@
+\documentclass[11pt,a4paper]{article}
+% \usepackage[draft]{hyperref}
+\usepackage[hyperref]{style/emnlp2018}
+
+\newif\ifcomment\commentfalse
+\input{style/preamble}
+
+\usepackage{xcolor}
+\usepackage{times}
+\usepackage{latexsym}
+\usepackage{amsmath}
+\usepackage{url}
+\usepackage{algorithm}
+\usepackage{amsfonts}
+\usepackage[noend]{algpseudocode}
+\usepackage{lipsum}
+\usepackage{multirow}
+\usepackage{framed}
+\usepackage{graphicx}
+\usepackage{longtable}
+\usepackage{tikz}
+\usepackage{booktabs}
+\usepackage[all]{nowidow}
+
+\graphicspath{{2018_emnlp_pathologies/images/}, {2018_emnlp_pathologies/auto_fig/}}
+
+\aclfinalcopy
+
+\DeclareMathOperator*{\argmin}{\arg\!\min}
+\DeclareMathOperator*{\argmax}{\arg\!\max}
+\DeclareMathOperator*{\substr}{substr}
+\DeclareMathOperator*{\subseq}{subseq}
+\DeclareMathOperator*{\len}{len}
+
+\input{2018_emnlp_pathologies/colorize.tex}
+
+\definecolor{coloranswer}{HTML}{0596FF}
+\definecolor{lightblue}{HTML}{3CC7EA}
+\definecolor{boxcolor}{HTML}{EEEEEE}
+\definecolor{periwinkle}{rgb}{0.8, 0.8, 1.0}
+\definecolor{colorsquad}{rgb}{0,1,0}
+\definecolor{colorsnli}{rgb}{1,0,0}
+\definecolor{colorvqa}{rgb}{1,1,0}
+
+\newcommand\BibTeX{B{\sc ib}\TeX}
+\newcommand{\squad}{\textsc{SQuAD}}
+\newcommand{\snli}{\textsc{SNLI}}
+\newcommand{\vqa}{\textsc{VQA}}
+\newcommand{\nlp}{\textsc{nlp}}
+\newcommand{\mb}[1]{\boldsymbol{\mathbf{#1}}}
+\newcommand{\loo}{leave-one-out}
+
+\makeatletter
+\def\BState{\State\hskip-\ALG@thistlm}
+\makeatother
+
+\title{Pathologies of Neural Models Make Interpretation Difficult}
+
+\author{
+  Shi Feng$^1$ Eric Wallace$^1$ Alvin Grissom~II$^2$ Mohit Iyyer$^{3,4}$\\
+  {\bf Pedro Rodriguez$^1$ Jordan Boyd-Graber$^1$}\\
+  $^1$University of Maryland $^2$Ursinus College\\
+  $^3$UMass Amherst $^4$Allen Institute for Artificial Intelligence\\
+  {\tt \{shifeng,ewallac2,entilzha,jbg\}@umiacs.umd.edu}, \\
+  {\tt agrissom@ursinus.edu}, {\tt miyyer@cs.umass.edu}\\
+}
+
+\def\aclpaperid{2051}
+\date{}
+
+\begin{document}
+\maketitle
+\begin{abstract}
+\input{2018_emnlp_pathologies/sections/00-abstract}
+\end{abstract}
+
+\input{2018_emnlp_pathologies/sections/10-intro}
+\input{2018_emnlp_pathologies/sections/20-reduction}
+\input{2018_emnlp_pathologies/sections/30-confidence}
+\input{2018_emnlp_pathologies/sections/40-regularization}
+\input{2018_emnlp_pathologies/sections/50-discussion}
+\newpage
+% \input{2018_emnlp_pathologies/sections/60-related}
+\input{2018_emnlp_pathologies/sections/70-conclusion}
+\newpage
+\input{2018_emnlp_pathologies/sections/ack}
+
+\bibliography{bib/journal-full,bib/fs,bib/jbg}
+\bibliographystyle{style/emnlp2018}
+
+\clearpage
+
+% \appendix
+% \input{2018_emnlp_pathologies/sections/appendix.tex}
+
+\end{document}

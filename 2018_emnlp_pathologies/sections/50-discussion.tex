@@ -1,0 +1,104 @@
+\section{Discussion}
+\label{sec:discussion}
+
+Rubbish examples have been studied in images~\cite{goodfellow2014explaining, nguyen2015fooled}, but to our knowledge not
+for \nlp{}.  Our input reduction gradually transforms a valid input
+into a rubbish example. We can often determine which word's removal
+is the tipping point---for example, removing ``Broncos'' in
+Figure~\ref{fig:path}.  These rubbish examples are
+ interesting, as they are also adversarial: they resemble valid
+ examples.  In contrast, image rubbish examples
+generated from noise lie outside the training data
+distribution and resemble static.
+
+The robustness of \nlp{} models has been studied
+extensively~\cite{papernot2016crafting, jia2017adversarial,
+iyyer2018scpn,ribeiro2018semantically},
+and most studies define adversarial examples similar to the image domain: small
+perturbations to the input lead to large changes in the output.
+HotFlip~\cite{ebrahimi2017hotflip} uses a gradient-based approach,
+similar to image adversarial examples, to flip the model prediction by
+perturbing a few characters or words.
+Our work and \citet{belinkov2017synthetic} both identify cases where noisy
+user inputs become adversarial by accident: common misspellings break neural
+machine translation models; we show that incomplete user input can lead to
+unreasonably high model confidence.
+
+Other failures of interpretation methods have been explored in the image
+domain. The sensitivity issue of gradient-based interpretation methods,
+similar to our shifting heatmaps, are observed by
+\citet{ghorbani2017interpretation} and \citet{kindermans2017unreliability}. They
+show that various forms of input perturbation---from adversarial changes to simple
+constant shifts in the image input---cause significant changes in the
+interpretation. \citet{ghorbani2017interpretation} make a similar observation
+about second-order sensitivity, that ``the fragility of interpretation is
+orthogonal to fragility of the prediction''.
+
+Previous work studies biases in the annotation process that lead to
+datasets easier than desired or expected which eventually induce
+pathological models. We attribute our observed pathologies primarily
+to the lack of accurate uncertainty estimates in neural models trained
+with maximum likelihood.  \snli{} hypotheses contain artifacts that
+allow \emph{training} a model without the
+premises~\cite{gururangan2018annotation}; we apply input reduction at
+\emph{test} time to the hypothesis. Similarly, \vqa{} images are
+surprisingly unimportant for training a model; we reduce the
+question. The recent \squad{} 2.0~\cite{rajpurkar2018know} augments
+the original reading comprehension task with an uncertainty modeling
+requirement, the goal being to make the task more realistic and
+challenging.  Question answering tasks such as \qb{} combine
+knowing what to answer with when there is sufficient information to
+answer for the agent or an opponent~\cite{He-16:opponent}.
+
+Section~\ref{sec:overconfidence} explains the pathologies from the
+overconfidence perspective. One explanation for overconfidence is overfitting:
+\citet{guo2017calibration} show that, late in maximum likelihood training,
+the model learns to minimize loss by outputting low-entropy distributions without
+improving validation accuracy. To examine if overfitting can explain the input
+reduction results, we run input reduction using \abr{DrQA} model checkpoints from
+every training epoch. Input reduction still achieves similar results on earlier
+checkpoints, suggesting that better convergence in maximum likelihood
+training cannot fix the issues by itself---we need new training objectives with
+uncertainty estimation in mind.
+
+\subsection{Methods for Mitigating Pathologies}
+
+We regularize the model using input reduction's reduced examples
+and improve its interpretability. This resembles adversarial
+training~\cite{goodfellow2014explaining}, where adversarial examples are added to
+the training set to improve model robustness. The objectives are different:
+entropy regularization
+encourages high uncertainty on rubbish examples, while adversarial training
+makes the model less sensitive to adversarial perturbations.
+
+\citet{pereyra2017regularizing} apply entropy regularization on regular examples
+from the start of training to improve model generalization. A similar
+method is label smoothing~\cite{szegedy2016rethinking}.  In comparison, we
+fine-tune a model with entropy regularization on the reduced examples
+for better uncertainty estimates and interpretations.
+
+To mitigate overconfidence, \citet{guo2017calibration} use
+\emph{post-hoc} fine-tuning a model's confidence with Platt scaling.
+This method adjusts the softmax function's temperature parameter using a
+small held-out dataset to align confidence with accuracy.
+However, because the output is calibrated using the entire
+confidence distribution, not individual values, this does not reduce
+overconfidence on specific inputs, such as the reduced examples.
+
+\subsection{Generalizability of Findings}
+
+To highlight the erratic model predictions on short examples and
+provide a more intuitive demonstration, we present paired-input tasks. On
+these tasks, the short lengths of reduced questions and hypotheses obviously
+contradict the necessary number of words for a human prediction (further
+supported by our human studies).
+We also apply input reduction to single-input tasks including
+sentiment analysis~\cite{mass2011imdb} and
+\qb{}~\cite{boydgraber2012besting}, achieving similar results.
+
+Interestingly, the reduced examples transfer to other architectures.
+In particular, when we feed fifty reduced \snli{} inputs from each
+class---generated with the \abr{BiMPM}
+model~\cite{wang2017bilateral}---through the Decomposable Attention
+Model~\cite{parikh2016decomposable},\footnote{\url{http://demo.allennlp.org/textual-entailment}}
+the same prediction is triggered 81.3\% of the time.
