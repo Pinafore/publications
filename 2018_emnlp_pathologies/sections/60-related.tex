@@ -1,0 +1,16 @@
+\section{Related Work}
+\label{sec:related}
+
+We now review relevant previous work in interpretability methods, their
+shortcomings, and mitigation techniques.
+
+Finally, the reduced examples highlight a model limitation that may be
+exploited by an adversary.  Other ways to expose these types of
+examples in \nlp{} have taken the form of word and character-level
+modifications~\cite{papernot2016crafting, ebrahimi2017hotflip,
+belinkov2017synthetic}. Additionally, neural models for reading
+comprehension appear to be overly stable to non-destructive additive
+changes such as inserting distractors~\cite{jia2017adversarial}. Our
+work has shown models can remain highly confident even when crucial
+information is \emph{removed} from their input.
+

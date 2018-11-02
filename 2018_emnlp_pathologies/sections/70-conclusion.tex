@@ -1,0 +1,39 @@
+\section{Conclusion}
+\label{sec:conclusion}
+
+We introduce input reduction, a process that iteratively removes
+unimportant input words while maintaining a model's
+prediction. Combined with gradient-based importance estimates, we
+expose pathological behaviors of neural models. Without lowering model
+confidence original predictions, an input sentence can be reduced to
+the point where it appears nonsensical, often consisting of one or two
+words. Humans cannot understand the reduced examples, but neural
+models maintain their original predictions.
+
+We explain these pathologies with known issues of neural models:
+overconfidence and sensitivity to small input changes. Inaccurate
+uncertainty estimates cause the the nonsensical reduced
+examples: the model is cannot lower its confidence on ill-formed inputs.
+The second-order sensitivity also explains why
+gradient-based interpretation methods contradict human expectations:
+a small change in the input can cause a minor change in the
+prediction but a large change in the interpretation. Input reduction's
+many small perturbations---a stress test---can expose deeper issues of
+model overconfidence and oversensitivity that other methods cannot.
+
+To properly interpret neural models, it is important to
+understand their fundamental
+characteristics: the nature of their decision surfaces, robustness
+against adversaries, and limitations of their training objectives.
+We explain fundamental difficulties of interpretation due to
+pathologies in neural models trained with maximum likelihood.  Our
+work suggests several future directions to improve interpretability:
+more thorough evaluation of interpretation methods, better uncertainty
+and confidence estimates, and interpretation beyond bag-of-word heatmap.
+
+More practically, \abr{nlp} systems are often designed as pipelines:
+speech recognition or machine translation feeds into a downstream
+classification task.  The classification is typically trained on
+uncorrupted English text.  Input reduction suggests that both the
+outputs and confidences of such na\"ive pipelines should be treated
+with greater suspicion.

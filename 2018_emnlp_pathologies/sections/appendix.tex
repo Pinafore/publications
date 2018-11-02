@@ -1,0 +1,220 @@
+\appendix
+\section{Model and Training Details}
+\label{sec:model_supplemental}
+
+\paragraph{\squad{}: Reading Comprehension}
+The model we use for \squad{} is the Document Reader of
+\abr{DrQA}~\cite{chen2017drqa}. We use the open source
+implementation from \url{https://github.com/hitvoice/DrQA}. The model
+represents the words of the paragraph as the concatenation of: 
+\abr{GloVe} embeddings~\cite{pennington2014glove}, other word-level
+features, and attention scores between the words in the paragraph and
+the question. The model runs a \abr{BiLSTM} over the sequence and
+takes the resulting hidden states at each time step as a word's final
+vector representation. Two classifiers then predict the beginning and
+end of the answer span independently. The span with the highest
+product of beginning and end probabilities is selected as the answer.
+In input reduction, we keep the exact same span.
+
+\paragraph{\snli{}: Textual Entailment}
+The model we use for \snli{} is the Bilateral Multi-Perspective
+Matching Model (\abr{BiMPM})~\cite{wang2017bilateral}.
+We use the open source implementation from
+\url{https://github.com/galsang/BIMPM-pytorch}. The model runs a
+\abr{BiLSTM} over the \abr{GloVe} word embeddings of both
+the premise and hypothesis. It then computes ``matches'' between the two
+sentences at multiple perspectives, aggregates the results using
+another \abr{BiLSTM}, and feeds the resulting representation
+through fully-connected layers for
+classification.
+
+\paragraph{\vqa{}: Visual Question Answering}
+The model we use for \vqa{} is Show, Ask, Attend and
+Answer~\cite{kazemi2017show}.  We use the open source implementation
+from \url{https://github.com/Cyanogenoid/pytorch-vqa}.  The model uses
+a ResNet-152~\cite{he2016resnet} to represent the image and an
+\abr{LSTM} to represent the natural language question.  The model then
+computes attention regions based on the two representations.  All
+representations are finally combined to predict the answer.
+
+\paragraph{Entropy Regularized Fine-Tuning}
+To optimize the objective of Equation ~\ref{regularizer}, we alternate
+updates on the two terms. We update the model on two
+batches of regular examples for the first term (maximum likelihood), followed
+by two batches of reduced examples for the second term (maximum entropy). The batches of
+reduced examples are randomly sampled from the collection of reduced
+inputs. We use two separate Adam~\cite{kingma2015adam} optimizers for
+the two terms.  For \squad{} and \snli{}, we use a learning rate of
+$2e^{-4}$ and $\lambda$ of $1e^{-3}$.  For \vqa{}, we use a learning
+rate of $1e^{-4}$ and $\lambda$ of $1e^{-4}$.
+
+\section{More Examples}
+\label{sec:example_supplemental}
+
+This section provides more examples of input reduction.  We show
+the original and reduced examples, which are generated on the models both 
+\emph{Before} and \emph{After} fine-tuning with the entropy regularization from
+Section~\ref{sec:entropy_training}. All examples are correctly classified by the model.
+
+\begin{figure*}[t]
+\begin{tabular}{lp{0.85\textwidth}}
+\textbf{\squad} & \\\hline
+
+Context & In 1899, John Jacob Astor IV invested \$ 100,000 for Tesla
+    to further develop and produce a new lighting system. Instead,
+    Tesla used the money to fund his \mybox{coloranswer}{Colorado
+    Springs experiments}. \\
+Original & What did Tesla spend Astor's money on ? (0.78) \\
+Before & did \\
+After & spend Astor money on ? \\\hline
+
+Context & The Colorado experiments had prepared Tesla for the
+    establishment of the \mybox{coloranswer}{trans-Atlantic wireless
+    telecommunications facility} known as Wardenclyffe near Shoreham,
+    Long Island. \\
+Original & What did Tesla establish following his Colorado experiments ? \\
+Before & experiments ? \\
+After & What Tesla establish experiments ? \\\hline
+
+Context & The Broncos defeated the Pittsburgh Steelers in the
+    divisional round, 23–16, by scoring 11 points in the final three
+    minutes of the game. They then beat the defending Super Bowl XLIX
+    champion \mybox{coloranswer}{New England Patriots} in the AFC
+    Championship Game, 20–18, by intercepting a pass on New England's
+    2-point conversion attempt with 17 seconds left on the clock.
+    Despite Manning's problems with interceptions during the season,
+    he didn't throw any in their two playoff games. \\
+Original & Who did the Broncos defeat in the AFC Championship game ? \\
+Before & Who the defeat the \\
+After & Who Broncos defeat AFC Championship game \\\hline
+
+Context & In 2014, economists with the Standard \& Poor's rating
+    agency concluded that the widening disparity between the U.S.'s
+    wealthiest citizens and the rest of the nation had slowed its
+    recovery from the 2008-2009 recession and made it more prone to
+    \mybox{coloranswer}{boom-and-bust cycles}. To partially remedy the
+    wealth gap and the resulting slow growth, S\&P recommended
+    increasing access to education. It estimated that if the average
+    United States worker had completed just one more year of school,
+    it would add an additional \$105 billion in growth to the
+    country's economy over five years. \\
+Original & What is the United States at risk for because of the
+    recession of 2008 ? \\
+Before & is the risk the \\
+After & What risk because of the 2008 \\\hline
+
+Context & The Central Region, consisting of present-day Hebei,
+    Shandong, Shanxi, the south-eastern part of present-day Inner
+    Mongolia and the Henan areas to the north of the Yellow River, was
+    considered the most important region of the dynasty and directly
+    governed by the Central Secretariat (or Zhongshu Sheng) at
+    \mybox{coloranswer}{Khanbaliq} (modern Beijing); similarly,
+    another top-level administrative department called the Bureau of
+    Buddhist and Tibetan Affairs (or Xuanzheng Yuan) held
+    administrative rule over the whole of modern-day Tibet and a part
+    of Sichuan, Qinghai and Kashmir. \\
+Original & Where was the Central Secretariat based ? \\
+Before & the based \\
+After & was Central Secretariat based \\\hline
+
+Context & It became clear that managing the Apollo program would
+    exceed the capabilities of Robert R. Gilruth's Space Task Group,
+    which had been directing the nation's manned space program from
+    NASA's Langley Research Center. So Gilruth was given authority to
+    grow his organization into a new NASA center, the Manned
+    Spacecraft Center (MSC). A site was chosen in
+    \mybox{coloranswer}{Houston, Texas}, on land donated by Rice
+    University, and Administrator Webb announced the conversion on
+    September 19, 1961. It was also clear NASA would soon outgrow its
+    practice of controlling missions from its Cape Canaveral Air Force
+    Station launch facilities in Florida, so a new Mission Control
+    Center would be included in the MSC. \\
+Original & Where was the Manned Spacecraft Center located ? \\
+Before & Where \\
+After & Where was Manned Center located \\\hline
+
+\end{tabular}
+\end{figure*}
+
+\begin{figure*}[t]
+\centering
+\begin{tabular}{lp{0.85\textwidth}}
+\textbf{\snli} & \\\hline
+
+Premise & a man in a black shirt is playing a guitar . \\
+Original & the man is wearing a blue shirt . \\
+Answer & contradiction \\
+Before & blue \\
+After & man blue shirt \\\hline
+
+Premise & two female basketball teams watch suspenseful as the
+    basketball nears the basket . \\
+Original & two teams are following the movement of a basketball . \\
+Answer & entailment \\
+Before & . \\
+After & movement \\\hline
+
+Premise & trucks racing \\
+Original & there are vehicles . \\
+Answer & entailment \\
+Before & are \\
+After & vehicles \\\hline
+
+Premise & a woman , whose face can only be seen in a mirror , is
+    applying eyeliner in a dimly lit room . \\
+Original & a man is playing softball . \\
+Answer & contradiction \\
+Before & man playing \\
+After & a man \\\hline
+
+Premise & a tan dog jumping over a red and blue toy \\
+Original & a dog playing \\
+Answer & entailment \\
+Before & dog \\
+After & playing \\\hline
+
+Premise & a man in a white shirt has his mouth open and is adjusting dials . \\
+Original & a man is sleeping . \\
+Answer & contradiction \\
+Before & sleeping \\
+After & man sleeping \\\hline
+\end{tabular}
+\end{figure*}
+
+
+\begin{figure*}
+\begin{tabular}{lp{0.85\columnwidth}lp{0.85\columnwidth}}
+\textbf{\vqa} \\\hline\\
+
+& \includegraphics[height=1in]{135}     & & \includegraphics[height=1in]{2}\\
+Original & what color is the flower     & Original & what letter is on the lanyard \\
+Answer & yellow                         & Answer & g \\
+Before & flower                         & Before & letter is on lanyard \\
+After & what color is flower            & After & what letter is the lanyard \\\hline\\
+                                         
+& \includegraphics[height=1in]{134}     & & \includegraphics[height=1in]{3}\\
+Original & are the cars lights on       & Original & if the man steps forward, will he fall onto the track \\
+Answer & yes                            & Answer & no \\
+Before & cars                           & Before & if the fall the \\
+After & lights                          & After & if the steps forward, fall onto the \\\hline\\
+                                         
+& \includegraphics[height=1in]{132}     & & \includegraphics[height=1in]{7}\\
+Original & do this take batteries       & Original & are there any clouds in the sky \\
+Answer & yes                            & Answer & yes \\
+Before & batteries                      & Before & are clouds \\
+After & batteries                       & After & there clouds sky \\\hline\\
+                                         
+& \includegraphics[height=1in]{126}     & & \includegraphics[height=1in]{11}\\
+Original & what is the man riding       & Original & what color is the skiers backpack \\
+Answer & elephant                       & Answer & black \\
+Before & man riding                     & Before & color \\
+After & what riding                     & After & what color is the skiers \\\hline\\
+                                         
+& \includegraphics[height=1in]{121}     & & \includegraphics[height=1in]{43}\\
+Original & what kind of pants is the girl wearing & Original & are the giants playing \\
+Answer & jeans                          & Answer & yes \\
+Before & kind of pants wearing          & Before & are \\
+After & what kind of pants              & After & giants playing \\\hline\\
+
+\end{tabular}
+\end{figure*}

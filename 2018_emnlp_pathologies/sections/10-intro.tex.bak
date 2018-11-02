@@ -1,0 +1,74 @@
+\section{Introduction}
+\label{sec:intro}
+
+\begin{figure}[t]
+\small
+\tikz\node[fill=white!90!colorsquad,inner sep=1pt]{
+\begin{tabular}{lp{0.7\columnwidth}}
+\textbf{\squad{}} \\
+    Context & In 1899, John Jacob Astor IV invested \$100,000 for Tesla to further
+develop and produce a new lighting system. Instead, Tesla used the
+money to fund his \mybox{coloranswer}{Colorado Springs experiments}. \\\\
+Original & What did Tesla spend Astor's money on ? \\
+Reduced & did  \\
+Confidence & 0.78 $\to$ 0.91 \\
+\end{tabular}
+}; 
+    \caption{\squad{} example from the validation set. With the same
+    original \emph{Context}, on both \emph{Original} and
+    \emph{Reduced} questions, the model makes the same correct
+    prediction (``Colorado Springs experiments'') with higher
+    confidence. For humans, the reduced question, ``did'', is
+    nonsensical.}
+\label{fig:intro_example}
+\end{figure}
+
+Many interpretation methods for neural networks explain the model's prediction
+as a counterfactual: how does the prediction
+change when the input is modified?  Adversarial
+examples~\cite{szegedy2013intriguing,goodfellow2014explaining} highlight the
+instability of neural network predictions by showing how small 
+perturbations to the input dramaticly change in the output.
+
+A common, non-adversarial form of model interpretation is feature attribution:
+features that are crucial for predictions are highlighted in a heatmap. One can
+measure the feature's importance by input perturbation. Given an input for text
+classification, a word's importance can be measured by the difference of model
+confidence before and after that word is removed from the input---the word is
+important if the confidence decreases significantly. This is the \loo{}
+method~\cite{li2016understanding}.
+Gradients can also be used to measure feature importance. For example, a feature
+is influential to the prediction if its gradient of log-likelihood is a large
+positive value. Both perturbation and gradient-based methods can
+generate heatmaps, implying that the model's prediction is highly
+influenced by the highlighted, important words.
+
+Instead, we study how the model's prediction is influenced by the
+\emph{unimportant} words.  We use \textbf{input reduction}, a process that
+iteratively removes the unimportant words from the input while maintaining model
+prediction.  Intuitively, the words remaining after input reduction should be
+important for prediction.  Moreover, the words should match the \loo{}'s
+selections, which closely align with human
+perception~\cite{li2016understanding,murdoch2018cd}.  However, rather than
+providing explanations of the original prediction, our reduced examples more
+closely resemble adversarial examples. In Figure~\ref{fig:intro_example}, the
+reduced input is meaningless to a human but retains the same model prediction
+with high confidence. Gradient-based input reduction exposes pathological model
+behaviors that contradict existing interpretation methods.
+
+In Section~\ref{sec:method}, we construct more of these counterintuitive
+examples by augmenting input reduction with beam search and experiment with
+three tasks: \squad~\cite{rajpurkar2016squad} for reading comprehension,
+\snli~\cite{bowman2015snli} for textual entailment, and
+\vqa~\cite{antol2015vqa} for visual question answering. 
+Input reduction with beam search consistently reduces
+the input sentence to very short lengths---often only one or two words---without
+lowering model confidence on its original prediction.  The reduced examples
+appear nonsensical to humans, which we verify with crowdsourced experiments. In
+Section~\ref{sec:confidence}, we draw connections to adversarial
+examples and confidence calibration, and explain why the observed pathologies
+are a consequence of the overconfidence of neural models. This elucidates
+limitations of interpretation methods that rely on model confidence. In
+Section~\ref{sec:entropy_training}, we encourage high model uncertainty on
+reduced examples with entropy regularization. The pathological model behavior
+under input reduction is mitigated, leading to more reasonable reduced examples.

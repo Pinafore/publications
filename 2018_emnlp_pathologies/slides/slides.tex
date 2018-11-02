@@ -1,0 +1,118 @@
+\documentclass{beamer}
+
+\RequirePackage{natbib}
+\setcitestyle{authoryear,round,citesep={;},aysep={,},yysep={;}}
+
+\mode<presentation>
+{
+  \usetheme{default}
+  \usecolortheme{default}
+  \usefonttheme{professionalfonts}
+  \setbeamertemplate{navigation symbols}{}
+  \setbeamertemplate{caption}[numbered]
+}
+
+\usepackage[english]{babel}
+\usepackage[utf8x]{inputenc}
+
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amsthm}
+\usepackage{bibentry}
+\usepackage{graphicx}
+\usepackage{bm}
+\usepackage{booktabs}
+\usepackage{tikz}
+\usepackage{xcolor}
+\usepackage{multirow}
+\usepackage[normalem]{ulem}
+\usepackage{pifont}
+\usepackage{array}
+\renewcommand{\ULthickness}{1.2pt}
+\graphicspath{{../images/}, {../auto_fig/}}
+
+\DeclareMathOperator*{\argmin}{\arg\!\min}
+\DeclareMathOperator*{\argmax}{\arg\!\max}
+\DeclareMathOperator*{\substr}{substr}
+\DeclareMathOperator*{\subseq}{subseq}
+\DeclareMathOperator*{\len}{len}
+
+\newcommand{\SubItem}[1]{
+    {\setlength\itemindent{15pt} \item[-] #1}
+}
+
+\input{../colorize.tex}
+
+\definecolor{l10_color1}{HTML}{3232FF}
+\definecolor{coloranswer}{HTML}{0596FF}
+\definecolor{lightblue}{HTML}{3CC7EA}
+\definecolor{boxcolor}{HTML}{EEEEEE}
+\definecolor{periwinkle}{rgb}{0.8, 0.8, 1.0}
+\definecolor{colorsquad}{rgb}{0,1,0}
+\definecolor{colorsnli}{rgb}{1,0,0}
+\definecolor{colorvqa}{rgb}{1,1,0}
+
+\newcommand\BibTeX{B{\sc ib}\TeX}
+\newcommand{\abr}[1]{\textsc{#1} }
+\newcommand{\squad}{\textsc{SQuAD}}
+\newcommand{\snli}{\textsc{SNLI}}
+\newcommand{\vqa}{\textsc{VQA}}
+\newcommand{\nlp}{\textsc{nlp}}
+\newcommand{\mb}[1]{\boldsymbol{\mathbf{#1}}}
+\newcommand{\loo}{leave-one-out}
+\newcommand{\g}{\, | \,}
+
+\newcommand*\colourcheck[1]{%
+  \expandafter\newcommand\csname #1check\endcsname{\textcolor{#1}{\ding{52}}}%
+}
+\colourcheck{blue}
+
+\title[EMNLP]{Pathologies of Neural Models Make Interpretation Difficult}
+\author{
+\small{
+Shi Feng$^1$ \textbf{Eric Wallace}$^1$ Alvin Grissom~II$^2$ Mohit Iyyer$^{3,4}$ \\
+Pedro Rodriguez$^1$ Jordan Boyd-Graber$^1$
+} \\\vspace{10px}
+\footnotesize{$^1$University of Maryland $^2$Ursinus College\\ $^3$UMass Amherst $^4$AI2}
+}
+% \date{August 23 2018}
+
+% \titlegraphic{
+%     \includegraphics[height=0.5cm]{umd_logo}\hspace*{0.5cm}~%
+%     \includegraphics[height=0.5cm]{ursinus_logo}\hspace*{0.5cm}~%
+%     \includegraphics[height=0.5cm]{umass_logo}\hspace*{0.5cm}~%
+%     \includegraphics[height=0.5cm]{ai2_logo}
+% }
+
+\begin{document}
+
+\begin{frame}
+    \titlepage
+\end{frame}
+
+% authors
+\input{sections/people}
+
+% \begin{frame}{Outline}
+%     \tableofcontents
+% \end{frame}
+
+% 1. interpretation, input reduction
+\input{sections/10}
+% 2. reduced inputs are weird
+\input{sections/20}
+% % 3. how did this happen
+\input{sections/30}
+% % 4. mitigation
+\input{sections/40}
+
+
+\begin{frame}[t, allowframebreaks]
+\frametitle{References}
+\bibliographystyle{../../style/emnlp2018}
+\small
+\bibliography{../../bib/journal-abbrv,../../bib/fs,../../bib/jbg}
+\end{frame}
+
+
+\end{document}
