@@ -1,5 +1,10 @@
 \begin{frame}{Input Reduction }
-What if we remove the unimportant words?
+\begin{itemize}
+\item What if we remove the unimportant words?
+\pause
+\item Keeping the model prediction the same.
+\end{itemize}
+\pause
 \begin{figure}
 \centering
 \small
@@ -58,7 +63,10 @@ Question & Confidence \\\midrule
 \end{frame}
 
 \begin{frame}{Input Reduction }
-What if we remove the unimportant words?
+\begin{itemize}
+\item What if we remove the unimportant words?
+\item Keeping the model prediction the same.
+\end{itemize}
 \begin{figure}
 \centering
 \small
@@ -119,7 +127,10 @@ Question & Confidence \\\midrule
 
 
 \begin{frame}{Input Reduction }
-What if we remove the unimportant words?
+\begin{itemize}
+\item What if we remove the unimportant words?
+\item Keeping the model prediction the same.
+\end{itemize}
 \begin{figure}
 \centering
 \small
@@ -179,7 +190,10 @@ Question & Confidence \\\midrule
 \end{frame}
 
 \begin{frame}{Input Reduction }
-What if we remove the unimportant words?
+\begin{itemize}
+\item What if we remove the unimportant words?
+\item Keeping the model prediction the same.
+\end{itemize}
 \begin{figure}
 \centering
 \small
@@ -289,9 +303,14 @@ Confidence & 0.977 $\to$ 0.706 \\
 % \end{frame}
 
 \begin{frame}{All Examples are Drastically Reduced}
+\begin{itemize}
+	\item Run input reduction for entire validation set.
+	\item Keep model prediction the same.
+\end{itemize}
+\pause
 \begin{figure}
 \centering
-\includegraphics[width=0.8\textwidth]{length_histogram_slides}
+\includegraphics[width=0.8\textwidth]{length_histogram}
 \end{figure}
 \begin{itemize}
 \item Consistently reduce examples to very short lengths without changing the model prediction. \pause
@@ -302,7 +321,7 @@ Confidence & 0.977 $\to$ 0.706 \\
 \begin{frame}{Confidence Remains High}
 \begin{figure}
 \centering
-\includegraphics[width=0.6\textwidth]{confidence}
+\includegraphics[width=0.7\textwidth]{confidence}
 \end{figure}
 \begin{itemize}
 \item Model confidence remains high on reduced examples. \pause
