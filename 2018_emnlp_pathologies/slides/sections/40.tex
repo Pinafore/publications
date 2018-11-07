@@ -1,5 +1,6 @@
 \begin{frame}{Mitigating Pathologies by Entropy Regularization}
 \begin{itemize}
+\pause
 \item Ideally, model should say ``I don't know''.
 \item Uniform distribution over classes.
 \pause
@@ -162,11 +163,10 @@ Before & After \\\midrule
 \end{center}
 \pause
 \begin{itemize}
-\item Regularization does not hurt normal accuracy.
-\pause
-\item Input reduction leads to longer examples after regularization.
-\pause
-%\item \textbf{But are they more meaningful?}
+% \item Regularization does not hurt normal accuracy.
+% \pause
+% \item Input reduction leads to longer examples after regularization.
+% \pause
 \item Human studies show examples are more meaningful.
 \end{itemize}
 \end{frame}
@@ -217,6 +217,11 @@ Before & After \\\midrule
 \pause
 \item Gradient interpretations assume linear model (bag-of-words).
 \SubItem {Neglects curvature (Hessian) and higher-order terms.}
+\pause
+\vspace{.65cm}
+\item \textbf{Shameless Plugs:}
+\SubItem{Competition on robust QA Models \url{www.qanta.org}}
+\SubItem{Take me as your student!}
 \end{itemize}      
 \end{frame}
 
