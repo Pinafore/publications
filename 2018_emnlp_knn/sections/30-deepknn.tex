@@ -1,0 +1,55 @@
+\section{Deep k-Nearest Neighbors for Sequential Inputs}
+\label{sec:deepknn}
+
+This section describes Deep k-Nearest Neighbors,
+its application to sequential inputs, and how we use it to 
+determine word importance values.
+
+\subsection{Deep k-Nearest Neighbors}
+
+\citet{papernot2018dknn} propose Deep k-Nearest Neighbors
+(\dknn{}), a modification to the test-time behavior
+of neural networks.  
+
+After training completes, the \dknn{} algorithm passes every training example
+through the model and saves each of the layer's representations.
+This creates a new dataset, whose features are the
+representations and whose labels are the model predictions. Test-time predictions
+are made by passing an example through the model and performing k-nearest neighbors classification
+on the resulting representations. This modification does not degrade
+the accuracy of image classifiers on several standard datasets~\cite{papernot2018dknn}.
+
+For our purposes, the benefit of \dknn{} is the algorithm's uncertainty metric,
+the \textit{conformity} score.  This score is the percentage of nearest
+neighbors belonging to the predicted class. Conformity follows from the
+framework of conformal prediction~\cite{shafer2008tutorial} and estimates how
+much the training data supports a classification decision.  
+
+The conformity score uses the representations at each neural network layer, and therefore, a prediction
+only receives high conformity if it largely agrees with the training data at all representation
+levels. This mechanism defends against adversarial examples~\cite{szegedy2013intriguing},
+as it is difficult to construct a perturbation which changes the neighbors at every layer.
+Consequently, conformity is a better uncertainty metric for both regular examples
+and out-of-domain examples such as noisy or adversarial inputs,
+making it suitable for interpreting models.
+
+\subsection{Handling Sequences}
+
+The \dknn{} algorithm requires fixed-size vector representations. 
+To reach a fixed-size representation for text classification,
+we take either the final hidden state of a
+recurrent neural network or use max pooling across
+time~\cite{collobert2008unified}. We consider deep architectures
+of these two forms, using each of the layers' representations as the 
+features for \dknn{}.
+
+\subsection{Conformity \loo{}}
+\label{sec:cred_l1o}
+
+Using conformity, we generate interpretations through a modified
+version of \loo{}~\cite{li2016understanding}. After removing a word,
+rather than observing the drop in confidence, we instead
+measure the drop in conformity. Formally, we
+modify classifier $f$ in Equation \ref{eq:importance} to
+output probabilities based on conformity. 
+We refer to this method as \textit{conformity \loo{}}.
