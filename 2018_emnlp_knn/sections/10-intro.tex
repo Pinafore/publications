@@ -1,0 +1,50 @@
+\section{Introduction}
+\label{sec:introduction}
+
+The growing use of neural networks in sensitive domains such as
+medicine, finance, and security raises concerns about human
+trust in these machine learning systems. A central question is
+test-time \emph{interpretability}: how can humans understand the
+reasoning behind model predictions?
+
+A common way to interpret neural network predictions is to identify the
+most important input features. For
+instance, a saliency map that highlights important pixels in an
+image~\cite{sundararajan2017axiomatic} or words in a
+sentence~\cite{li2016understanding}. Given a test prediction,
+the \emph{importance} of each input feature is the change in model confidence when that
+feature is removed.
+
+However, neural network confidence is not a proper measure
+of model uncertainty~\cite{guo2017calibration}. This issue is emphasized
+when models make highly confident predictions on inputs that
+are completely void of information, for example, images of pure
+noise~\cite{goodfellow2014explaining} or meaningless text
+snippets~\cite{feng2018rawr}. Consequently, a model's
+confidence may not properly reflect whether discriminative
+input features are present. This issue makes it difficult 
+to reliably judge the importance of each input feature using common
+confidence-based interpretation methods~\cite{feng2018rawr}.
+
+To address this, we apply Deep k-Nearest Neighbors
+(\dknn{})~\cite{papernot2018dknn} to neural models for text
+classification. Concretely, predictions are no longer
+made with a softmax classifier, but using
+the labels of the \emph{training examples} whose representations are
+most similar to the test example (Section~\ref{sec:deepknn}).
+This provides an alternative metric for
+model uncertainty, \emph{conformity}, which measures how much
+support a test prediction has by comparing its hidden representations
+to the training data. This representation-based uncertainty
+measurement can be used in combination with existing 
+interpretation methods, such as \loo{}~\cite{li2016understanding}, to better identify important
+input features.
+
+We combine \dknn{} with \cnn{} and \lstm{} models on six
+\abr{nlp} text classification tasks, including sentiment analysis and textual entailment, with no loss
+in classification accuracy (Section~\ref{sec:experiments}). We compare interpretations generated using \dknn{}
+conformity to baseline interpretation methods, finding \dknn{} interpretations rarely assign
+importance to extraneous words that do not align with human perception (Section~\ref{sec:interpretation}).
+Finally, we generate interpretations using \dknn{} conformity for a dataset with known artifacts (\abr{snli}),
+helping to indicate whether a model has learned superficial patterns.
+We open source the code for \dknn{} and our results.\footnote{https://github.com/Eric-Wallace/deep-knn}

@@ -1,0 +1,33 @@
+
+\begin{table*}[t]
+\centering
+\begin{tabular}{llp{0.6\textwidth}}
+\toprule
+\textbf{Prediction} & \textbf{Input} & \textbf{Saliency Map} \\
+\midrule
+\multirow{2}{*}{Contradiction} & Premise & a young boy reaches for and touches the propeller of a vintage aircraft.  \\
+& Hypothesis &  \mybox{color5}{a} \mybox{color8}{young} \mybox{color6}{boy} \mybox{color2}{swims} \mybox{color4}{in} \mybox{color6}{his} \mybox{color4}{pool}. \\
+\midrule
+\multirow{2}{*}{Contradiction} & Premise & a brown dog and a black dog in the edge of the ocean with a wave under them boats are on the water in the background.  \\
+& Hypothesis &  \mybox{color5}{the} \mybox{color5}{pets} \mybox{color5}{are} \mybox{color2}{sleeping} \mybox{color5}{on} \mybox{color5}{the} \mybox{color5}{grass}. \\
+\midrule
+& Premise & man in a blue shirt standing in front of a structure painted with geometric designs.\\
+Entailment & Hypothesis &  \mybox{color5}{a} \mybox{color6}{man} \mybox{color5}{is} \mybox{color2}{wearing} \mybox{color5}{a} \mybox{color6}{blue} \mybox{color5}{shirt}.\\
+\textcolor{red}{Entailment} & Hypothesis &  \mybox{color5}{a} \mybox{color6}{man} \mybox{color5}{is} \mybox{color2}{wearing} \mybox{color5}{a} \mybox{color6}{black} \mybox{color5}{shirt}.\\
+\bottomrule
+
+\end{tabular}
+\vspace{8pt}
+\begin{tabular}{c}
+Color Legend\quad  \mybox{color2}{Positive Impact}\quad \mybox{color7}{Negative Impact}
+\end{tabular}
+\caption{Interpretations generated with conformity \loo{} align with
+annotation biases identified in \abr{snli}. In the second example, the
+model puts emphasis on the word ``sleeping'', disregarding other words
+that could indicate the Neutral class. The final example diagnoses a
+model's incorrect Entailment prediction (shown in red). Green
+highlights indicate words that support the classification decision
+made (shown in parenthesis), pink highlights indicate words that
+support a different class.}
+\label{table:annotation_artifacts}
+\end{table*}

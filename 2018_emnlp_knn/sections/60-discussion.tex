@@ -1,0 +1,86 @@
+\section{Discussion and Related Work}
+\label{sec:discussion}
+
+We connect the improvements made by conformity \loo{} to 
+model confidence issues, compare alternative interpretation improvements,
+and discuss further features of \dknn{}.
+
+\subsection{Issues in Neural Network Confidence}
+\label{sec:overconfidence}
+
+Many existing feature attribution methods rely on estimates
+of model uncertainty: both input gradient and confidence \loo{} rely on
+prediction confidence, our method relies on \dknn{} conformity.
+Interpretation quality is thus determined by reliable uncertainty estimation. 
+For instance, past work shows relying on neural network confidence
+can lead to unreasonable interpretations~\cite{kindermans2017unreliability,
+ghorbani2017interpretation, feng2018rawr}. Independent of interpretability,
+\citet{guo2017calibration} show that neural network confidence is unreasonably
+high: on held-out examples, it far exceeds empirical accuracy.
+This is further exemplified by the high confidence predictions produced on
+inputs that are adversarial~\cite{szegedy2013intriguing} or contain solely
+noise~\cite{goodfellow2014explaining}.
+
+\subsection{Confidence Calibration is Insufficient}
+
+We attribute one interpretation failure to neural network
+confidence issues. \citet{guo2017calibration} study
+overconfidence and propose a calibration procedure using
+Platt scaling, which adjusts the temperature parameter of the softmax
+function to align confidence with accuracy on a held-out dataset.
+However, this is not input dependent---the confidence is lower
+for both full-length examples and ones with words left out. 
+Hence, selecting influential words will remain difficult.
+
+To verify this, we create an interpretation baseline using temperature 
+scaling.
+The results corroborate the intuition: calibrating the confidence 
+of \loo{} does not improve interpretations. Qualitatively, the 
+calibrated interpretation results remain comparable to  
+confidence \loo{}. Furthermore, calibrating the \dknn{}
+ conformity score as in \citet{papernot2018dknn} did not improve
+interpretability compared to the uncalibrated conformity score.
+
+\subsection{Alternative Interpretation Improvements}
+
+Recent work improves interpretation methods through other
+means. \citet{smilkov2017smoothgrad} and \citet{sundararajan2017axiomatic}
+both aggregate gradient values over multiple
+backpropagation passes to eliminate local noise or satisfy
+interpretation axioms. This work does not address 
+model confidence and is orthogonal to our \dknn{} approach. 
+ 
+\subsection{Interpretation Through Data Selection}
+
+Retrieval-Augmented Convolutional Neural Networks~\cite{zhao2018retrieval} are similar
+to \dknn{}: they augment model predictions with an information
+retrieval system that searches over network activations from the training data. 
+
+Retrieval-Augmented models and \dknn{} can both select influential
+training examples for a test prediction. In particular, the
+training data activations which are closest to the test point's 
+activations are influential according to the
+model. These training examples
+can provide interpretations as a form of analogy~\cite{caruana1999casebased}, an
+intuitive explanation for both machine learning experts and non-experts~\cite{klein1989biases,
+kim2014bayesian,
+koh2017influence, wallace2018trick}. However, unlike in computer vision where
+training data selection using \dknn{} yielded interpretable examples~\cite{papernot2018dknn},
+our experiments did not find human interpretable data points for \abr{sst} or
+\abr{snli}. 
+  		
+\subsection{Trust in Model Predictions}
+
+Model confidence is important for real-world
+applications: it signals how much one should trust
+a neural network's predictions. Unfortunately, users may be 
+misled when a model outputs highly confident predictions on rubbish
+examples~\cite{goodfellow2014explaining, nguyen2015fooled} or adversarial
+examples~\cite{szegedy2013intriguing}. Recent work decides when
+to trust a neural network model~\cite{ribeiro2016lime,
+doshivelez2017towards, jiang2018trust}. For instance, analyzing local linear
+model approximations~\cite{ribeiro2016lime} or flagging rare network activations
+using kernel density estimation~\cite{jiang2018trust}. The \dknn{} conformity
+score is a trust metric that helps defend against image adversarial
+examples~\cite{papernot2018dknn}. Future work should study if this robustness
+extends to interpretations. 
