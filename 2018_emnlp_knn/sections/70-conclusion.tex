@@ -1,0 +1,30 @@
+\section{Future Work and Conclusion}
+\label{sec:conclusion}
+
+A robust estimate of model uncertainty is critical to determine
+feature importance. The \dknn{} conformity score is
+one such uncertainty metric which leads to higher precision interpretations.
+Although \dknn{} is only a test-time improvement---the model is
+still trained using maximum likelihood. Combining nearest
+neighbor and maximum likelihood objectives during training may further
+improve model accuracy and
+interpretability. Moreover, other uncertainty estimators
+do not require test-time modifications. For
+example, modeling $p(x)$ and $p(y\mid\mb{x})$ using Bayesian Neural
+Networks~\cite{gal2016uncertainty}.
+
+Similar to other \abr{nlp} interpretation
+methods~\cite{sundararajan2017axiomatic, li2016understanding}, conformity
+\loo{} works when a model's representation has a fixed size. For
+other \abr{nlp} tasks, such as structured prediction (e.g., translation and
+parsing) or span prediction (e.g., extractive summarization and reading
+comprehension), models output a variable number of predictions and our interpretation
+approach will not suffice. Developing interpretation techniques for these
+types of models is a necessary area for future work.
+
+We apply \dknn{} to neural models for text classification. This provides a
+better estimate of model uncertainty---conformity---which we combine with
+\loo{}. This overcomes issues stemming from neural network confidence,
+leading to higher precision interpretations. Most interestingly,
+our interpretations are supported by the training data,
+providing insights into the representations learned by a model.

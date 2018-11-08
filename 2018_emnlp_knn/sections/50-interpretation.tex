@@ -1,0 +1,172 @@
+\section{\dknn{} is Interpretable}
+\label{sec:interpretation}
+
+Following past work~\cite{li2016understanding, murdoch2018cd}, we focus on the
+\abr{sst} dataset for generating interpretations. Due to the lack of standard
+interpretation evaluation metrics~\cite{doshivelez2017towards},
+we use qualitative evaluations~\cite{smilkov2017smoothgrad,
+sundararajan2017axiomatic, li2016understanding}, performing
+quantitative experiments where possible to examine the distinction
+between the interpretation methods.
+
+\subsection{Interpretation Analysis}
+
+\input{2018_emnlp_knn/sections/table_2}
+
+We compare our method (\emph{Conformity \loo{}}) against two baselines: \loo{}
+using regular confidence (\emph{Confidence \loo{}}, see Section \ref{sec:l10}) and the gradient with respect to the
+input (\emph{Gradient}, see Section \ref{sec:gradient}). To create saliency maps, we normalize each word's importance
+by dividing it by the total importance of the words in
+the sentence. We display unknown words in angle brackets $<>$.
+Table~\ref{table:saliency_maps} shows \abr{sst} interpretation examples
+for the \bilstm{} model and further examples are shown on a
+supplementary website.\footnote{\url{https://sites.google.com/view/language-dknn/}}
+
+Conformity \loo{} assigns concentrated importance values to
+a small number of input words. In contrast, the baseline methods
+assign non-zero importance values to numerous words, many of which
+are irrelevant.
+For instance, in all three examples of Table~\ref{table:saliency_maps}, 
+both baselines highlight almost half of the input, including words such as
+``fiction'' and ``clash''. We suspect model confidence is oversensitive to
+these unimportant input changes,
+causing the baseline interpretations to highlight unimportant words. On the other hand, 
+the conformity score better separates word importance, generating clearer interpretations.
+
+The tendency for confidence-based approaches to assign importance 
+to many words holds for the entire test set. We compute the average number of
+highlighted words using a threshold of $0.05$ 
+(a normalized importance value corresponding to a \mybox{color4}{light blue} or \mybox{color6}{light red} highlight). Out
+of the average 20.23 words in \abr{sst} test set, gradient highlights 5.32 words,
+confidence \loo{} highlights 5.79 words, and conformity \loo{} highlights 3.65 words.
+
+The second, and related, observation for confidence-based approaches is a bias
+towards selecting word importance based on a word's inherent sentiment,
+rather than its meaning in context. For example, see ``clash'',
+``terribly'', and ``unfaithful'' in Table \ref{table:saliency_maps}.
+The removal of these words causes a small change in the model confidence.
+When using \dknn{}, the conformity score indicates that the model's
+uncertainty has not risen without these input words and \loo{} does not
+assign them any importance.
+
+We characterize our interpretation method as significantly
+higher precision, but slightly lower recall than confidence-based
+methods. Conformity \loo{} rarely assigns high importance to words
+that do not align with
+human perception of sentiment. However, there are cases when our
+method does not assign significant importance to any word. This occurs
+when the input has a high redundancy. For example, a positive movie
+review that describes the sentiment in four distinct ways. In these
+cases, leaving out a single sentiment word has little effect on the
+conformity as the model's representation remains supported by the
+other redundant features. Confidence-based interpretations, which
+interpret models using the linear units that produce class scores,
+achieve higher recall by responding to every change in the input for a
+certain direction but may have lower precision.
+
+In the second example of Table~\ref{table:saliency_maps}, the word ``terribly''
+is assigned a negative importance value, disregarding its positive meaning in context.
+To examine if this is a stand-alone example or a more general pattern of 
+uninterpretable behavior, we calculate the importance value of the word
+``terribly'' in other positive examples. For each occurrence of the word ``great''
+in positive validation examples, we paraphrase it to ``awesome'', ``wonderful'',
+or ``impressive'', and add the word ``terribly'' in front of it. 
+This process yields $66$ examples. For each of these examples,
+we compute the importance value of each input word and rank them from
+most negative to most positive (the most negative word has
+a rank of 1). We compare the average ranking of ``terribly''
+from the three methods: 7.9 from conformity \loo{}, 1.68 from confidence \loo{}, and 1.1 from
+gradient. The baseline methods consistently rank ``terribly'' as the most
+negative word, ignoring its meaning in context. This echoes our suspicion: \dknn{} generates
+interpretations with higher precision because conformity is robust to irrelevant input changes.
+
+
+
+\subsection{Analyzing Dataset Annotation Artifacts}
+\label{sec:degenerate}
+
+We use conformity \loo{} to interpret a model trained on \abr{snli}, a dataset known to
+contain annotation artifacts. We demonstrate that our interpretation
+method can help identify when models exploit dataset biases.
+
+Recent studies~\cite{gururangan2018annotation,poliak2018hypothesis}
+identify annotation artifacts in \abr{snli}. Superficial
+patterns exist in the input which strongly correlate with certain
+labels, making it possible for models to ``game'' the task: obtain high
+accuracy without true understanding. For instance, the hypothesis of an
+entailment example is often a general paraphrase of the premise, using
+words such as ``outside'' instead of ``playing in a park''. Contradiction
+examples often contain negation words or non-action verbs like ``sleeping''.
+Models trained solely on the hypothesis can learn these patterns and reach
+accuracies considerably higher than the majority baseline.
+
+These studies indicate that the \abr{snli} task can be gamed. We look to confirm
+that some artifacts
+are indeed exploited by normally trained models that use full input pairs. We
+create saliency maps for examples in the validation set using conformity
+\loo{}. Table~\ref{table:annotation_artifacts} shows samples and more can be found on the
+supplementary website. We use
+blue highlights to indicate words which positively support the model's predicted class,
+and the color red to indicate words that support a different class.
+The first example is a randomly sampled baseline, showing how the words
+``swims'' and ``pool'' support the model's prediction of contradiction.
+The other examples are selected because they contain terms identified as artifacts.
+In the second example, conformity \loo{} assigns extremely high word importance
+to ``sleeping'', disregarding the other words necessary to predict contradiction (i.e., the neutral class is still possible
+if ``pets'' is replaced with ``people''). In the final two hypotheses, the interpretation
+method diagnoses the model failure, assigning high importance to ``wearing'', rather than
+focusing positively on the shirt color.
+
+To explore this further, we analyze the hypotheses in each \abr{snli} class
+which contain a top five artifact identified by \citet{gururangan2018annotation}.
+For each of these examples,
+we compute the importance value for each input word using
+both confidence and conformity \loo{}. We then rank the words from
+most important for the prediction to least important (a score of 1
+indicates highest importance) and report the average rank for the artifacts in Table~\ref{table:words}.
+We sort the words by their Pointwise Mutual Information with the correct label as provided by \citet{gururangan2018annotation}.
+The word ``nobody'' particularly stands out: it is the most important input word every time it appears
+in a contradiction example. 
+
+For most of the artifacts, conformity \loo{} assigns them a high importance,
+often ranking the artifacts as the most important input word. 
+Confidence \loo{} correlates less strongly with the known artifacts, frequently ranking them
+as low as the fifth or sixth most important word. Given the high correlation between 
+conformity \loo{} and the manually identified artifacts, this interpretation method may serve as
+a technique to identify undesirable biases a model has learned.
+
+\input{2018_emnlp_knn/sections/table_3}
+
+\begin{table}
+\setlength{\tabcolsep}{2pt}
+\centering
+\small
+\begin{tabular}{clcc}
+\toprule
+\textbf{Label} & \textbf{Artifact} & \textbf{Conformity} & \textbf{Confidence} \\
+\midrule
+\multirow{5}{*}{\textbf{Entailment}}
+& outdoors & 2.93 & 3.26 \\
+& least & 2.22 & 4.41 \\
+& instrument & 3.57 & 4.47 \\
+& outside & 4.08 & 4.80 \\
+& animal & 2.00 & 4.73 \\
+\midrule
+\multirow{5}{*}{\textbf{Neutral}}
+& tall & 1.09 & 2.61 \\
+& first & 2.14 & 2.99 \\
+& competition & 2.33 & 5.56 \\
+& sad & 1.39 & 1.79 \\
+& favorite & 1.69 & 3.89 \\
+\midrule
+\multirow{5}{*}{\textbf{Contradiction}}
+& nobody & 1.00 & 1.00 \\
+& sleeping & 1.64 & 2.34 \\
+& no & 2.53 & 5.74 \\
+& tv & 1.92 & 3.74 \\
+& cat & 1.42 & 3.62 \\
+\bottomrule
+\end{tabular}
+\caption{The top \abr{snli} artifacts identified by \citet{gururangan2018annotation} are shown on the left. For each word, we compute the average importance rank over the validation set using either \textit{Conformity} or \textit{Confidence} \loo{}. A score of 1 indicates that a word is always ranked as the most important word in the input. \textit{Conformity} \loo{} assigns higher importance to artifacts, suggesting it better diagnoses model biases.}
+\label{table:words}
+\end{table}

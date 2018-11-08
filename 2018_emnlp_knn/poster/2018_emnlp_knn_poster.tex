@@ -1,0 +1,373 @@
+\documentclass[final]{beamer} % beamer 3.10: do NOT use option hyperref={pdfpagelabels=false} !
+%\documentclass[final,hyperref={pdfpagelabels=false}]{beamer} % beamer 3.07: get rid of beamer warnings
+\mode<presentation> {  %% check http://www-i6.informatik.rwth-aachen.de/~dreuw/latexbeamerposter.php for examples
+    \usetheme{I6dv}    %% you should define your own theme e.g. for big headlines using your own logos
+    %\usetheme{Rochester}
+}
+\usepackage[english]{babel}
+\usepackage[latin1]{inputenc}
+\usepackage{epstopdf}
+\usepackage{amsmath,amsthm, amssymb, latexsym}
+\usepackage{soul}
+\usepackage{bm}
+\usepackage{caption}
+%\usepackage{subcaption}
+\usepackage{multirow}
+\usepackage{extarrows}
+\usepackage{xcolor}
+\usepackage{colortbl}
+\usepackage{tikz}
+\usepackage{relsize}
+\usepackage{hyperref}
+\usepackage{booktabs}
+\usepackage[normalem]{ulem}
+\renewcommand{\ULthickness}{1.5pt}
+\RequirePackage{natbib}
+
+\newcommand{\indentitem}{\setlength\itemindent{35pt}}
+\newcommand{\CC}[1]{\cellcolor{cyan!#1}}
+\newcommand{\CCYellow}[1]{\cellcolor{yellow!#1}}
+\newcommand{\highlight}[3]{\colorbox{#1!#2}{$\displaystyle#3$}}
+
+
+\newcommand\wideDownarrow{\mathrel{\scalebox{4}[3]{$\Rightarrow$}}}
+
+%\usepackage{times}
+%\usefonttheme{structuresmallcapsserif}  % times is obsolete
+\usefonttheme[onlymath]{serif}
+%\boldmath
+%\usepackage[orientation=landscape,size=custom,width=106.68,height=91.44,scale=1.4,debug]{beamerposter}
+\usepackage[orientation=portrait,size=a0,scale=1.2,debug]{beamerposter}
+
+\definecolor{olive20}{HTML}{E8E6BA}
+\definecolor{red20}{HTML}{FBCBBB}
+
+\setbeamertemplate{blocks}[rounded]
+
+\newenvironment{variableblock}[3]{%
+  \setbeamercolor{block body}{#2}
+  \setbeamercolor{block title}{#3}
+  \begin{block}{#1}}{\end{block}}
+
+\input{colorize_knn.tex}
+\input{colorize_rs.tex}
+\newcommand{\abr}[1]{\textsc{#1}}
+\newcommand{\dknn}{\textsc{DkNN}}
+\newcommand{\lstm}{\textsc{LSTM}}
+\newcommand{\bilstm}{\textsc{BiLSTM}}
+\newcommand{\cnn}{\textsc{CNN}}
+\newcommand{\loo}{leave-one-out}
+\newcommand{\mb}[1]{\boldsymbol{\mathbf{#1}}}
+\DeclareMathOperator*{\argmin}{\arg\!\min}
+\DeclareMathOperator*{\argmax}{\arg\!\max}
+\DeclareMathOperator*{\substr}{substr}
+\DeclareMathOperator*{\subseq}{subseq}
+\DeclareMathOperator*{\len}{len}
+\definecolor{coloranswer}{HTML}{0596FF}
+\definecolor{colorsquad}{rgb}{0,1,0}
+\definecolor{colorsnli}{rgb}{1,0,0}
+\definecolor{colorvqa}{rgb}{1,1,0}
+
+
+\title[Fancy Posters]{\Huge Interpreting Neural Networks With Nearest Neighbors}
+\author[]{\vspace{0.4cm} \huge Eric Wallace$^{\star}$, Shi Feng$^{\star}$, Jordan Boyd-Graber}
+\institute[]
+{
+  \vspace{-1cm} \LARGE
+  University of Maryland
+  \vspace{1cm}
+}
+
+\begin{document}
+
+\begin{frame}
+\begin{columns}%[t]
+\begin{column}{.5\linewidth}
+
+% \begin{block}{Interpreting \abr{nlp} Classifiers}
+% \center{Leave-one-out: remove a word and measure the confidence decrease~\citep{li2016visualizing}}
+% \begin{equation*}
+% \label{eq:importance}
+%     I(w_i \mid \mb{x}, y) = f(y\mid\mb{x}) - f(y\mid\mb{x}_{-i}).
+% \end{equation*}
+% \end{block}
+
+\begin{block}{Word Importance Using Leave-One-Out}
+\vspace{0.3cm}
+
+\begin{itemize}
+\item Saliency maps indicate the ``importance'' of each word to the model's prediction.
+\item Simple importance function: remove each word and measure the confidence decrease~\citep{li2016visualizing}.
+\end{itemize}
+
+\begin{figure}
+\centering
+\small
+\begin{tabular}{p{0.6\columnwidth}cc}
+Question & Confidence & Highlight \\\midrule
+\mybox{clr0}{\strut{What}} \mybox{clr0}{\strut{did}}
+\mybox{clr0}{\strut{Tesla}} \mybox{clr0}{\strut{spend}}
+\mybox{clr0}{\strut{Astor's}} \mybox{clr0}{\strut{money}}
+\mybox{clr0}{\strut{on}} \mybox{clr0}{\strut{?}} & \textbf{0.78} \\
+
+\mybox{clr0}{\strut{\sout{What}}} \mybox{clr0}{\strut{did}}
+\mybox{clr0}{\strut{Tesla}} \mybox{clr0}{\strut{spend}}
+\mybox{clr0}{\strut{Astor's}} \mybox{clr0}{\strut{money}}
+\mybox{clr0}{\strut{on}} \mybox{clr0}{\strut{?}} & 0.67 &
+\mybox{clr2}{\strut{What}} \\
+
+\mybox{clr0}{\strut{What}} \mybox{clr0}{\strut{\sout{did}}}
+\mybox{clr0}{\strut{Tesla}} \mybox{clr0}{\strut{spend}}
+\mybox{clr0}{\strut{Astor's}} \mybox{clr0}{\strut{money}}
+\mybox{clr0}{\strut{on}} \mybox{clr0}{\strut{?}} & 0.72 &
+\mybox{clr1}{\strut{did}} \\
+
+\mybox{clr0}{\strut{What}} \mybox{clr0}{\strut{did}}
+\mybox{clr0}{\strut{\sout{Tesla}}} \mybox{clr0}{\strut{spend}}
+\mybox{clr0}{\strut{Astor's}} \mybox{clr0}{\strut{money}}
+\mybox{clr0}{\strut{on}} \mybox{clr0}{\strut{?}} & 0.66 &
+\mybox{clr2}{\strut{Tesla}} \\
+
+\mybox{clr0}{\strut{What}} \mybox{clr0}{\strut{did}}
+\mybox{clr0}{\strut{Tesla}} \mybox{clr0}{\strut{\sout{spend}}}
+\mybox{clr0}{\strut{Astor's}} \mybox{clr0}{\strut{money}}
+\mybox{clr0}{\strut{on}} \mybox{clr0}{\strut{?}} & 0.74 &
+\mybox{clr1}{\strut{spend}} \\
+
+\mybox{clr0}{\strut{What}} \mybox{clr0}{\strut{did}}
+\mybox{clr0}{\strut{Tesla}} \mybox{clr0}{\strut{spend}}
+\mybox{clr0}{\strut{\sout{Astor's}}} \mybox{clr0}{money}
+\mybox{clr0}{\strut{on}} \mybox{clr0}{\strut{?}} & 0.76 &
+\mybox{clr1}{\strut{Astor's}} \\
+
+\mybox{clr0}{\strut{What}} \mybox{clr0}{\strut{did}}
+\mybox{clr0}{\strut{Tesla}} \mybox{clr0}{\strut{spend}}
+\mybox{clr0}{\strut{Astor's}} \mybox{clr0}{\strut{\sout{money}}}
+\mybox{clr0}{\strut{on}} \mybox{clr0}{\strut{?}} & \textbf{0.48} &
+\mybox{clr5}{\strut{money}} \\
+
+\mybox{clr0}{\strut{What}} \mybox{clr0}{\strut{did}}
+\mybox{clr0}{\strut{Tesla}} \mybox{clr0}{\strut{spend}}
+\mybox{clr0}{\strut{Astor's}} \mybox{clr0}{\strut{money}}
+\mybox{clr0}{\strut{\sout{on}}} \mybox{clr0}{\strut{?}} & 0.72 &
+\mybox{clr1}{\strut{on}} \\
+
+\mybox{clr0}{\strut{What}} \mybox{clr0}{\strut{did}}
+\mybox{clr0}{\strut{Tesla}} \mybox{clr0}{\strut{spend}}
+\mybox{clr0}{\strut{Astor's}} \mybox{clr0}{\strut{money}}
+\mybox{clr0}{\strut{on}} \mybox{clr0}{\strut{\sout{?}}} & 0.73 &
+\mybox{clr1}{\strut{?}} \\
+\end{tabular}
+\end{figure}
+\vspace{0.2cm}
+\begin{center}
+\mybox{clr2}{\strut{What}} \mybox{clr1}{\strut{did}}
+\mybox{clr2}{\strut{Tesla}} \mybox{clr1}{\strut{spend}}
+\mybox{clr1}{\strut{Astor's}} \mybox{clr5}{\strut{money}}
+\mybox{clr1}{\strut{on}} \mybox{clr1}{\strut{?}}
+\end{center}
+\vspace{0.3cm}
+\end{block}
+
+\begin{block}{Word Importance Using Gradient}
+\vspace{0.3cm}
+\begin{itemize}
+\item Fast importance function: approximate a word's removal using the input gradient~\citep{simonyan2013deep}.
+\end{itemize}
+\begin{equation*}
+    % \frac{\partial f}{\partial w_i} \
+    % = \frac{\partial f}{\partial \bm{v}_i}\frac{\partial \bm{v}_i}{\partial w_i} \ 
+    I(w_i \mid \mb{x}, y) = \frac{\partial f}{\partial \bm{v}_i} \cdot \bm{v}_i
+\end{equation*}
+\begin{itemize}
+\item Computes importance of all words in one backward pass.
+\end{itemize}
+\vspace{0.3cm}
+\end{block}
+
+\begin{block}{Instability of Gradient-based Interpretation}
+\vspace{0.3cm}
+
+\begin{itemize}
+\item Gradient interpretations are highly unstable to small input changes~\cite{feng2018rawr}.
+\item At each step, remove the \emph{least} important word (\underline{underlined}).
+\item ``advertisement'' goes most important to least important in one step. 
+\end{itemize}
+
+\vspace{0.3cm}
+\center{\textbf{SQuAD}}
+\vspace{0.3cm}
+\begin{center}
+% \tikz\node[fill=white!90!colorsquad,inner sep=1pt,rounded corners=0.3cm]{
+\begin{tabular}{p{.8\columnwidth}}
+Context: QuickBooks sponsored a ``Small Business Big Game'' contest, in
+which Death Wish Coffee had a 30-second commercial aired free of
+charge courtesy of QuickBooks. \mybox{coloranswer}{Death Wish
+Coffee} beat out nine other contenders from across the United
+States for the free advertisement.\\\\
+Question:\\
+\input{figure_4}
+\end{tabular}
+\end{center}
+\vspace{0.3cm}
+\end{block}
+
+\begin{block}{Failure of Confidence-based Interpretation}
+\vspace{0.3cm}
+
+\begin{itemize}
+\item Models have unreasonably high confidence on non-sensical inputs~\cite{feng2018rawr}
+\item Confidence does not reflect model uncertainty $\to$ poor interpretation metric
+\end{itemize}
+
+\vspace{0.6cm}
+\center{\textbf{VQA}} \\
+\vspace{0.3cm}
+% \tikz\node[fill=white!80!colorvqa,inner sep=1pt,rounded corners=0.3cm]{
+\begin{tabular}{lp{0.5\columnwidth}p{0.17\columnwidth}}
+& & \multirow{4}{*}{\includegraphics[height=6cm]{figures/vqa_example}}\\ 
+Original & What color is the flower ? \\
+Answer & yellow \\
+\textbf{Reduced} & \textbf{flower ?} \\
+Confidence & 0.827 $\to$ 0.819  \\
+\end{tabular}
+% }; % end of tikz
+
+\center{\textbf{SNLI}}
+\vspace{0.3cm}
+\begin{center}
+% \tikz\node[fill=white!90!colorsnli,inner sep=1pt,rounded corners=0.3cm]{
+\begin{tabular}{lp{0.7\columnwidth}}
+Premise & Well dressed man and woman dancing in the street \\
+Original & Two man is dancing on the street \\
+Answer & Contradiction \\
+\textbf{Reduced} & \textbf{dancing} \\
+Confidence & 0.977 $\to$ 0.706 \\
+\end{tabular}
+% }; % end of tikz
+
+\end{center}
+\vspace{0.3cm}
+\end{block}
+
+\begin{block}{Deep k-Nearest Neighbors (DkNN)}
+\vspace{0.3cm}
+%\begin{center}DkNN replaces the softmax classifier with k-nearest neighbors.\end{center}
+\begin{itemize}
+\item DkNN replaces the softmax classifier with k-nearest neighbors~\citep{papernot2018dknn}.
+\item The \textit{conformity} score measures agreement among nearest neighbors.
+\item Conformity better measures a model's uncertainty than softmax confidence.
+\item \textbf{Our insight:} measure the change in conformity, not confidence, during leave-one-out.
+\end{itemize}
+\vspace{0.8cm}
+\begin{center}
+\includegraphics{figures/dknn-intuition.pdf}
+\end{center}
+\vspace{0.3cm}
+\end{block}
+
+\end{column} % end of left column
+\begin{column}{.5\linewidth}
+
+\begin{block}{DkNN for Text Classification}
+\begin{itemize}
+\item Train text classifiers (LSTM, CNN) using standard softmax output.
+\item Replace softmax with kNN at each layer's final representation.
+\item Does not affect text classification accuracy.
+\end{itemize}
+\begin{center}
+\begin{tabular}{l|cccccc}
+\toprule
+& \abr{sst} & \abr{cr} & \abr{trec} & \abr{mpqa} & \abr{subj} \\
+\midrule
+\lstm{} & 86.7 & 82.7 & 91.5 & 88.9 & 94.8 \\
+\lstm{} \dknn{} & 86.6 & 82.5 & 91.3 & 88.6 & 94.9 \\
+\cnn{} & 85.7 & 83.3 & 92.8 & 89.1 & 93.5 \\
+\cnn{} \dknn{} & 85.8 & 83.4 & 92.4 & 88.7 & 93.1 \\
+\end{tabular}
+\end{center}
+\end{block}
+
+\begin{block}{Interpreting Sentiment Analysis on SST}
+\begin{itemize}
+\item Comparing \textit{Conformity} Leave-one-out, \textit{Confidence} Leave-one-out, and input \textit{Gradient}.
+\item Conformity leave-one-out ignores extraneous words such as ``clash'', ``fiction'', or ``Diane''.
+\item Correctly identifies sentiment for ``terribly'' $\to$ trend holds across validation set.
+\end{itemize}
+\input{table_2}
+\end{block}
+\begin{block}{Interpreting Textual Entailment on SNLI}
+\begin{itemize}
+\item SNLI contains dataset artifacts~\citep{gururangan2018annotation} that make hypothesis-only models strong.
+\item Do normally trained models learn these artifacts?
+\item Artifacts are assigned high importance (e.g., ``sleeping'' highly correlates with contradiction) 
+\end{itemize}
+\input{table_3}
+\end{block}
+
+\begin{block}{Identifying SNLI Artifacts}
+\begin{itemize}
+\item We verify that known artifacts can be detected by our method.
+\item Find the average importance rank of the artifacts for all appearances.
+\item Conformity leave-one-out assigns higher average importance to dataset artifacts.
+\end{itemize}
+\begin{center}
+% \setlength{\tabcolsep}{2pt}
+\centering
+\begin{tabular}{clcc}
+\toprule
+\textbf{Label} & \textbf{Artifact} & \textbf{Conformity} & \textbf{Confidence} \\
+\midrule
+\multirow{5}{*}{\textbf{Contradiction}}
+& nobody & 1.00 & 1.00 \\
+& sleeping & 1.64 & 2.34 \\
+& no & 2.53 & 5.74 \\
+& tv & 1.92 & 3.74 \\
+& cat & 1.42 & 3.62 \\
+\midrule
+\multirow{5}{*}{\textbf{Neutral}}
+& tall & 1.09 & 2.61 \\
+& first & 2.14 & 2.99 \\
+& competition & 2.33 & 5.56 \\
+& sad & 1.39 & 1.79 \\
+& favorite & 1.69 & 3.89 \\
+\midrule
+\multirow{5}{*}{\textbf{Entailment}}
+& outdoors & 2.93 & 3.26 \\
+& least & 2.22 & 4.41 \\
+& instrument & 3.57 & 4.47 \\
+& outside & 4.08 & 4.80 \\
+& animal & 2.00 & 4.73 \\
+\end{tabular}
+% \caption{The top  artifacts identified by
+% \citet{gururangan2018annotation} are shown on the left. For each word, we
+% compute the average importance rank over the validation set using either
+% \textit{Conformity} or \textit{Confidence} \loo{}. A score of 1 indicates that
+% a word is always ranked as the most important word in the input.
+% \textit{Conformity} \loo{} assigns higher importance to artifacts, suggesting
+% it better diagnoses model biases.}
+% \label{table:words}
+\end{center}
+\end{block}
+
+\begin{block}{More please!}
+\small{
+\begin{itemize}
+	\item{Paper}: \url{arxiv.org/abs/1809.02847}
+    \item{Code}: \url{github.com/Eric-Wallace/deep-knn}
+    \item{Blog}: \url{zerobatchsize.net}
+    \item{More Interpretation Examples}: \url{sites.google.com/view/language-dknn}
+\end{itemize}
+}
+\end{block}
+
+\begin{block}
+\scriptsize{
+\bibliographystyle{plain}
+\bibliography{../../bib/journal-abbrv,../../bib/fs,../../bib/jbg}
+}
+\end{block}
+\end{column}
+\end{columns}
+\end{frame}
+\end{document} 

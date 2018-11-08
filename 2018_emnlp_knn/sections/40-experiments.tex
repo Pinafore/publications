@@ -1,0 +1,75 @@
+\section{\dknn{} Maintains Classification Accuracy}
+\label{sec:experiments}
+
+Interpretability should not come at the cost of performance---before investigating
+how interpretable \dknn{} is, we first evaluate its accuracy. We
+experiment with six text classification tasks and two models,
+verifying that \dknn{} achieves accuracy comparable to regular classifiers.
+
+\subsection{Datasets and Models}
+
+We consider six common text classification tasks: binary sentiment analysis
+using Stanford Sentiment Treebank~\cite[\abr{sst}]{socher2013recursive} and
+Customer Reviews~\cite[\abr{cr}]{hu2004mining}, topic classification using
+\emph{TREC} ~\cite{li2002trec}, opinion
+polarity~\cite[\abr{mpqa}]{wiebe2005mpqa}, and
+subjectivity/objectivity~\cite[\abr{subj}]{pang2004subj}. Additionally, we
+consider natural language inference with \abr{snli}~\cite{bowman2015snli}.
+We experiment with \bilstm{} and \cnn{} models.
+
+\paragraph{\cnn{}}
+Our \cnn{} architecture resembles \citet{kim2014convolutional}. We
+use convolutional filters of size three, four, and five, with max-pooling over
+time~\cite{collobert2008unified}. The filters are followed by
+three fully-connected layers. We fine-tune \abr{GloVe}
+embeddings~\cite{pennington2014glove} of each word. For \dknn{}, we use the
+activations from the convolution layer and the three fully-connected layers.
+
+\paragraph{\bilstm{}}
+Our architecture uses a bidirectional \lstm{}~\cite{graves2005framewise}, with
+the final hidden state forming the fixed-size
+representation. We use three \lstm{} layers, followed by
+two fully-connected layers. We fine-tune \abr{GloVe}
+embeddings of each word. For \dknn{},
+we use the final activations of the three recurrent layers and
+the two fully-connected layers.
+
+\paragraph{\abr{snli} Classifier}
+Unlike the other tasks which consist of a single input sentence, \abr{snli} has two inputs,
+a premise and hypothesis. Following \citet{conneau2017supervised}, we use the
+same model to encode the two inputs, generating representations $u$ for the
+premise and $v$ for the hypothesis. We concatenate these two representations along with
+their dot-product and element-wise absolute difference, arriving at a final
+representation $\left[u;v;u*v;\vert u-v\vert \right]$. 
+This vector passes through two fully-connected
+layers for classification. For \dknn{}, we use the
+activations of the two fully-connected layers.
+
+\paragraph{Nearest Neighbor Search}
+For accurate interpretations, we trade efficiency for accuracy and replace locally
+sensitive hashing~\cite{gionis1999lsh} used by
+\citet{papernot2018dknn} with a k-d tree~\cite{bentley1975kdtree}. We use $k = 75$
+nearest neighbors at each layer. The empirical results are robust to the choice
+of $k$.
+
+\subsection{Classification Results}
+
+\dknn{} achieves comparable accuracy on the five classification tasks
+(Table~\ref{table:prediction_accuracy}). On \abr{snli}, the \bilstm{} achieves
+an accuracy of 81.2\% with a softmax classifier and 81.0\% with \dknn{}.
+
+\begin{table*}[t]
+\centering
+\begin{tabular}{l|cccccc}
+\toprule
+& \abr{sst} & \abr{cr} & \abr{trec} & \abr{mpqa} & \abr{subj} \\
+\midrule
+\lstm{} & 86.7 & 82.7 & 91.5 & 88.9 & 94.8 \\
+\lstm{} \dknn{} & 86.6 & 82.5 & 91.3 & 88.6 & 94.9 \\
+\cnn{} & 85.7 & 83.3 & 92.8 & 89.1 & 93.5 \\
+\cnn{} \dknn{} & 85.8 & 83.4 & 92.4 & 88.7 & 93.1 \\
+\bottomrule
+\end{tabular}
+\caption{Replacing a neural network's softmax classifier with \dknn{} maintains classification accuracy on standard text classification tasks.}   
+\label{table:prediction_accuracy}
+\end{table*}
