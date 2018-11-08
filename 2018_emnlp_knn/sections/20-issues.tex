@@ -1,0 +1,80 @@
+\section{Interpretation Through Feature Attribution}
+\label{sec:saliency_approaches}
+
+Feature attribution methods explain a test prediction
+by assigning an importance value to each input
+feature (typically pixels or words).
+
+In the case of text classification, we
+have an input sequence of $n$ words $\mb{x}=\langle w_1, w_2, \ldots
+w_n\rangle$, represented as
+one-hot vectors. The word sequence is then converted to a sequence of
+word embeddings~$\mb{e}=\langle\bm{v}_1, \bm{v}_2, \ldots \bm{v}_n\rangle$.
+A classifier $f$
+outputs a probability distribution over classes.
+The class with the highest probability is selected as the prediction $y$, with its
+probability serving as the model confidence. To create an interpretation, each input word
+is assigned an importance value, $g(w_i \mid \mb{x}, y)$, which indicates the word's
+contribution to the prediction. A saliency map (or heat map)
+visually highlights the words in a sentence.
+
+\subsection{Leave-one-out Attribution}
+\label{sec:l10}
+A simple way to define the importance $g$ is via \loo{}~\cite{li2016understanding}: individually
+remove a word from the input and see how the confidence changes. The importance of
+word $w_i$ is the decrease in confidence\footnote{equivalently the change in class score or cross
+entropy loss} when word $i$ is removed:
+\begin{equation}
+\label{eq:importance}
+    g(w_i \mid \mb{x}, y) = f(y\mid\mb{x}) - f(y\mid\mb{x}_{-i}),
+\end{equation}
+where $\mb{x}_{-i}$ is the input sequence with the $i$th word removed and
+$f(y\mid\mb{x})$ is the model confidence for class $y$. This can be repeated for
+all words in the input.
+Under this definition, the sign of the importance value is
+opposite the sign of the confidence change: if a word's removal 
+causes a decrease in the confidence, it gets a positive
+importance value. 
+We refer to this interpretation method as \textit{Confidence} \loo{}
+in our experiments.
+
+\subsection{Gradient-Based Feature Attribution}
+\label{sec:gradient}
+In the case of neural networks, the model $f(\mb{x})$ as a function of word
+$w_i$ is a highly non-linear, differentiable function. Rather than leaving one word
+out at a time,
+we can simulate a word's removal by approximating
+$f$ with a function that is linear in $w_i$ through the first-order Taylor expansion. 
+The importance of $w_i$ is computed as the derivative of $f$ with respect to the one-hot vector:
+\begin{equation}
+    \frac{\partial f}{\partial w_i} \
+    = \frac{\partial f}{\partial \bm{v}_i}\frac{\partial \bm{v}_i}{\partial w_i} \ 
+    = \frac{\partial f}{\partial \bm{v}_i} \cdot \bm{v}_i 
+\end{equation}
+
+Thus, a word's importance is the dot product between the gradient of the class prediction
+with respect to the embedding and the word embedding itself.
+This gradient approximation simulates the change in
+confidence when an input word is removed and has been used in various interpretation
+methods for \abr{nlp}~\cite{arras2016explaining,
+ebrahimi2017hotflip}. We refer to this interpretation approach as \textit{Gradient}
+in our experiments. 
+
+\subsection{Interpretation Method Failures}
+
+Interpreting neural networks can have unexpected negative results. 
+\citet{ghorbani2017interpretation} and \citet{kindermans2017unreliability}
+show how a lack of model robustness and stability 
+can cause egregious interpretation failures in computer vision settings.
+\citet{feng2018rawr} extend this to \abr{nlp} and draw
+connections between interpretation failures and adversarial examples~\cite{szegedy2013intriguing}.
+To counteract this, new interpretation methods alone
+are not enough---models must be improved. For instance, 
+\citet{feng2018rawr} argue that interpretation methods should not rely
+on prediction confidence as it does not reflect a model's uncertainty.
+
+Following this, we improve interpretations by replacing
+the softmax confidence with a more robust uncertainty estimate
+using \dknn{}~\cite{papernot2018dknn}. This algorithm maintains
+the accuracy of standard image classification models
+while providing a better uncertainty metric capable of defending against adversarial examples.

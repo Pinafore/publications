@@ -1,0 +1,109 @@
+\PassOptionsToPackage{table}{xcolor}
+\documentclass[11pt,a4paper]{article}
+\usepackage[hyperref]{style/emnlp2018}
+\usepackage{xcolor}
+\usepackage{times}
+\usepackage{latexsym}
+\usepackage{amsmath}
+\usepackage{algorithm}
+\usepackage{amsfonts}
+\usepackage{lipsum}
+\usepackage{multirow}
+\usepackage{framed}
+\usepackage{graphicx}
+\usepackage{longtable}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{graphics}
+\usepackage{booktabs}
+\usepackage[flushleft]{threeparttable}
+\usepackage{tabularx}
+\usepackage{tikz}
+\usepackage{bm}
+\usepackage[all]{nowidow}
+
+\input{2018_emnlp_knn/colorize.tex}
+
+\definecolor{red2}{RGB}{215,25,28}
+\definecolor{red1}{RGB}{243, 164, 129}
+\definecolor{red0}{RGB}{253, 217, 196}
+\definecolor{blue2}{RGB}{42, 113, 178}
+\definecolor{blue1}{RGB}{123, 182, 214}
+\definecolor{blue0}{RGB}{213, 231, 241}
+
+\definecolor{pink2}{RGB}{213, 87, 157}
+\definecolor{pink1}{RGB}{238, 173, 212}
+\definecolor{pink0}{RGB}{248, 208, 231}
+\definecolor{green2}{RGB}{67, 134, 31}
+\definecolor{green1}{RGB}{127, 188, 65}
+\definecolor{green0}{RGB}{199, 232, 159}
+\usepackage{ragged2e}
+\newcolumntype{Y}{>{\RaggedRight\arraybackslash}X}
+
+\newcommand{\abr}[1]{\textsc{#1}}
+\newcommand{\dknn}{\textsc{DkNN}}
+\newcommand{\lstm}{\textsc{LSTM}}
+\newcommand{\bilstm}{\textsc{BiLSTM}}
+\newcommand{\cnn}{\textsc{CNN}}
+\newcommand{\loo}{leave-one-out}
+\newcommand{\mb}[1]{\boldsymbol{\mathbf{#1}}}
+\DeclareMathOperator*{\argmin}{\arg\!\min}
+\DeclareMathOperator*{\argmax}{\arg\!\max}
+\DeclareMathOperator*{\substr}{substr}
+\DeclareMathOperator*{\subseq}{subseq}
+\DeclareMathOperator*{\len}{len}
+
+
+\newif\ifcomment\commenttrue
+\ifcomment
+ \newcommand{\jbgcomment}[1]{ \colorbox{red}{   \parbox{.8\linewidth}{ JBG: #1}  }}
+ \newcommand{\fscomment}[1]{ \colorbox{green}{   \parbox{.8\linewidth}{ fs: #1}  }}
+ \newcommand{\ewcomment}[1]{ \colorbox{blue}{   \parbox{.8\linewidth}{ Eric: #1}  }}
+\else
+\newcommand{\jbgcomment}[1]{}
+\newcommand{\fscomment}[1]{}
+\newcommand{\ewcomment}[1]{}
+\fi
+
+\graphicspath{{2018_emnlp_knn/images/}, {2018_emnlp_knn/auto_fig/}}
+
+\aclfinalcopy
+
+\makeatletter
+\g@addto@macro{\UrlBreaks}{\do\/\do\-}
+\makeatother
+
+\makeatletter
+\def\BState{\State\hskip-\ALG@thistlm}
+\newcommand{\printfnsymbol}[1]{
+  \textsuperscript{\@fnsymbol{#1}}
+}
+\makeatother
+
+\title{Interpreting Neural Networks With Nearest Neighbors}
+
+\author{Eric Wallace\thanks{$^{\star}$Equal contribution} , Shi Feng\printfnsymbol{1}, Jordan Boyd-Graber\\
+University of Maryland \\
+  {\tt \{ewallac2,shifeng,jbg\}@umiacs.umd.edu} \\}
+\date{}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+    \input{2018_emnlp_knn/sections/00-abstract}
+\end{abstract}
+
+\input{2018_emnlp_knn/sections/10-intro}
+\input{2018_emnlp_knn/sections/20-issues}
+\input{2018_emnlp_knn/sections/30-deepknn}
+\input{2018_emnlp_knn/sections/40-experiments}
+\input{2018_emnlp_knn/sections/50-interpretation}
+\input{2018_emnlp_knn/sections/60-discussion}
+\input{2018_emnlp_knn/sections/70-conclusion}
+\input{2018_emnlp_knn/sections/ack}
+
+\bibliography{bib/journal-abbrv,bib/fs,bib/jbg}
+\bibliographystyle{style/emnlp_natbib}
+
+\end{document}
