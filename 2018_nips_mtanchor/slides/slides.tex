@@ -1,0 +1,114 @@
+\documentclass{beamer}
+
+\RequirePackage{natbib}
+\setcitestyle{authoryear,round,citesep={;},aysep={,},yysep={;}}
+
+\mode<presentation>
+{
+  \usetheme{default}
+  \usecolortheme{default}
+  \usefonttheme{professionalfonts}
+  \setbeamertemplate{navigation symbols}{}
+  \setbeamertemplate{caption}[numbered]
+}
+
+\usepackage[english]{babel}
+\usepackage[utf8]{inputenc}
+
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amsthm}
+\usepackage{bibentry}
+\usepackage{graphicx}
+\usepackage{bm}
+\usepackage{booktabs}
+\usepackage{tikz}
+\usepackage{xcolor}
+\usepackage{multirow}
+\usepackage[normalem]{ulem}
+\usepackage{pifont}
+\usepackage{array}
+\usepackage{multimedia}
+\usepackage{makecell}
+\usepackage{xspace}
+\usepackage{CJKutf8}
+
+
+\renewcommand{\ULthickness}{1.2pt}
+\graphicspath{{figures/}}
+
+\DeclareMathOperator*{\argmin}{\arg\!\min}
+\DeclareMathOperator*{\argmax}{\arg\!\max}
+\DeclareMathOperator*{\substr}{substr}
+\DeclareMathOperator*{\subseq}{subseq}
+\DeclareMathOperator*{\len}{len}
+
+\newcommand{\SubItem}[1]{
+    {\setlength\itemindent{15pt} \item[-] #1}
+}
+
+\input{colorize.tex}
+
+\definecolor{l10_color1}{HTML}{3232FF}
+\definecolor{coloranswer}{HTML}{0596FF}
+\definecolor{lightblue}{HTML}{3CC7EA}
+\definecolor{boxcolor}{HTML}{EEEEEE}
+\definecolor{periwinkle}{rgb}{0.8, 0.8, 1.0}
+\definecolor{colorsquad}{rgb}{0,1,0}
+\definecolor{colorsnli}{rgb}{1,0,0}
+\definecolor{colorvqa}{rgb}{1,1,0}
+
+\newcommand\BibTeX{B{\sc ib}\TeX}
+\newcommand{\abr}[1]{\textsc{#1}}
+\newcommand{\nlp}{\textsc{nlp}}
+\newcommand{\mb}[1]{\boldsymbol{\mathbf{#1}}}
+\newcommand{\g}{\, | \,}
+\newcommand{\mtanchor}{MTAnchor\xspace}
+\newcommand{\zh}[2][]{\begin{CJK*}{UTF8}{bsmi}{#1}{#2}\end{CJK*}}
+
+
+\newcommand*\colourcheck[1]{%
+  \expandafter\newcommand\csname #1check\endcsname{\textcolor{#1}{\ding{52}}}%
+}
+\colourcheck{blue}
+
+\title[NIPS]{Multilingual Anchoring: Interactive Topic Modeling and Alignment across Languages}
+\author{
+\small{
+\textbf{Michelle Yuan}$^1$ Benjamin Van Durme$^2$  Jordan Boyd-Graber$^1$
+} \\\vspace{10px}
+\footnotesize{$^1$University of Maryland $^2$John Hopkins University}
+}
+
+\begin{document}
+
+\begin{frame}
+    \titlepage
+\end{frame}
+
+% authors
+\input{sections/people}
+
+
+
+% 1. multilingual topic modeling
+\input{sections/10}
+% 2. anchoring
+\input{sections/20}
+% % % 3. multilingual anchoring/mtanchor
+\input{sections/30}
+% % % 4. experiments/results
+\input{sections/40}
+% % % 5. discussion/conclusion
+\input{sections/50}
+
+
+\begin{frame}[t, allowframebreaks]
+\frametitle{References}
+\bibliographystyle{../../style/emnlp2018}
+\small
+\bibliography{../../bib/journal-abbrv,../../bib/michelle,../../bib/jbg}
+\end{frame}
+
+
+\end{document}
