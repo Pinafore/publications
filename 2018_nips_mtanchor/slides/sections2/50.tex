@@ -1,0 +1,47 @@
+\begin{frame}{Comparing Topics}
+\begin{table}
+\scriptsize
+\centering
+\begin{tabular}{lllllll} \\
+Dataset & Method & Topic \\
+\midrule
+Wikipedia & \abr{mcta} & dog san movie mexican fighter novel california \\
+& & \zh{主演} \zh{改編} \zh{本} \zh{小說} \zh{拍攝} \zh{角色} \zh{戰士}\\
+& Multilingual anchoring & \textbf{adventure} daughter bob kong hong robert movie \\
+& & \zh{主演} \zh{改編} \zh{本片} \zh{飾演} \textbf{\zh{冒險}} \zh{講述} \zh{編劇} \\
+& \mtanchor & \textbf{kong hong movie} office martial box reception \\
+& & \zh{主演} \zh{改編} \zh{飾演} \zh{本片} \textbf{\zh{演員}} \textbf{\zh{編劇}} \zh{講述} \\
+\midrule
+Amazon & \abr{mcta} & woman food eat person baby god chapter \\
+& & \zh{來貨} \zh{頂頂} \zh{水} \zh{耳機} \zh{貨物} \zh{張傑} \zh{傑} \zh{同樣} \\
+& Multilingual anchoring & eat diet food recipe \textbf{healthy} lose weight \\
+& & \textbf{\zh{健康}} \zh{幫} \zh{吃} \zh{身體} \zh{全面} \zh{同事} \zh{中醫}\\
+\midrule
+\abr{lorelei} & \abr{mcta} & help need floodrelief please families needed victim \\
+& Multilingual anchoring & aranayake warning landslide site missing nbro areas \\
+\end{tabular}
+\end{table}
+\end{frame}
+
+\begin{frame}{Why Not Use Deep Learning?}
+\begin{itemize}
+\item Neural networks are data-hungry and unsuitable for low-resource languages
+\item Deep learning models take long amounts of time to train 
+\item Pathologies of neural models make interpretation difficult~\citep{feng-2018}
+\end{itemize}
+\end{frame}
+
+
+\begin{frame}{Summary}
+\begin{itemize}
+\item Anchoring algorithm can be applied in multilingual settings.
+\item People can provide helpful linguistic or cultural knowledge to construct better multilingual topic models.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Future Work}
+\begin{itemize}
+    \item Apply human-in-the-loop algorithms to other tasks in NLP.  
+    \item Better understand the effect of human feedback on cross-lingual representation learning.
+\end{itemize}
+\end{frame}
