@@ -55,90 +55,94 @@
 
 \begin{minipage}[b]{1\linewidth}
 \centering
-\veryHuge \color{blue} \textbf{Pathologies of Neural Models Make Interpretations
-Difficult} \\[0.4cm]
+\veryHuge \color{blue} \textbf{Pathologies of Neural Models Make Interpretation Difficult} \\[0.4cm]
 \color{black}\LARGE
 Shi Feng$^1$ Eric Wallace$^1$ Alvin Grissom~II$^2$ Mohit Iyyer$^{3,4}$ Pedro Rodriguez$^1$ Jordan Boyd-Graber$^1$\\[0.4cm]
 \Large
 \textit{$^1$University of Maryland $^2$Ursinus College $^3$UMass Amherst $^4$Allen Institute for Artificial Intelligence}\\
 \end{minipage}
 
-\vspace{0.6cm}
+\vspace{0.3cm}
 
 \begin{multicols}{2}
 
 \large
 
 \section*{Abstract}
-One way to interpret a neural text classifier is to highlight the most important
-words in the input. Existing methods of word importance estimate reply largely
-on model confidence---either directly by removing each word from the input, or
-indirectly with input gradient. To understand the limitations of
-confidence-based interpretation, we use input reduction, which iteratively
-removes the least important word. Input reduction produces nonsensical examples
-that trigger the same model prediction with high confidence. We explain this
-type of pathological behavior from the perspective of uncertainty estimate and
-adversarial examples. To mitigate the model deficiencies, we take the reduced
-examples and impose an entropy regularization. Fine-tuned models become more
-interpretable under input reduction without accuracy loss on regular examples.
-\vspace{0.6cm}
+\begin{itemize}
+\item We interpret text classifiers by highlighting important words in the input.
+\item The highlights are usually computed based on model confidence.
+\item We use input reduction to expose pathologies of model confidence;
+\item explain why this makes interpretation difficult;
+\item and propose a simple mitigation.
+\end{itemize}
+\vspace{0.3cm}
 
 \section*{Pathological Examples}
-Neural models are known to have issues...
-
-\vspace{0.6cm}
+Neural model confidence is known to have issues. Here we show a particular case:
+models making the same predictions with high confidence even when the inputs are
+reduced to only a few words and appear non-sensical to humans.
+\vspace{0.3cm}
+\begin{center}
 \includegraphics[width=\linewidth]{21}
-\vspace{0.6cm}
-
-\section*{Input Reduction}
-How do we generate those examples?
-
-\begin{center}\vspace{0.6cm}
-\includegraphics[width=0.9\linewidth]{15}
-\end{center}\vspace{0.6cm}
-
-
-\section*{Leave-One-Out}
-Input reduction is not stupid...
-
-\begin{center}\vspace{0.6cm}
-\includegraphics[width=0.9\linewidth]{9}
-\end{center}\vspace{0.6cm}
-
-\vfill\null
-\columnbreak
-
-\section*{On the Dataset Scale}
-This happens on the dataset scale...
-
-\begin{center}\vspace{0.6cm}
-\includegraphics[width=0.9\linewidth]{length_histogram}
+\vspace{0.3cm}
 \end{center}
 
+\section*{Interpretation with Leave-One-Out}
+\begin{itemize}
+\item Saliency maps indicate the ``importance'' of each word to the model's prediction.
+\item Simple importance function: remove each word and measure the confidence decrease.
+\end{itemize}
+\vspace{0.3cm}
 \begin{center}
-\includegraphics[width=0.6\linewidth]{confidence}
-\end{center}\vspace{0.6cm}
+\includegraphics[width=\linewidth]{9}
+\end{center}
+\vspace{0.3cm}
 
+\section*{Input Reduction}
+\begin{itemize}
+\item The way we generate the pathological examples follow the same principle.
+\item We iteratively remove the least important words from the input.
+\end{itemize}
+\vspace{0.3cm}
+\begin{center}
+\includegraphics[width=\linewidth]{15}
+\end{center}
+%\vspace{0.3cm}
 
-\section*{Human Are Confused}
-The reduced examples are indeed nonsensical...
+% \vfill\null
+% \columnbreak
 
-\begin{center}\vspace{0.6cm}
+\section*{Reduced Examples Are Extremely Short}
+\begin{itemize}
+\item All examples in the validation set can be drastically reduced.
+\item Model confidence remains high.
+\end{itemize}
+\begin{center}
+\includegraphics[width=0.9\linewidth]{length_histogram}
+\includegraphics[width=0.7\linewidth]{confidence}
+\end{center}
+
+\section*{Reduced Examples Are Non-sensical}
+\begin{itemize}
+\item And the reduced examples are not just short but also non-sensical to humans.
+\end{itemize}
+\begin{center}
 \includegraphics[width=0.8\linewidth]{29}
-\end{center}\vspace{0.6cm}
-
+\end{center}
 
 \section*{Heatmap Shifts}
-Importance measured individually ignores high-order correlation between words...
-
-\begin{center}\vspace{0.6cm}
+\begin{itemize}
+\item Importance is measured for each word individually.
+\item High-order correlations between between words are ignored.
+\item Removing an unimportant words can lead to a significant drop in the
+    importance of an important word.
+\end{itemize}
+\begin{center}
 \includegraphics[width=0.9\linewidth]{42}
-\end{center}\vspace{0.6cm}
-
+\end{center}
 
 \section*{Mitigation}
-There is still hope...
-
 \begin{center}
 \begin{equation}
 \sum_{(\mb{x}, y)}\log(f(y \g \mb{x})) \
@@ -146,6 +150,12 @@ There is still hope...
 \mathbb{H}\left(f(y \g \tilde{\mb{x}})\right) \nonumber
 \end{equation}
 \end{center}
+\begin{itemize}
+\item Treat reduced examples as negative.
+\item Models should not confidently predict any label.
+\item Maximize the entropy on reduced examples.
+\end{itemize}
+
 
 % \vspace{0.6cm}
 % \includegraphics[width=0.9\linewidth]{48}
@@ -160,13 +170,13 @@ There is still hope...
 % \vspace{0.6cm}
 
 
-\section*{Conclusions}
-\begin{itemize}
-\item Confidence of a neural model trained with MLE is not reliable for
-interpretation
-\item Existing interpretation methods ignore high-order correlation between
-words
-\end{itemize}
+% \section*{Conclusions}
+% \begin{itemize}
+% \item Confidence of a neural model trained with MLE is not reliable for
+% interpretation
+% \item Existing interpretation methods ignore high-order correlation between
+% words
+% \end{itemize}
 
 % \section*{Referencias}
 % \bibliographystyle{plain} % Plain referencing style
