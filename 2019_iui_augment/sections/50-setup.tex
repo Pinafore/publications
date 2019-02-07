@@ -1,0 +1,107 @@
+\section{Setup}
+\label{sec:setup}
+
+% 1. overview:
+%   reiterate that we eval viz by human performance
+%   briefly say how they cooperate
+%   briefly say how we control viz
+% This section explains how we use our interface to evaluate the
+% interpretations introduced in the previous section. 
+This section explains how human players and the computer guesser play
+in cooperation. To ensure accuracy and unbiasedness, we control what
+interpretations each player sees instead of letting them choose.
+
+\subsection{Data and Participants}
+
+% 2. data
+We collect 160 new questions for this evaluation that had not been 
+previously seen by the \qb{} community to avoid bias in players'
+exposure to questions.
+
+% 3. participants
+We recruit 40 experts (\qb{} enthusiasts) by advertising on an
+online forum, and 40 novices using MTurk. Experts are
+free to play as many questions as they want (but each player can only
+play a question once), and we encourage them to play more by offering
+monetary prizes for those who finish the whole question set. We
+require novices to each answer at least twenty questions and require
+a positive score at the end (according to standard \qb{} scoring
+rules) to encourage good faith responses. Online \qb{} platforms such
+as \url{Protobowl.com} are usually anonymous, so we do not collect
+any information about the participants other than an email
+address for collecting prizes (optional).
+
+\subsection{Human-AI Cooperation on \qb{}}
+
+% 4. how they team up
+Unlike previous work where \qb{} interfaces are used for computers to
+\emph{compete} with
+humans~\cite{boydgraber2012besting,he2016opponent}, our interface aims
+at human-\abr{ai} \emph{cooperation}. We let a human player form a
+team with a computer teammate and put the human in charge.  As the
+question is displayed word-by-word, the computer periodically updates
+its guesses and interpretations (every 4 words in our experiments); at
+any point before the question is fully read, the human can decide to
+buzz, interrupt the readout, and provide an answer. The
+interpretations should help the human better decide whether to
+trust the computer's prediction or not.
+
+% 5. lead-in to expert vs novice
+We have two different experimental settings. In the simpler,
+non-competitive \textbf{novice setting}, we have a single turker
+interact with the interface, with the computer guesser
+as teammate, but without opponents.
+% For the novice setting, we recruit workers on Mechanical Turk.
+
+% 6. expert 1
+The competitive \textbf{expert setting} better resembles real \qb{}
+games, and the players in this setting are experts
+that enjoy the game.
+To encourage them to play to the best of their ability, we
+simulate the \qb{} setting as closely as possible (for novices the
+simple task is already taxing enough without competition).  In a real
+\qb{} match, players not just compete against themselves (can I get
+the question right?) but also with each other (can I get the question
+right before Selene does?).  \qb{}'s pyramidality
+encourages competition: difficult clues at the start of the
+question help determine who knows the most about a subject.
+Our interface resembles \url{Protobowl.com}, a popular online \qb{}
+platform where players play against each other (but
+without the computer teammate).  The computer generates the same
+output (both prediction and interpretations), but human players might
+have access to different interpretations, e.g., David sees evidence while
+Selene sees question highlights. Next section discusses the setup in
+detail. 
+% The competitiveness of the expert setting is familiar to \qb{}
+% enthusiasts, whom we recruit via a \qb{} community forum.
+
+% 8. community effort
+Our experiment in the expert setting was possible thanks to \qb{}'s
+enthusiast community. It was because \qb{}ers love to play this game
+and to improve their skills by practicing, that they were willing to
+learn our interface, team up with the computer, and compete under this
+slightly irregular setting.  This provided us new perspectives of how
+users from a wider range of skill levels use interpretations,
+compared to many previous work that only had non-expert
+turkers~\cite{smith2017evaluating,kneusel2017improving,clark2018creative}.
+
+\subsection{Controlling Which Interpretations to Show}
+
+% 9. lead-in to controlling interpretations, need rework
+Each of the three interpretations can be turned on or off, so we have
+in total $2\times2\times2=8$ conditions, including the null condition
+where all interpretations are hidden.
+To compare within-subjects (players vary greatly based on their innate
+ability), we vary the interpretations a player sees randomly.  We
+sample the enabled combination with the goal of having, in
+expectation, a uniform distribution over players, questions, and
+interpretation combinations. For player $P$ at question $Q$, we sample
+from an eight-class categorical distribution, with the parameter of
+each combination~$C$ set to $N-\#(C, P)$, where $\#(C, P)$ is the
+number of times player~$P$ has seen the interpretation combination~$C$
+and $N$ is the expected count of each combination (in our case 
+the number of questions divided by eight).  In the expert setting,
+interpretations are sampled independently for each player, and players
+may (and usually do) see different interpretations.
+For all experiments, we only allow each player to answer each question
+once.

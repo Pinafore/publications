@@ -1,0 +1,237 @@
+\section{Discussion}
+\label{sec:discussion}
+
+% \fscomment{Need to explain in more detail, but the main takeaways are
+%
+% \begin{itemize}
+%     \item our evaluation is a good extrinsic and application-grounded
+%         evaluation
+%     \item the effectiveness of interpretations varies with different
+%         inputs and human users of different skill levels.  this
+%         suggests the possibility of making the interpretations more
+%         useful by automatically selecting ones to show based on the
+%         input, and adapting to specific human user. RL or bandit
+%     \item when computer performance is higher than human,
+%         interpretation should pay more attention to showing
+%         uncertainty
+% \end{itemize}
+% }
+
+% \jbgcomment{I've been moving stuff here that delayed the point in
+%   previous sections.  It's not well integrated or organized}
+%
+% \jbgcomment{Should have explicit design recommendations for people
+%   building human in the loop interfaces}
+
+% \subsection{Experts vs.\ Novices}
+% In our cooperative setting, experts and novices use model
+% interpretations differently.  Novices tend to be too trusting, playing
+% much more aggressively when visualizations are enabled
+% (Figure~\ref{fig:tools_buzz}).
+% Interpretations that require less processing appear more useful to
+% experts (Figure~\ref{fig:coefs}).
+% For tasks where computer performs on the same level as human experts
+% but shows different strengths,
+% interpretations should be intuitive, easy to
+% process.
+% An unstructured saliency mapping
+% over input features might not be effective enough
+% (Figure~\ref{fig:fail_to_convince}).
+
+The evaluation we present is grounded in a realistic setting, but also
+task-specific. This section discusses how our method can be directly
+applied to other settings, its limitations, and how we can incorporate
+other components such as an eye tracker to our framework for a more
+fine-grained assessment of interpretability.
+
+\subsection{Forms and Methods of Interpretation}
+
+Interpretations take on many forms, and within each form we have multiple
+methods to generate the interpretation. For example, to highlight
+salient input features for image classification, we can use variants
+of input gradient~\cite{baehrens2010explain, simonyan2013deep}.
+To optimize the generalizability of our results (despite being
+task-specific) and demonstrate the flexibility of our method, we
+focus on a comparison between forms of interpretation. To
+select one method of each form, we choose a
+high-performance linear model for its canonical interpretations.  Our
+evaluation framework, including the interface and the regression
+analysis, can be directly applied to a different comparison---one
+between multiple methods of the same form.  This comparison is
+particularly useful in the case of neural models, where all existing
+interpretations are some approximation, and the evaluation of
+how faithful they are to the model is crucial.
+
+
+\subsection{Intrinsic and Extrinsic Evaluation}
+
+Our approach is an extrinsic evaluation~\cite{narayanan2018humans}. The
+task is played by thousands who compete in regularly.  Using
+\qb{} allows a contextual, motivated evaluation of whether an
+interpretation is useful. In contrast, intrinsic evaluation relies on
+the interpretation alone. It is more direct but limited. In tasks
+where no ground-truth explanation is available, the most tractable and
+commonly used method is to construct ground-truth using a simpler
+model as a benchmark for interpretability. For example, weights of linear models are
+used for evaluating input highlight
+explanations~\cite{li2016understanding,murdoch2018cd}.
+This is restricted to tasks where the benchmark model performs
+similarly to the complex model that requires interpretation, and it
+does not work in application-grounded setting
+(Section~\ref{sec:eval_qb}).
+
+Extrinsic evaluations are hard to design, as they are affected by more
+factors, especially humans' trust. When a user does not trust the
+model and ignores it, the difference in the performance is not
+affected by the explanations at all. Narayanan~\etal{}~\cite{narayanan2018humans} uses
+``alien'' tasks to enforce trust, tasks that humans do not have
+knowledge of. Our approach, in contrast, considers trust as an
+inherent part of the cooperation: good interpretations should be
+consistent and intuitive to convince humans to use it.
+
+% generalizability
+% 1. comparison between underlying algorithms
+% 2. other tasks
+% This paper focuses on comparing forms of
+% interpretations, so we limited the experiment to one method in each
+% form. However, our evaluation framework, the interface, and the
+% experimental setup can be naturally adapted to other comparisons, for
+% example, between different underlying algorithms within each
+% form, or between different models with interpretation methods fixed.
+
+\subsection{Generalizing to Other Tasks}
+Our method can be applied to natural language tasks other than
+\qb{}, although \qb{}'s characters make it uniquely suitable.  To use
+our interface for some other text classification task, for example
+sentiment analysis or spam detection, one can convert the task into an
+incremental version where the input is shown
+word-by-word. Time limitation or competition can be added to
+encourage the users to pay attention to
+visualizations~\cite{narayanan2018humans}. One task
+related to \qb{} has wide real world application: simultaneous
+interpretation (or simultaneous translation, not to be
+confused with model interpretation). Interpreters need to trade off
+between accuracy and delay, much like \qb{}ers need to balance
+accuracy and aggressiveness. The underlying mechanism of the
+\abr{qanta} buzzer~\cite{he2016opponent} also resembles how
+simultaneous translation systems handle this
+trade-off~\cite{Grissom-14}.
+
+% limitations
+% 1. UI design, equal exposure (placement)
+% 2. ordering of questions, learning curve
+\subsection{Limitations}
+First, because we
+compare visualizations individually and in combinations, their
+placement is fixed to avoid confusing the players. The fixed
+placement leads to uneven exposure to the users, so they might pay
+less attention to some visualizations than others. If we focus on
+individual visualizations, one way to resolve this issue is to display
+the interpretation in a single fixed location, for example below the
+question area. This would lead to a fair display of different
+visualizations without confusing the users. However, one single
+location might not suit all visualizations: for example, input
+highlight should collocate with the input, while evidence is best
+displayed next to the input for comparison.
+
+Visualizations displayed on our interface change from question to
+question, and the randomization (Setup)
+might confuse the users. Before answering questions, each user sees
+a tutorial that walks through the components of the interface,
+but this can be improved by a set of warm-up questions to familiarize
+the users of the interaction, which we will implement in future
+studies. In addition, we can randomly sort the questions instead of
+the visualizations, so the users see the same layout for multiple
+questions, reducing context switches and consequently the cognitive
+load.
+
+Another limitation of our study is that, when a player's performance
+improves with some interpretation, we cannot tell how much of that
+improvement comes from the player using that interpretation.
+We cannot derive causality from correlation. The key
+missing factor is how much attention the player gave the interpretation,
+and how much the decision is based on that. The attention the player
+gave each interpretation could be measured using an eye tracker, and we
+leave this to future work.
+
+
+% \subsection{A Question of Trust}
+%
+% However, we believe that trust should not be separated from the
+% evaluation, as it is an inherent part of a human-in-the-loop
+% system. There will always be a varying degree of trust in the system
+% when it is used in the real world. And to keep the end-to-end
+% assessment consistent with the real world, we should not force trust
+% in our extrinsic evaluations. Moreover, it would be ideal if we can
+% simlutate different degrees of human trust to make the evaluations
+% more realistic and accurate.
+%
+% Trust can be affected by many factors: accuracy of the system,
+% consistency of the explanation, and also external rewards. Reward
+% structures of competitive environments can incentivize humans to use
+% the model outputs in a certain way.  For example, when a large
+% negative reward is given on incorrect prediction, the users would be
+% encouraged to be more careful and less reliant on the model. By tuning
+% the external rewards, we can achieve more fine-grained control,
+% without resorting to ``alien" tasks.
+%
+% One benefit of our framework as a competition is that we can adjust
+% players' loss function through the \qb{} scoring mechanism.  For
+% example, we can offer ``power'' points for early answers (typically in
+% competition) or increase the penalty for getting questions wrong
+% (sometimes seen with larger player pools).  This can encourage players
+% to depend on the visualization more (increasing rewards) or to be more
+% skeptical (increasing penalties).
+
+%% \subsection{Trust Factor and Threat to Validity}
+%% As mentioned in Section~\ref{sec:eval_qb}, degree of trust can be adjusted by
+%% tuning the reward structure, but we cannot guarantee consistent trust across
+%% player. The main threat to the validity of our results is the variance in player
+%% baseline performance, difficulty of questions, and degree of trust. We plan to
+%% collect more data, which would allow the regression analysis to factor out these
+%% variance more accurately.
+
+% \subsection{Persuasive vs. Informative}
+
+\subsection{Future Work}
+
+While we focus on broad categories of interpretations to reveal that
+some visualizations are more effective than others (e.g., highlighting
+is more useful than guess lists), we can also use this approach to
+evaluate specific highlighting methods in a task-based setting.  This
+can help reveal how best to choose spans for highlighting, which words are best
+suited for highlighting, and how to convey uncertainty in
+highlighting.
+
+While our evaluation focuses on the downstream task, we can expand
+our analysis to measure how much users look at visualizations and in
+what contexts (e.g., with an eye tracker).  This would reveal situational usefulness of
+visualization components; if, for example, highlighting were only
+useful to distinguish when two guesses had similar scores, we could
+decrease cognitive load by only showing highlights when needed.
+
+A tantalizing extension is to make these modifications automatically,
+using the reward of task performance to encourage a reinforcement
+learning algorithm to adjust interface elements to optimize
+performance: such as changing font sizes, setting buttons for users to
+explicitly agree or disagree with model predictions, or modifying the
+highlighting strategy.
+
+% \subsection{Other Tasks}
+%
+% Another possible extension is to convert any language task into a
+% competitive version for interpretation evaluation. Natural language is
+% inherently sequential, so converting the tasks into incremental
+% versions is trivial. Then we can turn them into competitive games. For
+% example, predicting the verb in simultaneous translation is very
+% similar to the \qb{} answering task~\cite{Grissom-14}.  By comparing
+% the evaluation in both incremental and non-incremental settings, we
+% might be able to quantitatively determine whether the competitiveness
+% achieved by this conversion indeed lead to more realistic and accurate
+% evaluation.
+%
+% Previous work have studied the evaluation of interpretation in
+% cooperative~\ref{Antunes2008StructuringDF}, and
+% application-grounded~\ref{williams2016axis} settings. However, our
+% work is the first to conduct application-grounded evaluation in
+% natural language processing domain.

@@ -1,0 +1,172 @@
+\section{Related Work}
+\label{sec:related}
+
+\subsection{Human-AI Cooperation}
+% 1. usability of ai is a concern
+Explainability is a central problem of applied \abr{ai}, with research
+stretching back to the days of expert
+systems~\cite{swartout1983xplain}.
+% Early work exposes the potential lack of usability of \abr{ai}:
+% Suchman~\cite{suchman1987plans} criticizes that \abr{ai}'s rigid
+% concepts of ``plans and goals'' are incompatible with how people
+% behave in the real world.
+The recent surge of interest in this area is the
+result of the success of \abr{ml} models based on neural networks,
+a.k.a.\ deep learning~\cite{lecun2015deep}. These complicated models
+have stupendous predictive power, but at the same time brittle, best
+demonstrated by the existence of adversarial
+examples~\cite{goodfellow2014explaining}, where small perturbation to
+the input leads to significant change in the model output.
+From a practical standpoint, the inscrutability of these models makes
+it difficult to integrate into real world decision-making in high risk
+areas such as urban planning, disease diagnosis, predicting insurance
+risk, and criminal justice.
+The fairness, accountability, and transparency of machine learning
+remain a concern~\cite{acm2017public}, which is reflected in the
+``right to explanation'' in European Union's new General Data
+Protection Regulation~\cite[\abr{gdpr}]{gdpr}. 
+
+% 2. importance of interpretation
+Thus, \abr{ml} model predictions need explanations.
+Efforts including the Explainable \abr{ai} (\abr{xai})
+initiative~\cite{gunning2017explainable} led to the conceptualization
+of a series of human-\abr{ai} cooperation paradigms, including
+human-aware \abr{ai}~\cite{chakraborti2017ai}, and human-robot
+teaming~\cite{vinson2018human}. 
+As an example, Schmidt and Herrmann~\cite{schmidt2017intervention}
+recognize the importance of interpretability when interacting with
+autonomous vehicles.
+Such need motivated the \abr{ml} community to develop interpretation
+methods for deep neural models~\cite[\em inter
+alia]{baehrens2010explain, simonyan2013deep}.
+
+% 3. moved to next subsection
+
+% 4. previous hci work on evaluation of interpretation
+The \abr{hci} community has a rich body of research towards making
+computers more usable, for example in interaction
+design~\cite{ju2008design} and software
+learnability~\cite{grossman2009survey}.
+To borrow insights from the human side,
+Miller~\cite{miller2017explanation} provides an overview of social
+science research regarding how people define, generate, select,
+evaluate, and present explanations.
+Still, interpreting \abr{ml} models has its unique challenges.
+Krause~\etal{}~\cite{krause2016interacting} compare different \abr{ml}
+models under one visualization method, partial dependency.
+Smith~\etal{}~\cite{smith2017evaluating} and
+Lee~\etal{}~\cite{lee2017human} focus on the
+interpretation of topic models. In contrast, we compare interpretation
+of classification models across various forms, making
+our framework more generalizable to other tasks and interpretation
+methods.
+
+\subsection{Interpretation of Machine Learning Models}
+
+% 5. forms interpretations
+Interpretations can take on several different forms.
+We focus on interpretation in the form of uncertainty, important
+input features, and relevant training examples.  Some \abr{ml} models
+provide canonical interpretations.
+% For the sparse linear classifier
+% used in \abr{lime}~\cite{ribeiro2016lime}, important input features
+% can be identified by inspecting the coefficients.
+For models such as
+decision trees and association rule
+lists~\cite{lakkaraju2016interpretable, letham2015interpretable}, the
+interpretation is built in the prediction itself.  However, most
+state-of-the-art models in vision and language---domains with the
+widest range of applications---are deep neural models with hundreds of
+thousands of parameters. Next we introduce previous work on
+interpreting both simpler linear models and more complicated neural
+networks, in each of the three forms.
+
+% 6. uncertainty
+\paragraph{Conveying Uncertainty}
+Augmenting the prediction from a neural network classifier with a
+confidence score (a value between zero and one) conveys the
+uncertainty of the model. In a cooperative setting, the uncertainty
+helps humans decide to trust the model or
+not~\cite{antifakos2005towards, rukzio2006visualization}. To make it
+more informative, we can also display the confidence for the
+classes other than the top one~\cite{liu2017towards}.
+Confidence of simple linear models are usually
+well-calibrated, but estimating uncertainty for a deep neural model
+is challenging: due to overfitting, they are over-confident 
+and require careful calibration~\cite{guo2017calibration,
+feng2018rawr}.
+% Sometimes uncertainty estimate needs to be combined with anomaly
+% detection to be robust~\cite{hendrycks2016baseline,feng2018rawr}.
+
+% 7. input features
+\paragraph{Highlighting Important Features}
+Model predictions can be explained by
+highlighting the most salient features in the input, typically visualized
+by a heat map.  For a linear classifier, the most salient features
+are the ones with the largest corresponding coefficients;  For
+non-linear classifiers, the relevance of a feature can be calculated
+by the gradient of the loss function w.r.t.\ that
+feature~\cite{simonyan2013deep}.
+Alternatively, one can locally approximate a non-linear classifier
+with a simpler linear model, then use the coefficients to explain the
+predictions from the non-linear model~\cite{ribeiro2016lime}.
+
+% 8. training examples
+\paragraph{Interpretation by Example}
+We can explain a prediction on a test example by finding the most
+influential training examples.  Various metrics exist for finding
+important training examples, such as distance in the representation
+space which is natural to linear models, clustering algorithms and
+their deep variation~\cite{papernot2018dknn}, and influence
+functions~\cite{koh2017influence} for non-linear models.
+
+As we discuss in Section~\ref{sec:eval_qb}, although our experiments
+use a linear classifier,  our method can be generalized to evaluating
+these methods designed for neural models
+(Section~\ref{sec:discussion}).
+
+\subsection{Evaluation of Interpretation}
+
+% 3. interpretation evaluation is difficult
+A fair and accurate assessment of interpretations is crucial for
+improving the understability of \abr{ai} and consequently
+human-\abr{ai} cooperation.
+Although interpretation methods have rigorous mathematical
+formulations, some even axiomatically
+derived~\cite{sundararajan2017axiomatic}, it remains unclear how we
+can evaluate the efficacy of these methods on \emph{real tasks} with
+\emph{real users}. Lipton~\cite{lipton2016mythos} argues that there is no
+clear agreement on what interpretability means: looking at \abr{ml}
+models alone, no definitive answer exists as in what would be the best
+interpretation in both faithfulness to the model and usefulness
+to humans.
+
+% 9. interpretation evaluation is important
+As it is widely accepted that machine learning models should be
+evaluated beyond natural examples, e.g., in adversarial
+settings~\cite{goodfellow2014explaining, jia2017adversarial},
+the evaluation of interpretation should not be limited to being
+visually pleasing. Indeed, interpretations can be fragile under small
+input perturbations~\cite{ghorbani2017interpretation,
+kindermans2017unreliability}, unfaithful to the
+model~\cite{hooker2018evaluating, adebayo2018sanity, feng2018rawr},
+and create a false sense of security~\cite{jiang2018trust}.
+
+% 10. finale's work on interpretation evaluation
+Conditioning a more realistic setting, Doshi-Velez and
+Kim~\cite{doshivelez2017towards}
+provide an ontology of various evaluations of interpretation with a
+human in the loop. Following this framework,
+Narayanan~\etal{}~\cite{narayanan2018humans} conduct
+one such evaluation with synthetic tasks and hand-crafted
+interpretations to study their desirable cognitive properties.
+
+% 11. overview of what we do
+We focus on \emph{application-grounded} evaluation---real tasks with
+real users.  This setting best aligns with what interpretations are
+intended for---improving human performance on the end task.  However,
+application-grounded evaluation is also challenging because it
+requires real tasks and motivated real users. The task needs a large
+pool of willing human testers, and ideally one that challenges both
+humans and computers. As we discuss in the next section, \qb{} is a
+task that satisfies these conditions.
