@@ -1,0 +1,152 @@
+\section{Interpretation Testbed: Quizbowl}
+\label{sec:eval_qb}
+
+% 1. lead-in
+This section introduces \qb{}, our testbed for evaluating the three
+forms of interpretations. We discuss how the task suits our purposes,
+which model to use, and how we generate the interpretations.
+
+\subsection{\qb{} and Computer Models}
+
+% 2. overview of the task
+\qb{} is both a challenging task for
+machine learning~\cite{boydgraber2012besting} and a trivia game played
+by thousands of students around the world each year. Each question
+consists of multiple clues, presented to the players
+\emph{word-by-word}, verbally or in text.
+The ordering of \qb{} clues is
+\emph{pyramidal}---difficult clues at the beginning, easy clues at the
+end, and the challenge is to answer with as few clues as possible.
+For a question with $n$ words, the players have $n$ chances to decide
+that \emph{this is all the information I need to answer the question}.
+The player can do so by \emph{buzzing} before the question is fully
+read, which interrupts the readout so
+the player provide an answer. Whoever gets the answer correct first
+wins that question and receives ten points.\footnote{Like previous
+work, we only consider \emph{toss-up}/\emph{starter} questions.} But
+when players buzz and answer incorrectly, they lose five points.
+Success in \qb{} requires a player to not only be knowledgeable but
+also balance between aggressiveness and
+accuracy~\cite{he2016opponent}.
+
+% 6. qb challenges computers and humans in different ways
+\qb{} challenges humans and computers in different
+ways~\cite{boydgraber2012besting, wallace2018trick}.  Computers can
+memorize every poem and book ever written, making it trivial to
+identify quotes.  Computers can also memorize all of the \emph{reflex
+clues} that point to answers (e.g., if you hear ``phosphonium ylide'',
+answer \underline{Wittig}) and apply them without any higher reasoning.
+Humans can chain together evidence (``predecessor of the Queen who
+pardoned Alan Turing'') and solve wordplay (``opera about an enchanted
+woodwind instrument'').  
+Thus, \qb{} is representative of tasks where human-computer
+cooperation 
+has huge potential~\cite{Thompson-13}. This also makes \qb{} a
+suitable testbed for interpretation methods designed to better
+interface humans and computers.
+
+Thus, instead of trying to beat humans with computers, we team
+them together and use their cooperation to
+measure the effectiveness of interpretations.  In our cooperative
+setting, instead of having a model to decide when to buzz in,
+\emph{the human needs to decide when the system has a good guess}.
+When answering a \qb{} question---which takes many steps, the human
+constantly interacts with the model, which provides many opportunities
+to evaluate the interpretability of models.  Every word provides new
+evidence that can change the underlying interpretation and convince
+the human that the system has a good answer to offer.
+Furthermore, the competitiveness of
+\qb{} encourages humans to use the help from the computers as much as
+possible, avoiding a degenerate scenario where the users solve the
+task on their own. It also attracts a large pool of enthusiastic
+participants, which is crucial for application-grounded evaluations.
+Sesction~\ref{sec:setup} discusses the cooperation in detail.
+
+% \jbgcomment{Not too important for IUI, but I would reframe as a linear
+% decision function and you can talk about the feature set.  This would
+% be useful for when we share it with ML researchers.}
+
+% 3. model
+As mentioned in Section~\ref{sec:intro}, we focus on the comparison
+between three forms of interpretation, using one method for each form.
+But which method to use?  Linear models provide canonical
+interpretations: important features and relevant training examples can
+be identified based on the coefficients. On the other hand, neural
+models do not have
+canonical interpretations: 
+all interpretations are approximations, which by definition are not
+completely faithful to the model~\cite{rudin2018please}.
+% To avoid conflating the faithfulness with usefulness, we choose a
+% linear model for our experiments.
+
+Luckily in the case of \qb{}, we have linear models with
+performance on par or better than neural models.
+\abr{qanta}~\cite{iyyer2014ann} is a simple, powerful, and
+interpretable system for \qb{}. A stripped-down, minimal version of it
+is provided to participants in the \abr{nips} 2017 Human-Computer
+Question Answering competition~\cite{nips2018qbcomp}.  We use the
+\emph{guesser} of \abr{qanta}, which has a linear decision function
+built on ElasticSearch~\cite[\abr{es}]{gormley2015es}.  As the name
+implies, guesser generates guesses for what the answer to a question
+could be.  Despite its simplicity, \abr{es}-based
+systems perform very well on \qb{}, defeating top trivia
+players.\footnote{\url{https://youtu.be/bYFqMINXayc}}
+
+\subsection{Interpretation of a Question Answering Model}
+
+% talk again about the choice of linear model here
+
+% 9. maybe merge with the previous one
+Our goal is to see which forms of interpretation are most
+helpful to the users, and a linear model with natural
+interpretations makes this easy.  Our \abr{es}-based \qb{} model
+supports three forms of interpretations, each corresponding to a class
+of methods widely studied in recent literature as mentioned in the
+previous section.
+Given a question never seen in the training set, \abr{es} mainly uses
+tf-idf features to find the
+most relevant training example, which is either a Wikipedia page or a
+previously seen \qb{} question, and then uses the label of that
+document as the answer.
+
+% 10. how to get scores
+To convey the uncertainty of model predictions, we augment the top ten
+guesses from our model with their corresponding scores. 
+Unlike regular classification models, \abr{es} does not output 
+a probability distribution over all possible answers.  Its scores
+measure the relevance between the question and training examples, but
+are not normalized.
+We keep the scores unnormalized to stay true to the model.
+Despite its simplistic form, these scores provide strong
+signal about model uncertainty, for example, a large gap between the
+top two scores usually indicate a confident prediction.
+% The buzzer module of \abr{qanta}, whose job is decide when to buzz in,
+% relied on only these scores to defeat top human
+% players~\cite{nips2018qbcomp}.
+
+% 11. how to get important input features
+Interpretation by example---getting the \emph{evidence}---is
+straightforward with our \abr{es}-based model.
+The prediction is the label of the most relevant documents, so
+the extracted documents are naturally the most salient training
+examples.  We can further identify the most important words in each
+retrieved training example, using the highlight
+\abr{api}\footnote{\url{https://www.elastic.co/guide/en/elasticsearch/reference/current/search-request-highlighting.html}}.
+This gives us \emph{evidence highlights}.
+The player can make a better decision of whether to trust the computer
+prediction by judging how relevant the evidence is to the question.
+
+% 12. how to get training examples
+To highlight important input features---generating \emph{question
+highlights}---we build on the previous \emph{evidence highlights}.
+The most
+important words in the question naturally emerge when we compare the
+question against the most salient training example.  Specifically, we
+go through the question and find words that appear highlighted in the
+evidence. Question highlights inform the player whether the computer
+is looking at the right keywords in the question.
+
+Although generating \emph{question highlights} depends on
+\emph{evidence highlights}, the former can be displayed without the
+later. We discuss how we control which interpretation to display in
+the next two sections.
