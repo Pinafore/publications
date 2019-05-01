@@ -1,0 +1,64 @@
+\section{A New Adversarially-Authored Dataset}\label{sec:human}
+
+Our adversarial dataset consists of \ntotalquestions{} questions with
+\ntotalsentences{} sentences across diverse topics (Table~\ref{table:categories}).\footnote{Data available at \url{http://trickme.qanta.org}.} There are \ntotalIR{} questions  
+written against the \abr{ir} system and \ntotalNeural{} against the
+neural model by \ntotalwriters{} unique authors.
+We plan to hold twice-yearly competitions
+to continue data collection.
+
+\begin{table}
+\centering \small
+\begin{tabular}{lr}
+\toprule
+Science                        & 17\%                  \\
+History                        & 22\%                  \\
+Literature                     & 18\%                  \\
+Fine Arts                      & 15\%                  \\
+Religion, Mythology,           & \multirow{2}{*}{13\%} \\
+Philosophy, and Social Science &                       \\
+Current Events, Geography,     & \multirow{2}{*}{15\%} \\
+and General Knowledge          &                       \\
+\midrule
+Total Questions & \ntotalquestions{} \\
+\bottomrule
+\end{tabular}
+\caption{The topical diversity of the questions in the \challenge{}
+  dataset based on a random sample of 100 questions.}
+\label{table:categories}
+\end{table}
+
+\subsection{Validating Questions with Quizbowlers}
+\label{sec:validation}
+
+We validate that the \challenge{} questions are not of poor quality or too difficult for humans. 
+We first automatically filter out questions based on
+length, the presence of vulgar statements, or repeated submissions
+(including re-submissions from the \qb{} training or evaluation
+data). 
+
+We next host a human-only \qb{} event using intermediate
+and expert players (former and current collegiate \qb{} players).
+We select sixty \challenge{} questions and sixty standard high
+school national championship questions, both with the same number of
+questions per category (list of categories in Table~\ref{table:categories}).
+
+To answer a \qb{} question, a player interrupts the question: the
+earlier the better.  To capture this dynamic, we
+record both the average answer
+position (as a percentage of the question, lower is better) and 
+answer accuracy. We shuffle the regular and \challenge{}
+questions, read them to players, and record these two metrics. 
+
+The \challenge{} questions are on average \emph{easier} for humans
+than the regular test questions. For the \challenge{} set, humans buzz
+with 41.6\% of the question 
+remaining and an accuracy of 89.7\%. On the standard questions, humans
+buzz with 28.3\% of the question remaining and an accuracy of
+84.2\%. The difference in accuracy between the two types of questions
+is not significantly different ($p = 0.16$ using Fisher's exact test),
+but the buzzing position is earlier for \challenge{}
+questions ($p = 0.0047$ for a two-sided $t$-test). We expect the questions
+that were not played to be of comparable difficulty because they went through
+the same submission process and post-processing. We further explore the
+human-perceived difficulty of the \challenge{} questions in Section~\ref{subsec:live}.

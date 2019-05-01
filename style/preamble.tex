@@ -23,8 +23,10 @@
 
 
 % Below should be safe
+\usepackage{framed}
 \usepackage{mdwlist}
 \usepackage{latexsym}
+\usepackage{xcolor}
 \usepackage{nicefrac}
 \usepackage{booktabs}
 \usepackage{amsfonts}
@@ -43,14 +45,16 @@
 
 \newcommand{\breakalign}{\right. \nonumber \\ & \left. \hspace{2cm}}
 
-\newcommand{\qb}[0]{Quizbowl}
+
+
 \newcommand{\feat}[1]{{\small \texttt{#1}}}
 \newcommand{\act}[1]{{\small \texttt{#1}}}
 \newcommand{\ngram}[0]{$n$-gram}
 \newcommand{\topic}[1]{\underline{#1}}
 \newcommand{\gem}[1]{\mbox{\textsc{gem}}}
 \newcommand{\abr}[1]{\textsc{#1}}
-\newcommand{\camelabr}[2]{{\scriptsize #1}{\textsc{#2}}}
+\newcommand{\camelabr}[2]{{\small #1}{\textsc{#2}}}
+\newcommand{\abrcamel}[2]{{\textsc #1}{\small{#2}}}
 \newcommand{\grammar}[1]{{\color{red} #1}}
 \newcommand{\explain}[2]{\underbrace{#2}_{\mbox{\footnotesize{#1}}}}
 \newcommand{\dir}[1]{\mbox{Dir}(#1)}
@@ -62,7 +66,7 @@
 \newcommand{\wn}{\textsc{WordNet}}
 \newcommand{\twentynews}{\textsc{20news}}
 \newcommand{\g}{\, | \,}
-\newcommand{\G}[1]{\Gamma \left( \textstyle #1 \right)}
+\newcommand{\Gam}[1]{\Gamma \left( \textstyle #1 \right)}
 \newcommand{\LG}[1]{\log \Gamma \left( \textstyle #1 \right)}
 \newcommand{\Pois}[1]{\mbox{Poisson}(#1)}
 \newcommand{\pcfg}[3]{#1_{#2 \rightarrow #3}}
@@ -72,6 +76,16 @@
 \newcommand{\digambig}[1]{\Psi \left( #1 \right) }
 \newcommand{\digam}[1]{\Psi \left( \textstyle #1 \right) }
 \newcommand{\ddigam}[1]{\Psi' \left( \textstyle #1 \right) }
+
+\DeclareMathOperator*{\argmax}{arg\,max}
+\DeclareMathOperator*{\argmin}{arg\,min}
+\newcommand{\bmat}[1]{\text{\textbf{#1}}}
+\newcommand{\bvec}[1]{\boldsymbol{#1}}
+
+\newcommand{\email}[1]{ {\small \href{mailto://#1}{\texttt{#1} }  }}
+\newcommand{\emaillink}[2]{ {\small \href{mailto://#2}{\texttt{#1} }  }}
+
+\newcommand{\ch}[1]{\begin{CJK*}{UTF8}{gbsn}#1\end{CJK*}}
 
 \newcommand{\e}[2]{\mathbb{E}_{#1}\left[ #2 \right] }
 \newcommand{\h}[2]{\mathbb{H}_{#1}\left[ #2 \right] }
@@ -83,89 +97,46 @@
 \newcommand{\hidetext}[1]{}
 \newcommand{\ignore}[1]{}
 
-\ifcomment
-\newcommand{\nahocomment}[1]{
-\colorbox{yellow}{   \parbox{.8\linewidth}{\scriptsize NAHO: #1}  }}
-\newcommand{\shcomment}[1]{ \colorbox{green}{  \parbox{.8\linewidth}{ SH:  #1}}}
-\newcommand{\mjpcomment}[1]{   \colorbox{blue}{MJP: #1}}
-\newcommand{\jbgcomment}[1]{  \colorbox{red}{   \parbox{.8\linewidth}{ JBG: #1}  }}
-\newcommand{\ffcomment}[1]{  \colorbox{yellow}{   \parbox{.8\linewidth}{ FF: #1}  }}
-\newcommand{\fpcomment}[1]{  \colorbox{green}{   \parbox{.8\linewidth}{ FP: #1}  }}
+\newcommand{\todo}[1]{\textcolor{red}{{\bf TODO: #1}}}
 
-\newcommand{\yhcomment}[1]{  \colorbox{green}{  \parbox{.8\linewidth}{ YH:  #1}
-}}
-\newcommand{\hhecomment}[1]{  \colorbox{blue}{  \parbox{.8\linewidth}{ HH:  #1}
-}}
-\newcommand{\jjmcomment}[1]{  \colorbox{green}{  \parbox{.8\linewidth}{ John:  #1}
-}}
-\newcommand{\tncomment}[1]{  \colorbox{blue}{  \parbox{.8\linewidth}{ TN:  #1}
-}}
-\newcommand{\mnicomment}[1]{  \colorbox{green}{  \parbox{.8\linewidth}{ Mohit:  #1}  }}
-\newcommand{\prcomment}[1]{  \colorbox{lightblue}{  \parbox{.8\linewidth}{ Pedro:  #1}  }}
-\newcommand{\fscomment}[1]{  \colorbox{orange}{  \parbox{.8\linewidth}{ Shi:  #1}  }}
-\newcommand{\vmcomment}[1]{  \colorbox{yellow}{  \parbox{.8\linewidth}{ Varun:  #1}  }}
-\newcommand{\rscomment}[1]{  \colorbox{yellow}{  \parbox{.8\linewidth}{ Richard:  #1}  }}
-\newcommand{\jszcomment}[1]{  \colorbox{green}{  \parbox{.8\linewidth}{ JSG:  #1}  }}
-\newcommand{\ascomment}[1]{  \colorbox{blue}{  \parbox{.8\linewidth}{ AS:  #1}
-}}
-\newcommand{\vecomment}[1]{  \colorbox{blue}{  \parbox{.8\linewidth}{ VE:  #1}  }}
-\newcommand{\halcomment}[1]{  \colorbox{magenta!20}{  \parbox{.8\linewidth}{ Hal:  #1}  }}
-\newcommand{\kgcomment}[1]{  \colorbox{blue}{  \parbox{.8\linewidth}{ Kim:  #1}  }}
-\newcommand{\vancomment}[1]{
-\colorbox{green}{  \parbox{.8\linewidth}{ VAN:  #1}  }}
-\newcommand{\thangcomment}[1]{  \colorbox{green}{  \parbox{.8\linewidth}{ Thang:  #1}  }}
-\newcommand{\alvincomment}[1]{  \colorbox{cyan}{  \parbox{.8\linewidth}{ Alvin:  #1}  }}
-\newcommand{\reviewercomment}[1]{  \colorbox{blue}{  \parbox{.8\linewidth}{Reviewer:  #1}  }}
-\newcommand{\brscomment}[1]{  \colorbox{blue}{  \parbox{.8\linewidth}{BRS:  #1}  }}
-\newcommand{\psrcomment}[1]{  \colorbox{yellow}{  \parbox{.8\linewidth}{PSR:  #1}  }}
-\newcommand{\zkcomment}[1]{  \colorbox{cyan}{  \parbox{.8\linewidth}{ZK:  #1}  }}
-\newcommand{\ctcomment}[1]{
-\colorbox{blue}{  \parbox{.8\linewidth}{CT:  #1}  }}
-\newcommand{\swcomment}[1]{ \colorbox{yellow}{ \parbox{.8\linewidth}{ SW: #1}
-}}
-\newcommand{\shaycomment}[1]{  \colorbox{yellow}{  \parbox{.8\linewidth}{SBC:  #1}  }}
-\newcommand{\jlundcomment}[1]{  \colorbox{cyan}{  \parbox{.8\linewidth}{J:  #1}  }}
-\newcommand{\kdscomment}[1]{  \colorbox{ceil}{  \parbox{.8\linewidth}{KDS:  #1}  }}
-\newcommand{\lkfcomment}[1]{  \colorbox{yellow}{  \parbox{.8\linewidth}{LF:  #1}  }}
-\newcommand{\yfcomment}[1]{
-  \colorbox{brown}{  \parbox{.8\linewidth}{YF:  #1}  }}
-\newcommand{\ewcomment}[1]{      \colorbox{lightblue}{   \parbox{.8\linewidth}{ Eric: #1}  }}
+\ifcomment
+\newcommand{\pinaforecomment}[3]{\colorbox{#1}{\parbox{.8\linewidth}{#2: #3}}}
 \else
-% Don't delete this!  This makes comments disappear if you set the if
-% correctly.  If you delete it, it will generate errors when people
-% turn off comments.
-\newcommand{\ewcomment}[1]{  }
-\newcommand{\nahocomment}[1]{ }
-\newcommand{\shcomment}[1]{ }
-\newcommand{\alvincomment}[1]{ }
-\newcommand{\jbgcomment}[1]{ }
-\newcommand{\ffcomment}[1]{ }
-\newcommand{\yhcomment}[1]{ }
-\newcommand{\jjmcomment}[1]{ }
-\newcommand{\hhecomment}[1]{ }
-\newcommand{\tncomment}[1]{ }
-\newcommand{\mnicomment}[1]{ }
-\newcommand{\prcomment}[1]{ }
-\newcommand{\ascomment}[1]{ }
-\newcommand{\vecomment}[1]{ }
-\newcommand{\halcomment}[1]{ }
-\newcommand{\kgcomment}[1]{ }
-\newcommand{\brscomment}[1]{ }
-\newcommand{\reviewercomment}[1]{ }
-\newcommand{\zkcomment}[1]{ }
-\newcommand{\jszcomment}[1]{ }
-\newcommand{\ctcomment}[1]{ }
-\newcommand{\swcomment}[1]{ }
-\newcommand{\psrcomment}[1]{ }
-\newcommand{\vancomment}[1]{ }
-\newcommand{\shaycomment}[1]{ }
-\newcommand{\jlundcomment}[1]{ }
-\newcommand{\kdscomment}[1]{ }
-\newcommand{\lkfcomment}[1]{ }
-\newcommand{\mjpcomment}[1]{ }
-\newcommand{\fpcomment}[1]{ }
-\newcommand{\yfcomment}[1]{ }
+\newcommand{\pinaforecomment}[3]{}
 \fi
+
+\newcommand{\jbgcomment}[1]{\pinaforecomment{red}{JBG}{#1}}
+\newcommand{\mjpcomment}[1]{\pinaforecomment{blue}{MJP}{#1}}
+\newcommand{\czcomment}[1]{\pinaforecomment{orange}{chen}{#1}}
+\newcommand{\ffcomment}[1]{\pinaforecomment{red}{FF}{#1}}
+\newcommand{\fpcomment}[1]{\pinaforecomment{green}{FP}{#1}}
+\newcommand{\yhcomment}[1]{\pinaforecomment{green}{YH}{#1}}
+\newcommand{\hhecomment}[1]{\pinaforecomment{blue}{HH}{#1}}
+\newcommand{\tncomment}[1]{\pinaforecomment{blue}{TN}{#1}}
+\newcommand{\mnicomment}[1]{\pinaforecomment{green}{Mohit}{#1}}
+\newcommand{\prcomment}[1]{\pinaforecomment{lightblue}{Pedro}{#1}}
+\newcommand{\fscomment}[1]{\pinaforecomment{orange}{Shi}{#1}}
+\newcommand{\vmcomment}[1]{\pinaforecomment{yellow}{Varun}{#1}}
+\newcommand{\rscomment}[1]{\pinaforecomment{yellow}{Richard}{#1}}
+\newcommand{\jszcomment}[1]{\pinaforecomment{green}{JSG}{#1}}
+\newcommand{\ascomment}[1]{\pinaforecomment{blue}{AS}{#1}}
+\newcommand{\vecomment}[1]{\pinaforecomment{blue}{VE}{#1}}
+\newcommand{\halcomment}[1]{\pinaforecomment{magenta!20}{Hal}{#1}}
+\newcommand{\kgcomment}[1]{\pinaforecomment{blue}{Kim}{#1}}
+\newcommand{\vancomment}[1]{\pinaforecomment{green}{VAN}{#1}}
+\newcommand{\thangcomment}[1]{\pinaforecomment{green}{Thang}{#1}}
+\newcommand{\alvincomment}[1]{\pinaforecomment{cyan}{Alvin}{#1}}
+\newcommand{\reviewercomment}[1]{\pinaforecomment{blue}{Reviewer}{#1}}
+\newcommand{\brscomment}[1]{\pinaforecomment{blue}{BRS}{#1}}
+\newcommand{\psrcomment}[1]{\pinaforecomment{yellow}{PSR}{#1}}
+\newcommand{\zkcomment}[1]{\pinaforecomment{cyan}{ZK}{#1}}
+\newcommand{\swcomment}[1]{\pinaforecomment{yellow}{SW}{#1}}
+\newcommand{\shaycomment}[1]{\pinaforecomment{yellow}{SBC}{#1}}
+\newcommand{\jlundcomment}[1]{\pinaforecomment{cyan}{J}{#1}}
+\newcommand{\kdscomment}[1]{\pinaforecomment{ceil}{KDS}{#1}}
+\newcommand{\lkfcomment}[1]{\pinaforecomment{yellow}{LF}{#1}}
+\newcommand{\yfcomment}[1]{\pinaforecomment{brown}{YF}{#1}}
+\newcommand{\ewcomment}[1]{\pinaforecomment{lightblue}{Eric}{#1}}
 
 \newcommand{\smalltt}[1]{ {\tt \small #1 }}
 \newcommand{\smallurl}[1]{ \begin{tiny}\url{#1}\end{tiny}}
@@ -177,3 +148,10 @@
 \definecolor{grey}{rgb}{0.95,0.95,0.95}
 \definecolor{ceil}{rgb}{0.57, 0.63, 0.81}
 
+
+% Datasets
+
+\newcommand{\qb}[0]{Quizbowl}
+\newcommand{\triviaqa}{\camelabr{Trivia}{qa}}
+\newcommand{\qblink}{\abrcamel{qb}{Link}}
+\newcommand{\qanta}{\textsc{qanta}}

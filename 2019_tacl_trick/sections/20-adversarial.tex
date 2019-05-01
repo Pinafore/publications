@@ -1,0 +1,52 @@
+\section{Adversarial Evaluation for \abr{nlp}}
+\label{sec:recent}
+
+Adversarial examples~\cite{szegedy2013-intriguing} often reveal
+model failures better than traditional test sets. However, automatic
+adversarial generation is tricky for \abr{nlp} (e.g., by replacing words) without
+changing an example's meaning or invalidating it.
+
+Recent work side-steps this by focusing on simple
+transformations that preserve meaning. For instance,
+\citet{ribeiro2018sear} generate adversarial
+perturbations such as replacing \emph{What has} $\to$
+\emph{What's}. Other minor perturbations such as
+typos~\cite{belinkov2018synthetic}, adding distractor
+sentences~\cite{jia2017adversarial,mudrakarta2018understand}, or
+character replacements~\cite{ebrahimi2017hotflip} preserve meaning
+while degrading model performance.
+
+Generative models can discover more adversarial perturbations but
+require post-hoc human verification of the examples.
+For example, neural paraphrase or language models can
+generate syntax modifications~\cite{iyyerscpn2018}, plausible
+captions~\cite{zellers2018swag}, or \textsc{nli}
+premises~\cite{zhao2017generating}. These methods improve
+example-level diversity but mainly target a specific phenomenon, e.g.,
+rewriting question syntax.
+
+Furthermore, existing adversarial perturbations are restricted to sentences---not the
+paragraph inputs of \qb{} and other
+tasks---due to challenges in long-text generation. For instance,
+syntax paraphrase networks~\cite{iyyerscpn2018} applied to \qb{} only
+yield valid paraphrases 3\% of the time (Appendix~\ref{sec:scpn}).
+
+\subsection{Putting a Human in the Loop}\label{sec:loop}
+
+Instead, we task human authors with \emph{adversarial writing} of questions:
+generating examples which break a specific \abr{qa} system but
+are still answerable by humans. We expose model predictions and
+interpretations to question authors, who find question edits that confuse the model. 
+
+The user interface makes the adversarial writing process interactive and
+model-driven, in contrast to adversarial examples written independent of a model~\cite{ettinger2017towards}. The result is an \challenge{} dataset that explicitly exposes a model's limitations by design.
+
+Human-in-the-loop generation can replace or aid model-based
+adversarial generation approaches. Creating
+interfaces and interpretations is often easier than designing and
+training generative models for specific domains. In domains where
+adversarial generation is feasible, human creativity
+can reveal which tactics automatic approaches can
+later emulate. Model-based and human-in-the-loop generation approaches can
+also be combined by training models to mimic human adversarial edit
+history, using the relative merits of both approaches.
