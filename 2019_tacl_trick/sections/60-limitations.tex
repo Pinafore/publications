@@ -1,0 +1,200 @@
+\section{What Makes Adversarially-authored Questions Hard?}
+\label{sec:limitations}
+
+This section analyzes the
+\challenge{}
+questions to identify the source of their difficulty.
+
+\subsection{Quantitative Differences in Questions}
+
+One possible source of difficulty 
+is data scarcity: the answers to adversarial questions rarely
+appear in the training set. However, this is not the case;
+the mean number of training examples per answer (e.g., \underline{George Washington})
+is 14.9 for the adversarial questions versus
+16.9 for the regular test data.
+
+Another explanation for question difficulty
+is limited 
+``overlap'' with the training data, i.e.,
+models cannot match $n$-grams
+from the training clues. We measure the proportion of test $n$-grams
+that also appear in training questions with the same answer
+(Table~\ref{table:training_comparison}).
+The overlap is roughly equal for unigrams but surprisingly higher for 
+bigrams in adversarial questions.
+The adversarial questions are also shorter
+and have fewer \abr{ne}s on average.
+However, the
+proportion of question words that are \abr{ne}s is
+roughly equivalent. 
+
+One difference between the questions written against
+the \abr{ir} system and the ones written against the \abr{rnn} model
+is the drop in \abr{ne}s. The decrease in \abr{ne}s is much higher for \abr{ir} adversarial questions, which may explain their generalization: the \abr{rnn}
+is more sensitive to changes in phrasing, while the \abr{ir} system is more
+sensitive to specific words.
+
+\setlength{\tabcolsep}{4pt}
+\begin{table}[t]
+\begin{tabular}{p{3.65cm}rr}
+ \toprule
+
+& \textbf{Adversarial} & \textbf{Regular}  \\
+\midrule
+Unigram overlap & 0.40 & 0.37 \\
+Bigram overlap & 0.08 & 0.05 \\ 
+Longest $n$-gram overlap & 6.73 & 6.87 \\
+Average \abr{ne} overlap & 0.38 & 0.46 \\
+\hspace{0.5cm} \abr{ir} Adversarial & 0.35 &  \\
+\hspace{0.5cm} \abr{rnn} Adversarial & 0.44 &  \\
+\midrule
+Total Words & 107.1 & 133.5 \\
+Total \abr{ne} & 9.1 & 12.5 \\
+\bottomrule
+\end{tabular}
+\caption{The \challenge{} questions have similar $n$-gram overlap to
+  the regular test questions. However, the overlap of the
+  named entities (\abr{ne}) decreases
+   for \abr{ir} Adversarial questions.}
+\label{table:training_comparison}
+\end{table}
+
+\subsection{Categorizing Adversarial Phenomena}
+
+\begin{table}[h]
+\centering \small
+\begin{tabular}{lrr}
+ \toprule
+Composing Seen Clues & 15\%\\
+Logic \& Calculations & 5\% \\
+Multi-Step Reasoning & 25\% \\
+\midrule
+Paraphrases & 38\% \\
+Entity Type Distractors & 7\%\\
+Novel Clues & 26\% \\
+\midrule
+Total Questions & \ntotalquestions{} \\
+\bottomrule
+\end{tabular}
+\caption{A breakdown of the phenomena in the \challenge{} dataset.}
+\label{table:stats}
+\end{table}
+
+We next qualitatively analyze the \challenge{} questions. We
+manually inspect
+the author edit logs, classifying the questions into six different
+phenomena that fall into
+two broad categories.
+Table~\ref{table:stats} reports the relative frequency of each phenomenon
+from a random sample of 100 questions, double counting questions into multiple phenomena
+when applicable.
+
+\subsubsection{Adversarial Category 1: Reasoning}
+\label{sec:compose_knowledge}
+
+
+\begin{table*}[t]
+\centering
+\begin{tabular}{p{6.5cm}llp{2cm}}
+\hline
+         Question    & Prediction & Answer & Phenomenon                  \\ \hline
+
+This man, who died at the Battle of the Thames, experienced a setback when his brother Tenskwatawa's influence over their tribe began to fade. & Battle of Tippecanoe & \underline{Tecumseh} & Composing Seen Clues \\ \hline
+
+This number is one hundred fifty more than the number of Spartans at Thermopylae. & Battle of Thermopylae & \underline{450} & Logic \& Calculations \\ \hline
+
+A building dedicated to this man was the site of the ``I Have A Dream'' speech. & Martin Luther King Jr. & \underline{Abraham Lincoln} & Multi-Step Reasoning \\ \hline
+
+\end{tabular}
+\caption{The first category of \challenge{} questions consists of examples that require reasoning. \emph{Answer} displays the correct answer (all models were incorrect). For these examples, connecting the training and \challenge{} clues is simple for humans but difficult for models.}
+\label{table:unseen_sample}
+\end{table*}
+
+\begin{table*}[t]
+\centering
+\begin{tabular}{p{1.75cm}p{8.5cm}lp{2cm}}
+\hline
+         Set & Question    & Prediction      & Phenomenon                  \\ \hline
+
+Training & Name this sociological phenomenon, the \emph{taking of one's own life}. & \underline{Suicide} & \multirow{2}{*}{Paraphrase} \\
+Adversarial  & Name this \emph{self-inflicted method of death}. & \underline{Arthur Miller} & \\ \hline
+
+Training &  Clinton played the \emph{saxophone on The Arsenio Hall Show}.  & \underline{Bill Clinton} &  \\ 
+Adversarial & He was edited to appear in the film ``Contact''\dots\ For ten points, name this American president who played the \emph{saxophone on an appearance on the Arsenio Hall Show}. & \underline{Don Cheadle} & Entity Type Distractor \\ \hline
+
+\end{tabular}
+\caption{The second category of adversarial questions consists of clues that are present in the training data but are written in a distracting manner. \emph{Training} shows relevant snippets from the training data. \emph{Prediction} displays the \abr{rnn} model's answer prediction (always correct on Training, always incorrect on Adversarial).}
+\label{table:rewrite_sample}
+\end{table*}
+
+The first question category requires reasoning about known clues (Table~\ref{table:unseen_sample}).~\smallskip
+
+\paragraph{Composing Seen Clues:} These questions provide several entities with a first-order
+relationship to the correct answer. The system must then
+triangulate the correct answer by ``filling in the blank''. For
+example, the first question of Table~\ref{table:unseen_sample} names the
+place of death of Tecumseh. The training data contains a
+question about the place of death (\underline{The Battle of the Thames}) reading
+``though stiff fighting came from their Native American allies under
+Tecumseh, who died at this battle''. The system must connect these two
+clues to answer.~\smallskip
+
+\paragraph{Logic \& Calculations:} These questions require applying mathematical
+or logical operators. For example, the training data
+contains a clue about the Battle of Thermopylae reading ``King
+Leonidas and 300 Spartans died at the hands of the Persians''. The
+second question in Table~\ref{table:unseen_sample} requires adding
+150 to the number of Spartans.~\smallskip 
+
+\paragraph{Multi-Step Reasoning:} This question type requires multiple reasoning
+steps between entities. For example, the last question of
+Table~\ref{table:unseen_sample} requires a reasoning step
+from the ``I Have A Dream'' speech to the Lincoln Memorial and then 	another
+reasoning step to reach \underline{Abraham Lincoln}. 
+
+\subsubsection{Adversarial Category 2: Distracting Clues}
+\label{sec:changes_language}
+
+The second category consists of circumlocutory clues (Table~\ref{table:rewrite_sample}).~\smallskip
+
+\paragraph{Paraphrases:} A common adversarial modification is to
+paraphrase clues to remove exact $n$-gram matches from the training data. This
+renders our \abr{ir} system useless but also hurts the neural models. Many of
+the adversarial paraphrases go beyond syntax-only changes (e.g., the first row of Table~\ref{table:rewrite_sample}).~\smallskip
+
+\paragraph{Entity Type Distractors:} Whether explicit or implicit in a model, one key component for \abr{qa} is determining the
+answer type of the question. Authors take advantage of this
+by providing clues that cause the model to select the wrong answer type. For example,
+in the second question of Table~\ref{table:rewrite_sample}, the ``lead-in'' clue implies
+the answer may be an actor. The \abr{rnn} model answers Don Cheadle in response despite previously
+seeing the Bill Clinton ``playing a saxophone'' clue in the training data.~\smallskip
+
+\paragraph{Novel Clues:} Some \challenge{} questions are hard
+not because of phrasing or logic but because our models have
+not seen these clues.  These questions are easy
+to create: users can add \emph{Novel Clues} that---because they are
+not uniquely associated with an answer---confuse the models.
+While not as linguistically interesting, novel clues are
+not captured by Wikipedia or \qb{} data, thus improving the
+dataset's diversity.  For example, adding clues about literary
+criticism~\cite{hardwick-67,watson-96} to a question about Lillian
+Hellman's \underline{The Little Foxes}: ``Ritchie Watson commended
+this play's historical accuracy for getting the price for a dozen eggs
+right---ten cents---to defend against Elizabeth Hardwick's contention
+that it was a sentimental history.'' Novel clues create 
+an incentive for models to use
+information beyond past questions and Wikipedia.
+
+Novel clues have different effects on \abr{ir} and neural models:
+while \abr{ir} models largely ignore them, novel clues can lead
+neural models astray.  For example, on a question about \underline{Tiananmen
+Square}, the \abr{rnn} model buzzes on
+the clue ``World Economic Herald''.  However, adding a novel clue
+about ``the history of shaving''
+renders the brittle \abr{rnn} unable to buzz on the ``World Economic
+Herald'' clue that it was able to recognize before.\footnote{The ``history of shaving'' is a tongue-in-cheek name for a poster
+displaying the hirsute leaders of Communist thought. It goes from the bearded Marx and Engels,
+to the mustachioed Lenin and Stalin, and finally the clean-shaven Mao.}  This helps
+to explain why \challenge{} questions written against the \abr{rnn}
+do not stump \abr{ir} models.

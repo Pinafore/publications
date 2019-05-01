@@ -1,0 +1,42 @@
+\section{Related Work}
+\label{sec:related}
+
+New datasets often allow for a finer-grained analysis of a linguistic
+phenomenon, task, or genre.  The \abr{lambada}
+dataset~\cite{paperno2016lambada} tests a model's understanding
+of the broad contexts present in book passages, while the
+Natural Questions corpus~\cite{kwiatkowski2019natural} combs Wikipedia for 
+answers to questions that users trust search engines to
+answer~\cite{oeldorf2014search}. Other work focuses on natural
+language inference, where challenge examples highlight model
+failures~\cite{wang2018glue,glockner2018breaking,naik2018stress}.  Our
+work is unique in that we use human adversaries to expose model
+weaknesses, which provides a diverse set of phenomena (from
+paraphrases to multi-hop reasoning) that models cannot solve.
+
+Other work puts an adversary in the data annotation or postprocessing loop.
+For instance, \citet{dua2019drop} and \citet{zhang2018record} 
+filter out easy questions using a baseline \abr{qa} model,
+while \citet{zellers2018swag} use stylistic classifiers to filter
+language inference examples. Rather than filtering out easy questions,
+we instead use human adversaries to generate hard ones.
+Similar to our work, \citet{ettinger2017towards} use human adversaries.
+We extend their setting by providing humans with model interpretations to
+facilitate adversarial writing. Moreover, we have a
+ready-made audience of question writers to generate
+adversarial questions.  
+
+The collaborative adversarial writing process reflects
+the complementary abilities of humans and computers.
+For instance, ``centaur'' chess teams of both a human and a computer are often stronger
+than a human or computer alone~\cite{Case2018How}. In Starcraft, 
+humans devise high-level ``macro'' strategies, while computers
+are superior at executing fast and precise ``micro'' actions~\cite{vinyals2017starcraft}. In \abr{nlp}, computers
+aid simultaneous human interpreters~\cite{he2016interpretation} at remembering
+forgotten information or translating unfamiliar words.
+
+Finally, recent approaches to adversarial evaluation of
+\abr{nlp} models (Section~\ref{sec:recent}) typically
+target one phenomenon (e.g., syntactic modifications) and
+complement our human-in-the-loop approach.
+

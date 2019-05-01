@@ -1,0 +1,66 @@
+\appendix
+
+\section{Failure of Syntactically Controlled Paraphrase Networks}
+\label{sec:scpn}
+
+\begin{table*}[t]
+\centering
+\begin{tabular}{p{11cm}l}
+\hline
+         Sentence & Success/Failure Phenomena                  \\ \hline
+its types include ``frictional'', ``cyclical'', and ``structural'' & \multirow{2}{*}{Missing Information \xmark} \\
+its types include \mybox{gitred}{``frictional'', and structural} & \\ \hline
+
+german author of the sorrows of young werther and a two-part faust & \multirow{2}{*}{Lost Named Entity \xmark} \\
+german author of the sorrows of \mybox{gitred}{mr. werther} & \\ \hline
+
+name this elegy on the death of john keats composed by percy shelley & \multirow{2}{*}{Incorrect Clue \xmark} \\
+name was this elegy on the \mybox{gitred}{death of percy shelley} & \\ \hline
+
+identify this play about willy loman written by arthur miller & \multirow{2}{*}{Unsuited Syntax Template \xmark}  \\
+\mybox{gitred}{so you can identify this work of mr. miller} & \\ \hline
+
+he employed marco polo and his father as ambassadors & \multirow{2}{*}{Verb Synonym \checkmark}  \\ 
+he \mybox{gitgreen}{hired} marco polo and his father as ambassadors & \\ \hline
+
+\end{tabular}
+\caption{Failure and success cases for \abr{SCPN}. The model fails to create a valid paraphrase of the sentence for  97\% of questions.}
+\label{table:scpn}
+\end{table*}
+
+We apply the Syntactically Controlled Paraphrase Network~\cite[\abr{SCPN}]{iyyerscpn2018} to \qb{} questions. The model operates on the sentence level and cannot paraphrase paragraphs. We thus feed in each sentence independently, ignoring possible breaks in coreference. The model does not correctly paraphrase most of the complex sentences present in \qb{} questions. The paraphrases were rife with issues: ungrammatical, repetitive, or missing information. 
+
+To simplify the setting, we focus on paraphrasing the shortest sentence from each question (often the final clue). The model still fails in this case. We analyze a random sample of 200 paraphrases: only six maintained all of the original information. 
+
+Table~\ref{table:scpn} shows common failure cases. One recurring issue is an inability to maintain the correct named entities after paraphrasing. In \qb{}, maintaining entity information is vital for ensuring question validity. We were surprised by this failure because \abr{SCPN} incorporates a copy mechanism.
+
+\section{Studio Ousia \qb{} Model}
+\label{sec:ousia}
+
+The Studio Ousia system works by aggregating scores from both a neural text classification model and an \abr{IR} system. Additionally, it scores answers based on their match with the correct entity type (e.g., religious leader, government agency, etc.) predicted by a neural entity type classifier. The Studio Ousia system also uses data beyond \qb{} questions and the text of Wikipedia pages, integrating entities from a knowledge graph and customized word vectors~\cite{yamada2018studio}.
+
+
+\section{Failed Adversarial Attempt}
+\label{sec:failed}
+
+Figure~\ref{fig:failure} shows a user's failed attempt to break the neural \qb{} model.
+
+\begin{figure}[h]
+\centering
+\tikz\node[draw=black!40!red,inner sep=1pt,line width=0.3mm,rounded corners=0.1cm]{
+\begin{tabular}{p{0.45\textwidth}}
+In his speeches this $\ldots$ As a Senator, \\\mybox{gitred}{\sout{this man supported \textbf{Paraguay} in the}} \\
+\mybox{gitred}{\sout{\textbf{Chaco War}, believing \textbf{Bolivia} was backed}}
+\mybox{gitred}{\sout{by Standard Oil.}}\\
+\mybox{gitgreen}{this man's campaign was endorsed by} \mybox{gitgreen}{Milo Reno and Charles Coughlin.} \\
+\emph{Prediction}: \underline{Huey Long} (\Checkmark) $\to$ \underline{Huey Long} (\Checkmark)\\\\
+In his speeches this $\ldots$ As a Senator, this man's campaign was endorsed by \textbf{Milo Reno} and \\
+\mybox{gitred}{\sout{\textbf{Charles Coughlin}}.} \\
+\mybox{gitgreen}{a Catholic priest and radio show host.} \\
+\emph{Prediction}: \underline{Huey Long} (\Checkmark) $\to$ \underline{Huey Long} (\Checkmark)\\
+\end{tabular}
+}; 
+\caption{\label{fig:failure} A failed attempt to trick the neural model.  The
+author modifies the question multiple times, replacing words suggested by the
+interpretation, but is unable to break the system.}
+\end{figure}
