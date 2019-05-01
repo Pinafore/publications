@@ -1,0 +1,136 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[table]{xcolor}
+\usepackage{times,latexsym}
+
+\usepackage{url}
+\usepackage[T1]{fontenc}
+\usepackage[acceptedWithA]{style/tacl2018v2}
+
+\usepackage{verbatim}
+\usepackage{color}
+\usepackage{smartdiagram}
+\usepackage{etoolbox}
+\usepackage{tikz}
+\usepackage{amsmath}    
+\usepackage{multirow}   
+\usepackage{algorithm}    
+\usepackage{amsfonts}   
+\usepackage{lipsum}   
+\usepackage{framed}   
+\usepackage{graphicx}   
+\usepackage{longtable}    
+\usepackage{caption}    
+\usepackage{subcaption}   
+\usepackage{graphics}
+\usepackage{float}
+\usepackage{stfloats}
+\usepackage{bm}
+\usepackage{amssymb}
+\usepackage{pifont}
+\usepackage{mwe}
+\usepackage[percent]{overpic}
+\usepackage[normalem]{ulem}
+
+\newif\ifcomment
+\commenttrue
+\input{style/preamble}
+
+\newcommand{\mb}[1]{\boldsymbol{\mathbf{#1}}}
+\newcommand{\ntotalquestions}[0]{1213}
+\newcommand{\ntotalsentences}[0]{6,541}
+\newcommand{\ntotalwriters}[0]{115}
+\newcommand{\nansweroptions}[0]{25,000}
+\newcommand{\ntotalNeural}[0]{406}
+\newcommand{\ntotalIR}[0]{807}
+\newcommand{\xmark}{\ding{55}}
+\newcommand{\Checkmark}{\ding{51}}
+\newcommand{\challenge}{adversarially-authored}
+\definecolor{ao}{rgb}{0.0, 0.5, 0.0}
+
+\definecolor{color0}{HTML}{FFFFFF}
+\definecolor{color1}{HTML}{FEE5D8}
+\definecolor{color2}{HTML}{FDCAB5}
+\definecolor{color3}{HTML}{FCAB8F}
+\definecolor{color4}{HTML}{FC8A6A}
+\definecolor{color5}{HTML}{FB694A}
+\definecolor{color6}{HTML}{F14432}
+\definecolor{color7}{HTML}{D92523}
+\definecolor{color8}{HTML}{BC141A}
+\definecolor{color9}{HTML}{980C13}
+\definecolor{gitred}{HTML}{FDB8C0}
+\definecolor{gitgreen}{HTML}{ACF294}
+\newcommand*{\mybox}[2]{\tikz[anchor=base,baseline=0pt,rounded corners=0pt, inner sep=0.2mm] \node[fill=#1] (X) {#2};}
+
+\graphicspath{{2018_tacl_trick/images/}, {2018_tacl_trick/auto_fig/}}
+
+% Plot commands, run in pinafore/qb repo with data in right place
+% System results on round 1 and 2
+% ./figures.py guesser --use-test --only-tacl --no-humans --rounds 1 --title "Round 1 Models" output/tacl
+% ./figures.py guesser --use-test --only-tacl --no-humans --rounds 2 --title "Round 2 Models" output/tacl
+% Human plot results
+% ./figures.py guesser --use-test --only-tacl --no-models output/tacl
+% Merge human results
+% ./figures.py guesser --use-test --only-tacl --no-models --merge-humans output/tacl
+
+\definecolor{Goldenrod}{HTML}{3cc7ea}
+\definecolor{colorsquad}{rgb}{0,1,0}
+\definecolor{colorsnli}{rgb}{1,0,0}
+\definecolor{colorvqa}{rgb}{1,1,0}
+
+\title{Trick Me If You Can: Human-in-the-loop Generation of \\
+  Adversarial Question Answering Examples}
+
+\author{Eric Wallace \\
+       \abr{ee} and \abr{umiacs} \\       
+        University of Maryland \\
+        \email{ewallac2@umiacs.umd.edu}
+        \And
+        Pedro Rodriguez, Shi Feng \\
+        \abr{cs}, \abr{umiacs} \\
+        University of Maryland \\
+        \emaillink{\{pedro,}{pedro@umiacs.umd.edu}\emaillink{shifeng\}}{shifeng@umiacs.umd.edu} \\
+        \emaillink{@umiacs.umd.edu}{shifeng@umiacs.umd.edu}
+                \And
+        Ikuya Yamada \\
+        Studio Ousia \\
+        \email{ikuya@ousia.jp}
+        \AND
+        Jordan Boyd-Graber \\
+        \abr{cs}, iSchool, \abr{umiacs}, \abr{lsc} \\
+        University of Maryland \\
+        \email{jbg@umiacs.umd.edu}}
+
+
+\date{}
+
+\setlength\titlebox{7cm}
+
+\begin{document}
+\maketitle
+
+
+
+\begin{abstract}
+\input{2018_tacl_trick/sections/00-abstract}
+\end{abstract}
+
+\input{2018_tacl_trick/sections/10-intro}
+\input{2018_tacl_trick/sections/20-adversarial}
+\input{2018_tacl_trick/sections/30-qb}
+\input{2018_tacl_trick/sections/40-dataset_validation}
+\input{2018_tacl_trick/sections/50-experiments}
+\input{2018_tacl_trick/sections/60-limitations}
+\input{2018_tacl_trick/sections/70-interface_analysis}
+\input{2018_tacl_trick/sections/80-related}
+\input{2018_tacl_trick/sections/90-conclusion}
+\input{2018_tacl_trick/sections/acknowledgements}
+
+\bibliography{bib/journal-full,bib/eric,bib/jbg}
+\bibliographystyle{style/acl_natbib}
+
+\clearpage
+\begin{appendix}
+\input{2018_tacl_trick/sections/appendix}
+\end{appendix}
+
+\end{document}
