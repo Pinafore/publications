@@ -1,5 +1,8 @@
 import os
+import sys
+import subprocess
 import pickle
+from urllib.request import urlretrieve
 import difflib
 import numpy as np
 import pandas as pd
@@ -10,14 +13,40 @@ matplotlib.use('agg')
 from plotnine import (
     ggplot, aes, ggtitle,
     geom_bar, geom_density, geom_boxplot, geom_segment, geom_col, geom_hline, geom_point, geom_errorbarh,
-    theme, theme_light, coord_flip, facet_grid, xlim, ylim,
+    theme, theme_light, coord_flip, facet_grid, xlim, ylim, facet_wrap,
     element_text, element_blank, element_rect, element_line,
     scale_fill_manual, scale_fill_brewer, xlab, ylab, geom_line, facet_wrap,
-    scale_x_continuous, scale_y_continuous, scale_color_manual
+    scale_x_continuous, scale_y_continuous, scale_color_manual, stat_smooth, coord_cartesian,
+    stat_summary_bin
 )
 
 data_dir = '2019_tacl_trick/data/rnn_question_buzz_pos.pickle'
 fig_dir = '2019_tacl_trick/auto_fig/'
+round_2_df_checksum = 'f57c90fd1d4397c0f8bc47d75ed3cc78'
+round_2_df_url = 'https://s3-us-west-2.amazonaws.com/pinafore-us-west-2/trickme-tacl/round2_df.json'
+round_2_df_path = '2019_tacl_trick/data/round2_df.json'
+
+
+def eprint(*args, **kwargs):
+    print(*args, file=sys.stderr, **kwargs)
+
+
+def md5sum(filename):
+    return subprocess.run(
+        f'md5sum {filename}',
+        shell=True,
+        stdout=subprocess.PIPE,
+        check=True
+    ).stdout.decode('utf-8').split()[0]
+
+
+def verify_checksum(checksum, filename):
+    if os.path.exists(filename):
+        file_checksum = md5sum(filename)
+        if checksum != file_checksum:
+            raise ValueError(f'Incorrect checksum for: {filename}')
+    else:
+        raise ValueError(f'File does not exist: {filename}')
 
 
 class theme_fs(theme_light):
@@ -185,6 +214,39 @@ def round_1_plot():
     p.save('2019_tacl_trick/auto_fig/round_1_csv.pdf', width=7.0, height=1.7)
 
 
+def mean_no_se(series, mult=1):
+    m = np.mean(series)
+    se = mult * np.sqrt(np.var(series) / len(series))
+    return pd.DataFrame({'y': [m], 'ymin': m, 'ymax': m})
+
+
+def round_2_plot():
+    if not os.path.exists(round_2_df_path):
+        eprint(f'Downloading {round_2_df_url} to {round_2_df_path}')
+        urlretrieve(round_2_df_url, round_2_df_path)
+    verify_checksum(round_2_df_checksum, round_2_df_path)
+    df = pd.read_json(round_2_df_path)
+    p = (
+        ggplot(df)
+        + aes(x='char_percent', y='correct', color='Dataset')
+        + facet_wrap('Guessing_Model', nrow=1)
+        + stat_summary_bin(fun_data=mean_no_se, bins=20, shape='.', linetype='None', size=0.5)
+        + scale_y_continuous(breaks=np.linspace(0, 1, 6))
+        + scale_x_continuous(breaks=[0, .5, 1])
+        + coord_cartesian(ylim=[0, 0.7])
+        + ggtitle('Round 2 Attacks and Models')
+        + xlab('Percent of Question Revealed')
+        + ylab('Accuracy')
+        + theme(
+            #legend_position='top', legend_box_margin=0, legend_title=element_blank(),
+            strip_text_x=element_text(margin={'t': 6, 'b': 6, 'l': 1, 'r': 5})
+        )
+        + scale_color_manual(values=['#FF3333', '#66CC00', '#3333FF', '#FFFF33'], name='Questions')
+    )
+    p.save('2019_tacl_trick/auto_fig/round_2_json.pdf', width=7.0, height=1.7)
+
+
 if __name__ == '__main__':
     ikuya_sys_plot()
     round_1_plot()
+    round_2_plot()
