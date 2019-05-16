@@ -16,8 +16,8 @@ from plotnine import (
     scale_x_continuous, scale_y_continuous, scale_color_manual
 )
 
-data_dir = '2018_tacl_trick/data/rnn_question_buzz_pos.pickle'
-fig_dir = '2018_tacl_trick/auto_fig/'
+data_dir = '2019_tacl_trick/data/rnn_question_buzz_pos.pickle'
+fig_dir = '2019_tacl_trick/auto_fig/'
 
 
 class theme_fs(theme_light):
@@ -87,7 +87,7 @@ def gen_fig():
 
 
 def load_ikuya_nips():
-    with open('2018_tacl_trick/data/shared_task_results.json') as f:
+    with open('2019_tacl_trick/data/shared_task_results.json') as f:
         results = []
         all_results = json.load(f)
         for q in all_results:
@@ -134,7 +134,7 @@ def rerelabel(l):
 
 def ikuya_sys_plot():
     nips_df = load_ikuya_nips()
-    with open('2018_tacl_trick/data/ikuya_cdf.json') as f:
+    with open('2019_tacl_trick/data/ikuya_cdf.json') as f:
         df = pd.DataFrame(json.load(f))
         df = pd.concat([df, nips_df])
         df['model'] = df['model'].map(relabel)
@@ -148,16 +148,16 @@ def ikuya_sys_plot():
             + scale_y_continuous(breaks=np.linspace(0, 1, 6), limits=[0, 1])
             + theme(
                 legend_position=(.335, .7),
-                legend_background=element_rect(alpha=1, fill='#EEEFEE', color='white'),
-                legend_key=element_rect(alpha=0),
+                legend_background=element_blank(),#element_rect(alpha=1, fill='#EEEFEE', color='white'),                                
+                #legend_key=element_rect(alpha=0),
                 legend_box_margin=0, legend_title=element_blank()
             )
         )
-    p.save('2018_tacl_trick/auto_fig/ikuya_cdf.pdf', width=3.5, height=2.5)
+    p.save('2019_tacl_trick/auto_fig/ikuya_cdf.pdf', width=3.5, height=2.5)
 
 
 def round_1_plot():
-    df = pd.read_csv('2018_tacl_trick/data/round_1.csv')
+    df = pd.read_csv('2019_tacl_trick/data/round_1.csv')
     model_dtype = CategoricalDtype(['DAN', 'RNN', 'IR'], ordered=True)
     df['Model'] = df['Model'].astype(model_dtype)
 
@@ -182,7 +182,7 @@ def round_1_plot():
         )
         + scale_color_manual(values=['#FF3333', '#66CC00', '#3333FF', '#FFFF33'], name='Questions')
     )
-    p.save('2018_tacl_trick/auto_fig/round_1_csv.pdf', width=7.0, height=1.7)
+    p.save('2019_tacl_trick/auto_fig/round_1_csv.pdf', width=7.0, height=1.7)
 
 
 if __name__ == '__main__':
