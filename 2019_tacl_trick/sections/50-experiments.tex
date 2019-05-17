@@ -51,10 +51,10 @@ the accuracy rises towards the end as the clues become
 In the second round, the authors also attack an \abr{rnn} model.
 All models tested in the second round are trained on a larger dataset (Section~\ref{subsec:models}).
 
-A similar trend holds for \abr{ir} adversarial question
+A similar trend holds for \abr{ir} adversarial questions
 in the second round (Figure~\ref{fig:round_two}): a question that tricks the \abr{ir} system also fools
-the two neural models (i.e., the adversarial examples transfer). For example, the \abr{dan} model
-was never targeted adversarially but had substantial
+the two neural models (i.e., adversarial examples transfer). For example, the \abr{dan} model
+was never targeted but had substantial
 accuracy decreases in both rounds.
 
 However, this does not hold for questions written adversarially
@@ -71,16 +71,19 @@ unaffected (Figure~\ref{fig:round_two}, right).
 \centering
 \includegraphics[width=2\columnwidth]{human_breakdown}
 \caption{Humans find \challenge{} question about as difficult as
-  normal questions regardless of whether they are rusty weekend
+  normal questions: rusty weekend
   warriors (\textit{Intermediate}), active players (\textit{Expert}), or
-  some of the best trivia players in the world (\textit{National}).}
+  the best trivia players in the world (\textit{National}).}
 \label{fig:human_breakdown}
 \end{figure*}
 
 \begin{figure}[t!]
 \centering
-\includegraphics[width=\columnwidth]{ikuya_cdf}
-\caption{The accuracy of the state-of-the-art Studio Ousia model degrades on the \challenge{} questions despite never being directly targeted. This verifies that our findings generalize beyond the \abr{rnn} and \abr{ir} models.}
+\includegraphics[width=0.85\columnwidth]{ikuya_cdf}
+\caption{The accuracy of the state-of-the-art Studio Ousia model
+  degrades on the \challenge{} questions despite never being directly
+  targeted. This verifies that our findings generalize beyond the
+  \abr{rnn} and \abr{ir} models.}
 \label{fig:ikuya_vs_human}
 \end{figure}
 
@@ -100,9 +103,15 @@ Although the
 team at our live event was comparable to the \abr{nips}
 2017 team, the tables were turned: the human team won handedly 300--30.
 
-Our second live event is significantly larger:
-seven human teams play against models on over 400 questions written adversarially against the \abr{rnn} model. The human teams range in ability from high school \qb{} players to national-level teams. The
-models are based on either \abr{ir} or neural methods. Despite a few close games between the weaker human teams and the models, humanity prevailed in every match.\footnote{Videos available at \url{http://trickme.qanta.org}.}
+Our second live event is significantly larger: seven human teams play
+against models on over 400 questions written adversarially against the
+\abr{rnn} model. The human teams range in ability from high school
+\qb{} players to national-level teams (Jeopardy! champions, Academic
+Competition Federation national champions, top scorers in the World
+Quizzing Championships). The models are based on either \abr{ir} or
+neural methods. Despite a few close games between the weaker human
+teams and the models, humanity prevailed in every
+match.\footnote{Videos available at \url{http://trickme.qanta.org}.}
 
 Figures~\ref{fig:human_breakdown}--\ref{fig:ikuya_vs_human} summarize
 the live match results for the humans and Ousia model, respectively. Humans
@@ -114,6 +123,6 @@ In essence, the ``give-away'' clues at the end of questions are easy for humans 
 
 On the other hand, models on regular test questions
 do well in the \emph{first half}, i.e.,
-the ``difficult'' clues for humans are easier for models (\emph{Regular Test} curve in Figure~\ref{fig:ikuya_vs_human}).
-However, models, like humans, struggle to 
-answer the adversarial questions in the first half of the question.
+the ``difficult'' clues for humans are easier for models (\emph{Regular Test} in Figure~\ref{fig:ikuya_vs_human}).
+However, models, like humans, struggle on 
+ adversarial questions in the first half.

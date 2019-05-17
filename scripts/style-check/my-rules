@@ -1,0 +1,68 @@
+#  such may be abused to blacklist certain words even spelled correctly.
+# capitalize is case sensitive, and also bracketed by non-word.
+# phrase and spelling are case insensitive, but bracketed by non-word characters.
+# syntax is case sensitive but not bracketed by non-word; probably best if used with regexes.
+\bet al\.[^}]        % syntax use the \etal{} command instead. (or write one to italicize)
+\bet\. al\.          % syntax use the \etal{} command, "et" needs no dot (et alii). (or write one to italicize)
+\bc\.f\.\b             % syntax should be cf. for "confer" (latin for compare)
+\b$i\)[^$]              % syntax leave the paren in math mode -- should be $i)$
+\b$ii\)[^$]             % syntax leave the paren in math mode -- should be $ii)$
+\b$iii\)[^$]            % syntax leave the paren in math mode -- should be $iii)$
+\b$iv\)[^$]             % syntax leave the paren in math mode -- should be $iv)$
+\b$v\)[^$]              % syntax leave the paren in math mode -- should be $v)$
+\ban [b-df-gj-np-tv-z] % syntax probably meant to use "a" instead of "an", though there are exceptions.
+\ban [B-DF-GJ-NP-TV-Z][^A-Z/] % syntax probably meant to use "a" instead of "an", though there are exceptions (like acronyms).
+\b[Aa] [aeiouAEIOU](?!se|ni|A|ur|RL|ti|ne|DP) % syntax probably meant to use "an" instead of "a", though there are exceptions. (user, useful, AA, unified, uniform, unique, Europe, one, UDP; n/a doesn't work, so use {n/a})
+This allows           % phrase tie more explicitly: This (x) allows...
+we find               % phrase omit "we find"
+we found              % phrase omit "we found"
+try and               % phrase "try to", though if you're using try as a noun in a compound sentence, this rule is wrong.
+impact of             % phrase not a useful metaphor; try evaluation, success, effect, value.
+including [^\.]*etc\. % syntax "including" tells of a non-exclusive list, so "etc." is redundant.  This rule will misfire if you have two lists in your sentence, but you shouldn't do that either. ;)
+includes [^\.]*etc\.  % syntax "includes" tells of a non-exclusive list, so "etc." is redundant.  This rule will misfire if you have two lists in your sentence, but you shouldn't do that either. ;)
+and etc\.             % phrase come on. learn some latin.
+AT&T                  % syntax you poor thing, this won't compile.
+doesn't               % phrase be formal.
+be occur              % phrase what happens when I'm indecisive about what follows "can"
+up until              % phrase "until"
+one or more           % phrase probably redundant -- nonzero is probably implied.
+is comprise(d|s) of   % phrase you probably mean "is composed of" because "comprises" is more a synonym for "contains" 
+will be significantly different % phrase "will differ significantly" for active voice
+More importantly,     % phrase probably means the order is wrong: put important stuff first.
+todo                  % ignoredcommand
+texttt                  % ignoredcommand
+jbgcomment              % ignoredcommand
+lkfcomment              % ignoredcommand
+due to space constraints % phrase don't whine.
+this paper % phrase can be ambiguous if talking about someone else's paper whether you mean the one youre writing or the one you're talking about..
+the above             % phrase horrible phrase that must be expunged.  you might use "these" instead, but best to make the sentence stand alone.
+referred to above     % phrase "these".
+(all|the|of) [0-9][ ] %  phrase use words for numbers in phrases.
+clearly shows         % phrase "clearly" is usually much.
+grows larger          % phrase is "grows smaller" possible?  grows.
+guarantee as much as possible % phrase then not really a guarantee "provide"
+affects negatively   % phrase "hurts" or "harms"
+rely upon % phrase rely on is good enough
+relies upon % phrase relies on is good enough
+record route packets? % phrase hyphenate record-route packets
+record-route; % phrase leave record route alone if not modifying something else
+we accomplish this  % phrase verbose way to get active voice.
+refers to the % phrase you're being wimpy in the definition.  use "is"
+\\emph\{[a-zA-Z ]*\} refers to % syntax you're being wimpy in the definition.
+loss off % phrase loss of?
+this could % phrase this "what" could
+with that has % phrase probably just one
+simply % phrase probably isn't.
+to get to % phrase "to reach"?
+latency benefit % phrase reduction
+latency improvement % phrase reduction
+shed insight % phrase 'shed light' would seem the metaphor.
+increasingly more % phrase redundant
+I\.e\. % syntax starting a sentence with i.e. is just ugly.
+E\.g\. % syntax starting a sentence with e.g. is just ugly.
+in the large % phrase if large is a noun, bad.  if it's an adjective, fine.
+encapsulates with % phrase seen it, don't know what it means.
+when working with % phrase just say "with"
+it is true that	  % phrase usually can delete
+LDA % phrase convention put in small caps
+(F|f)indings (show|indicate|suggest)	% phrase delete or make more specific
