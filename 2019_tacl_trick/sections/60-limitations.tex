@@ -22,16 +22,16 @@ from the training clues. We measure the proportion of test $n$-grams
 that also appear in training questions with the same answer
 (Table~\ref{table:training_comparison}).
 The overlap is roughly equal for unigrams but surprisingly higher for 
-bigrams in adversarial questions.
+adversarial questions' bigrams.
 The adversarial questions are also shorter
-and have fewer \abr{ne}s on average.
+and have fewer \abr{ne}s.
 However, the
-proportion of question words that are \abr{ne}s is
+proportion of named entities is
 roughly equivalent. 
 
 One difference between the questions written against
 the \abr{ir} system and the ones written against the \abr{rnn} model
-is the drop in \abr{ne}s. The decrease in \abr{ne}s is much higher for \abr{ir} adversarial questions, which may explain their generalization: the \abr{rnn}
+is the drop in \abr{ne}s. The decrease in \abr{ne}s is higher for \abr{ir} adversarial questions, which may explain their generalization: the \abr{rnn}
 is more sensitive to changes in phrasing, while the \abr{ir} system is more
 sensitive to specific words.
 
@@ -81,12 +81,11 @@ Total Questions & \ntotalquestions{} \\
 \label{table:stats}
 \end{table}
 
-We next qualitatively analyze the \challenge{} questions. We
+We next qualitatively analyze \challenge{} questions. We
 manually inspect
-the author edit logs, classifying the questions into six different
-phenomena that fall into
-two broad categories.
-Table~\ref{table:stats} reports the relative frequency of each phenomenon
+the author edit logs, classifying questions into six different
+phenomena in
+two broad categories (Table~\ref{table:stats})
 from a random sample of 100 questions, double counting questions into multiple phenomena
 when applicable.
 
@@ -130,19 +129,19 @@ Adversarial & He was edited to appear in the film ``Contact''\dots\ For ten poin
 
 The first question category requires reasoning about known clues (Table~\ref{table:unseen_sample}).~\smallskip
 
-\paragraph{Composing Seen Clues:} These questions provide several entities with a first-order
-relationship to the correct answer. The system must then
+\paragraph{Composing Seen Clues:} These questions provide entities with a first-order
+relationship to the correct answer. The system must 
 triangulate the correct answer by ``filling in the blank''. For
 example, the first question of Table~\ref{table:unseen_sample} names the
 place of death of Tecumseh. The training data contains a
-question about the place of death (\underline{The Battle of the Thames}) reading
+question his death reading
 ``though stiff fighting came from their Native American allies under
-Tecumseh, who died at this battle''. The system must connect these two
+Tecumseh, who died at this battle'' (\underline{The Battle of the Thames}). The system must connect these two
 clues to answer.~\smallskip
 
-\paragraph{Logic \& Calculations:} These questions require applying mathematical
+\paragraph{Logic \& Calculations:} These questions require mathematical
 or logical operators. For example, the training data
-contains a clue about the Battle of Thermopylae reading ``King
+contains a clue about the \underline{Battle of Thermopylae}: ``King
 Leonidas and 300 Spartans died at the hands of the Persians''. The
 second question in Table~\ref{table:unseen_sample} requires adding
 150 to the number of Spartans.~\smallskip 

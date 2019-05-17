@@ -1,0 +1,18 @@
+IPs                  % phrase should be IP addresses
+[Rr]ate-limits       % spelling "rate limits" has no hyphen, only "rate-limited"
+best effort          % phrase hyphenate best-effort service.
+deliver route        % phrase jargon redundancy
+euclidean % capitalize Euclidean.
+interdomain          % spelling inter-domain
+internet             % capitalize unless talking about an internet other than the Internet
+intradomain          % spelling intra-domain
+log-normal           % spelling lognormal is one word.
+pareto               % capitalize
+ttl                  % capitalize
+weibull              % capitalize proper name.
+PoP                  % syntax I think POP looks less annoying.
+PoPs                 % syntax I think POP looks less annoying.
+http[ ]              % capitalize capitalize HTTP.
+linux                % capitalize capitalize Linux
+Internet[^\.]*Internet % syntax avoid Internet twice in the same sentence?
+zipf                 % capitalize capitalize the guy's name.
