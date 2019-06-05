@@ -1,0 +1,73 @@
+
+\section{Analysis: Understanding Modularity as an Evaluation Metric}
+\label{sec:empirical}
+
+
+The experiments so far 
+show that modularity captures whether an
+embedding is useful,
+which suggests that modularity could be used as an intrinsic evaluation or validation metric.
+Here, we investigate whether modularity can
+capture \emph{distinct} information compared to existing evaluation measures:
+\textsc{qvec-cca}~\cite{ammar2016massively}, \textsc{csls}~\cite{lample2018word}, and cosine similarity between translation pairs (Section~\ref{sec:ablation}).
+We also 
+analyze the effect of
+the number of nearest neighbors $k$ (Section~\ref{sec:k_sensitivity}).
+
+\begin{figure}[tb]
+ \centering
+     {\includegraphics[width=0.98\linewidth]{\autofig{ablation_study.pdf}}}
+    \vspace{-1ex}
+     \caption{We predict the cross-lingual document classification results for \textsc{da} and \textsc{it} from Figure~\ref{fig:mod_results} using three out of four evaluation metrics.  Ablating modularity causes by far the largest decrease ($R^2 = 0.814$ when using all four features) in $R^2$, showing that it captures
+       information complementary to the other metrics.
+       }
+\label{fig:ablation}
+\end{figure}
+
+\subsection{Ablation Study Using Linear Regression}
+\label{sec:ablation}
+
+
+We fit a linear regression model to predict the classification
+accuracy given four intrinsic measures: \textsc{qvec-cca}, \textsc{csls}, average cosine
+similarity of translations, and modularity.  We ablate 
+each of the four measures, fitting linear regression with standardized feature values,
+for two target languages (\textsc{it} and \textsc{da}) on the task of cross-lingual document classification (Figure~\ref{fig:mod_results}).  We limit to
+\textsc{it} and \textsc{da} because aligned supersense annotations to
+\textsc{en} ones~\citep{Miller:1993:SC:1075671.1075742}, required for \textsc{qvec-cca} are only available
+in those languages~\citep{Montemagni2003,martinezalonso-EtAl:2015:NODALIDA,martinezalonsoetal2016,ammar2016massively}.
+We standardize the values of the four features before training the regression model.
+
+Omitting modularity hurts accuracy prediction on
+cross-lingual document classification substantially, while omitting
+the other three measures has smaller effects
+(Figure~\ref{fig:ablation}).  Thus, modularity complements the
+other measures and is more predictive of classification
+accuracy.
+
+
+\subsection{Hyperparameter Sensitivity}
+\label{sec:k_sensitivity}
+
+While modularity itself does not have any adjustable hyperparameters,
+our approach to constructing the lexical graph has two hyperparameters: the number of nearest neighbors ($k$) and the number of trees ($t$) for approximating the $k$-nearest neighbors using random projection trees. 
+We conduct a grid search for $k \in \{1, 3, 5, 10, 50, 100, 150, 200\}$ and $t \in \{50, 100, 150, 200, 250, 300, 350, 400, 450, 500\}$ using the German \abrcamel{rcv}{2} corpus as the held-out language to tune hyperparameters. 
+
+
+\begin{figure}[t]
+   \centering
+      \vspace{-2ex}
+       {\includegraphics[width=0.85\linewidth]{\autofig{k_nn_diff_k_corr.pdf}}}
+      \vspace{-1ex}
+       \caption{\label{fig:diff_k_corr} Correlation between modularity and classification performance (\textsc{en}$\rightarrow$\textsc{de}) with different numbers of neighbors $k$. 
+       Correlations are computed on the same setting as Figure~\ref{fig:mod_results} using supervised methods. 
+       We use this to set $k=3$. 
+       }
+\end{figure}
+
+The nearest neighbor $k$ has a much larger effect on modularity than~$t$, 
+so we focus on analyzing the effect of $k$, 
+using the optimal $t=450$.
+Our earlier experiments all use $k=3$ since it gives the highest Pearson's and Spearman's correlation on the tuning dataset (Figure~\ref{fig:diff_k_corr}). 
+The absolute correlation between the downstream task decreases when setting $k>3$, indicating nearest neighbors beyond $k=3$ are only contributing noise. 
+

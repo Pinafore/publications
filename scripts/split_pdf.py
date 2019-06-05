@@ -9,8 +9,7 @@ __author__ = 'benhdj@cs.cmu.edu (Benjamin Han)'
 
 import sys
 import os
-
-from CoreGraphics import *
+from PyPDF2 import PdfFileReader, PdfFileWriter
 
 
 def Usage ():
@@ -36,57 +35,42 @@ pages long):
 
   """)
 
+def pdf_splitter(source, splits, target):
+    pdf = PdfFileReader(source)
+    num_pages = pdf.getNumPages()
 
-if len(sys.argv) < 3:
-  Usage()
-  sys.exit(1)
-else:
-  inputFN = sys.argv[1]
-  inputDoc = \
-    CGPDFDocumentCreateWithProvider(\
-    CGDataProviderCreateWithFilename(inputFN))
+    last_page = 0
+    for ii in splits:
+        pdf_writer = PdfFileWriter()
+        output_filename = '{}_page_{}.pdf'.format(target, last_page)
+        with open(output_filename, 'wb') as out:
+          for jj in range(last_page, ii):
+            pdf_writer.addPage(pdf.getPage(jj))
+          pdf_writer.write(out)
+        last_page = ii
+        print('Created: {}'.format(output_filename))
+  
+if __name__ == "__main__":
+  if len(sys.argv) < 3:
+    Usage()
+    sys.exit(1)
+  else:
+    inputFN = sys.argv[1]
 
-  if inputDoc:
-    maxPages = inputDoc.getNumberOfPages()
+  if inputFN:
+    pdf = PdfFileReader(inputFN)
+    maxPages = pdf.getNumPages()    
     print('%s has %d pages' % (inputFN, maxPages))
   else:
     sys.exit(2)
 
   try:
-    splitPageNums = map(int,  sys.argv[2:])
+    splitPageNums = list(map(int,  sys.argv[2:]))
   except:
     print('Error: invalid split page number(s).')
 
-  for i, splitPageNum in enumerate(splitPageNums):
-    if splitPageNum < 1 or splitPageNum > maxPages:
-      print('Error: a split page number must be >= 1 and <= %d.' % \
-            maxPages)
-      sys.exit(3)
-    elif i and splitPageNums[i - 1] >= splitPageNum:
-      print('Error: split page numbers must be increasing.')
-      sys.exit(4)
-    
-baseFN = os.path.splitext(os.path.basename(inputFN))[0]
-pageRect = CGRectMake (0, 0, 612, 792)
-
-if splitPageNums[-1] < maxPages:
   splitPageNums.append(maxPages)
+  print("Got splits %s" % str(splitPageNums))
 
-startPageNum = 1
-for i, splitPageNum in enumerate(splitPageNums):
-  outputFN = '%s.part%d.%d_%d.pdf' % \
-             (baseFN, i + 1, startPageNum, splitPageNum)
-  writeContext = CGPDFContextCreateWithFilename(outputFN, pageRect)
-
-  print('Writing page %d-%d to %s...' % \
-        (startPageNum, splitPageNum, outputFN))
-
-  for pageNum in xrange(startPageNum, splitPageNum + 1):
-    mediaBox = inputDoc.getMediaBox(pageNum)
-    writeContext.beginPage(mediaBox)
-    writeContext.drawPDFDocument(mediaBox, inputDoc, pageNum)
-    writeContext.endPage()
-
-  startPageNum = splitPageNum + 1
-
-print('Done: %d file(s) generated.' % len(splitPageNums))
+  pdf_splitter(inputFN, splitPageNums, inputFN.split(".")[0])
+    

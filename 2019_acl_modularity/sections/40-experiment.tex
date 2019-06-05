@@ -1,0 +1,461 @@
+\section{Experiments: Correlation of Modularity with Downstream Success}
+\label{sec:experiment}
+
+We now investigate whether
+modularity can predict the effectiveness of cross-lingual word embeddings
+on three downstream tasks: (i) cross-lingual document classification,
+(ii) bilingual lexical induction, and (iii) document retrieval in
+low-resource languages.
+If modularity correlates with task
+performance, it can characterize embedding quality.
+
+
+\subsection{Data}
+
+To investigate the relationship between embedding effectiveness and
+modularity, we explore five different cross-lingual word embeddings
+on six language pairs (Table~\ref{tab:stats_mono}).
+
+
+\begin{table}[!tb]
+\centering
+\small
+ \begin{tabular}{llr}
+\bf Language  & \bf Corpus                      & \bf Tokens        \\ \hline
+     English (\textsc{en})   & News             & 23M             \\
+     Spanish (\textsc{es})   & News             & 25M             \\
+     Italian (\textsc{it})   & News             & 23M             \\
+     Danish (\textsc{da})    & News             & 20M             \\
+     Japanese (\textsc{ja})  & News             & 28M             \\
+     Hungarian (\textsc{hu}) & News             & 20M             \\
+     Amharic (\textsc{am})   & \textsc{lorelei} & 28M             \\
+ \hline
+ \end{tabular}
+\caption{\label{tab:stats_mono}Dataset statistics
+         (source and number of tokens) for each language
+         including both Indo-European and
+         non-Indo-European languages.
+ }
+\end{table}
+
+
+\paragraph{Monolingual Word Embeddings}
+All monolingual embeddings  are
+trained using a skip-gram model with negative
+sampling~\citep{NIPS2013_5021}.  The dimension size is $100$ or
+$200$.
+All other hyperparameters are default in
+Gensim~\cite{rehurek_lrec}.
+ News articles except for Amharic are from Leipzig Corpora~\citep{Goldhahn12buildinglarge}.
+ For Amharic, we use
+documents from \textsc{lorelei}~\citep{LORELEI_lang_packs}.
+MeCab \citep{kudo-yamamoto-matsumoto:2004:EMNLP} tokenizes
+Japanese sentences.
+
+\paragraph{Bilingual Seed Lexicon} For supervised methods, bilingual
+lexicons from \citet{rolston2016collection} induce all cross-lingual
+embeddings except for Danish, which uses Wiktionary.\footnote{\url{https://en.wiktionary.org/}}
+
+\subsection{Cross-Lingual Mapping Algorithms}
+\label{sec:algorithms}
+
+We use three supervised (\abr{mse}, \abr{mse}+Orth, \abr{cca}) and
+two unsupervised (\abr{muse}, \abr{vecmap}) cross-lingual
+mappings:\footnote{We use the implementations
+  from original authors with default parameters unless otherwise
+  noted.}
+
+\paragraph{Mean-squared error (\abr{mse})}
+\citet{DBLP:journals/corr/MikolovLS13} minimize the mean-squared error
+of bilingual entries in a seed lexicon to learn a projection between
+two embeddings. We use the implementation by
+\citet{artetxe2016learning}.
+
+\paragraph{\abr{mse} with orthogonal constraints (\abr{mse}+Orth)}
+\citet{xing-EtAl:2015:NAACL-HLT} add length normalization
+and orthogonal constraints to preserve the
+cosine similarities in the original monolingual embeddings.
+\citet{artetxe2016learning} further preprocess monolingual embeddings
+by mean centering.\footnote{One round of
+iterative  normalization~\cite{iternorm}}
+
+\paragraph{Canonical Correlation Analysis (\abr{cca})}
+\citet{faruqui-dyer:2014:EACL}
+maps two
+monolingual embeddings into a shared space by maximizing the
+correlation between translation pairs in a seed lexicon.
+
+\paragraph{\citet[\abr{muse}]{lample2018word}}
+use language-adversarial learning~\citep{ganin} to induce the initial bilingual seed lexicon, followed by a refinement step, which iteratively
+solves the orthogonal Procrustes problem~\cite{Schonemann1966,artetxe-labaka-agirre:2017:Long}, aligning embeddings without an external
+bilingual lexicon.
+Like \abr{mse}+Orth, vectors are unit length and mean
+centered.
+Since \textsc{muse} is unstable~\cite{self_learn,eigenval_sim}, we
+report the best of five runs.
+
+\paragraph{\citet[\abr{vecmap}]{self_learn}}
+induce an initial bilingual
+seed lexicon by aligning intra-lingual similarity matrices computed
+from each monolingual embedding.
+We report the best of five runs to address
+uncertainty from the initial dictionary.
+
+
+\subsection{Modularity Implementation}
+We implement modularity using random projection trees~\citep{dasgupta2008random} to speed up the
+extraction of $k$-nearest
+neighbors,\footnote{\url{https://github.com/spotify/annoy}} tuning
+$k=3$ on the German \abrcamel{rcv}{2} dataset (Section~\ref{sec:k_sensitivity}).
+
+\subsection{Task 1: Document Classification}
+\label{sec:cldc}
+
+We now explore the correlation of modularity and accuracy on cross-lingual document classification.
+We classify documents from the Reuters \abrcamel{rcv}{1} and \abrcamel{rcv}{2} corpora~\citep{Lewis:2004:RNB:1005332.1005345}.
+Documents have one of four labels (\underline{Corporate/Industrial},
+\underline{Economics}, \underline{Government/Social}, \underline{Markets}).  We follow
+\citet{klementiev-titov-bhattarai:2012:PAPERS}, except we use
+all \textsc{en} training documents
+and documents in each target language (\abr{da}, \abr{es}, \abr{it}, and \abr{ja}) as tuning and test data.
+After removing out-of-vocabulary words,
+we split documents in target languages into $10\%$ tuning data and $90\%$ test data.
+Test data are 10,067 documents for \textsc{da}, 25,566
+for \textsc{it}, 58,950 for \textsc{ja}, and 16,790 for \textsc{es}.
+We exclude languages Reuters lacks: \textsc{hu} and \textsc{am}.
+We use deep averaging
+networks~\cite[\abr{dan}]{iyyer-EtAl:2015:ACL-IJCNLP} with three
+layers, 100 hidden states, and 15 epochs as our classifier.
+The \abr{dan} had better accuracy than averaged
+  perceptron~\citep{avg_percep} in \citet{klementiev-titov-bhattarai:2012:PAPERS}.
+
+\begin{figure}[tb]
+\centering
+     {\includegraphics[width=.95\linewidth]{\autofig{corr_cldc.pdf}}}
+    \vspace{-2ex}
+     \caption{\label{fig:mod_results} Classification accuracy
+     and modularity of cross-lingual word embeddings ($\rho=-0.665$): less
+     modular cross-lingual mappings have higher accuracy.
+}
+\end{figure}
+
+\begin{table}[!tb]
+  \small
+  \centering
+  \begin{tabular}{clrr}
+                              & \bf Method           & \bf Acc. & \bf Modularity\\ \hline
+                              &     \abr{mse}              & 0.399    & 0.529 \\
+Supervised                    &     \abr{cca}              & 0.502    & 0.513 \\
+                              &     \abr{mse}+Orth         & 0.628    & 0.452 \\ \hline
+\multirow{2}{*}{Unsupervised} &     \textsc{muse}    & 0.711    & 0.431 \\
+                              &     \textsc{vecmap}  & 0.643    & 0.432 \\
+\hline
+  \end{tabular}
+ \caption{\label{tab:mod_results} Average classification accuracy on
+   (\textsc{en} $\rightarrow$ \textsc{da}, \textsc{es}, \textsc{it},
+   \textsc{ja}) along with the average modularity of five
+   cross-lingual word embeddings.
+   \textsc{muse}
+   has the best accuracy, captured by its low modularity.
+ }
+\end{table}
+
+
+
+\paragraph{Results}
+
+We report the correlation value computed from the data points in Figure~\ref{fig:mod_results}.
+Spearman's correlation between modularity and classification
+accuracy on all languages is $\rho = -0.665$.
+Within each language pair,
+modularity has a strong correlation within
+\textsc{en}-\textsc{es} embeddings ($\rho=-0.806$),
+\textsc{en}-\textsc{ja} ($\rho=-0.794$),
+\textsc{en}-\textsc{it} ($\rho=-0.784$), and
+a moderate correlation within
+\textsc{en}-\textsc{da} embeddings ($\rho=-0.515$).
+\textsc{muse} has the best classification accuracy (Table~\ref{tab:mod_results}),
+reflected by its low modularity.
+
+
+\begin{table}[tb]
+\vspace{-1ex}
+ \small
+ \centering
+  \begin{tabular}{|l|l|l|l|p{2cm}|p{2.5cm}|p{2.5cm}|}
+  \hline
+ \begin{CJK}{UTF8}{ipxm}市場 ``market''      \end{CJK}&\begin{CJK}{UTF8}{ipxm}終値\end{CJK} ``closing price'' \\\hline\hline
+ \begin{CJK}{UTF8}{ipxm}新興 ``new coming''  \end{CJK}&\begin{CJK}{UTF8}{ipxm}上げ幅 ``gains''         \end{CJK}\\
+ \begin{CJK}{UTF8}{ipxm}market               \end{CJK}&\begin{CJK}{UTF8}{ipxm}株価 ``stock price''     \end{CJK}\\
+ \begin{CJK}{UTF8}{ipxm}markets              \end{CJK}&\begin{CJK}{UTF8}{ipxm}年初来 ``yearly''        \end{CJK}\\
+ \begin{CJK}{UTF8}{ipxm}軟調 ``bearish''     \end{CJK}&\begin{CJK}{UTF8}{ipxm}続落 ``continued fall''  \end{CJK}\\
+ \begin{CJK}{UTF8}{ipxm}マーケット ``market''\end{CJK}&\begin{CJK}{UTF8}{ipxm}月限 ``contract month''  \end{CJK}\\
+ \begin{CJK}{UTF8}{ipxm}活況 ``activity''    \end{CJK}&\begin{CJK}{UTF8}{ipxm}安値 ``low price''       \end{CJK}\\
+ \begin{CJK}{UTF8}{ipxm}相場 ``market price''\end{CJK}&\begin{CJK}{UTF8}{ipxm}続伸 ``continuous rise'' \end{CJK}\\
+ \begin{CJK}{UTF8}{ipxm}底入 ``bottoming''   \end{CJK}&\begin{CJK}{UTF8}{ipxm}前日 ``previous day''    \end{CJK}\\
+ \begin{CJK}{UTF8}{ipxm}為替 ``exchange''    \end{CJK}&\begin{CJK}{UTF8}{ipxm}先物 ``futures''         \end{CJK}\\
+ \begin{CJK}{UTF8}{ipxm}ctoc                 \end{CJK}&\begin{CJK}{UTF8}{ipxm}小幅 ``narrow range''    \end{CJK}\\
+  \hline
+  \end{tabular}
+ \caption{\label{tab:jp_nn_example} Nearest neighbors
+ in an \textsc{en}-\textsc{ja} embedding.
+ Unlike the \textsc{ja} word ``market'', the \textsc{ja} word ``closing price'' has no \textsc{en} vector nearby.
+   }
+\end{table}
+
+\paragraph{Error Analysis}
+A common error in \textsc{en} $\rightarrow$ \textsc{ja}
+classification is predicting
+\underline{Corporate/Industrial} for documents labeled \underline{Markets}.
+One cause is documents with \begin{CJK}{UTF8}{ipxm}終値\end{CJK} ``closing price'';
+ this has few market-based English neighbors
+  (Table~\ref{tab:jp_nn_example}).
+  As a result, the model fails to transfer across languages.
+
+
+\subsection{Task 2: Bilingual Lexical Induction (\abr{bli})}
+\label{sec:task2}
+Our second downstream task explores the correlation between modularity and
+bilingual lexical induction (\abr{bli}).
+We evaluate on the test set from \citet{lample2018word}, but we remove
+pairs in the seed lexicon from \citet{rolston2016collection}.
+The result is 2,099 translation pairs for \textsc{es}, 1,358 for
+\textsc{it}, 450 for \textsc{da}, and 973 for \textsc{ja}.
+We report precision@1 (P@1) for retrieving cross-lingual nearest
+neighbors by cross-domain similarity local
+scaling~\cite[\abr{csls}]{lample2018word}.
+
+\paragraph{Results}
+Although this task ignores intra-lingual nearest neighbors when
+retrieving translations,
+modularity still has a high correlation ($\rho=-0.785$) with P@1
+(Figure~\ref{fig:bli_results}).
+\textsc{muse} and \textsc{vecmap} beat the three supervised methods,
+which have the lowest modularity (Table~\ref{tab:bli_mod_results}).
+P@1 is low compared to other work on the \abr{muse} test set
+(e.g., \citet{lample2018word}) because we filter out translation pairs which appeared
+in the large training lexicon compiled by \citet{rolston2016collection},
+and the raw corpora used to train monolingual embeddings (Table~\ref{tab:stats_mono})
+are relatively small compared to Wikipedia.
+
+
+\begin{figure}[tb]
+\centering
+     {\includegraphics[width=.95\linewidth]{\autofig{corr_bli.pdf}}}
+    \vspace{-2ex}
+     \caption{\label{fig:bli_results} Bilingual lexical induction
+       results and modularity of cross-lingual word embeddings
+       ($\rho=-0.789$): lower modularity means higher precision@1.  }
+\end{figure}
+
+
+\begin{table}[!tb]
+  \small
+  \centering
+  \begin{tabular}{clrrr}
+                               &  \bf Method     & \bf P@1 & \bf Modularity\\ \hline
+                               &  \abr{mse}            & 7.30           &  0.529        \\
+ Supervised                    &  \abr{cca}            & 3.06           &  0.513        \\
+                               &  \abr{mse}+Orth       & 10.57          &  0.452        \\\hline
+ \multirow{2}{*}{Unsupervised} &  \textsc{muse}  & 11.83          &  0.431        \\
+                               &  \textsc{vecmap}& 12.92          &  0.432        \\
+\hline
+  \end{tabular}
+  \vspace{-1ex}
+ \caption{\label{tab:bli_mod_results} Average precision@1 on
+   (\textsc{en} $\rightarrow$ \textsc{da}, \textsc{es}, \textsc{it},
+   \textsc{ja}) along with the average modularity of the
+   cross-lingual word embeddings trained with different methods.
+   \textsc{vecmap} scores the best P@1, which is captured by its low modularity.
+ }
+\end{table}
+
+
+
+\subsection{Task 3: Document Retrieval in Low-Resource Languages}
+\label{sec:task3}
+
+As a third downstream task, we turn to an important task for low-resource languages: lexicon
+expansion~\citep{gupta-manning:2015:NAACL-HLT,hamilton-EtAl:2016:EMNLP2016} for document retrieval.
+Specifically, we start with a set of \textsc{en}
+seed words relevant to a particular concept, then 
+find related words in a target language for which a
+comprehensive bilingual lexicon does not exist.  We
+focus on the disaster domain, where events may require immediate
+{\abr{nlp}} analysis
+(e.g., sorting \abr{sms}
+messages to first responders).
+
+We induce keywords in a target language by taking the $n$ nearest
+neighbors of the English seed words in a cross-lingual word embedding.
+We manually select sixteen disaster-related English seed words
+from
+Wikipedia articles, ``{\it Natural hazard}'' and ``{\it Anthropogenic
+  hazard}''.  Examples of seed terms include ``earthquake'' and ``flood''.
+Using the extracted terms, we retrieve disaster-related documents by
+keyword matching and assess the coverage and relevance of terms by
+area under the precision-recall curve (\abr{auc}) with varying $n$.
+
+
+\vspace{-0.5ex}
+\paragraph{Test Corpora}
+
+As positively labeled documents, we use documents from the
+\textsc{lorelei} project~\citep{LORELEI_lang_packs} containing any
+disaster-related annotation.
+There are $64$ disaster-related documents in Amharic, and $117$ in Hungarian.
+We construct a set of negatively labeled documents from the Bible;
+because the \textsc{lorelei} corpus does not include negative
+documents and the Bible is available in all our
+languages~\citep{Christodouloupoulos:2015},
+we take the chapters of the gospels ($89$ documents), which do not discuss disasters,
+and treat these as non-disaster-related documents.
+
+\begin{table}[!tb]
+     \small
+     \centering
+      \vspace{-1ex}
+     \begin{tabular}{llrrrr}
+       \bf Lang.                  & \bf Method      & \bf AUC &\bf Mod.\\ \hline
+    \multirow{5}{*}{ \textsc{am}}
+                                  & \abr{mse}             & 0.578  & 0.628 \\
+                                  & \abr{cca}             & 0.345  & 0.501 \\
+                                  & \abr{mse}+Orth        & 0.606  & 0.480 \\
+                                  & \textsc{muse}   & 0.555  & 0.475 \\
+                                  & \textsc{vecmap} & 0.592  & 0.506 \\ \hline
+    \multirow{5}{*}{ \textsc{hu}}
+                                  & \abr{mse}             & 0.561  & 0.598 \\
+                                  & \abr{cca}             & 0.675  & 0.506 \\
+                                  & \abr{mse}+Orth        & 0.612  & 0.447 \\
+                                  & \textsc{muse}   & 0.664  & 0.445 \\
+                                  & \textsc{vecmap} & 0.612  & 0.432 \\ \hline
+    \multicolumn{2}{c}{Spearman Correlation $\rho$} & \multicolumn{2}{c}{$-0.378$}  \\
+     \end{tabular}
+     \vspace{-1ex}
+    \caption{\label{tab:prec_results}
+    Correlation between modularity and AUC on document retrieval.
+    It shows a moderate correlation to this task.
+      }
+\end{table}
+
+
+\paragraph{Results}
+Modularity has a moderate correlation with \abr{auc}
+($\rho=-0.378$, Table~\ref{tab:prec_results}).
+While modularity focuses on the entire vocabulary of cross-lingual
+word embeddings, this task focuses on a small, specific
+subset---disaster-relevant words---which may explain the low
+correlation compared to \abr{bli} or document
+classification.
+
+
+
+
+\section{Use Case: Model Selection for \textsc{muse}}
+\label{sec:validation}
+
+A common use case of intrinsic measures is model selection.
+We focus on \textsc{muse}~\cite{lample2018word} since it is unstable,
+especially on distant language
+pairs~\cite{self_learn,eigenval_sim,non_adv} and therefore requires an
+effective metric for model selection.
+\textsc{muse} uses a validation metric in its two steps: (1) the language-adversarial step, and (2) the refinement step.
+First the algorithm selects an optimal mapping $W$ using a validation metric, obtained from language-adversarial learning~\cite{ganin}.
+Then the selected mapping $W$ from the language-adversarial step is passed on to the refinement step~\citep{artetxe-labaka-agirre:2017:Long} to re-select the optimal mapping $W$ using the same validation metric after each epoch of solving the orthogonal Procrustes problem~\citep{Schonemann1966}.
+
+Normally, \textsc{muse} uses an intrinsic metric, \textsc{csls} of the top 10K frequent words \cite[\textsc{csls}-10K]{lample2018word}.  Given word vectors $s, t \in \mathbb{R}^n$ from a source and a target embedding, \textsc{csls} is a cross-lingual similarity metric,
+\begin{equation}
+\text{\textsc{csls}}(W s, t) = 2 \cos(W s, t) - r(W s) - r(t)
+\end{equation}
+where $W$ is the trained mapping after each epoch, and $r(x)$ is the average cosine similarity of the top $10$ cross-lingual nearest neighbors of a word $x$.
+
+
+What if we use modularity instead?
+To test modularity as a validation metric for~\abr{muse}, we
+compute modularity on the lexical graph of 10K most frequent words
+(Mod-10K; we use 10K for consistency with \textsc{csls} on the same
+words) after each epoch of the adversarial step and the refinement step and select the best mapping.
+
+The important difference between these two metrics is that Mod-10K
+considers the relative similarities between intra- and cross-lingual
+neighbors, while \textsc{csls}-10K only considers the similarities of
+cross-lingual nearest neighbors.\footnote{Another difference is that
+  $k$-nearest neighbors for \textsc{csls}-10K is $k=10$, whereas
+  Mod-10K uses $k=3$. However, using $k=3$ for \textsc{csls}-10K leads
+  to worse results; we therefore only report the result on the
+  default metric i.e., $k=10$.}
+
+\begin{table}[!tb]
+     \small
+     \centering
+     \begin{tabular}{llrrrrrrrr}
+ \bf Family                      & \bf Lang.   & \multicolumn{2}{c}{\bf \textsc{csls}-10K} &  \multicolumn{2}{c}{\bf Mod-10K}   \\ \hline
+                                 &             & Avg.           & Best                     & Avg.         & Best    \\ \hline
+\multirow{2}{*}{Germanic}        & \textsc{da} &  \bf 52.62      &  \bf 60.27               & 52.18        & 60.13   \\
+                                 & \textsc{de} &  \bf 75.27      &  \bf 75.60               & 75.16        & 75.53   \\ \hline
+\multirow{2}{*}{Romance}         & \textsc{es} & \bf 74.35       &  83.00                   & 74.32        & 83.00   \\
+                                 & \textsc{it} &   78.41         &  78.80                   & \bf 78.43    & 78.80   \\ \hline
+\multirow{3}{0.7cm}{Indo-Iranian}& \textsc{fa} &  \bf 27.79      & 33.40                    & 27.77        & 33.40   \\
+                                 & \textsc{hi} &  25.71          & 33.73                    & \bf 26.39    & \bf 34.20\\
+                                 & \textsc{bn} &  0.00           & 0.00                     & \bf 0.09     & \bf 0.87 \\ \hline
+\multirow{8}{*}{Others}          & \textsc{fi} &  4.71           & 47.07                    & 4.71         & 47.07    \\
+                                 & \textsc{hu} & \bf 52.55       & 54.27                    & 52.35        & \bf 54.73\\
+                                 & \textsc{ja} &  18.13          & 49.69                    & \bf 36.13    & 49.69     \\
+                                 & \textsc{zh} &  5.01           & 37.20                    & \bf 10.75    & 37.20     \\
+                                 & \textsc{ko} &  16.98          & 20.68                    & \bf 17.34    & \bf 22.53 \\
+                                 & \textsc{ar} &  15.43          & 33.33                    & \bf 15.71    & \bf 33.67 \\
+                                 & \textsc{id} &  67.69          & 68.40                    & \bf 67.82    & 68.40     \\
+                                 & \textsc{vi} &  0.01           & 0.07                     & 0.01         & 0.07      \\ \hline
+     \end{tabular}
+    \caption{\label{tab:validation_metric} \abr{bli} results (P@1
+      $\times 100\%$) from \textsc{en} to each target language with
+      different validation metrics for \textsc{muse}: default
+      (\textsc{csls}-10K) and modularity (Mod-10K).  We report the
+      average (Avg.) and the best (Best) from ten runs with ten random
+      seeds for each validation metric.  \textbf{Bold} values are
+      mappings that are not shared between the two validation metrics.
+      Mod-10K improves the robustness of \textsc{muse} on distant
+      language pairs.
+      }
+\end{table}
+
+
+
+\paragraph{Experiment Setup}
+
+We use the pre-trained
+fastText vectors~\citep{fasttext} to be comparable with the prior
+work.  Following \citet{self_learn}, all vectors are unit length
+normalized, mean centered, and then unit length
+normalized.
+We use the test lexicon by \citet{lample2018word}.
+We run ten times with the same random seeds and
+hyperparameters but with different validation metrics.  Since
+\textsc{muse} is unstable on distant language
+pairs~\cite{self_learn,eigenval_sim,non_adv}, we test it on
+English to languages from diverse language families: Indo-European
+languages such as Danish (\textsc{da}), German (\textsc{de}), Spanish
+(\textsc{es}), Farsi (\textsc{fa}), Italian (\textsc{it}), Hindi
+(\textsc{hi}), Bengali (\textsc{bn}), and non-Indo-European languages
+such as Finnish (\textsc{fi}), Hungarian (\textsc{hu}), Japanese
+(\textsc{ja}), Chinese (\textsc{zh}), Korean (\textsc{ko}), Arabic
+(\textsc{ar}), Indonesian (\textsc{id}), and Vietnamese (\textsc{vi}).
+
+
+\paragraph{Results}
+Table~\ref{tab:validation_metric} shows P@1 on \abr{bli} for each target
+language using English as the source language.
+Mod-10K improves P@1 over the default validation metric in diverse
+languages, especially on the average P@1 for non-Germanic languages
+such as \textsc{ja} ($+18.00\%$) and \textsc{zh} ($+5.74\%$), and the
+best P@1 for \textsc{ko} ($+1.85\%$).
+These language pairs include pairs (\textsc{en-ja} and
+\textsc{en-hi}), which are difficult for \textsc{muse}~\cite{non_adv}.
+Improvements in \textsc{ja} come from selecting a better mapping
+ during the refinement step, which the default validation
+misses.  For \textsc{zh}, \textsc{hi}, and
+\textsc{ko}, the improvement comes from selecting better mappings
+during the adversarial step.
+However, modularity does not improve
+on all languages (e.g., \textsc{vi}) that are reported to fail by \citet{non_adv}.
+

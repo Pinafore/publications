@@ -1,0 +1,25 @@
+\section{Discussion: What Modularity Can and Cannot Do}
+\label{sec:conc}
+
+This work focuses on modularity as a diagnostic tool: it is cheap and
+effective at discovering which embeddings are likely to falter on
+downstream tasks.  
+Thus, practitioners should consider including it as a metric for
+evaluating the quality of their embeddings.
+Additionally, we believe that modularity could serve as a useful prior for the
+algorithms that \emph{learn} cross-lingual word embeddings: during learning
+prefer updates that avoid increasing modularity if all else is equal.
+
+Nevertheless, we recognize limitations of modularity. 
+Consider the following cross-lingual word embedding ``algorithm'': for
+each word, select a random point on the unit hypersphere.
+This is a horrible distributed representation: the position
+of words' embedding has no relationship to the underlying meaning.
+Nevertheless, this representation will have very low modularity.
+Thus, while modularity can identify bad embeddings, once vectors are
+well mixed, this metric---unlike \textsc{qvec} or \textsc{qvec-cca}---cannot identify whether the
+meanings make sense.
+Future work should investigate how to combine techniques that use both
+word meaning and nearest neighbors for a more robust, semi-supervised
+cross-lingual evaluation.
+

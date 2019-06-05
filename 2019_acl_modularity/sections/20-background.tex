@@ -1,0 +1,85 @@
+\section{Background: Cross-Lingual Word Embeddings and their Evaluation}
+\label{sec:diagnosis}
+
+There are many approaches to training cross-lingual word embeddings.
+This section reviews the embeddings we consider in this paper,
+along with existing work on evaluating those embeddings.
+
+
+\subsection{Cross-Lingual Word Embeddings}
+
+We focus on methods that learn a cross-lingual vector space through a post-hoc mapping between independently constructed
+monolingual embeddings~\citep{DBLP:journals/corr/MikolovLS13,vulic-korhonen-acl:2016c}.
+Given two separate monolingual embeddings and a bilingual seed
+lexicon, a projection matrix can map translation pairs in a given
+bilingual lexicon to be near each other in a shared embedding space.
+A key assumption is that cross-lingually coherent words have ``similar
+geometric arrangements''~\citep{DBLP:journals/corr/MikolovLS13}
+in the embedding space, enabling ``knowledge transfer between
+languages''~\citep{DBLP:journals/corr/Ruder17}. 
+
+We focus on mapping-based approaches for two reasons.  First, these approaches are
+applicable to low-resource languages because they do not requiring
+large bilingual dictionaries or parallel corpora
+\citep{artetxe-labaka-agirre:2017:Long,lample2018word}.\footnote{\citet{DBLP:journals/corr/Ruder17}
+  offers detailed discussion on alternative approaches. }
+Second, this focus separates the word embedding task from the cross-lingual
+mapping, which allows us to focus on evaluating the specific
+multilingual component in Section~\ref{sec:experiment}.
+
+
+\subsection{Evaluating Cross-Lingual Embeddings}
+
+Most work on evaluating cross-lingual embeddings
+ focuses on extrinsic evaluation of downstream tasks~\citep{upadhyay-EtAl:2016,glavas2019properly}.
+However, intrinsic evaluations are crucial since many low-resource languages
+lack annotations needed for downstream tasks.
+Thus, our goal is to develop an intrinsic measure that correlates
+with downstream tasks without using any external resources.
+This section summarizes existing work on intrinsic methods of evaluation for cross-lingual embeddings.
+
+One widely used intrinsic measure for evaluating the coherence of
+monolingual embeddings is \textsc{qvec}~\citep{qvec:enmlp:15}. 
+\citet{ammar2016massively} extend \textsc{qvec} by using 
+canonical correlation analysis (\textsc{qvec-cca})
+to make the scores comparable across
+embeddings with different dimensions.
+However, while both \textsc{qvec} and \textsc{qvec-cca} can be
+extended to cross-lingual word embeddings, they are limited: they require external annotated corpora.  
+This is problematic in cross-lingual settings since this requires
+annotation to be consistent across
+languages~\citep{ammar2016massively}.
+
+Other internal metrics do not require external resources, but those consider only part of the embeddings.
+\citet{lample2018word} and \citet{self_learn} use a validation metric
+that calculates similarities of cross-lingual neighbors to conduct
+model selection.
+Our approach differs in that we consider whether cross-lingual nearest neighbors 
+are {\it relatively closer} than intra-lingual nearest neighbors.
+
+\citet{eigenval_sim} use the similarities of intra-lingual
+neighbors and compute graph similarity between two monolingual
+lexical subgraphs built by subsampled words in a bilingual lexicon.
+They further show that the resulting graph similarity has a high
+correlation with bilingual lexical induction on \abr{muse}~\citep{lample2018word}.
+However, their graph similarity still only uses intra-lingual similarities
+but not cross-lingual similarities. 
+
+These existing metrics are limited by either requiring external resources
+or considering only part of the embedding structure (e.g., intra-lingual but not cross-lingual neighbors).
+In contrast, our work develops an intrinsic metric which
+ is highly correlated with multiple downstream tasks but does not require external resources,
+and considers both intra- and cross-lingual neighbors. 
+
+\paragraph{Related Work}
+A related line of work is the intrinsic evaluation measures of probabilistic
+topic models, which are another low-dimensional representation of
+words similar to word embeddings.  Metrics based on word co-occurrences
+have been developed for measuring the monolingual coherence of topics
+\citep{NewmanLGB10,MimnoWTLM11,LauNB14}. Less work has studied
+evaluation of cross-lingual topics \citep{MimnoWNSM09}. Some
+researchers have measured the overlap of direct translations across
+topics~\citep{Boyd-Graber:Blei-2009}, while \citet{Hao18mltm} propose
+a metric based on co-occurrences across languages that is more general
+than direct translations.
+
