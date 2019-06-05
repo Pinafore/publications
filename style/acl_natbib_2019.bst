@@ -1,3 +1,4 @@
+%%% acl_natbib.bst
 %%% Modification of BibTeX style file acl_natbib_nourl.bst
 %%% ... by urlbst, version 0.7 (marked with "% urlbst")
 %%% See <http://purl.org/nxg/dist/urlbst>
@@ -9,25 +10,24 @@
 %%% Original headers follow...
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% - fixed a bug with format.chapter - error given in chapter is empty
-%   with inbook.
-% Shay Cohen 2018/02/16
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
-% BibTeX style file acl_natbib.bst
+% BibTeX style file acl_natbib_nourl.bst
 %
 % intended as input to urlbst script
+% $ ./urlbst --hyperref --inlinelinks acl_natbib_nourl.bst > acl_natbib.bst
 %
 % adapted from compling.bst 
 % in order to mimic the style files for ACL conferences prior to 2017
 % by making the following three changes:
 % - for @incollection, page numbers now follow volume title.
 % - for @inproceedings, address now follows conference name.
-% (address is intended as location of conference,
-%  not address of publisher.)
+%	(address is intended as location of conference,
+%	 not address of publisher.)
 % - for papers with three authors, use et al. in citation
 % Dan Gildea 2017/06/08
+% - fixed a bug with format.chapter - error given if chapter is empty
+%   with inbook.
+% Shay Cohen 2018/02/16
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
@@ -668,8 +668,8 @@ FUNCTION {format.names}
     { s nameptr
       duplicate$ #1 >
         { "{ff~}{vv~}{ll}{, jj}" }
-        { "{ff~}{vv~}{ll}{, jj}" }  % first name first for first author 
-%        { "{vv~}{ll}{, ff}{, jj}" }  % last name first for first author
+        { "{ff~}{vv~}{ll}{, jj}" }	% first name first for first author 
+%        { "{vv~}{ll}{, ff}{, jj}" }	% last name first for first author
       if$
       format.name$
       bibinfo bibinfo.check
@@ -1090,8 +1090,7 @@ FUNCTION {format.vol.num.pages}
 
 FUNCTION {format.chapter}
 { chapter empty$
-    %'skip$  %% SC
-    { "" }
+    'format.pages
     { type empty$
         { bbl.chapter }
         { type "l" change.case$

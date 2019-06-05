@@ -1,11 +1,22 @@
 #!/bin/bash -e
 
-if hash python3 2>/dev/null; then
-        PYCOMMAND=python3
-else
-        PYCOMMAND=python
-fi
 
+if hash pythonw 2>/dev/null; then
+    VERSION=`pythonw -c 'import platform; major, minor, patch = platform.python_version_tuple(); print(major);'`
+    if [ $VERSION -eq 3 ]; then
+        PYCOMMAND=pythonw
+    else
+        if hash python3 2>/dev/null; then
+           PYCOMMAND=python3
+        fi
+    fi
+else
+    if hash python3 2>/dev/null; then
+        PYCOMMAND=python3
+    else
+        PYCOMMAND=python
+    fi
+fi
 
 echo $1
 echo `which $PYCOMMAND`

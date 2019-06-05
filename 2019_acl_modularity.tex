@@ -1,0 +1,74 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[hyperref]{style/acl2019}
+\usepackage{times}
+\usepackage{latexsym}
+\usepackage{url}
+\usepackage{amsmath}
+\usepackage{adjustbox}
+\usepackage{CJKutf8}
+\usepackage{tablefootnote}
+\usepackage{graphicx}
+\usepackage{subcaption}
+\usepackage{url}
+\usepackage{wrapfig}
+\usepackage{sidecap}
+\usepackage{physics}
+\usepackage{mdwlist}
+\usepackage{enumitem}
+\setlist[enumerate]{itemsep=1mm}
+
+
+\newif\ifcomment\commentfalse
+
+\input{style/preamble}
+
+\aclfinalcopy 
+\def\aclpaperid{454} 
+
+\newcommand{\latexfile}[1]{\input{2019_acl_modularity/sections/#1}}
+\newcommand{\figfile}[1]{2019_acl_modularity/figures/#1}
+\newcommand{\autofig}[1]{2019_acl_modularity/auto_fig/#1}
+\newcommand{\email}[1]{ {\small \href{mailto://#1}{\texttt{#1} }  }}
+
+
+\newcommand\BibTeX{B\textsc{ib}\TeX}
+
+\title{A Resource-Free Evaluation Metric for Cross-Lingual Word Embeddings Based on Graph Modularity}
+
+\author{Yoshinari Fujinuma \\
+        Computer Science \\
+        University of Colorado \\
+        \email{fujinumay@gmail.com}
+        \And
+        Jordan Boyd-Graber \\
+        \abr{cs}, iSchool, \abr{umiacs}, \abr{lsc} \\
+        University of Maryland \\
+        \email{jbg@umiacs.umd.edu}
+        \And
+        Michael J. Paul\\
+        Information Science\\
+        University of Colorado \\
+        \email{mpaul@colorado.edu}
+        }
+
+\date{}
+
+\begin{document}
+\maketitle
+\begin{abstract}
+\latexfile{00-abstract}
+\end{abstract}
+
+\latexfile{10-introduction}
+\latexfile{20-background}
+\latexfile{30-modularity}
+\latexfile{40-experiment}
+\latexfile{50-discussion}
+\latexfile{70-conclusion}
+\latexfile{acknowledgements}
+
+
+\bibliography{bib/journal-full,bib/yoshinari}
+\bibliographystyle{style/acl_natbib}
+
+\end{document}

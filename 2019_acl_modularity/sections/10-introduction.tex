@@ -1,0 +1,95 @@
+\section{Introduction}
+
+The success of monolingual word embeddings in natural language
+processing~\citep{NIPS2013_5021} has motivated extensions to
+cross-lingual settings.
+Cross-lingual word embeddings---where multiple languages share a single
+distributed representation---work well for
+classification~\citep{klementiev-titov-bhattarai:2012:PAPERS,ammar2016massively}
+and machine
+translation~\citep{lample2018unsupervised,artetxe2018unsupervised},
+even with few bilingual pairs~\citep{artetxe-labaka-agirre:2017:Long}
+or no supervision at all~\cite{adv_bli,lample2018word,self_learn}.
+
+Typically the quality of cross-lingual word embeddings is measured with respect to
+how well they improve a downstream task.
+However, sometimes it is not possible to evaluate embeddings for a specific downstream task,
+for example a future task that does not yet have data
+or on a rare language that does not have resources to support traditional evaluation.
+In such settings, it is useful to have an {\em intrinsic} evaluation
+metric: a metric that looks at the embedding space itself to know whether
+the embedding is good \emph{without} resorting to an
+extrinsic task.
+While extrinsic tasks are the ultimate arbiter of
+  whether cross-lingual word embeddings work, intrinsic metrics are useful for low-resource
+  languages where one often lacks the annotated data that would make an
+  extrinsic evaluation possible.
+
+However, few intrinsic measures exist for cross-lingual word embeddings,
+and those that do exist require external linguistic resources (e.g.,
+sense-aligned corpora in \citet{ammar2016massively}).
+The requirement of language resources makes this approach limited or impossible for low-resource languages,
+which are the languages where intrinsic evaluations are most needed.
+Moreover, requiring language resources can bias the evaluation toward words in the
+resources rather than evaluating the embedding space as a whole.
+
+Our solution involves a graph-based metric that considers the characteristics of the embedding space
+without using linguistic resources.
+To sketch the idea, imagine a cross-lingual word embedding space where
+it is possible to draw a hyperplane that separates all word vectors in one language from all vectors in another.
+Without knowing anything about the languages, it is easy to see that this is a problematic embedding:
+the representations of the two languages are in distinct parts of the space rather than using a shared space.
+While this example is exaggerated, this characteristic where vectors are clustered by language often appears
+within smaller {neighborhoods} of the embedding space,
+we want to discover these clusters.
+
+To measure how well word embeddings are mixed across languages, we draw on concepts
+from network science.
+Specifically, some cross-lingual word embeddings are
+\emph{modular} by language: {\bf vectors in one language are
+  consistently closer to each other than vectors in another language}
+(Figure~\ref{fig:assort_disassort}).
+When embeddings are modular, they often fail on
+downstream tasks (Section~\ref{sec:diagnosis}).
+
+\begin{figure}[t]
+ \centering
+  \begin{subfigure}[t]{0.52\linewidth}
+ \centering
+     {\includegraphics[width=0.95\linewidth]{\figfile{top_cos_sim_graph_enlarged.pdf}}}
+     \caption{low modularity}
+  \end{subfigure}
+  \begin{subfigure}[t]{0.46\linewidth}
+ \centering
+     {\includegraphics[width=0.95\linewidth]{\figfile{bottom_cos_sim_graph_enlarged.pdf}}}
+     \caption{\label{fig:assort}high modularity}
+  \end{subfigure}
+     \caption{\label{fig:assort_disassort} An example of a low
+       modularity (languages mixed) and high
+       modularity cross-lingual word embedding lexical
+       graph using $k$-nearest neighbors of ``eat'' (left) and
+       ``firefox'' (right) in English and Japanese.
+     }
+\end{figure}
+
+Modularity is a concept from network theory
+(Section~\ref{sec:modularity}); because network theory is applied to
+graphs, we turn our word embeddings into a graph by connecting
+nearest-neighbors---based on vector similarity---to each other.
+Our hypothesis is that {\em modularity will predict how useful the
+  embedding is} in downstream tasks; low-modularity embeddings should
+work better.
+
+
+We explore the relationship between modularity and three downstream
+tasks (Section~\ref{sec:experiment}) that use cross-lingual word embeddings differently: (i)
+cross-lingual document classification; (ii) bilingual lexical
+induction in Italian, Japanese, Spanish, and Danish; and (iii)
+low-resource document retrieval in Hungarian and Amharic, finding
+moderate to strong negative correlations between modularity and performance.
+Furthermore, using modularity as a validation metric
+(Section~\ref{sec:validation}) makes \abr{muse}~\cite{lample2018word}, an unsupervised model,
+more robust on distant language pairs.
+Compared to other existing intrinsic evaluation metrics, modularity
+captures complementary properties and is more predictive of downstream
+performance despite needing no external resources (Section~\ref{sec:empirical}).

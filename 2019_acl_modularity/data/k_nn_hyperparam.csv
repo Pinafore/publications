@@ -1,0 +1,17 @@
+,k,Absolute Correlation,Correlation Type
+0,1,0.886,Spearman Correlation
+1,3,0.886,Spearman Correlation
+2,5,0.886,Spearman Correlation
+3,10,0.886,Spearman Correlation
+4,50,0.886,Spearman Correlation
+5,100,0.771,Spearman Correlation
+6,150,0.771,Spearman Correlation
+7,200,0.771,Spearman Correlation
+0,1,0.922,Pearson Correlation
+1,3,0.923,Pearson Correlation
+2,5,0.919,Pearson Correlation
+3,10,0.913,Pearson Correlation
+4,50,0.875,Pearson Correlation
+5,100,0.841,Pearson Correlation
+6,150,0.811,Pearson Correlation
+7,200,0.792,Pearson Correlation

@@ -1,0 +1,97 @@
+\section{Approach: Graph-Based Diagnostics for Detecting Clustering by Language}
+\label{sec:modularity}
+
+This section describes our graph-based approach to measure the intrinsic quality of a cross-lingual embedding space.
+
+\subsection{Embeddings as Lexical Graphs}
+
+We posit that we can understand the quality of cross-lingual
+embeddings by analyzing characteristics of a lexical
+graph~~\citep{pelevina-etal-2016-making,hamilton-EtAl:2016:EMNLP2016}.  The lexical graph has
+words as nodes and edges weighted by their similarity in the embedding space.
+Given a pair of words $(i, j)$ and associated word vectors~$(v_i,
+v_j)$, we compute the similarity between two
+words by their vector similarity.  We encode this similarity in a weighted adjacency matrix~$A$: $A_{ij} \equiv \max(0, \text{cos\_sim}(v_i,
+v_j))$.
+However, nodes are only connected to their $k$-nearest neighbors
+(Section~\ref{sec:k_sensitivity} examines the sensitivity to $k$); all
+other edges become zero.
+Finally, each node $i$ has a label $g_i$ indicating the word's language.
+
+\subsection{Clustering by Language}
+
+We focus on a phenomenon that we call ``clustering by language'',
+when word vectors in the embedding space tend to be more similar to words in the same language than words in the other.
+For example in Figure~\ref{fig:tsne}, 
+ the intra-lingual nearest neighbors of ``slow''
+have higher
+similarity in the embedding space than semantically related cross-lingual words.
+This indicates that words are represented differently across the two languages,
+thus our hypothesis is that clustering by language degrades the quality of cross-lingual embeddings when used in downstream tasks. 
+
+\begin{figure}[!tb]
+ \centering
+     {\includegraphics[width=0.95\linewidth]{\autofig{en_jp_w2v_snippet.pdf}}}
+  \vspace{-1ex}
+     \caption{ Local t-\abr{sne}~\citep{t-sne} of an
+       \textsc{en}-\textsc{ja} cross-lingual word embedding, 
+       which shows an example of ``clustering by language''. 
+        }
+\label{fig:tsne}
+\end{figure}
+
+
+\subsection{Modularity of Lexical Graphs}
+
+
+With a labeled graph, we can now ask whether the graph is
+\emph{modular}~\cite{newman2010networks}.
+ In a cross-lingual
+lexical graph, modularity is the degree to which words are more
+similar to words in the \emph{same} language than to words in a
+\emph{different} language.  This is undesirable, because the
+representation of words is not transferred across languages. 
+If the nearest neighbors of the words are instead within the same language,
+then the languages are not mapped into the cross-lingual space
+consistently.  In our setting, the language $l$ of each word defines
+its group, and \emph{high} modularity indicates embeddings are more
+similar \emph{within} languages than \emph{across}
+languages~\citep{newman2003mixing,newman2004finding}. 
+In other words, good embeddings should have \emph{low} modularity.
+
+
+Conceptually, the modularity of a lexical graph is the difference
+between the proportion of edges in the graph that connect two nodes
+from the same language and the {\em expected} proportion of such
+edges in a randomly connected lexical graph.
+If edges were random, the number of edges starting from node~$i$ within the same language would be the degree of node~$i$,~$d_i
+= \sum_j A_{ij}$ for a weighted graph, following \citet{PhysRevE.70.056131}, times the proportion of words in that language.  Summing over all nodes gives the expected number of edges within a language,
+\begin{equation}
+a_{l} = \frac{1}{2m} \sum_{i} d_{i} \ind{g_i=l},
+\end{equation}
+where $m$ is the number of edges, $g_i$ is the label of node $i$, and $\ind{\cdot}$ is an indicator function
+that evaluates to $1$ if the argument is true and $0$ otherwise. 
+
+Next, we count the fraction of edges $e_{ll}$ that 
+connect words of the same language:\begin{equation}
+e_{ll} = \frac{1}{2m} \sum_{ij} A_{ij} \ind{g_i=l} \ind{g_j=l}.
+\end{equation}
+Given $L$ different languages, we calculate overall modularity~$Q$ by
+taking the difference between $e_{ll}$ and $a_l^2$ for all languages:\begin{equation}
+\label{unnorm_modularity}
+Q = \sum_{l = 1}^L (e_{ll} - a_l^2).
+\end{equation}
+Since $Q$ does not necessarily have a maximum value of $1$, 
+we normalize modularity:\begin{equation}
+Q_{norm} = \frac{Q}{Q_{max}}, \textrm{where} \,\, Q_{max} = 1 - \sum_{l = 1}^L (a_l^2). 
+\end{equation}The higher the modularity, the more words from the same language
+appear as nearest neighbors.  Figure~\ref{fig:assort_disassort} shows
+the example of a lexical subgraph with low modularity (left, $Q_{norm} =
+0.143$) and high modularity (right, $Q_{norm}=0.672$).  In
+Figure~\ref{fig:assort}, the lexical graph is modular since
+``firefox'' does not encode same sense in both languages.
+
+Our hypothesis is that cross-lingual word embeddings with lower modularity
+will be more successful in downstream tasks.
+If this hypothesis holds, then modularity could be a useful
+metric for cross-lingual evaluation.
