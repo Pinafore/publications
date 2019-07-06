@@ -28,7 +28,7 @@ of adversarial examples is often severely restricted.
 \caption{Adversarial evaluation in \abr{nlp} typically focuses on a specific
   phenomenon (e.g., word replacements) and then generates the corresponding examples (top).
   Consequently, adversarial examples are limited to
-  the diversity of what the underlying generative model or perturbation rule can produce, and also require downstream
+  the diversity of what the underlying generative model or perturbation rule can produce and also require downstream
   human evaluation to ensure validity. Our setup (bottom) instead has
   human-authored examples, using human--computer collaboration to craft adversarial examples with greater diversity.}
 \label{fig:flow_chart}
@@ -46,8 +46,8 @@ The \challenge{} test set is nonetheless as easy as
 regular questions for humans (Section~\ref{sec:human}), but
 the relative accuracy of strong \abr{qa} models drops as much as 40\%
 (Section~\ref{sec:experiments}).
-We also host live human vs. computer matches, where models typically defeat
-top human teams, but observe spectacular model failures
+We also host live human vs. computer matches---where models typically defeat
+top human teams---but observe spectacular model failures
 on adversarial questions.
 
 Analyzing the adversarial edits uncovers phenomena
