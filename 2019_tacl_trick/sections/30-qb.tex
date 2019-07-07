@@ -84,7 +84,7 @@ The model treats \qb{} as classification and predicts the answer entity from a s
 represented as 300-dimensional GloVe
 embeddings~\cite{pennington2014glove}. Both models
 in this round are trained using an expanded dataset of 
-approximately 110,000 \qb{} questions. We expand the round two 
+approximately 110,000 \qb{} questions. We expand the second round 
 dataset to incorporate more diverse answers (\nansweroptions{} entities
 versus 11,000 in round one).
 
@@ -100,7 +100,7 @@ For the neural model, word importance is the decrease in
 prediction probability when a word is
 removed~\cite{li2016understanding,wallace2018Neighbors}.
 We focus on gradient-based
-approximations~\cite{simonyan2013saliency,montavon2017interpreting}
+approximations~\cite{simonyan2013saliency,montavon2017methods}
 for their computational efficiency.
 
 \setlength{\abovedisplayskip}{10pt}
@@ -115,7 +115,7 @@ of $f$ with respect to the one-hot vector:
    = \frac{\partial f}{\partial \bm{v}_i}\frac{\partial \bm{v}_i}{\partial w_i} \ 
    = \frac{\partial f}{\partial \bm{v}_i} \cdot \bm{v}_i. 
 \end{equation} 
-This simulates how model predictions change when a particular word's embedding is set to the zero vector, i.e., it approximates word removal~\cite{ebrahimi2017hotflip,wallace2018Neighbors}.
+This simulates how model predictions change when a particular word's embedding is set to the zero vector---it approximates word removal~\cite{ebrahimi2017hotflip,wallace2018Neighbors}.
 
 For the \abr{ir} model, we use the ElasticSearch Highlight
 \abr{api}~\cite{gormley2015elasticsearch}, which provides word
@@ -199,7 +199,7 @@ disagreement over who wrote the theme and its name), and the \abr{qa} system now
 The user can continue to build on the theme, writing \begin{quote}
    While summering in Tutzing, this composer turned that theme into
    ``Variations on a Theme by Haydn''.  \end{quote}
- Again, the author then sees that the system buzzes ``Variations on a
+ Again, the author sees that the system buzzes ``Variations on a
  Theme'' with the correct answer.  However, the author can rewrite it
  in its original German, ``Variationen \"uber ein Thema von Haydn'' to
  fool the system.
