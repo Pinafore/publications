@@ -1,0 +1,16 @@
+\section{Conclusions and Future Work}
+\label{sec:conclu}
+
+We introduce a novel multilingual topic model (\mtm) that learns weighted topic links across languages by minimizing the Euclidean distances of translation pairs' (transformed) topic distributions, where translation pairs can be weighted, e.g., by \tfidf.
+%
+This connects topics in different languages \emph{only} when necessary and is more robust on low-comparability corpora.
+%
+The \mtm outperforms baselines substantially in both intra- and cross-lingual classification tasks, while achieving no worse or slightly better topic coherence than monolingual \lda on low-comparability data.
+
+We plan to explore weighting methods to better evaluate the importance
+of translation pairs.
+%
+We will also study how to improve topic transformation with the topic
+link weight matrices.
+% the use of the topic link weight matrices for topic space
+% transformation across languages.

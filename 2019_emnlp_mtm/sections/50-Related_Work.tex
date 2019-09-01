@@ -1,0 +1,34 @@
+\section{Related Work}
+\label{sec:bg}
+
+%Monolingual topic models~\cite{blei-2003-lda} achieve a great success in uncovering latent topics~\cite{griffiths-2004-lda-gibbs} and assisting other downstream tasks, such as information retrieval~\cite{wei-2006-lda-ir}, dialogue segmentation~\cite{purver-2006-dialog-seg}, and even computer vision~\cite{li-2005-tm-cv}.
+
+Monolingual topic models have been extended it to the multilingual case, e.g., analyzing the commonality~\cite{shi-2016-mtm-common} and differences~\cite{gutierrez-2016-mtm-diff} across cultures. 
+%
+For a multilingual topic model, there must be some external knowledge to bridge the languages. 
+%
+It could come from document parallelism information, either fully~\cite{mimno-2009-plda} or partially~\cite{hao-2018-mtm-doc-link}. 
+%
+Another source is the word translations which map words across languages. 
+%
+Like other prior knowledge, e.g., document links~\cite{daume-2009-mrtf,chang-2010-rtm,Yang:Boyd-Graber:Resnik-2016} and document labels~\cite{ramage-2009-labeled-lda,mcauliffe-2008-slda,zhu-2012-medlda}, word translations can be incorporated in either a \emph{downstream} or an \emph{upstream} way. 
+%
+A downstream \mtm takes the word translations as supervision and generates them conditioned on the documents, topics, and words~\cite{liu-2015-mtm-downstream}.   \jbgcomment{cite SHLDA, political science-based supervision as well}
+%
+An upstream \mtm, on the contrary, generates topic assignments conditioned on the word translations~\cite{boyd-graber-2009-muto,jagarlamudi-2010-mtm,boyd-graber-2010-mlslda}. 
+%
+In addition, tree prior~\cite{boyd-graber-2007-tm-wsd} can also encode
+word translations for learning \mtms with tree
+\lda~\cite{Hu-2014-ptlda}.
+
+In addition to multilingual topics, multilingual word embeddings have been developed based on monolingual ones~\cite{mikolov-2013-word2vec,pennington-2014-glove} to align semantic dimensions across languages. 
+%
+Similar to the topic model community, one source of cross-lingual knowledge comes from document alignment, either in whole~\cite{sogaard-2015-mwe-inverted-indexing,hermann-2014-ted} or in part~\cite{vulic-2015-mwe-doc-align}. 
+%
+Another source is the translation
+dictionary~\cite{faruqui-2014-mwe-cca,lu-2015-mwe-deep-cca,ammar-2016-uw-embed},
+by projecting two or more semantic spaces into the same one using
+canonical correlation analysis~\cite[\cca]{hardoon-2004-cca}.
+
+\jbgcomment{Contrast that embeddings don't give you the high-level
+  summaries that you get from topic models.}

@@ -1,0 +1,227 @@
+\documentclass[paper=a4, fontsize=11pt]{article}
+
+\usepackage{times}
+\usepackage{geometry}
+\usepackage{xspace}
+\usepackage{mathtools}
+\usepackage{multirow}
+\usepackage{xcolor}
+\usepackage{bm,bbm}
+\usepackage{enumitem}
+\usepackage{url}
+\usepackage{CJKutf8}
+\usepackage{xpinyin}
+
+\geometry{left=3.1cm,right=3.1cm,top=2.54cm,bottom=2.54cm}
+
+\newcommand{\ch}[1]{\begin{CJK*}{UTF8}{gbsn}#1\end{CJK*}}
+
+% Use these comment definitions to see paper without comments
+%\newcommand{\jbgcomment}[1]{}
+%\newcommand{\wycomment}[1]{}
+%\newcommand{\psrcomment}[1]{}
+
+% Use these comment definitions to keep comments visible
+\newcommand{\jbgcomment}[1]{ \textcolor{blue}{[JBG: {\bf #1}]} }
+\newcommand{\wycomment}[1]{ \textcolor{red}{[WY: {\bf #1}]} }
+\newcommand{\psrcomment}[1]{ \textcolor{green}{[PSR: {\bf #1}]} }
+
+\newcommand{\explain}[2]{\underbrace{#2}_{\mbox{\footnotesize{#1}}}}
+
+\newcommand{\paco}{\textsc{paco}\xspace}
+\newcommand{\inco}{\textsc{inco}\xspace}
+\newcommand{\en}{\textsc{en}\xspace}
+\newcommand{\ar}{\textsc{ar}\xspace}
+\newcommand{\zh}{\textsc{zh}\xspace}
+\newcommand{\es}{\textsc{es}\xspace}
+\newcommand{\fa}{\textsc{fa}\xspace}
+\newcommand{\ru}{\textsc{ru}\xspace}
+\newcommand{\si}{\textsc{si}\xspace}
+
+\newcommand{\lda}{\textsc{lda}\xspace}
+\newcommand{\mtm}{\textsc{mtm}\xspace}
+\newcommand{\lbfgs}{\textsc{l-bfgs}\xspace}
+\newcommand{\toplink}{\textsc{top}\xspace}
+
+\newcommand{\ind}[1]{\mathbbm{1} \left( #1 \right)}
+
+\allowdisplaybreaks[3]
+
+\title{Supplement for Paper ``A Multilingual Topic Model for Learning Weighted Topic Links Across Corpora with Low Comparability''}
+\author{\textbf{Weiwei Yang}\thanks{Now at Facebook}\\
+Computer Science\\
+\\
+University of Maryland\\
+{\tt wwyang@cs.umd.edu}\and
+\textbf{Jordan Boyd-Graber}\thanks{Now at Google AI Z\"urich}\\
+Computer Science, iSchool,\\
+Language Science, \textsc{umiacs}\\
+University of Maryland\\
+{\tt jbg@umiacs.umd.edu}\and
+\textbf{Philip Resnik}\\
+Linguistics and \textsc{umiacs}\\
+\\
+University of Maryland\\
+{\tt resnik@umd.edu}}
+%\author{Weiwei Yang$^{1,2}$ Jordan Boyd-Graber$^{1,2,3,4}$ Philip Resnik$^{1,2,5}$ \\
+%  $^1$Computer Science, $^2$\textsc{umiacs}, $^3$iSchool, $^4$Language Science Center, $^5$Linguistics \\
+%  University of Maryland, College Park, MD, USA \\
+%  {\tt wwyang@cs.umd.edu jbg@umiacs.umd.edu resnik@umd.edu} \\}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\appendix
+
+%\section{Chinese Words' Translations in Figure 1}
+%
+%\begin{table}[h]
+%  \centering
+%  \begin{tabular}{lll|lll}
+%    Chinese & Pinyin & English & Chinese & Pinyin & English \\ \hline \hline
+%    \multicolumn{3}{c|}{\zh-1} & \multicolumn{3}{c}{\zh-2} \\ \hline
+%    \ch{技术} & \pinyin{ji4} \pinyin{shu4} & technology & \ch{音乐} & \pinyin{yin1} \pinyin{yue4} & music \\
+%    \ch{科学} & \pinyin{ke1} \pinyin{xue2} & science & \ch{专辑} & \pinyin{zhuan1} \pinyin{ji2} & album \\
+%    \ch{计算机} & \pinyin{ji4} \pinyin{suan4} \pinyin{ji1} & computer & \ch{歌手} & \pinyin{ge1} \pinyin{shou3} & singer \\
+%    \ch{智能} & \pinyin{zhi4} \pinyin{neng2} & smart & \ch{作品} & \pinyin{zuo4} \pinyin{pin3} & works \\
+%    \ch{系统} & \pinyin{xi4} \pinyin{tong3} & system & \ch{演唱会} & \pinyin{yan3} \pinyin{chang4} \pinyin{hui4} & concert \\ \hline \hline
+%    \multicolumn{3}{c|}{\zh-3} & \multicolumn{3}{c}{\zh-4} \\ \hline
+%    \ch{运动} & \pinyin{yun4} \pinyin{dong4} & sports & \ch{经济} & \pinyin{jing1} \pinyin{ji4} & economics \\
+%    \ch{比赛} & \pinyin{bi3} \pinyin{sai4} & match & \ch{美元} & \pinyin{mei3} \pinyin{yuan2} & dollars \\
+%    \ch{裁判} & \pinyin{cai2} \pinyin{pan4} & referee & \ch{百万} & \pinyin{bai3} \pinyin{wan4} & million \\
+%    \ch{锦标赛} & \pinyin{jin3} \pinyin{biao1} \pinyin{sai4} & tournament & \ch{投资} & \pinyin{tou2} \pinyin{zi1} & invest \\
+%    \ch{冠军} & \pinyin{guan4} \pinyin{jun1} & champion & \ch{收入} & \pinyin{shou1} \pinyin{ru4} & income \\ \hline \hline
+%  \end{tabular}
+%  \caption{Chinese Words' Translations.}\label{tab:trans}
+%\end{table}
+
+\section{Generative Details of our Multilingual Topic Model}
+
+Our \mtm is a downstream model with a posterior regularizer. It has two \lda components that generate the documents in languages~$S$ and~$T$. Then it generates the posterior regularizer~$\Psi$ which encodes the cross-lingual knowledge. The detailed generative process is as follows.
+\begin{enumerate}[noitemsep]
+  \item For each topic $k \in \{ 1, \ldots, K_T \}$ in language~$T$
+  \begin{enumerate}
+    \item Draw word distribution $\bm{\phi_{T,k}} \sim \text{Dirichlet} (\beta_T)$.
+  \end{enumerate}
+  \item For each document $d \in \{ 1, \ldots, D_T \}$ in language~$T$
+  \begin{enumerate}
+    \item Draw topic distribution $\bm{\theta_{T, d}} \sim \text{Dirichlet} (\alpha_T)$.
+    \item For each token $t_{T,d,n}$ in document~$d$
+    \begin{enumerate}
+      \item Draw a topic $z_{T,d,n} \sim \text{Multinomial} (\bm{\theta_{T,d}})$.
+      \item Draw a word $w_{T,d,n} \sim \text{Multinomial} (\bm{\phi_{T,z_{T,d,n}}})$.
+    \end{enumerate}
+  \end{enumerate}
+  \item For each topic $k \in \{ 1, \ldots, K_S \}$ in language~$S$
+  \begin{enumerate}
+    \item Draw word distribution $\bm{\phi_{S,k}} \sim \text{Dirichlet} (\beta_S)$.
+  \end{enumerate}
+  \item For each document $d \in \{ 1, \ldots, D_S \}$ in language~$S$
+  \begin{enumerate}
+    \item Draw topic distribution $\bm{\theta_{S,d}} \sim \text{Dirichlet} (\alpha_S)$.
+    \item For each token $t_{S,d,n}$ in document $d$
+    \begin{enumerate}
+      \item Draw a topic $z_{S,d,n} \sim \text{Multinomial} (\bm{\theta_{S,d}})$.
+      \item Draw a word $w_{S,d,n} \sim \text{Multinomial} (\bm{\phi_{S,z_{S,d,n}}})$.
+    \end{enumerate}
+  \end{enumerate}
+  \item Draw the posterior regularizer~$\Psi = \left( \prod_{c=1}^{C} \left\lVert \bm{\Omega_{S,c}} - \bm{\rho_{T \rightarrow S}} \bm{\Omega_{T,c}} \right\rVert_{2}^{\eta_c} \left\lVert \bm{\rho_{S \rightarrow T}} \bm{\Omega_{S,c}} - \bm{\Omega_{T,c}} \right\rVert_{2}^{\eta_c} \right)^{-1}$.
+\end{enumerate}
+
+\subsection{Posterior Inference}
+
+As we mentioned in the paper, the posterior inference is based on stochastic \textsc{em} and consists of an E-step and an M-step~\cite{celeux-1985-sem}. In each iteration, the E-step updates every token's topic assignment using Gibbs sampling, while holding the values in the topic link weight matrices~$\bm{\rho}$. The M-step optimizes~$\bm{\rho}$ while holding the topic assignments.
+
+\subsubsection{E-Step: Topic Assignment Sampling}
+
+In addition to the usual word and topic dependencies, our \mtm encourages topic assignments that maximize the posterior regularizer~$\Psi$, thus make the related translation pairs' (transformed) topic distributions close. This is reflected in the Gibbs sampling equation to update~$z_{T,d,n}$, the topic assignment of the~$n$-th token of document~$d$ in language~$T$:
+\begin{align}
+\Pr ( z_{T,d,n}=k \,|\, &\bm{z_{-T,d,n}}, w_{T,d,n}=v, \bm{w_{-T,d,n}}, \bm{\rho}, \alpha_T, \beta_T ) \propto \explain{\lda Sampling}{\left( N_{T,d,k}^{-T,d,n}+\alpha_T \right) \frac{N_{T,k,v}^{-T,d,n}+\beta_T}{N_{T,k,\cdot}^{-T,d,n}+V_T\beta_T}} \notag\\
+& \explain{Minimizing the Topic Distribution Distances}{\left( \prod_{v' \in \text{Dic} (v)} \left\lVert \bm{\Omega_{S,v'}} - \bm{\rho_{T \rightarrow S} \Omega_{T,v}} \right\rVert_{2}^{\eta_{v',v}} \left\lVert \bm{\rho_{S \rightarrow T} \Omega_{S,v'}} - \bm{\Omega_{T,v}} \right\rVert_{2}^{\eta_{v',v}} \right)^{-1}}, \label{equ:inf_t}
+%&\explain{Minimizing the Topic Distribution Distances}{\left( \prod_{v' \in \text{Dic} (v)} \left[ \text{Euc} \left( \bm{\Omega_{S,v'}}, \bm{\rho_{T \rightarrow S} \Omega_{T,v}} \right) \right]^{\eta_{v',v}} \right)^{-1} \left( \prod_{v' \in \text{Dic} (v)} \left[ \text{Euc} \left( \bm{\rho_{S \rightarrow T} \Omega_{S,v'}}, \bm{\Omega_{T,v}} \right) \right]^{\eta_{v',v}} \right)^{-1}} \notag\\
+\end{align}
+where the first two terms are the same as \lda: $N_{T,d,k}$ denotes the number of tokens in document~$d$ assigned to topic~$k$; $N_{T,k,v}$ denotes the number of times word~$v$ is assigned to topic~$k$; $\cdot$ denotes marginal counts; $^{-T,d,n}$ means the count excludes the token. The final term corresponds to the posterior regularizer: $\text{Dic}(v)$ is word~$v$'s translation word set in language~$S$; The values of~$\bm{\Omega_{T,v}}$, the topic distribution of word~$v$, \emph{assume} topic $k$ is chosen as follows:
+\begin{equation}\label{equ:omega_t}
+\Omega_{T,v,k'} = \frac{N_{T,k',v}^{-T,d,n} + \ind{k'=k}}{N_{T,v}},
+\end{equation}
+where $\ind{\cdot}$ is an indicator function.
+
+Symmetrically, the Gibbs sampling equation to update~$z_{S,d,n}$, the topic assignment of the~$n$-th token of document~$d$ in language~$S$, is
+\begin{align}
+\Pr ( z_{S,d,n}=k \,|\, &\bm{z_{-S,d,n}}, w_{S,d,n}=v, \bm{w_{-S,d,n}}, \bm{\rho}, \alpha_S, \beta_S ) \propto \left( N_{S,d,k}^{-S,d,n}+\alpha_S \right) \frac{N_{S,k,v}^{-S,d,n}+\beta_S}{N_{S,k,\cdot}^{-S,d,n}+V_S\beta_S} \notag\\
+&\left( \prod_{v' \in \text{Dic} (v)} \left\lVert \bm{\Omega_{S,v}} - \bm{\rho_{T \rightarrow S} \Omega_{T,v'}} \right\rVert_{2}^{\eta_{v,v'}} \left\lVert \bm{\rho_{S \rightarrow T} \Omega_{S,v}} - \bm{\Omega_{T,v'}} \right\rVert_{2}^{\eta_{v,v'}} \right)^{-1}. \label{equ:inf_s}
+%&\left( \prod_{v' \in \text{Dic} (v)} \left[ \text{Euc} \left( \bm{\Omega_{S,v}}, \bm{\rho_{T \rightarrow S} \Omega_{T,v'}} \right) \right]^{\eta_{v,v'}} \right)^{-1} \left( \prod_{v' \in \text{Dic} (v)} \left[ \text{Euc} \left( \bm{\rho_{S \rightarrow T} \Omega_{S,v}}, \bm{\Omega_{T,v'}} \right) \right]^{\eta_{v,v'}} \right)^{-1}. \label{equ:inf_s}
+\end{align}
+
+The values of~$\bm{\Omega_{S,v}}$, assuming topic~$k$ is chosen, are
+\begin{equation}\label{equ:omega_s}
+\Omega_{S,v,k'} = \frac{N_{S,k',v}^{-S,d,n} + \ind{k'=k}}{N_{S,v}}.
+\end{equation}
+
+\subsubsection{M-Step: Parameter Optimization}
+
+Here we optimize the topic link weight matrices~$\bm{\rho}$ while fixing the topic assignments. As~$\Psi$ is the product over all translation pairs, we modify~$\Psi$ to obtain the objective functions~$J(\bm{\rho_{T \rightarrow S}})$ and~$J(\bm{\rho_{S \rightarrow T}})$ as the weighted logarithmic sum\footnote{It makes sense to add regularization on~$\bm{\rho}$'s to prevent overfitting, but the data already adds a strong constraint on~$\bm{\rho}$'s---each word's~$\bm{\Omega}$ values should add up to one.}
+\begin{align}
+J(\bm{\rho_{T \rightarrow S}}) =& \sum_{c=1}^{C} \eta_c \log \left\lVert \bm{\Omega_{S,c}} - \bm{\rho_{T \rightarrow S, i_S}} \bm{\Omega_{T,c}} \right\rVert_{2} \\
+J(\bm{\rho_{S \rightarrow T}}) =& \sum_{c=1}^{C} \eta_c \log \left\lVert \bm{\Omega_{T,c}} - \bm{\rho_{S \rightarrow T, i_T}} \bm{\Omega_{S,c}} \right\rVert_{2}.
+\end{align}
+
+The objective functions are then minimized by using \lbfgs~\cite{liu-1989-lbfgs} and the partial derivatives with respect to~$\rho_{T \rightarrow S, k_S, k_T}$ and~$\rho_{S \rightarrow T, k_T, k_S}$ as
+\begin{align}
+\frac{\partial J(\bm{\rho_{T \rightarrow S}})}{\rho_{T \rightarrow S,k_S,k_T}} =& - \sum_{c=1}^{C} \frac {\eta_c \Omega_{T,c,k_T} \left( \Omega_{S,c,k_S} - \bm{\rho_{T \rightarrow S, k_S}} \bm{\Omega_{T,c}} \right)} {\left\lVert \bm{\Omega_{S,c}} - \bm{\rho_{T \rightarrow S, i_S}} \bm{\Omega_{T,c}} \right\rVert_{2}^2} \\
+\frac{\partial J(\bm{\rho_{S \rightarrow T}})}{\rho_{S \rightarrow T,k_T,k_S}} =& - \sum_{c=1}^{C} \frac {\eta_c \Omega_{S,c,k_S} \left( \Omega_{T,c,k_T} - \bm{\rho_{S \rightarrow T, k_T}} \bm{\Omega_{S,c}} \right)} {\left\lVert \bm{\Omega_{T,c}} - \bm{\rho_{S \rightarrow T, i_T}} \bm{\Omega_{S,c}} \right\rVert_{2}^2}.
+\end{align}
+
+\section{Corpora Statistics}
+
+There are four datasets used in our experiments. The first one is collected from Wikipedia for document category classification in English (\en) and Chinese (\zh)~\cite{yuan-2018-mtanchor}. There are six document categories for Wikipedia documents: \emph{film}, \emph{music}, \emph{animals}, \emph{politics}, \emph{religion}, and \emph{food}. The dictionary comes from \textsc{mdbg}, a website for learning Chinese.\footnote{\url{https://www.mdbg.net/chinese/dictionary?page=cc-cedict}}
+
+The second dataset is about disaster response in English and Sinhalese (\si)~\cite{strassel-2016-lorelei,strassel-2017-sf}. A subset of the documents are annotated with one of eight need types: \emph{evacuation}, \emph{food supply}, \emph{search/rescue}, \emph{utilities}, \emph{infrastructure}, \emph{medical assistance}, \emph{shelter}, and \emph{water supply}. The dictionary is provided by the dataset authors.
+
+The last two are also collected from Wikipedia, one is partially comparable (\paco) and the other one is incomparable (\inco)~\cite{hao-2018-mtm-doc-link}. Either one contains five bilingual corpora. Among these bilingual corpora, one of the language is always English (\en), while the other language is one of Arabic (\ar), Chinese (\zh), Spanish (\es), Farsi (\fa), and Russian (\ru). The dictionaries are extracted from Wiktionary.\footnote{\url{https://dumps.wikimedia.org/enwiktionary/}}
+
+The detailed corpora statistics are in Table~\ref{tab:stats}.
+
+\begin{table}[h]
+  \centering
+  \begin{tabular}{lllrrrr}
+    Dataset & Language Pair & Language & \#Docs & \#Tokens & \#Vocabuary & \#Translations\\ \hline \hline
+    \multirow{2}{*}{Wikipedia} & \multirow{2}{*}{\en-\zh} & \en & 11,043 & 1,906,142 & 13,200 & \multirow{2}{*}{6,812} \\
+     & & \zh & 10,135 & 1,169,056 & 13,972 & \\ \hline
+    Disaster & \multirow{2}{*}{\en-\si} & \en & 1,100 & 32,714 & 6,920 & \multirow{2}{*}{6,330} \\
+    Response & & \si & 4,790 & 168,082 & 31,629 & \\ \hline
+    \multirow{10}{*}{\paco} & \multirow{2}{*}{\en-\ar} & \en & 1,999 & 622,955 & 47,790 & \multirow{2}{*}{4,384} \\
+     & & \ar & 1,999 & 107,434 & 19,900 & \\ \cline{2-7}
+     & \multirow{2}{*}{\en-\zh} & \en & 2,000 & 405,976 & 39,847 & \multirow{2}{*}{8,691} \\
+     & & \zh & 1,997 & 86,585 & 30,481 & \\ \cline{2-7}
+     & \multirow{2}{*}{\en-\es} & \en & 2,000 & 238,092 & 30,278 & \multirow{2}{*}{18,221} \\
+     & & \es & 2,000 & 188,469 & 27,465 & \\ \cline{2-7}
+     & \multirow{2}{*}{\en-\fa} & \en & 2,000 & 513,855 & 41,685 & \multirow{2}{*}{4,419} \\
+     & & \fa & 1,814 & 37,158 & 9,987 & \\ \cline{2-7}
+     & \multirow{2}{*}{\en-\ru} & \en & 1,999 & 296,148 & 34,618 & \multirow{2}{*}{2,981} \\
+     & & \ru & 1,999 & 101,922 & 24,341 & \\ \hline
+    \multirow{10}{*}{\inco} & \multirow{2}{*}{\en-\ar} & \en & 2,000 & 581,473 & 45,444 & \multirow{2}{*}{4,380} \\
+     & & \ar & 1,999 & 107,434 & 19,900 & \\ \cline{2-7}
+     & \multirow{2}{*}{\en-\zh} & \en & 2,000 & 432,442 & 38,369 & \multirow{2}{*}{8,766} \\
+     & & \zh & 1,997 & 86,585 & 30,481 & \\ \cline{2-7}
+     & \multirow{2}{*}{\en-\es} & \en & 1,999 & 557,602 & 46,161 & \multirow{2}{*}{20,954} \\
+     & & \es & 2,000 & 188,469 & 27,465 & \\ \cline{2-7}
+     & \multirow{2}{*}{\en-\fa} & \en & 2,000 & 324,858 & 34,278 & \multirow{2}{*}{4,280} \\
+     & & \fa & 1,814 & 37,158 & 9,987 & \\ \cline{2-7}
+     & \multirow{2}{*}{\en-\ru} & \en & 2,000 & 547,748 & 47,167 & \multirow{2}{*}{3,345} \\
+     & & \ru & 1,999 & 101,922 & 24,341 & \\ \hline
+  \end{tabular}
+  \caption{Corpora Statistics.}\label{tab:stats}
+\end{table}
+
+\section{An Example of Topic Space Transformation with Top-Linked Topics}
+
+We give an example to illustrate how we transform topic space with top-linked topics. Suppose that we have a Chinese topic with a probability mass of 0.2 in a document and its topic link weight to English Topics 0--4 are 0.1, 0.4, 0.2, 0.1, 0.2. Given that English Topic 1 has the highest link weight with the Chinese topic, when transforming the document's topic distribution into English, the probability mass of the Chinese topic is transferred to English Topic 1.
+
+%\bibliographystyle{../../style/acl_natbib_2019}
+\bibliographystyle{unsrt}
+\bibliography{../../bib/journal-full,../../bib/wwyang}
+
+\end{document} 

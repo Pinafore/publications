@@ -1,0 +1,63 @@
+\section{Posterior Regularizers to Inject Knowledge}
+\label{sec:post_reg}
+
+Improving topic models often requires modeling additional information:
+word correlations~\cite{boyd-graber-2007-tm-wsd}, document
+labels~\cite{mcauliffe-2008-slda}, or document
+links~\cite{chang-2010-rtm}.
+%
+Likewise, linking multilingual topics requires an infusion of
+knowledge, either in the form of word translations~\cite{Hu-2014-ptlda}, paired documents~\cite{mimno-2009-plda},
+or embeddings~\cite{das-2015-glda,ammar-2016-uw-embed}.
+\wycomment{It looks like no work is done on linking multilingual topics using word embeddings. Shall we cite multilingual word embedding and monolingual Gaussian LDA? 
+\jbgcomment{For camera ready, better to add citations wherever relevant}}
+However, increasing the complexity of the model often comes at a cost:
+inference becomes more complicated.  Posterior regularization becomes
+an effective middle ground.  It's relatively flexible but able to model many
+forms of metadata.
+
+\newcite{yang-2015-knowledge} specifically apply posterior
+regularization to Gibbs sampling~\cite{heinrich-09} for
+vanilla topic models that sample only token topic
+assignments~$\bm{z}$.
+For each prior knowledge source~$m$ in the knowledge set~$M$, they
+create a potential function $f_m (\bm{z}, \bm{w}, \bm{d})$ of topic assignments~$\bm{z}$,
+words~$\bm{w}$, and/or documents~$\bm{d}$.
+Higher $f_m (\bm{z}, \bm{w}, \bm{d})$ indicates better consistency
+with~$m$ at the current state.  The posterior regularizer is
+\begin{equation}\label{equ:post_reg}
+\Psi \left( \bm{z}, \bm{w}, M \right) = \prod_{m \in M} \exp \left( f_m (\bm{z}, \bm{w}, \bm{d}) \right),
+\end{equation}
+which they include in the collapsed Gibbs sampling equation
+as:\par\nobreak
+\begin{align}
+\Pr ( &z_{d,n}=k \,|\, \bm{z_{-d,n}}, w_{d,n}=v, \bm{w_{-d,n}} ) \notag\\
+\propto & \explain{\textsc{lda} Sampling}{ \left( N_{d,k}^{-d,n}+\alpha \right) \frac{N_{k,v}^{-d,n}+\beta}{N_{k,\cdot}^{-d,n}+V\beta}} \notag\\
+& \explain{Posterior Regularizer}{\Psi \left( z_{d,n}=k, \bm{z_{-d,n}}, \bm{w}, M \right)}, \label{equ:gibbs_post_reg}
+\end{align}
+where $N_{d,k}$ is the number of tokens in document~$d$ assigned to
+topic~$k$; $N_{k,v}$ is the number of times that word~$v$ is assigned
+to topic~$k$; and $\cdot$ denotes marginal counts; $^{-d,n}$ means
+that the count excludes the token~\cite{heinrich-09,resnik-2010-gibbs}.\jbgcomment{Now that we have more time, ease into Gibbs sampling a little bit more.  Give intuition about what sampling step does, how the additional term changes things with an example (beyond just saying ``consistent with''.}
+
+In this formulation, the potential functions shape Gibbs sampling
+inference: topic assignments are more likely when they are consistent
+with the prior knowledge included in the potential functions.
+This brings significant flexibility in the expression of the potential
+function $f_m (\bm{z}, \bm{w}, \bm{d})$.
+The expression is not restricted to probabilistic distributions,
+exponential family, or conjugacy.  \jbgcomment{``conjugacy'' isn't specific enough.  Need to say ``conjugate priors''}
+It can be expressed flexibly using the combinations of \emph{any} of
+the values from topic assignments, words, and/or documents. 
+\jbgcomment{This is a little too much; you could make the computation
+  too expensive to be done tractibly.  Would be good to reign this in
+  a little bit.}
+Moreover, changing the expressions of potential functions does not
+change the main structure of the topic model or require full
+re-derivation of the Gibbs sampling equation, which allows more
+flexible experimentation.
+
+For our \mtm, we encode the topic link weights and the translation
+pairs' topic distributions into the posterior regularizer. Thus we can
+convey prior knowledge across languages and improve the topic models
+for the two languages.

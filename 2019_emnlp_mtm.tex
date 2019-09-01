@@ -1,0 +1,138 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[hyperref]{style/emnlp-ijcnlp-2019}
+\usepackage{times}
+\usepackage{latexsym}
+\usepackage{url}
+\usepackage{graphicx,subfigure}
+\usepackage{bm,bbm}
+\usepackage{amsmath}
+\usepackage{enumitem}
+\usepackage{multirow}
+
+\usepackage{xspace}
+\usepackage{CJKutf8}
+\usepackage{xpinyin}
+\usepackage{footnote}
+\usepackage{threeparttable}
+
+\aclfinalcopy % Uncomment this line for the final submission
+
+%\setlength\titlebox{5cm}
+% You can expand the titlebox if you need extra space
+% to show all the authors. Please do not make the titlebox
+% smaller than 5cm (the original size); we will check this
+% in the camera-ready version and ask you to change it back.
+
+\setlength{\tabcolsep}{2pt}
+\makesavenoteenv{table}
+
+\newcommand{\ch}[1]{\begin{CJK*}{UTF8}{gbsn}#1\end{CJK*}}
+
+\newcommand{\explain}[2]{\underbrace{#2}_{\mbox{\footnotesize{#1}}}}
+
+\newcommand{\abr}[1]{\textsc{#1}}
+
+% Use these comment definitions to see paper without comments
+\newcommand{\jbgcomment}[1]{}
+\newcommand{\wycomment}[1]{}
+\newcommand{\psrcomment}[1]{}
+\newcommand{\psrnewcomment}[1]{}
+\newcommand{\ignore}[1]{}
+
+% Use these comment definitions to keep comments visible
+%\newcommand{\jbgcomment}[1]{ \textcolor{blue}{[JBG: {\bf #1}]} }
+%\newcommand{\wycomment}[1]{ \textcolor{red}{[WY: {\bf #1}]} }
+%\newcommand{\psrcomment}[1]{ \textcolor{green}{[PSR: {\bf #1}]} }
+%\newcommand{\psrnewcomment}[1]{ \textcolor{olive}{[PSR: {\bf #1}]} }
+
+% Math
+\newcommand{\prob}[2]{\Pr \left( #1 \,|\, #2 \right)}
+\newcommand{\ind}[1]{\mathbbm{1} \left( #1 \right)}
+\newcommand{\rhost}{$\bm{\rho_{S \rightarrow T}}$\xspace}
+\newcommand{\rhots}{$\bm{\rho_{T \rightarrow S}}$\xspace}
+
+% Names
+\newcommand{\lda}{\textsc{lda}\xspace}
+\newcommand{\mtm}{\textsc{mtm}\xspace}
+\newcommand{\mtms}{\textsc{mtm}s\xspace}
+\newcommand{\ptlda}{pt\textsc{lda}\xspace}
+
+\newcommand{\paco}{\textsc{paco}\xspace}
+\newcommand{\inco}{\textsc{inco}\xspace}
+\newcommand{\en}{\textsc{en}\xspace}
+\newcommand{\zh}{\textsc{zh}\xspace}
+\newcommand{\si}{\textsc{si}\xspace}
+\newcommand{\tr}{\textsc{tr}\xspace}
+
+\newcommand{\us}{\textsc{us}\xspace}
+
+\newcommand{\lbfgs}{\textsc{l-bfgs}\xspace}
+\newcommand{\pmi}{\textsc{pmi}\xspace}
+\newcommand{\tfidf}{\textsc{tf-idf}\xspace}
+\newcommand{\mtanchor}{MTAnchor\xspace}
+\newcommand{\mcta}{\textsc{mcta}\xspace}
+\newcommand{\cca}{\textsc{cca}\xspace}
+
+\newcommand{\intra}{\textsc{in}\xspace}
+\newcommand{\cross}{\textsc{cr}\xspace}
+\newcommand{\toplink}{\textsc{top}\xspace}
+
+% Table commands
+\newcommand{\tabincell}[2]{\begin{tabular}{@{}#1@{}}#2\end{tabular}}
+
+%\newcommand\BibTeX{B{\sc ib}\TeX}
+
+% Note: The PDFLaTeX-compiled document contains unembedded fonts due to the two Visio-generated PDF figures contain unembedded fonts.
+% The error message is "Your PDF document contains some fonts that are not embedded. This is not allowed as per the submission guidelines".
+% The way to resolve this is to run the following commands in the figures directory:
+%    pdftops mtm.pdf
+%    ps2pdf14 -dPDFSETTINGS=/prepress mtm.ps mtm2.pdf
+%    pdftops topic_link_vertical.pdf
+%    ps2pdf14 -dPDFSETTINGS=/prepress topic_link_vertical.ps topic_link_vertical2.pdf
+
+\title{A Multilingual Topic Model for\\ Learning Weighted Topic Links Across Corpora with Low Comparability}
+
+\author{Weiwei Yang\thanks{\hspace{0.2cm}Now at Facebook}\\
+  Computer Science \\
+  \\
+  University of Maryland \\
+  {\tt wwyang@cs.umd.edu} \And
+  Jordan Boyd-Graber\thanks{\hspace{0.2cm}Now at Google AI Z\"urich} \\
+  Computer Science, iSchool, \\
+  Language Science, \abr{umiacs} \\
+  University of Maryland \\
+   {\tt jbg@umiacs.umd.edu}
+  \And
+  Philip Resnik \\
+  Linguistics and \abr{umiacs} \\
+  \\
+  University of Maryland \\
+  {\tt resnik@umd.edu} \\}
+
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\input{2019_emnlp_mtm/sections/00-Abstract}
+
+\input{2019_emnlp_mtm/sections/10-Introduction}
+
+%\input{2019_emnlp_mtm/sections/20-Posterior_Reg}
+
+\input{2019_emnlp_mtm/sections/30-Model}
+
+\input{2019_emnlp_mtm/sections/40-Experiment}
+
+%\input{2019_emnlp_mtm/sections/50-Related_Work}
+
+\input{2019_emnlp_mtm/sections/60-Conclusions}
+
+\input{2019_emnlp_mtm/sections/70-Acknowledgement}
+
+% include your own bib file like this:
+\bibliographystyle{style/acl_natbib_2019}
+\bibliography{bib/journal-full,bib/wwyang,bib/jbg}
+
+\end{document}
