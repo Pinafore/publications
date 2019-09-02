@@ -1,0 +1,74 @@
+\section{When Orthogonal Mappings Work}
+\label{sec:property}
+
+When are two embedding spaces easily aligned? A good
+orthogonal mapping is more likely if word vectors have two
+properties: \emph{length-invariance} and \emph{center-invariance}.
+
+\paragraph{Length-Invariance.}
+%
+First, all word vectors should have the same, constant
+length.
+Length-invariance resolves inconsistencies between monolingual word
+embedding and cross-lingual mapping objectives~\citep{xing-15}.
+During training, popular word embedding
+algorithms~\cite{mikolov-13-fixed,pennington-14,bojanowski-17} maximize
+\emph{dot products} between similar words, but evaluate on
+\emph{cosine similarity}.
+%
+To make things worse, the transformation matrix 
+minimizes a third metric, \emph{Euclidean
+  distance}~(Equation~\ref{eq:obj}).
+This inconsistency is naturally resolved when the lengths of word
+vectors are fixed.
+Suppose $\vect{u} \in \mathbb{R}^d$ and $\vect{v} \in \mathbb{R}^d$
+have the same length, then
+\begin{equation*}
+\vect{u}^\top \vect{v} \propto \cos(\vect{u},\vect{v})
+= 1 - \frac{1}{2} \| \vect{u} - \vect{v} \|_2^2.
+\end{equation*}
+Minimizing Euclidean distance is equivalent to maximizing both dot
+product and cosine similarity with constant word vector lengths, thus
+making objectives consistent.
+
+Length-invariance also satisfies a prerequisite for bilingual
+orthogonal alignment: the embeddings of translation pairs should have the same
+length.
+If a source word vector $\vect{x}_i$ can be aligned to its target language
+translation $\vect{z}_j = \vect{W} \vect{x}_i$ with an orthogonal matrix
+$\vect{W}$, then 
+\begin{equation}\label{eq:len}
+  \| \vect{z}_j \|_2 = \| \vect{W} \vect{x}_i \|_2 = \| \vect{x}_i \|_2,
+\end{equation}
+where the second equality follows from the orthogonality of $\vect{W}$.
+Equation~\eqref{eq:len} is trivially satisfied if all vectors have the same
+length.
+%
+In summary, length-invariance not only promotes consistency between
+monolingual word embedding and cross-lingual mapping objective but
+also simplifies translation pair alignment.
+
+\paragraph{Center-Invariance.}
+%
+Our second condition is that the mean vector of different languages should have
+the same length, which we prove is a pre-requisite for orthogonal
+alignment.
+%
+Suppose two embedding matrices $\vect{X}$ and $\vect{Z}$ can be aligned with an
+orthogonal matrix $\vect{W}$ such that $\vect{Z} = \vect{W} \vect{X}$.
+%
+Let $\vect{\bar{x}} = \frac{1}{n} \sum_{i=1}^n \vect{x}_i$ and $\vect{\bar{z}}
+= \frac{1}{n} \sum_{i=1}^n \vect{z}_i$ be the mean vectors.
+%
+Then $\vect{\bar{z}} = \vect{W} \vect{\bar{x}}$.  Since $\vect{W}$ is 
+orthogonal, 
+\begin{equation*}
+  \| \vect{\bar{z}} \|_2 = \| \vect{W} \vect{\bar{x}} \|_2 = \| \vect{\bar{x}}\|_2.
+\end{equation*}
+In other words, orthogonal mappings can \emph{only} align embedding spaces
+with equal-magnitude centers.
+
+A stronger version of center-invariance is zero-mean, where the mean vector of
+each language is zero.
+\newcite{artetxe-16} find that centering improves dictionary induction; our
+analysis provides an explanation.

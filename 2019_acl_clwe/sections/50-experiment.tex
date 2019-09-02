@@ -1,0 +1,116 @@
+\section{Dictionary Induction Experiments}\label{sec:exp}
+
+On a dictionary induction benchmark, we combine \name{} with three
+\abr{clwe} methods and show improvement in word translation accuracy across
+languages.
+
+\subsection{Dataset and Methods}
+
+We train and evaluate \abr{clwe} on \abr{muse} dictionaries~\citep{conneau-18}
+with default split.
+%
+We align English embeddings to thirty-nine target language embeddings,
+pre-trained on Wikipedia with fastText~\cite{bojanowski-17}.  The alignment
+matrices are trained from dictionaries of 5,000 source words.
+We report top\nobreakdash-1 word translation accuracy for 1,500 source words,
+using cross-domain similarity local scaling~\citep[\abr{csls}]{conneau-18}.
+We experiment with the following \abr{clwe} methods.\footnote{We only report
+accuracy for one run, because these \abr{clwe} methods are deterministic.}
+
+\paragraph{Procrustes Analysis.}  Our first algorithm uses Procrustes
+analysis~\cite{schonemann-66} to find the orthogonal transformation that
+minimizes Equation~\ref{eq:obj}, the total distance between translation pairs.
+
+\paragraph{Post-hoc Refinement.}  Orthogonal mappings can be improved
+with refinement steps~\cite{artetxe-17,conneau-18}.
+After learning an initial mapping $\vect{W}_0$ from the seed dictionary
+$\mathcal{D}$, we build a synthetic dictionary $\mathcal{D}_1$ by translating
+each word with $\vect{W}_0$.  We then use the new dictionary $\mathcal{D}_1$ to
+learn a new mapping $\vect{W}_1$ and repeat the process.
+
+\paragraph{Relaxed \abr{csls} Loss (\abr{rcsls}).}
+\citet{joulin-18} optimize \abr{csls} scores between translation pairs instead
+of Equation~\eqref{eq:obj}. 
+\abr{rcsls} has state-of-the-art supervised word translation accuracies on
+\abr{muse}~\citep{glavas-19}.
+For the ease of optimization, \abr{rcsls} does not enforce the orthogonal
+constraint.
+%
+Nevertheless, \name{} also improves its accuracy
+(Table~\ref{tab:result}), showing it can help linear non-orthogonal
+mappings too.
+
+\vspace{.8em}
+\subsection{Training Details}
+\vspace{.4em}
+
+We use the implementation from \abr{muse} for Procrustes analysis and
+refinement~\citep{conneau-18}.  We use five refinement steps.
+For \abr{rcsls}, we use the same hyperparameter selection strategy as
+\citet{joulin-18}---we choose learning rate from $\{1, 10, 25, 50\}$ and number
+of epochs from $\{10, 20\}$ by validation.
+As recommended by~\citet{joulin-18}, we turn off the spectral constraint.
+We use ten nearest neighbors when computing \abr{csls}.
+
+\vspace{.8em}
+\subsection{Translation Accuracy}
+\vspace{.4em}
+
+For each method, we compare three normalization strategies:
+(1) no normalization,
+(2) dimension-wise mean centering followed by length normalization~\citep{artetxe-16},
+and (3) five rounds of \name{}.  
+Table~\ref{tab:result} shows word translation accuracies on seven selected
+target languages.  Results on other languages are in
+Appendix~\ref{sec:result_all}.
+
+As our theory predicts, \name{} increases translation accuracy for Procrustes
+analysis (with and without refinement) across languages.
+While centering and length-normalization also helps, the improvement is smaller,
+confirming that one round of normalization is insufficient.
+The largest margin is on English-Japanese, where \name{} increases test
+accuracy by more than 40\%.
+Figure~\ref{fig:example} shows an example of how \name{} makes the substructure
+of an English-Japanese translation pair more similar. 
+
+Surprisingly, normalization is even more important for \abr{rcsls}, a \abr{clwe}
+method without orthogonal constraint.
+\abr{rcsls} combined with \name{} has state-of-the-art accuracy,
+but \abr{rcsls} is much worse than Procrustes analysis on unnormalized
+embeddings,
+suggesting that length-invariance and center-invariance are also helpful
+for learning linear non-orthogonal mappings.
+
+\begin{table}
+\centering
+\begin{tabular}{lrr}
+  \toprule
+  Dataset & Before & After\\
+  \midrule
+  \abr{ws-353} & {\bf 73.9} & 73.7\\ 
+  \abr{mc} & 81.2 & {\bf 83.9}\\
+  \abr{rg} & 79.7 & {\bf 80.0}\\
+  \abr{yp-130} & 53.3 & {\bf 57.6}\\
+  \bottomrule
+\end{tabular}
+\caption{Correlations before and after applying \name{} on four English word
+  similarity benchmarks: \abr{ws-353}~\citep{finkelstein-02},
+  \abr{mc}~\citep{miller-91}, \abr{rg}~\citep{rubenstein-65}, and
+  \abr{yp-130}~\citep{yang-06}.
+  The scores are similar, which shows that \name{} retains useful structures
+  from the original embeddings.}
+\label{tab:word-sim}
+\end{table}
+
+\newpage
+\subsection{Monolingual Word Similarity}
+
+Many trivial solutions satisfy both length-invariance and center-invariance;
+e.g., we can map half of words to $\vect{e}$ and the rest to
+$-\vect{e}$, where $\vect{e}$ is any unit-length vector.
+A meaningful transformation should also preserve useful structure in the
+original embeddings.
+%
+We confirm \name{} does not hurt scores on English word similarity
+benchmarks~(Table~\ref{tab:word-sim}), showing that \name{} 
+produces meaningful representations.

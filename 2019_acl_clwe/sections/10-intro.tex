@@ -1,0 +1,80 @@
+% intro
+
+\section{Orthogonal Cross-Lingual Mappings}\label{sec:intro}
+
+Cross-lingual word embedding (\abr{clwe}) models map words from
+multiple languages to a shared vector space, where words with similar
+meanings are close, regardless of language.
+\abr{clwe} is widely used in multilingual natural language
+processing~\citep{klementiev-12,guo-15,zhang-16}.
+Recent \abr{clwe} methods~\citep{ruder-17,glavas-19} independently train two
+monolingual embeddings on large monolingual corpora and then align them
+with a linear transformation.
+Previous work argues that these transformations should be
+\emph{orthogonal}~\citep{xing-15,smith-17,artetxe-16}: for any two words, the
+dot product of their representations is the same as the dot product with the
+transformation.
+This preserves similarities and substructure of the original monolingual word
+embedding but enriches the embeddings with multilingual connections between
+languages.
+
+\begin{figure*}[!t]
+  \centering
+  \includegraphics[width=.8\linewidth]{\figfile{girl.pdf}}
+  \caption{The most similar Japanese words for \ja{少女} (sh\={o}jo ``girl'')
+  and English words for ``girl'', measured by cosine similarity on Wikipedia
+  fastText vectors, before (left) and after (right) \name{}.
+  In the original embedding spaces, ``boy'' is the nearest neighbor for both
+  languages but with a very different cosine similarity, and ``cat'' in English
+  is not close to ``girl'': both violate the isomorphism assumed by an
+  orthogonal transformation for cross-lingual representations.
+  \name{} replaces \ja{猫} (neko ``cat'') with the more
+  relevant \ja{美少女} (bish\={o}jo ``pretty girl'') and brings cosine similarities 
+  closer.}
+  \label{fig:example}
+\end{figure*}
+
+Thus, many state-of-the-art mapping-based \abr{clwe} methods impose an
+orthogonal
+constraint~\citep{artetxe-17,conneau-18,alvarez-18,artetxe-18b,ruder-18,alvarez-19}.
+The success of orthogonal methods relies on the assumption that embedding spaces
+are isomorphic; i.e., they have the same inner-product structures across
+languages, but this does not hold for all
+languages~\citep{sogaard-18,fujinuma-19}.
+For example, English and Japanese fastText vectors~\citep{bojanowski-17} have
+different substructures around ``girl'' (Figure~\ref{fig:example} left).
+As a result, orthogonal mapping fails on some languages---when
+\citet{hoshen-18} align fastText embeddings with orthogonal mappings, they
+report 81\% English--Spanish word translation accuracy but only 2\% for the
+more distant English--Japanese.
+
+While recent work challenges the orthogonal
+assumption~\citep{doval-18,joulin-18,jawanpuria-19}, we focus on whether simple
+preprocessing techniques can \emph{improve the suitability of orthogonal
+models}.
+Our iterative method normalizes monolingual embeddings to make their structures
+more similar (Figure~\ref{fig:example}), which improves subsequent
+alignment.
+
+Our method is motivated by two desired properties of monolingual embeddings
+that support orthogonal alignment:
+\begin{enumerate*}
+\item Every word vector has the same length.
+\item Each language's mean has the same length.
+\end{enumerate*}
+Standard preprocessing such as dimension-wise mean centering and length
+normalization~\cite{artetxe-16} do not meet the two requirements at
+the same time.
+%
+Our analysis leads to \emph{\name{}}, an alternating projection
+algorithm that normalizes any word embedding to provably satisfy both
+conditions.
+%
+After normalizing the monolingual embeddings, we then apply
+mapping-based \abr{clwe} algorithms on the transformed embeddings.
+
+We empirically validate our theory by combining \name{} with three
+mapping-based \abr{clwe} methods.
+%
+\name{} improves word translation accuracy on a dictionary induction benchmark
+across thirty-nine language pairs.

@@ -1,0 +1,98 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[hyperref]{style/acl2019}
+\usepackage{times}
+\usepackage{latexsym}
+\usepackage{amsthm}
+
+\aclfinalcopy % Uncomment this line for the final submission
+\def\aclpaperid{757} %  Enter the acl Paper ID here
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Put these commands before you \begin{document}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newif\ifcomment\commenttrue
+%\newif\ifcomment\commentfalse
+\input{style/preamble}
+
+\ifcomment
+\newcommand{\mzcomment}[1]{ \colorbox{lightblue}{   \parbox{.8\linewidth}{ MZ: #1}  }}
+\else
+\newcommand{\mzcomment}[1]{}
+\fi
+
+\newcommand{\vect}[1]{\bm{\mathbf{#1}}}
+
+\newcommand{\latexfile}[1]{\input{2019_acl_clwe/sections/#1}}
+\newcommand{\figfile}[1]{2019_acl_clwe/figures/#1}
+\newcommand{\autofig}[1]{2019_acl_clwe/auto_fig/#1}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{assumption}{Assumption}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% CJK characters
+\usepackage{CJKutf8}
+\newcommand{\ja}[1]{\begin{CJK*}{UTF8}{ipxm}#1\end{CJK*}}
+
+% method name
+\newcommand{\name}[0]{Iterative Normalization}
+
+% columns with equal width
+\usepackage{array}
+\newcolumntype{R}[0]{>{\raggedleft\let\newline\\\arraybackslash\hspace{0pt}}p{1cm}}
+
+% national flags
+\newcommand{\flag}[1]{{\setlength{\fboxsep}{0pt}\fbox{\includegraphics[height=0.24cm,width=0.36cm]{\figfile{flags/#1.pdf}}}}}
+
+\title{Are Girls Neko or Sh\={o}jo? Cross-Lingual Alignment of Non-Isomorphic Embeddings with Iterative Normalization}
+
+\author{
+  \begin{tabular}{ccc}
+    Mozhi Zhang$^1$ & Keyulu Xu$^2$ & Ken-ichi Kawarabayashi$^3$
+  \end{tabular}\\
+  \begin{tabular}{cc}
+    \textbf{Stefanie Jegelka$^2$} & \textbf{Jordan Boyd-Graber$^1$}
+  \end{tabular}\\
+  $^1$University of Maryland, College Park, Maryland, USA\\
+  $^2$Massachusetts Institute of Technology, Cambridge, Massachusetts, USA\\
+  $^3$National Institue of Informatics, Tokyo, Japan\\
+  \begin{tabular}{ccc}
+    {\small\tt \{mozhi,jbg\}@umiacs.umd.edu} & {\small\tt \{keyulu,stefje\}@mit.edu} & {\small\tt k\_keniti@nii.ac.jp}
+  \end{tabular}
+}
+
+\begin{document}
+
+\maketitle
+\latexfile{00-abstract}
+\latexfile{10-intro}
+\latexfile{20-prelim}
+\latexfile{30-property}
+\latexfile{40-method}
+\latexfile{50-experiment}
+\latexfile{60-conclusion}
+
+\section*{Acknowledgments}
+
+We thank the anonymous reviewers for comments.
+Boyd-Graber and Zhang are supported by DARPA award HR0011-15-C-0113 under
+subcontract to Raytheon BBN Technologies.
+Jegelka and Xu are supported by NSF CAREER award 1553284. Xu is also supported
+by a Chevron-MIT Energy Fellowship. Kawarabayashi is supported by JST ERATO
+JPMJER1201 and JSPS Kakenhi JP18H05291.
+Any opinions, findings, conclusions, or recommendations expressed here are
+those of the authors and do not necessarily reflect the view of the sponsors.
+
+\clearpage
+
+\bibliographystyle{style/acl_natbib}
+\bibliography{bib/journal-full,bib/jbg,bib/mozhi,bib/keyulu}
+
+\clearpage
+\begin{appendix}
+  \latexfile{70-appendix}
+\end{appendix}
+
+\end{document}

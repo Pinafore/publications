@@ -1,0 +1,43 @@
+\section{Learning Orthogonal Mappings}\label{sec:prelim}
+
+This section reviews learning orthogonal
+cross-lingual mapping between word embeddings and, along the way,
+introduces our
+notation.
+
+We start with pre-trained word embeddings in a source language and a
+target language.
+We assume\footnote{Word translation benchmarks
+use the same assumptions.}
+ all embeddings are~$d$-dimensional, and the two languages
+have the same vocabulary size~$n$.
+Let $\vect{X} \in \mathbb{R}^{d \times n}$ be the word embedding
+matrix for the source language, where each column $\vect{x}_i \in
+\mathbb{R}^d$ is the representation of the $i$-th word from the source
+language, and let $\vect{Z} \in \mathbb{R}^{d \times n}$ be the word
+embedding matrix for the target language.
+Our goal is to learn a transformation matrix~$\vect{W} \in
+\mathbb{R}^{d\times d}$ that maps the source language vectors to the
+target language space.
+%
+While our experiments focus on the supervised case with a seed dictionary $\mathcal{D}$
+with translation pairs $(i, j)$, the analysis also applies to
+unsupervised projection.
+
+One straightforward way to learn $\vect{W}$ is by minimizing Euclidean
+distances between translation pairs~\citep{mikolov-13b}.  Formally, we
+solve:
+\begin{equation}\label{eq:obj}
+\min_{\vect{W}} \sum_{(i,j) \in \mathcal{D}} \| \vect{W} \vect{x}_i - \vect{z}_j \|_2^2.
+\end{equation}
+
+\citet{xing-15} further restrict $\vect{W}$ to orthogonal
+transformations; i.e., $\vect{W}^\top \vect{W} = \vect{I}$.
+The orthogonal constraint significantly improves word translation
+accuracy~\citep{artetxe-16}.
+However, this method still fails for some
+language pairs because word embeddings are not isomorphic across
+languages.
+To improve orthogonal alignment between non-isomorphic embedding
+spaces, we aim to transform monolingual embeddings in a way that helps
+orthogonal transformation.

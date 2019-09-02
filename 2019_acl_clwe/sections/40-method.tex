@@ -1,0 +1,115 @@
+\begin{table*}
+\centering
+\begin{tabular}{llRRRRRRR}
+\toprule
+Method & Normalization & \flag{ja}~\abr{ja} & \flag{zh}~\abr{zh} & \flag{hi}~\abr{hi} & \flag{tr}~\abr{tr} & \flag{da}~\abr{da} & \flag{de}~\abr{de} & \flag{es}~\abr{es}\\
+\midrule
+Procrustes & None & 1.7 & 32.5 & 33.3 & 44.9 & 54.0 & 73.5 & 81.4\\
+& \abr{c+l} & 12.3 & 41.1 & 34.0 & 46.5 & 54.9 & 74.6 & 81.3\\
+& \abr{in} & \textbf{44.3} & \textbf{44.2} & \textbf{36.7} & \textbf{48.7} & \textbf{58.4} & \textbf{75.5} & \textbf{81.5}\\
+\midrule
+Procrustes + refine & None & 1.7 & 32.5 & 33.6 & 46.3 & 56.8 & 74.3 & 81.9\\
+& \abr{c+l} & 13.1 & 42.3 & 34.9 & 48.7 & 59.3 & 75.2 & 82.4\\
+& \abr{in} & \textbf{44.3} & \textbf{44.2} & \textbf{37.7} & \textbf{51.7} & \textbf{60.9} & \textbf{76.0} & \textbf{82.5}\\
+\midrule
+\abr{rcsls} & None & 14.6 & 17.1 & 5.0 & 18.3 & 19.2 & 43.6 & 50.5\\
+& \abr{c+l} & 16.1 & 45.1 & 36.2 & 50.7 & 58.3 & 77.5 & 83.6\\
+& \abr{in} & \textbf{56.3} & \textbf{48.6} & \textbf{38.0} & \textbf{52.4} & \textbf{60.5} & \textbf{78.1} & \textbf{83.9}\\
+\bottomrule
+\end{tabular}
+\caption{Word translation accuracy aligning English embeddings to seven
+  languages. %(more languages in Appendix~\ref{sec:result_all}).
+  We combine three normalizations---no normalization (None), mean
+  centering and length normalization (\abr{c+l}), and \name{}
+  (\abr{in}) for five rounds---with three \abr{clwe}s: Procrustes, Procrustes
+  with refinement~\citep{conneau-18}, and
+  \abr{rcsls}~\citep{joulin-18}.
+  Procrustes with \abr{c+l} is equivalent to \citet{artetxe-16}.
+  The best result for each \abr{clwe} in each column \textbf{in
+  bold}.  \name{} has the best accuracy of the three normalization techniques.}
+\label{tab:result}
+\end{table*}
+
+\section{\name{}}
+
+We now develop \name{}, which transforms monolingual word embeddings
+to satisfy both length-invariance and center-invariance.
+%
+Specifically, we normalize word embeddings to simultaneously have
+unit-length and zero-mean.
+%
+Formally, we produce embedding matrix $\vect{X}$ such that
+\begin{equation}
+  \| \vect{x}_i \|_2 = 1 \quad \text{for all $i$}, \label{eq:length-constraint}
+\end{equation}
+and
+\begin{equation}
+  \sum_{i=1}^n \vect{x}_i = \vect{0}. \label{eq:center-constraint}
+\end{equation}
+
+\name{} transforms the embeddings to make them satisfy both
+constraints \textit{at the same time}.
+Let $\vect{x}^{(0)}_i$ be the initial embedding for word $i$.
+We assume that all word embeddings are non-zero.\footnote{For such vectors,
+a small perturbation is an easy fix.}
+For every word $i$, we iteratively transform each word vector
+$\vect{x}_i$ by first making the vectors unit length,
+\begin{equation}
+  \vect{y}_i^{(k)} = \vect{x}_i^{(k-1)} / \| \vect{x}_i^{(k-1)} \|_2, \label{eq:renorm}
+\end{equation}
+  and then making them mean zero,
+\begin{equation}
+  \vect{x}_i^{(k)} = \vect{y}_i^{(k)}-\frac{1}{n} \sum_{i=1}^n \vect{y}_i^{(k)}.\label{eq:center}
+\end{equation}
+
+Equation~\eqref{eq:renorm} and \eqref{eq:center} project the embedding matrix
+$\vect{X}$ to the set of embeddings that satisfy
+Equation~\eqref{eq:length-constraint} and \eqref{eq:center-constraint}.
+Therefore, our method is a form of alternating
+projection~\citep{bauschke1996projection}, an algorithm to find a point in the
+intersection of two closed sets by alternatively projecting onto one of the two
+sets.
+%
+Alternating projection guarantees convergence in the intersection of
+two convex sets at a linear rate~\cite{gubin1967method,
+  bauschke1993convergence}.
+%
+Unfortunately, the unit-length constraint is \emph{non-convex}, ruling out the
+classic convergence proof.
+%
+Nonetheless, we use recent results on alternating non-convex
+projections~\cite{zhu2018convergence} to prove \name{}'s
+convergence (details in Appendix~\ref{sec:proof}).
+
+\begin{theorem}\label{thm:converge}
+  If the embeddings are non-zero after each iteration; i.e., $\vect{x}_i^{(k)}
+  \neq \vect{0}$ for all $i$ and $k$, then the sequence $\left\{ \vect{X}^{(k)}
+  \right\}$ produced by \name{} is convergent.
+\end{theorem}
+
+All embeddings in our experiments satisfy the non-zero assumption; it is violated only when all words have the same embedding.
+In degenerate cases, the algorithm might converge to a solution that does not
+meet the two requirements.
+Empirically, our method always satisfy both constraints.
+
+\paragraph{Previous approach and differences.}
+\citet{artetxe-16} also study he unit-length and zero-mean
+constraints, but our work differs in two aspects.
+First, they motivate the zero-mean condition based on the heuristic argument
+that two randomly selected word types should not be semantically similar (or
+dissimilar) in expectation.
+While this statement is attractive at first blush, some word types have more
+synonyms than others, so we argue that word types might not be evenly
+distributed in the semantic space.
+We instead show that zero-mean is helpful because it satisfies
+center-invariance, a \textit{necessary condition} for orthogonal mappings.
+Second, \citet{artetxe-16} attempt to enforce the two constraints by a single
+round of dimension-wise mean centering and length normalization.
+%
+Unfortunately,
+this often fails to meet the constraints \textit{at the same time}---length
+normalization can change the mean, and mean centering can change
+vector length.
+%
+In contrast, \name{} simultaneously meets both constraints and is
+empirically better (Table~\ref{tab:result}) on dictionary induction.
