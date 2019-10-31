@@ -50,7 +50,7 @@ In particular, we focus on how tournaments should be fun, well-calibrated, and d
 \subsection{Are we having fun yet?}
 \label{sec:fun}
 
-Many question answering papers pay crowdworkers to establish human baselines~\citep{rajpurkar-16,choi-18}.
+Many question answering papers pay crowdworkers to establish human baselines~\cite{rajpurkar-16,choi-18}.
 
 \newcite{boyd-graber-12} instead created an interface that was fun enough that people played for free.
 
@@ -64,7 +64,7 @@ Put yourself in the shoes of someone who has to \emph{answer} the questions.
 
 If you find out boring, repetitive, and uninteresting, so will your crowd workers (this might interfere with measuring human performance. 
 
-For example consider \squad{} 2.0~\citep{rajpurkar-18}, arguably the most popular computer \abr{qa} leaderboard or---in our framing---the most popular computer trivia tournament.
+For example consider \squad{} 2.0~\cite{rajpurkar-18}, arguably the most popular computer \abr{qa} leaderboard or---in our framing---the most popular computer trivia tournament.
 
 Many of the questions aren't particularly fun to answer from a human perspective; they're fairly formulaic.  
 
@@ -78,7 +78,7 @@ For example, the source paragraph says ``In [Commonwealth countries]\dots the te
 
 A human would want to be able to paraphrase and negate some of the source information to answer the question correctly.
 
-Or consider \searchqa{}~\citep{dunn-17}, which is derived from the game \jeopardy{}, which asks ``An article that he wrote about his riverboat days was eventually expanded into \textit{Life on the Mississippi}.''
+Or consider \searchqa{}~\cite{dunn-17}, which is derived from the game \jeopardy{}, which asks ``An article that he wrote about his riverboat days was eventually expanded into \textit{Life on the Mississippi}.''
 
 The young apprentice and newspaper writer who wrote the article is named Samuel Clemens; however, the reference answer is that author's later pen name, \underline{Mark Twain}.
 
@@ -90,7 +90,7 @@ Of course, fun is relative.
 
 Many people do not find trivia fun, others travel thousands of miles to answer sports trivia questions,
 
-and others still might have the same passion for answering math questions~\citep{amini-19}.
+and others still might have the same passion for answering math questions~\cite{amini-19}.
 
 The deeper issues when creating a \abr{qa} task are:
 
@@ -116,15 +116,15 @@ While in the \abr{ml} community we might discuss this in terms of whether your m
 
 We talk about how well-written questions avoid unfairness at a low level in Section~\ref{sec:craft}, but the structure of the tournament itself might inadvertently encourage the wrong behavior (or demotivate hard-working system builders).
 
-Answering questions requires multiple skill sets: for example, you need to know where an answer is mentioned~\citep{hermann-15}, know a cannonical name for the answer~\citep{yih-15}, known when you know the answer~\citep{rajpurkar-18}, and sometimes you need to communicate to others how to answer the question~\citep{fever-18}.
+Answering questions requires multiple skill sets: for example, you need to know where an answer is mentioned~\cite{hermann-15}, know a cannonical name for the answer~\cite{yih-15}, known when you know the answer~\cite{rajpurkar-18}, and sometimes you need to communicate to others how to answer the question~\cite{fever-18}.
 
 Like \abr{qa} leaderboards, trivia tournaments need to decide on a single winner.
 
 But they also recognize that different people may have different skills.
 
-For example, a tournament may recognize the disparate resources/preparation available at different institutions: the winner fro m high schools, small schools, universities, community colleges, or open winners~\citep{naqt-eligibility}.
+For example, a tournament may recognize the disparate resources/preparation available at different institutions: the winner fro m high schools, small schools, universities, community colleges, or open winners~\cite{naqt-eligibility}.
 
-Or they will give awards for specific skills (e.g., a ``golden chicken'' award for least incorrect answers, awards for specific categories, ``yo-yo'' for highest variance, or a neg award~\citep{neg-award} for most incorrect answers).
+Or they will give awards for specific skills (e.g., a ``golden chicken'' award for least incorrect answers, awards for specific categories, ``yo-yo'' for highest variance, or a neg award~\cite{neg-award} for most incorrect answers).
 
 In general, the community recognizes that while a single metric will determine the winner, this is not the end of the story.
 
@@ -134,7 +134,7 @@ For example, in \squad{} 2.0, abstaining contributes the same to the overall \fo
 
 Both are clearly important, but a single score prioritizes one specific balance of the two that may not be fair.
 
-For example in the 2018 \fever{} shared task~\citep{fever-18}, the organizers specifically devalued \fone{}, instead focusing on a metric that required just one piece of evidence per question.
+For example in the 2018 \fever{} shared task~\cite{fever-18}, the organizers specifically devalued \fone{}, instead focusing on a metric that required just one piece of evidence per question.
 
 The submission that had the best overall precision and \fone{} thus was in fourth place on the ``primary'' leaderboard.
 
@@ -165,7 +165,7 @@ Most systems cannot answer questions like ``What was the cause of the \abr{us} c
 
 While easy questions might have near probability 1.0 of a system answering correctly and very hard questions might have a probability near 0.0, questions with probabilities nearer to 0.5 are more interesting.
 
-Much like Vygotsky's theories of proximal development for human learning~\citep{chaiklin-03}---which argues that leaners are most motivated by tasks that are achievable but \emph{just} beyond their current abilities---the questions between impossible and obvious are going to best improve \abr{qa} systems.
+Much like Vygotsky's theories of proximal development for human learning~\cite{chaiklin-03}---which argues that leaners are most motivated by tasks that are achievable but \emph{just} beyond their current abilities---the questions between impossible and obvious are going to best improve \abr{qa} systems.
 
 The Goldilocks questions in between are most important for deciding who will sit atop the leaderboard; ideally these (not random noise) will decide.
 
