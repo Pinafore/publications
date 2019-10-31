@@ -32,8 +32,6 @@ if [ -s $1/figures.py ]
 then
     cp $1/figures.py $2/$1
 fi
-python scripts/sanitize.py $1/sections
-echo "------------"
 
 for DIR in figures sections data tables
 do
@@ -45,6 +43,8 @@ done
 
 echo "------------"
 cd $2
+python scripts/sanitize.py $1/sections
+echo "------------"
 git add Makefile scripts/*
 git add `python scripts/latex_deps.py $1.tex`
 git add $1/figures/*.* $1/sections/*.* $1/data/*.* $1.tex
