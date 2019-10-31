@@ -50,3 +50,6 @@ clean:
 
 %.tgz: %.bbl
 	tar cvfz $(<:.bbl=.tgz) Makefile $< style/*.sty style/*.bst style/*.cls $(<:.bbl=.tex) bib/*.bib style/preamble.tex $(<:.bbl=)/figures/* $(<:.bbl=)/auto_fig/* $(<:.bbl=)/sections/*.tex
+
+%.arxiv.tgz: %.tgz
+	pigz -d < %< | tar --delete --wildcards -f - '*.bib' | pigz > $@
