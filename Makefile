@@ -48,5 +48,5 @@ clean:
 	mv $(<:.paper.pdf=).paper.part4.11_12.pdf $(<:.paper.pdf=)/output/collaboration_plan.pdf
 	mv $(<:.paper.pdf=).paper.part5.*.pdf $(<:.paper.pdf=)/output/works_cited.pdf
 
-%.tgz: %.pdf
-	tar cvfz $(<:.pdf=.tgz) Makefile style/*.sty style/*.bst style/*.cls $(<:.tex=.tex) bib/*.bib style/preamble.tex $(<:.pdf=)/figures/* $(<:.pdf=)/auto_fig/* $(<:.pdf=)/sections/*.tex
+%.tgz: %.bbl
+	tar cvfz $(<:.bbl=.tgz) Makefile style/*.sty style/*.bst style/*.cls $(<:.bbl=.tex) $< $(<:.bbl=)/bib/*.bib style/preamble.tex $(<:.bbl=)/figures/* $(<:.bbl=)/auto_fig/* $(<:.bbl=)/sections/*.tex
