@@ -63,8 +63,6 @@ year = {2013}
 
 @Inbook{voorhees-08,
 author="Voorhees, Ellen M.",
-editor="Strzalkowski, Tomek
-and Harabagiu, Sanda M.",
 title="Evaluating Question Answering System Performance",
 bookTitle="Advances in Open Domain Question Answering",
 year="2008",
@@ -8797,7 +8795,7 @@ booktitle=aaai,
 
 @proceedings{fever-18,
     title = "Proceedings of the First Workshop on Fact Extraction and {VER}ification ({FEVER})",
-    author = "Thorne, James  and
+    editor = "Thorne, James  and
       Vlachos, Andreas  and
       Cocarascu, Oana  and
       Christodoulopoulos, Christos  and
@@ -8859,18 +8857,13 @@ doi = {10.1109/MC.2006.196}
       Hajishirzi, Hannaneh",
     booktitle = acl,
     year = "2019",
-    url = "https://www.aclweb.org/anthology/N19-1245",
-    doi = "10.18653/v1/N19-1245",
-    pages = "2357--2367",
-    abstract = "We introduce a large-scale dataset of math word problems and an interpretable neural math problem solver by learning to map problems to their operation programs. Due to annotation challenges, current datasets in this domain have been either relatively small in scale or did not offer precise operational annotations over diverse problem types. We introduce a new representation language to model operation programs corresponding to each math problem that aim to improve both the performance and the interpretability of the learned models. Using this representation language, we significantly enhance the AQUA-RAT dataset with fully-specified operational programs. We additionally introduce a neural sequence-to-program model with automatic problem categorization. Our experiments show improvements over competitive baselines in our dataset as well as the AQUA-RAT dataset. The results are still lower than human performance indicating that the dataset poses new challenges for future research. Our dataset is available at https://math-qa.github.io/math-QA/",
 }
 
-@incollection{hermann-15,
+@inproceedings{hermann-15,
 title = {Teaching Machines to Read and Comprehend},
 author = {Hermann, Karl Moritz and Kocisky, Tomas and Grefenstette, Edward and Espeholt, Lasse and Kay, Will and Suleyman, Mustafa and Blunsom, Phil},
 booktitle = nips,
 year = {2015},
-url = {http://papers.nips.cc/paper/5945-teaching-machines-to-read-and-comprehend.pdf}
 }
 
 @inproceedings{dua-19,
@@ -8959,14 +8952,16 @@ journal	= {Transactions of the Association of Computational Linguistics}
 @inbook{chaiklin-03,
     place={Cambridge}, 
     series={Learning in Doing: Social, Cognitive and Computational Perspectives}, 
-    title={The Zone of Proximal Development in {Vygotsky}'s Analysis of Learning and Instruction}, DOI={10.1017/CBO9780511840975.004}, 
+    title={The Zone of Proximal Development in {Vygotsky}'s Analysis of Learning and Instruction}, 
+    DOI={10.1017/CBO9780511840975.004}, 
     booktitle={{Vygotsky}'s Educational Theory in Cultural Context}, 
     publisher={Cambridge University Press}, 
     author={Chaiklin, Seth}, 
-    editor={Kozulin, Alex and Gindis, Boris and Ageyev, Vladimir S. and Miller, Suzanne M.Editors}, year={2003}, pages={39–64}, collection={Learning in Doing: Social, Cognitive and Computational Perspectives}}
+    year={2003}
+}
 
 @misc{iyer-17,
-    author={Shankar Iyer, Nikhil Dandekar, and Kornél Csernai},
+    author={Shankar Iyer and Nikhil Dandekar and Kornél Csernai},
     title={Quora Question Pairs},
     url={https://www.quora.com/q/quoradata/First-Quora-Dataset-Release-Question-Pairs},
     year={2017}
@@ -9068,7 +9063,7 @@ journal	= {Transactions of the Association of Computational Linguistics}
     abstract = "We present QuAC, a dataset for Question Answering in Context that contains 14K information-seeking QA dialogs (100K questions in total). The dialogs involve two crowd workers: (1) a student who poses a sequence of freeform questions to learn as much as possible about a hidden Wikipedia text, and (2) a teacher who answers the questions by providing short excerpts from the text. QuAC introduces challenges not found in existing machine comprehension datasets: its questions are often more open-ended, unanswerable, or only meaningful within the dialog context, as we show in a detailed qualitative evaluation. We also report results for a number of reference models, including a recently state-of-the-art reading comprehension architecture extended to model dialog context. Our best model underperforms humans by 20 F1, suggesting that there is significant room for future work on this data. Dataset, baseline, and leaderboard available at \url{http://quac.ai}.",
 }
 
-@online{najberg-18,
+@misc{najberg-18,
   author = {Adam Najberg},
   title = {{Alibaba} {AI} Model Tops Humans in Reading Comprehension},
   year = 2018,
@@ -9076,7 +9071,7 @@ journal	= {Transactions of the Association of Computational Linguistics}
   urldate = {2019-10-21}
 }
 
-@online{cuthbertson-18, 
+@misc{cuthbertson-18, 
   author = {Anthony Cuthbertson},
   title = {Robots can now read better than humans, putting millions of jobs at risk},
   year = 2018,

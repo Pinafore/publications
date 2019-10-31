@@ -1,0 +1,17 @@
+\section{What makes a good question?}
+\label{sec:question}
+
+The trivia community has rules to prevent people from getting fooled into answering an ambiguous question.  For example, they say things like:
+
+Heœôòùs not Sherlock Holmes, but his address is 221B. Heœôòùs not the Janitor on Scrubs, but his father is played by R. Lee Ermy. After viewing the actorœôòùs audition tape recorded in a Namibian bathroom during filming for Flight of the Phoenix, director Bryan Singer had no idea that the showœôòùs eventual lead was in fact British. Jennifer Morrisonœôòùs character falls for him, but is rejected despite Lisa Cuddyœôòùs intervention. He correctly deduces that Cameron slept with Dr. Robert Chase while high on meth, diagnoses a rat in his ex-wifeœôòùs house, and treats a guy with AIDS all in one episode! For ten points, name this misanthropic, crippled, Vicodin-dependent central character of a FOX medical drama.
+
+Likewise, the style guides for writing questions stipulate that you must give the answer type clearly and early on.  Whether you want a book, a collection, a movement, etc.  This helps prevent ambiguities in the level of specificity requested (e.g., year + month, year only, or year and date).
+
+Despite all of this, the trivia community doesnœôòùt always get it right.  Thereœôòùs a process for adjudicating answers that participants disagree with.  Iœôòùll translate this to how it would work for MRQA.  This requires that test sets are only created for a specific time; all systems are submitted simultaneously.  Then, all questions and answers are revealed.  System authors can protest correctness rulings on questions.  Low-level staff have the authority to throw out a single question for a participant or to accept minor variations (America instead of USA); if thereœôòùs a bigger disagreement, then the protest goes through a complicated adjudication process thatœôòùs designed to minimize bias.
+
+For example, when I was on Jeopardy!, I answered œôòüendoscopeœôòı to œôòü Your surgeon could choose to take a look inside you with this type of fiberoptic instrumentœôòı.  Each contestant on Jeopardy! has a lawyer assigned from the auditing company to fight for them if there's a bad ruling. I didnœôòùt have to say anything; my lawyer was up and arguing with the judges to overturn the ruling at the commercial break and they shuttled off the players to take a break.  They wrote up a summary of the case (without mentioning who was involved) that then went to a sequestered panel of judges who then ruled that I was correct.
+
+Similarly, quiz bowl has a complicated rule set for adjudicating protests and a well-developed phone tree for finding experts on a particular subject:
+https://www.naqt.com/rules/#protest
+
+This would require creating a new, smaller test set every year.  The nice thing is that this allows gradual refinements of annotations and process to be reflected.  It also prevents overfitting.  With my UMD hat, Iœôòùve been trying to get funding to start doing this for our adversarial question answering but havenœôòùt had luck yet.

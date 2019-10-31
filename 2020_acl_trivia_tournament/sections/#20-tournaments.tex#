@@ -1,0 +1,22 @@
+\section{Surprise, You're Running a Trivia Tournament!}
+\label{sec:tournament}
+
+But I'm doing real, important research, you say, my work is Nothing like a silly trivia tournament.  That may be, but let me first tell you a little about what running a tournament is like, and perhaps you might see some similarities.
+
+First, the questions.  Either you write them yourself or you pay someone to write them (sometimes people on the internet).  There's a fixed number of questions you need to hit by a particular date.  I'll talk more about the finer points of editing and writing later, but the first thing is that you need a bunch of questions.
+
+Then, you advertise.  You talk about the questions that you have (or will have).  You talk about who is writing them, what subjects are covered, and try to get players to answer your questions.
+
+Then you have the tournament.  You keep your questions secure until test time, have players answer the questions, and you declare a winner. Then, people use the questions to train for future tournaments.
+
+These have natural analogs to crowd sourcing questions, writing the paper, advertising, and running a leaderboard.  The innate biases of academia put much more emphasis on the paper, but there are components where trivia tournament best practices could help.  In particular, we focus on how tournaments should be fun, fair, and discriminative.
+
+\subsection{Are we having fun yet?}
+
+In our first question answering paper, we thought that we would have to pay humans to get a human performance baseline.  We were pleasantly surprised that people found our game fun.  Indeed, after we took our data collection door down, it was bootlegged at least twice.
+
+While it is somewhat trite, you should probably look at your data.  Try answering your own questions.  If you find out boring, repetitive, and uninteresting, so will your crowd workers.
+
+\subsection{}
+
+Fun, fair, and discriminative
