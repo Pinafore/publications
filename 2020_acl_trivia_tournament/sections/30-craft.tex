@@ -2,11 +2,8 @@
 \label{sec:craft}
 
 One thing that trivia enthusiasts agree on is that questions should be well written.
-
 In the research community, this is not always the case: some believe that it is more natural for questions to be written by people who do no know the answer (more on this in Section~\ref{sec:unnatural}), and many questions are written by crowdworkers who may not be confident users of English (the primary language of \abr{qa} datasets).
-
 In the previous section, we focused on how datasets as a whole should be structured.
-
 Now, we focus on how specific \emph{questions} should be structured to make the dataset as valuable as possible.
 
 \subsection{Avoiding Ambiguity}
@@ -14,9 +11,7 @@ Now, we focus on how specific \emph{questions} should be structured to make the 
 
 The trivia community has rules to prevent people from getting fooled
 into answering an ambiguous question.
-
 While this is true in many contexts, we focus on a format called \qb{}, whose very long ``questions'' (really statements) offer more opportunities to see tactics that trivia writers use.
-
 For example, in a 2005 \abr{parfait} packet, writer Zhu Ying signals that the question is not looking for two different answers:
 \begin{quote}
  He's not Sherlock Holmes, but his address is 221B. He's not the Janitor on Scrubs, but his father is played by R. Lee Ermy. \dots For ten points, name this misanthropic, crippled, Vicodin-dependent central character of a FOX medical drama. \\
@@ -25,7 +20,6 @@ For example, in a 2005 \abr{parfait} packet, writer Zhu Ying signals that the qu
 Generally, when there are clues that could perhaps trigger an alternate but incorrect answer, those are highlighted in the question itself.
 
 Otherwise, the authors of questions give guidelines on which answers are acceptable.  
-
 For example, in the Harvard Fall Tournament XI, writer Raynor Kuang uses a mental model of an answerer to deliniate right from wrong answers:
 \begin{quote}
      In Newtonian gravity, this quantity satisfies Poisson's equation. This quantity is equal to half the difference between the Hamiltonian and Lagrangian, and the operator for it is symbolized with a capital $V$. For a dipole, this quantity is given by negative the dipole moment dotted with the electric field. In one form, this quantity is one-half charge times capacitance squared, and it is one-half $k$ times the displacement squared in a spring. This quantity is mass times little $g$ times height in its gravitational form. For 10 points, name this form of energy contrasted with kinetic.\\
@@ -35,137 +29,94 @@ In contrast, \qa{} datasets typically only provide a single string.  For named e
 
 Likewise, the style guides for writing questions stipulate that you
 must give the answer type clearly and early on.
-
 These mentions specify whether you want a book, a collection, a movement, etc.  This helps
 prevent ambiguities in the level of specificity requested.  
-
 For example, if a question asks about a date it usually says ``day and month required'' (\underline{September 11}, ``month and year required'' (\underline{April 1968}), or ``day, month, and year required'' (\underline{September 1, 1939}).
-
 This is true for other answers as well: city and team, party and country, or more generally ``two answers required''.
 
 Despite all of these conventions, the trivia community does not always get it right.
-
 There's a process for adjudicating answers that participants disagree
 with.  
-
 We translate this to how it would work for \abr{mrqa}.
-
 This requires that test sets are only created for a specific time; all
 systems are submitted simultaneously.
-
 Then, all questions and answers are revealed.
-
 System authors can protest correctness rulings on questions.
-
 Low-level staff have the authority to throw out a single question for
 a participant or to accept minor variations (\underline{America} instead
 of \underline{\abr{usa}}); if there's a bigger disagreement, then the protest goes
 through an adjudication process that's designed to minimize
 bias.\footnote{\url{https://www.naqt.com/rules/\#protest}}  
-
 This seems to have been the norm during the days of \abr{trec-qa} by \newcite{voorhees-08} who noted
 \begin{quote}
     Different \abr{qa} runs very seldom return exactly the same answer strings, and it is quite difficult to determine automatically whether the difference between a new string and a judged string is significant with respect to the correctness of the answer.
 \end{quote} 
-
 While machine reading has made span-based evaluation easier, it has encouraged more superficial evaluations (and perhaps the ubiquity of leaderboards also contributes).
 
 In high school and college national competitions, if low-level staff cannot resolve the issue, the low-level staff contacts the tournament director.
-
 The tournament director often is able to make a decision about what to do (they often know the rules better than low level staffers, and there is a straightforward resolution).
-
 However, if the tournament director cannot resolve the issue (e.g., the decision is based on expertise they lack), the tournament director writes the summary of the dispute on paper.
-
 All parties agree on the summary of the dispute, and then the tournament director calls or e-mails a mutually agreed expert from the tournament's phone tree.
-
 The substance of the disagreement is communicated (without identities), and the expert applies the rules to make a decision on the question.
 
 For example, when a 
-
 \jeopardy{} contestant answered \underline{endoscope} to ``Your surgeon could choose to take a look inside you with this type of fiber-optic instrument''.
-
 Every contestant on \jeopardy{} has an advocate assigned from the
 auditing company to fight for them if there's a bad ruling.
-
 An advocate was up and arguing with the
 judges to overturn the ruling at the commercial break, and the players went off to rest their legs for a bit.
-
 The advocate wrote up a summary of the case (without mentioning who was
 involved) that then went to a sequestered panel of judges who then
 ruled that \underline{endoscope} (a more general term) was also correct.
 
 This would require creating a new, smaller test set every year.
-
 The nice thing is that this allows gradual refinements of annotations
 and process to be reflected.
 
 \subsection{Avoiding Implicit Assumptions}
 
 In contrast, many datasets make extensive assumptions that are explicit in the questions.
-
 We already picked on \squad{}, so we now turn to Natural Questions~\cite{kwiatkowski-19}.
-
 For example, the gold answer to the question ``when was the last time michigan won the championship'' is \underline{1989}, assuming the University of Michigan's football team; similarly, the gold answer to the question ``what year did the us hockey team won the olympics'' is \underline{1960} and \underline{1980}, ignoring the \abr{us} women's team, which won in 1998 and 2018.
-
 Similarly, given the question ``which supreme court judge has served in international court of justice'', the gold answer is \underline{Dalveer Bhandari}, assuming the Indian Supreme Court.
-
 To be clear, the existence of such questions is not a problem.
-
 Natural Questions fill a valuable role in describing the (sometimes ambiguous) needs of real-world information seekers, but by assuming single interpretations as the gold answer, implicit assumptions can either introduce noise or bias in leaderboard rankings (i.e., giving a bonus to systems that make the same assumptions as the dataset).
 
 
 In other instances, questions would be answerable if assumptions were made, but Natural Questions does not make assumptions particularly when it depend on who is asking the question and when.
-
 For example, the questions ``can i buy wine in kentucky on sunday'', ``where am i on the steelers waiting list'', ``when is the real housewives on'', and ``who has majority in the house and senate'' are all answerable, but depend on which county of Kentucky you're in,
   when you paid for your season pass, and the local network
   syndicating \textit{Real Housewives}.
-
 However, Natural Questions calls these unanswerable, while the previous questions are answerable with implicit assumptions.
 
 Going back to the question of whether your dataset is fun (Section~\ref{sec:fun}), these implicit assumptions can often rob a human player of the fun of answering the question correctly.
-
 Suppose you're a \abr{us} Supreme Court buff and know the justices' biographies from Samuel Alito to William Burnham Woods; if you get the question ``which supreme court judge has served in international court of justice'', you can confidently say that no \emph{American} justice has\dots only to be ruled incorrect because the question was implicitly asking about India.
-
 Similarly, if given the question ``when did Michigan last win the championship'' and you answer \underline{2014}---when the Michigan State Spartans won the Women's Cross Country championship---you would then be told that you chose the wrong school, the wrong sport, and the wrong gender.
-
 If this were a real trivia tournament, the players would protest and complain.\footnote{Where to draw the line is a matter of judgment; computers---who lack common sense---might find questions ambiguous where humans would not.}
 
 These issues are important not just from an abstract question of fairness; when questions make arbitrary assumptions, they cannot discriminate plausible answers from very wrong ones.
-
 The above answers to questions demonstrate knowledge and reasoning and are arguably correct---as correct as the official gold questions.
-
 Nevertheless, these answers are as wrong as answering \underline{Judge Wapner} or \underline{1836}.
 
 At best, these will become part of the measurement error of datasets (no dataset is perfect). 
-
 At worst, they will recapitulate the biases that went into the creation of the datasets.
-
 Then, the community will implicitly equate the biases with correctness: you get high scores if you adopt this set of assumptions.
-
 Then, these systems will enter into real-world systems, further perpetuating the biases.
 
 \subsection{Focus on the Bubble}
 
 When writing a tournament, of course the authors want every question to be as good as possible.
-
 But the reality is that time and resources are limited.  
-
 Thus, authors of tournaments have a policy of ``focusing on the bubble'', where the ``bubble'' are the questions mostly likely to discriminate between top teams.
-
 As we discuss in Section~\ref{sec:discriminative}, these questions should be the bulk of your dataset.
 
 For humans, authors and editors focus on the questions and clues that they predict will be the deciding matches in a tournament.
-
 These questions are thoroughly playtested, vetted, and edited until they are as good as possible.
-
 Only after these questions have been perfected will the other questions undergo the same level of polish.
 
 For computers, the same logic applies.  
-
 You should expend the most effort (both for authors and annotators) to ensure that these questions are correct, free of ambiguity, and unimpeachable.
-
 However, as far as we can tell, the authors of \qa{} datasets do not give any special attention to these questions.
 
 Unlike a human trivia tournament, however---with finite patience of the participants---this does not mean that you should necessarily remove all of the easy or hard questions from your dataset---simply spend more of your time/effort/resources on the bubble.
-
 You would not want to introduce a sampling bias that leads to inadvertently forgetting how to answer questions like ``who is buried in Grant's tomb?''~\cite[Chapter 7]{dwan-00}.
