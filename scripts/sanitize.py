@@ -4,7 +4,7 @@ from glob import glob
 import re
 import sys
 
-kCOMMENT = re.compile(r"(?<!\\)%.*\n")
+kCOMMENT = re.compile(r"(?<!\\)%.*")
 kSTRIP = re.compile(r"\\.*comment{")
 strippable = set(["\\hidetext{", "\\ignore{"])
 
