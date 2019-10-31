@@ -1,6 +1,6 @@
 #!/bin/bash -e
 
-
+PYCOMMAND=python
 if hash pythonw 2>/dev/null; then
     VERSION=`pythonw -c 'import platform; major, minor, patch = platform.python_version_tuple(); print(major);'`
     if [ $VERSION -eq 3 ]; then
