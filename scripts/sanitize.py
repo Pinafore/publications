@@ -34,7 +34,7 @@ if __name__ == "__main__":
 
     for ii in glob("%s/*" % sys.argv[1]) + \
             ["%s.tex" % sys.argv[1].split("/")[0]]:
-        raw_file = open(ii).read()
+        raw_file = open(ii).read().replace(r"\n%\n", r"\n")
         print("\n".join(kCOMMENT.findall(raw_file)[:5]))
         new_text = kCOMMENT.sub("", raw_file)
 
