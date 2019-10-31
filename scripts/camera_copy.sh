@@ -28,6 +28,10 @@ if [ -s $1/figures.R ]
 then
     cp $1/figures.R $2/$1
 fi
+if [ -s $1/figures.py ]
+then
+    cp $1/figures.py $2/$1
+fi
 python scripts/sanitize.py $1/sections
 echo "------------"
 
