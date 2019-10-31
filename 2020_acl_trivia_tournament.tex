@@ -1,0 +1,61 @@
+\documentclass[table,times]{article}
+
+\usepackage{style/acl2019}
+
+
+
+
+
+
+\newif\ifcomment\commentfalse
+\input{style/preamble}
+\usepackage{hyperref}
+
+\aclfinalcopy
+\def\aclpaperid{???}
+
+\newcommand{\latexfile}[1]{\input{2020_acl_trivia_tournament/sections/#1}}
+\newcommand{\figfile}[1]{2020_acl_trivia_tournament/figures/#1}
+\newcommand{\autofig}[1]{2020_acl_trivia_tournament/auto_fig/#1}
+
+
+\title{What Question Answering can Learn from Trivia Nerds}
+\author{\hspace{4.4cm}Jordan \\ 
+iSchool, \abr{cs}, \abr{umiacs}, \abr{lsc} \\
+University of Maryland \\
+\texttt{jbg@umiacs.umd.edu} \And 
+\hspace{-5.2cm} Boyd-Graber \\
+Google Research \\
+Z\"urich \\
+\texttt{jbg@google.com}}
+
+
+
+\begin{document}
+
+\maketitle
+
+\latexfile{00-abstract}
+\latexfile{10-intro}
+\latexfile{20-tournaments}
+\latexfile{30-craft}
+
+\latexfile{60-qb}
+\latexfile{90-call}
+
+\paragraph{Acknowledgements}
+
+Many thanks to Ben B\"orschinger, Massimiliano Ciaramita, Jon Clark, Christian Buck, Emily Pitler, and Michael Collins for insightful discussions that helped frame these ideas.  Thanks to Kevin Kwok for permission to use Protobowl information.
+
+\bibliographystyle{style/compling}
+\bibliography{bib/journal-full,bib/jbg}
+
+
+
+
+
+
+
+\end{document}
+
+

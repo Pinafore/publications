@@ -7,7 +7,7 @@ clean:
 	rm -f *.aux *.dvi *.log *.bbl *.pdf *~ *.out *.blg *.nav *.toc *.snm *.fdb_latexmk *.fls *.synctex.gz
 	rm -f */*.aux */*.dvi */*.log */*.bbl */*.pdf */*~ */*.out */*.blg */*/*~
 	rm -fR */auto_fig
-	rm *.tgz
+	rm -R *.tgz
 
 %/auto_fig/res.txt: $(FIG)
 	mkdir -p $(@:/res.txt=)
@@ -49,4 +49,4 @@ clean:
 	mv $(<:.paper.pdf=).paper.part5.*.pdf $(<:.paper.pdf=)/output/works_cited.pdf
 
 %.tgz: %.pdf
-	tar cvfz $(<:.tex=.tgz) Makefile style/*.sty style/*.bst style/*.cls $(<:.tex=.tex) bib/*.bib style/preamble.tex $(<:.tex=)/figures/* $(<:.tex=)/auto_fig/* $(<:.tex=)/sections/*.tex
+	tar cvfz $(<:.pdf=.tgz) Makefile style/*.sty style/*.bst style/*.cls $(<:.tex=.tex) bib/*.bib style/preamble.tex $(<:.pdf=)/figures/* $(<:.pdf=)/auto_fig/* $(<:.pdf=)/sections/*.tex

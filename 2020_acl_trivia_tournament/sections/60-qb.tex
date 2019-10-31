@@ -1,0 +1,156 @@
+
+
+\section{\qb{}: The Worst Question Answering Format (except for all the others)}
+\label{sec:qb}
+
+While we have discussed \qa{} from a broad perspective, we now turn to a very specific format.
+
+For general question answering and language understanding, we believe it is a strong format and should be part of mainstream \abr{qa} bakeoffs (if nothing else, you can stage fun human--computer face-offs).
+
+However, we emphasize that we have no delusion that mainstream \abr{qa} will adopt this format.
+
+However, given then community's emphasis on fair evaluation, there are likely \emph{aspects} that computer \abr{qa} can borrow from the gold standard of human \abr{qa}.
+
+We discuss what this may look like in Section~\ref{sec:call}, but first we describe how the gold standard of human \abr{qa} works.
+
+\subsection{What is \qb{}}
+
+We have shown several examples of \qb{} questions, but we have not yet explained in detail how the format works; see \newcite{DBLP:journals/corr/abs-1904-04792} for a more comprehensive description.
+
+You might be scared off by how long the questions are.
+
+However, in real trivia tournaments based on the \qb{} format, these questions are usually not finished.
+
+This is because these questions are designed to be \emph{interrupted}.
+
+Two agents listen to the questions read by a moderator.
+
+As soon as someone knows the answer to the question, they use a signaling device to ``\emph{buzz in}''. 
+
+If the agent who buzzed in is right, they get points.
+
+Otherwise, they lose points and the rest of the question is read for the other team.  
+
+Not all trivia games with buzzers have this property, however.
+
+For example, take \jeopardy{}, the subject of Watson's tour-de-force.  
+
+While \jeopardy{} also uses signaling devices, these only work \emph{at the end of the question}; Ken Jennings, one of the top \jeopardy{} players explains it on a \textit{Planet Money} interview~\cite{malone-19}:
+\begin{quote}
+{\bf Jennings:} The buzzer is
+    not live until Alex finishes reading the question. And if you buzz
+    in before your buzzer goes live, \emph{you actually lock yourself out
+    for a fraction of a second}. So the big mistake on the show is
+    people who are all adrenalized and are buzzing too quickly, too
+    eagerly. \\
+{\bf Malone:} OK. To some degree, "Jeopardy!" is kind of a video game, and a \emph{crappy video game where it's, like, light goes on, press button} - that's it. \\
+{\bf Jennings:} (Laughter) Yeah. \\
+{\bf Malone:} Is that true? \\
+{\bf Jennings:} I do like to think of it as a beautiful art and not a really crappy video game.
+\end{quote}
+
+Thus, the buzzer is a gimmick for \jeopardy{} to ensure good television; however, \qb{} uses the buzzer to better discriminate knowledge (Section~\ref{sec:discriminative}).
+
+\subsection{Pyramidality}
+\label{sec:pyramidality}
+
+Recall that an effective dataset (tournament) is one that can reliably discriminate who knows the most about a subject, and that the higher the proportion of effective questions~$\rho$, the better.
+
+Is there a way to make nearly every question able to effectively discriminate the better system/player?
+
+\qb{} does this by adding the discrimination \emph{within} a question: after every word, the system must decide whether it has enough information to answer the question.
+
+The system that can answer first is judged to have answered the question better than systems that require more information.
+
+Another aspect of the art of writing \qb{} questions is to arrange the clues so that these questions are maximally pyramidal.
+
+Thus, questions begin with hard clues---ones that require deeper knowledge and logic---to more accessible clues that are well known.
+
+An abstract way of considering why this is valuable is through Rademacher complexity: how likely is it that a bad system could score well on the dataset?
+
+In contrast to \triviaqa{}~\cite{joshi-17}, which is also written by trivia experts, also contains many non-pyramidal questions.
+
+So while it has the benefits of of knowledgeable writers, it cannot discriminate between systems as well.
+
+\subsection{The Editing Process}
+
+\qb{} questions are created in two phases by two different individuals, both who are knowledgeable about the subject.
+
+First, the \emph{author} of the question selects the answer, assembles clues (in a pyramidal order), and ties them together.
+
+However, this is not the end of a process; a \emph{subject editor} then removes ambiguity, adjusts the list of acceptable answers, and sometimes tweaks the clues to ensure the question will be maximally discriminative.
+
+Finally, a head editor or \emph{packetizer} will ensure that the overall set of questions has a diverse set of questions, has uniform difficulty, and does not contain repeats.
+
+\subsection{Unnatural Questions}
+\label{sec:unnatural}
+
+Trivia questions are fake: the person asking the question already know the answer.  
+
+But then they're no more fake than the exams you have at the end of a course, where the teacher presumably knows the answer. 
+
+Trivia questions are designed to test knowledge\dots which in many ways is also what we want from QA dataset, particularly given the emphasis on leaderboards.  
+
+Experts can know when their questions are ambigiuous; while ``what play has a character who's father is dead'' is could refer to many different plays (\textit{Hamlet}, \textit{Antigone}, \textit{Proof}, \textit{inter alia}), but a good writer would know to write it as ``whose uncle Claudius poisoned his father?''.
+
+When authors fail to do this, the question is derided as a ``hose''~\cite{2013-eltinge}, which robs the tournament of fun (Section~\ref{sec:fun}).
+
+One of the benefits of contrived formats is that you can focus on phenomena that you want to test (which may be rare in nature or amendable to cheating). 
+
+Just like a teacher can recognize that students struggle with long division and assign more problems on that, you can set up a framework to focus on what computers struggle with.
+
+\newcite{dua-19} used this framework to focus on quantitative reasoning by excluding questions a reading comprehension system \emph{could} answer.
+
+In working with trivia enthusiasts to craft adversarial examples~\cite{wallace-19}, one author had a question that contained the phrase ``this author opens Crime and Punishment''; the top system confidently answers \underline{Fyodor Dostoyevski}.
+
+However, that phrase was embedded in a longer question ``The narrator in \textit{Cogwheels} by this author opens \textit{Crime and Punishment} to find it has become \textit{The Brothers Karamazov}''. 
+
+Again, this shows the inventiveness and linguistic dexterity of the trivia community.
+
+A counterargument is that when real humans ask questions---e.g., on Yahoo! Questions~\cite{szpektor-13} or Quora~\cite{iyer-17}---they don't follow the craft of question writing.
+
+This can sometimes result in confusion or divergent answers (e.g., someone answering ``I assume you meant\dots'').
+
+In contrast to trivia questions or exams where an expert seeks to verify someone else's expertise, real information seeking questions  are sometimes ambiguous, leave the specificity undefined, or make incorrect assumptions.
+
+Researchers hoping to answer those questions must cope with the noise and ambiguity in the real world; this is a noble and important task and must continue.
+
+Ideally, however, these datasets should recognize the ambiguity in the scoring mechanism (any of the interpretations should be correct) or systems should be able to refine the questions via interaction (e.g., did you mean\dots).
+
+This is already an active area of research, as the recent emphasis on conversational \abr{qa}~\cite{reddy-18,choi-18}.
+
+While existing research has focused on how to minimize ambiguities from coreference or pragmatic constraints~\cite{elgohary-19}, interesting future research would be to rewrite questions to resolve or to make ambiguity explicit.
+
+
+
+\subsection{\qb{}'s problems}
+
+\paragraph{Complexity} 
+
+\qb{} is a more complex task than other datasets.  
+
+Unlike other datasets where you just need to decide \emph{what} to answer but also \emph{when} to answer the question.
+
+While this improves how discriminative the dataset is, it can hurt your popularity because you cannot just copy/paste code from other \abr{qa} tasks.
+
+However, the underlying mechanisms (e.g., reinforcement learning) share properties with other tasks, such as simultaneous translation~\cite{grissom:he:boyd-graber:morgan-2014,ma-etal-2019-stacl}, human incremental processing~\cite{levy-08,levy-11}, and opponent modeling~\cite{he-16}.
+
+
+\paragraph{Distribution} 
+
+\qb{} ``in the wild'' has a very specific distribution over subjects.
+
+Unlike Natural Questions, which often has questions about movies, music, and current events (i.e., what real people care about)
+
+or questions generated randomly from Wikipedia pages (\squad{}, \textit{inter alia}),
+
+\qb{} focuses primarily on \emph{academic} content (i.e., what a well-rounded student should learn from a classical liberal arts education).
+
+While there are some advantages to this such as diversity across time, geography, and subject, this is less likely to contain common sense information.
+
+However, the \qb{} \emph{format} could be applied to other subjects.
+
+
+\subsection{Early Machine Reading Datasets}
+
+Most machine reading datasets are both unnatural and are written by novices.
