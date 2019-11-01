@@ -19,7 +19,7 @@ Computer scientists can benefit if the trivia community writes questions that ar
 The trivia community can benefit from tools that make their job easier: show related questions, link to Wikipedia articles, or predict where humans will answer the question.
 
 And, above all, give the trivia community credit.
-For example, if you use trivia questions scraped from websites to build a trivia \qa{} dataset, you should contact the original authors to make sure it is okay and thank them in the acknowledgements.  
+For example, if you use trivia questions scraped from websites to build a trivia \qa{} dataset, you should contact the original authors to make sure it is okay and thank them in your paper.  
 
 Likewise, the broader public has unique knowledge and skills.
 In contrast to low-paid crowdworkers, public platforms for question answering and fun citizen science~\cite{bowser-13} have revealed how much expertise is available for free\dots if you can engage the relevant communities.
@@ -30,7 +30,7 @@ There should also be deeper, more frequent discussion of actual questions within
 Part of every post-mortem of trivia tournaments is a detailed discussion of the questions, where good questions are praised and bad questions are excoriated.
 This is not meant to shame the askers but rather to help build and reinforce cultural norms: questions should be well-written, precise, and fulfill the creator's goals.
 Just like trivia tournaments, \abr{qa} datasets resemble a product for sale.
-Creators want people to invest considerable time and sometimes money (e.g., \abr{gpu} hours) in using their data and submitting to their leaderboards.
+Creators want people to invest time and sometimes money (e.g., \abr{gpu} hours) in using their data and submitting to their leaderboards.
 It is ``good business'' to build a reputation for quality questions and being willing to discuss individual questions.
 
 \subsection{Make your Questions Discriminative}
@@ -42,7 +42,7 @@ For more traditional \abr{qa} tasks, however, you can still maximize the usefuln
 \subsection{Eat Your Own Dog Food}
 
 As you develop new question answering tasks, you should feel comfortable playing the task as a human.
-Importantly, this is not just to replicate what crowdworkers are doing (also important) but to validate that there are not hidden assumptions, that the metrics are fair, and that the task is well defined.
+Importantly, this is not just to replicate what crowdworkers are doing (also important) but to remove hidden assumptions, institute fair metrics, and define the task well.
 For this to feel real, you will need to keep score; have all of your coauthors participate and compare their scores.
 
 Again, we emphasize that human and computer skills are not identical, but this is a benefit: humans natural aversion to unfairness will help you create a better task, while computers will blindly optimize a broken objective function~\cite{bostrom-03}.
@@ -51,7 +51,7 @@ As you go through the process of playing on your question--answer dataset, you c
 Again, we do not harbor the illusion that everyone will adopt \qb{} as a format.
 But you can use some of the intuitions to make your data more discriminative.
 For example, in visual \abr{qa}, you can offer increasing resolutions of the image: the better system should be able to do more with less.
-For other settings, you can achieve pyramidality by adding additional metadata: coreference, semantic parses, refinement, disambiguation, or for table-based \abr{qa}, the correct column mappings.
+For other settings, create pyramidality by adding additional metadata: coreference, semantic parses, refinement, disambiguation, or for table-based \abr{qa}, the correct column mappings.
 In short, consider multiple versions/views of your data that progress from extremely difficult to easy.
 This not only makes more of your dataset discriminative but also helps reveal what makes a question answerable, i.e. what key word or information solves the puzzle~\cite[Chapter 10]{klagge-10}.
 
@@ -65,10 +65,9 @@ Or, if not all questions have a single answer, link answers to a knowledge base 
 However, with more complicated systems and evaluations, a return to the yearly evaluations of \abr{trecqa} may be the best option.
 This improves not only the quality of evaluation (we can have real-time human judging) but also lets the test set reflect the build it/break it cycle~\cite{ruef-16}, as attempted by the 2019 iteration of \abr{fever}.
 Moreover, another lesson the \abr{qa} community could learn from trivia games is to turn it into a spectacle: exciting games with a telegenic host.
-This has a benefit to the public, who see how \abr{qa} systems fail on difficult questions, as well as to \abr{qa} researchers, who have a spoonful of fun sugar to encourage them to look at their systems' output as well as the output of competitors.
+This has a benefit to the public, who see how \abr{qa} systems fail on difficult questions and to \abr{qa} researchers, who have a spoonful of fun sugar to inspect their systems' output and their competitors'.
 
-In between are automatic metrics which mimic the flexibility of human raters.
-This could take inspiration from evaluations for machine translation~\cite{papineni-02,specia-10} or summarization~\cite{lin-04}.
+In between are automatic metrics which mimic the flexibility of human raters, inspired by evaluations for machine translation~\cite{papineni-02,specia-10} or summarization~\cite{lin-04}.
 
 \subsection{Truth in Evaluation and Advertising}
 

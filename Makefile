@@ -22,9 +22,9 @@ clean:
 %.paper.pdf: %.pdf %.bbl 
 	pdflatex $*
 	pdflatex $*
-	cp $(<:.tex=.pdf) $@
+	cp $< $@
 	cp $@ ~/public_html/temp || true
-	./scripts/style-check.rb $(<:.tex=)/*.tex $(<:.tex=)/sections/*.tex
+	./scripts/style-check.rb $(<:.pdf=)/*.tex $(<:.pdf=)/sections/*.tex
 
 2020_aaai_sense.appendix.pdf: 2020_aaai_sense.paper.pdf
 	python scripts/split_pdf.py 2020_aaai_sense.paper.pdf 8

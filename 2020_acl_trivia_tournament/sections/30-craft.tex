@@ -11,15 +11,15 @@ Now, we focus on how specific \emph{questions} should be structured to make the 
 
 The trivia community has rules to prevent people from getting fooled
 into answering an ambiguous question.
-While this is true in many contexts, we focus on a format called \qb{}, whose very long ``questions'' (really statements) offer more opportunities to see tactics that trivia writers use.
+While this is true in many contexts, we focus on a format called \qb{}, whose very long ``questions'' (like \jeopardy{}, not syntactically questions although still information seeking) offer more opportunities to see tactics that trivia writers use.
 For example, in a 2005 \abr{parfait} packet, writer Zhu Ying signals that the question is not looking for two different answers:
 \begin{quote}
  He's not Sherlock Holmes, but his address is 221B. He's not the Janitor on Scrubs, but his father is played by R. Lee Ermy. \dots For ten points, name this misanthropic, crippled, Vicodin-dependent central character of a FOX medical drama. \\
 {\bf ANSWER:} Gregory \underline{House}, MD
 \end{quote}
-Generally, when there are clues that could perhaps trigger an alternate but incorrect answer, those are highlighted in the question itself.
+Generally, when there are clues that could perhaps trigger an alternate but incorrect answer, they are highlighted in the question itself.
 
-Otherwise, the authors of questions give guidelines on which answers are acceptable.  
+Otherwise, the authors of questions delineate acceptable and unacceptable answers.  
 For example, in the Harvard Fall Tournament XI, writer Raynor Kuang uses a mental model of an answerer to deliniate right from wrong answers:
 \begin{quote}
      In Newtonian gravity, this quantity satisfies Poisson's equation. This quantity is equal to half the difference between the Hamiltonian and Lagrangian, and the operator for it is symbolized with a capital $V$. For a dipole, this quantity is given by negative the dipole moment dotted with the electric field. In one form, this quantity is one-half charge times capacitance squared, and it is one-half $k$ times the displacement squared in a spring. This quantity is mass times little $g$ times height in its gravitational form. For 10 points, name this form of energy contrasted with kinetic.\\
@@ -54,10 +54,10 @@ This seems to have been the norm during the days of \abr{trec-qa} by \newcite{vo
 While machine reading has made span-based evaluation easier, it has encouraged more superficial evaluations (and perhaps the ubiquity of leaderboards also contributes).
 
 In high school and college national competitions, if low-level staff cannot resolve the issue, the low-level staff contacts the tournament director.
-The tournament director often is able to make a decision about what to do (they often know the rules better than low level staffers, and there is a straightforward resolution).
+The tournament director often is able to decide the issue (they often know the rules better than low level staffers, and there is a straightforward resolution).
 However, if the tournament director cannot resolve the issue (e.g., the decision is based on expertise they lack), the tournament director writes the summary of the dispute on paper.
 All parties agree on the summary of the dispute, and then the tournament director calls or e-mails a mutually agreed expert from the tournament's phone tree.
-The substance of the disagreement is communicated (without identities), and the expert applies the rules to make a decision on the question.
+The substance of the disagreement is communicated (without identities), and the experts apply the rules and decide.
 
 For example, when a 
 \jeopardy{} contestant answered \underline{endoscope} to ``Your surgeon could choose to take a look inside you with this type of fiber-optic instrument''.
@@ -70,8 +70,7 @@ involved) that then went to a sequestered panel of judges who then
 ruled that \underline{endoscope} (a more general term) was also correct.
 
 This would require creating a new, smaller test set every year.
-The nice thing is that this allows gradual refinements of annotations
-and process to be reflected.
+However, this would gradually refine annotations and process over time, correcting any initial problems.
 
 \subsection{Avoiding Implicit Assumptions}
 
@@ -95,7 +94,7 @@ Similarly, if given the question ``when did Michigan last win the championship''
 If this were a real trivia tournament, the players would protest and complain.\footnote{Where to draw the line is a matter of judgment; computers---who lack common sense---might find questions ambiguous where humans would not.}
 
 These issues are important not just from an abstract question of fairness; when questions make arbitrary assumptions, they cannot discriminate plausible answers from very wrong ones.
-The above answers to questions demonstrate knowledge and reasoning and are arguably correct---as correct as the official gold questions.
+These answers show knowledge and reasoning and are as correct as the official gold questions.
 Nevertheless, these answers are as wrong as answering \underline{Judge Wapner} or \underline{1836}.
 
 At best, these will become part of the measurement error of datasets (no dataset is perfect). 
@@ -118,5 +117,5 @@ For computers, the same logic applies.
 You should expend the most effort (both for authors and annotators) to ensure that these questions are correct, free of ambiguity, and unimpeachable.
 However, as far as we can tell, the authors of \qa{} datasets do not give any special attention to these questions.
 
-Unlike a human trivia tournament, however---with finite patience of the participants---this does not mean that you should necessarily remove all of the easy or hard questions from your dataset---simply spend more of your time/effort/resources on the bubble.
+Unlike a human trivia tournament, however---with finite patience of the participants---this does not mean that you should necessarily remove all of the easy or hard questions from your dataset---spend more of your time/effort/resources on the bubble.
 You would not want to introduce a sampling bias that leads to inadvertently forgetting how to answer questions like ``who is buried in Grant's tomb?''~\cite[Chapter 7]{dwan-00}.

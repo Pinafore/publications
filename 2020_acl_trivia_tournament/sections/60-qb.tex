@@ -6,7 +6,7 @@
 While we have discussed \qa{} from a broad perspective, we now turn to a very specific format.
 For general question answering and language understanding, we believe it is a strong format and should be part of mainstream \abr{qa} bakeoffs (if nothing else, you can stage fun human--computer face-offs).
 However, we emphasize that we have no delusion that mainstream \abr{qa} will adopt this format.
-However, given then community's emphasis on fair evaluation, there are likely \emph{aspects} that computer \abr{qa} can borrow from the gold standard of human \abr{qa}.
+However, given then community's emphasis on fair evaluation, computer \abr{qa} can borrow \emph{aspects} from the gold standard of human \abr{qa}.
 We discuss what this may look like in Section~\ref{sec:call}, but first we describe how the gold standard of human \abr{qa} works.
 
 \subsection{What is \qb{}}
@@ -52,7 +52,7 @@ Thus, questions begin with hard clues---ones that require deeper knowledge and l
 An abstract way of considering why this is valuable is through Rademacher complexity: how likely is it that a bad system could score well on the dataset?
 
 In contrast to \triviaqa{}~\cite{joshi-17}, which is also written by trivia experts, also contains many non-pyramidal questions.
-So while it has the benefits of of knowledgeable writers, it cannot discriminate between systems as well.
+So while it benefits from knowledgeable writers, it cannot discriminate between systems as well.
 
 \subsection{The Editing Process}
 
@@ -69,16 +69,16 @@ But then they're no more fake than the exams you have at the end of a course, wh
 Trivia questions are designed to test knowledge\dots which in many ways is also what we want from QA dataset, particularly given the emphasis on leaderboards.  
 
 Experts can know when their questions are ambigiuous; while ``what play has a character who's father is dead'' is could refer to many different plays (\textit{Hamlet}, \textit{Antigone}, \textit{Proof}, \textit{inter alia}), but a good writer would know to write it as ``whose uncle Claudius poisoned his father?''.
-When authors fail to do this, the question is derided as a ``hose''~\cite{2013-eltinge}, which robs the tournament of fun (Section~\ref{sec:fun}).
+When authors omit these cues, the question is derided as a ``hose''~\cite{2013-eltinge}, which robs the tournament of fun (Section~\ref{sec:fun}).
 
 One of the benefits of contrived formats is that you can focus on phenomena that you want to test (which may be rare in nature or amendable to cheating). 
-Just like a teacher can recognize that students struggle with long division and assign more problems on that, you can set up a framework to focus on what computers struggle with.
+Just like a teacher can recognize that students struggle with long division and assign more problems on that, you can focus on what computers struggle with.
 \newcite{dua-19} used this framework to focus on quantitative reasoning by excluding questions a reading comprehension system \emph{could} answer.
 In working with trivia enthusiasts to craft adversarial examples~\cite{wallace-19}, one author had a question that contained the phrase ``this author opens Crime and Punishment''; the top system confidently answers \underline{Fyodor Dostoyevski}.
 However, that phrase was embedded in a longer question ``The narrator in \textit{Cogwheels} by this author opens \textit{Crime and Punishment} to find it has become \textit{The Brothers Karamazov}''. 
 Again, this shows the inventiveness and linguistic dexterity of the trivia community.
 
-A counterargument is that when real humans ask questions---e.g., on Yahoo! Questions~\cite{szpektor-13} or Quora~\cite{iyer-17}---they don't follow the craft of question writing.
+A counterargument is that when real humans ask questions---e.g., on Yahoo! Questions~\cite{szpektor-13} or Quora~\cite{iyer-17}---they do not follow the craft of question writing.
 This can sometimes result in confusion or divergent answers (e.g., someone answering ``I assume you meant\dots'').
 In contrast to trivia questions or exams where an expert seeks to verify someone else's expertise, real information seeking questions  are sometimes ambiguous, leave the specificity undefined, or make incorrect assumptions.
 Researchers hoping to answer those questions must cope with the noise and ambiguity in the real world; this is a noble and important task and must continue.
@@ -107,9 +107,5 @@ or questions generated randomly from Wikipedia pages (\squad{}, \textit{inter al
 While there are some advantages to this such as diversity across time, geography, and subject, this is less likely to contain common sense information.
 However, the \qb{} \emph{format} could be applied to other subjects.
 
-
-\subsection{Early Machine Reading Datasets}
-
-Most machine reading datasets are both unnatural and are written by novices.
 
 %\subsection{Unnaturalness of ``Natural Questions''}
