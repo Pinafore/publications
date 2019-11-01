@@ -51,8 +51,8 @@ clean:
 
 # These targets should remain in sync (e.g., if you fix one, do the same for the other).  Except for the .tgz target should have all the bib files but the arxiv target should have the bbl file ($<)
 %.tgz: %.bbl
-	tar cvfz $(<:.bbl=.tgz) Makefile style/*.sty style/*.bst style/*.cls $(<:.bbl=.tex) bib/*.bib style/preamble.tex $(<:.bbl=)/figures/* $(<:.bbl=)/auto_fig/* $(<:.bbl=)/sections/*.tex
+	tar cvfz $@ Makefile style/*.sty style/*.bst style/*.cls $(<:.bbl=.tex) bib/*.bib style/preamble.tex $(<:.bbl=)/figures/* $(<:.bbl=)/auto_fig/* $(<:.bbl=)/sections/*.tex
 
 %.arxiv.tgz: %.bbl
-	tar cvfz $(<:.bbl=.tgz) Makefile $< style/*.sty style/*.bst style/*.cls $(<:.bbl=.tex) style/preamble.tex $(<:.bbl=)/figures/* $(<:.bbl=)/auto_fig/* $(<:.bbl=)/sections/*.tex
+	tar cvfz $@ Makefile $< style/*.sty style/*.bst style/*.cls $(<:.bbl=.tex) style/preamble.tex $(<:.bbl=)/figures/* $(<:.bbl=)/auto_fig/* $(<:.bbl=)/sections/*.tex
 
