@@ -2,6 +2,16 @@
 
 \usepackage{amsmath,amsfonts,bm}
 
+\ifcomment
+\newcommand{\pinaforecomment}[3]{\colorbox{#1}{\parbox{.8\linewidth}{#2: #3}}}
+\else
+\newcommand{\pinaforecomment}[3]{}
+\fi
+
+\newcommand{\jbgcomment}[1]{\pinaforecomment{green}{JBG}{#1}}
+\newcommand{\massicomment}[1]{\pinaforecomment{yellow}{MC}{#1}}
+\newcommand{\bencomment}[1]{\pinaforecomment{magenta}{BB}{#1}}
+
 % Mark sections of captions for referring to divisions of figures
 \newcommand{\figleft}{{\em (Left)}}
 \newcommand{\figcenter}{{\em (Center)}}
