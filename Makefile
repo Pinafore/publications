@@ -7,7 +7,7 @@ clean:
 	rm -f *.aux *.dvi *.log *.bbl *.pdf *~ *.out *.blg *.nav *.toc *.snm *.fdb_latexmk *.fls *.synctex.gz
 	rm -f */*.aux */*.dvi */*.log */*.bbl */*.pdf */*~ */*.out */*.blg */*/*~
 	rm -fR */auto_fig
-	rm -R *.tgz
+	rm -fR *.tgz
 
 %/auto_fig/res.txt: $(FIG)
 	mkdir -p $(@:/res.txt=)
