@@ -1,0 +1,97 @@
+\begin{figure*}[t!]
+  \centering
+  \includegraphics[width=.9\textwidth]{\figfile{architecture.pdf}}
+  \caption{\label{fig:model} Computation graph of \name{} on an example
+  sentence (``cats eat fish'').
+  \emph{Bottom:} Each input word $\vect{w}_i$ is mapped to a vector $\vect{v}_i$
+  by passing its characters through a \abr{bi-lstm} embedder.
+  \emph{Top:} Word vectors $\{\vect{v_i}\}$ are then passed through a \abr{dan}
+  classifier to predict the label $y$.
+  Specifically, \abr{dan} transforms the average of the word vectors
+  $\vect{z}_0$ with $k$ layers of non-linearity and a final softmax layer.}
+\end{figure*}
+
+\section{Introduction: Classifiers across Languages}
+
+Modern machine learning methods in natural language processing can learn highly
+accurate, context-based classifiers~\citep{devlin-19}.
+Despite this revolution for high-resource languages such as English, some
+languages are left behind because of the dearth of text data generally and
+specifically labeled data.
+Often, the need for a text classifier in a low-resource language is acute, as
+text classifiers can provide situational awareness in emergent
+incidents~\citep{strassel-16}.
+Cross-lingual document
+classification~\citep[\abr{cldc}]{klementiev-12} attacks this problem
+by using annotated dataset from a \emph{source} language to build
+classifiers for a \emph{target} language.
+
+\abr{cldc} works when it can find a shared representation for
+documents from both languages: train a classifier on source language
+documents and apply it on target language documents.
+Previous work uses a bilingual lexicon~\citep{shi-10,andrade-15}, machine
+translation~\citep[\abr{mt}]{banea-08-fixed,wan-09-fixed,zhou-16}, topic
+models~\citep{mimno-09-fixed,yuan-18}, cross-lingual word
+embeddings~\citep[\abr{clwe}]{klementiev-12}, or multilingual contextualized
+embeddings~\citep{wu-19} to extract cross-lingual features.
+But these methods may be impossible in low-resource languages, as they require
+some combination of large parallel or comparable text, high-coverage
+dictionaries, and monolingual corpora from a shared domain.
+
+However, as anyone who has puzzled out a Portuguese menu from their
+high school Spanish knows, the task is not hopeless, as languages do
+not exist in isolation.
+Shared linguistic roots, geographic proximity, and history bind
+languages together; cognates abound, words sound the same, and there
+are often shared morphological patterns.
+These similarities are often not found at word-level but at character-level.
+Therefore, we investigate character-level knowledge transfer for \abr{cldc} in
+truly low-resource settings, where unlabeled or parallel data in the target
+language is also limited or unavailable.
+
+To study knowledge transfer at character level, we propose a \abr{cldc}
+framework, {\bf C}lassification {\bf A}ided by {\bf C}onvergent {\bf
+O}rthography (\name{}) that capitalizes on character-level similarities between
+related language pairs.
+Previous \abr{cldc} methods treat words as atomic symbols and do not transfer
+character-level patterns across languages; \name{} instead uses a bi-level
+model with two components: a character-based \emph{embedder} and a word-based
+\emph{classifier}.
+
+The embedder exploits shared patterns in related languages to
+create word representations from character sequences.
+The classifier then uses the \emph{shared} representation across
+languages to label the document.  
+The embedder learns morpho-semantic regularities, while the
+classifier connects lexical semantics to labels.
+
+To allow cross-lingual transfer, we use a \emph{single} model with shared
+character embeddings for both languages.
+We jointly train the embedder and the classifier on annotated source
+language documents.
+The embedder transfers knowledge about source language words to target language
+words with similar orthographic features.
+
+While the model can be fairly accurate without any target language data, it can
+also benefit from \emph{a small amount} of additional information when
+available.  If we have a dictionary, pre-trained monolingual word embeddings,
+or parallel text, we can fine-tune the model with multi-task learning.
+We encourage the embedder to produce similar word embeddings for translation
+pairs from a dictionary, which captures patterns between cognates.
+We also teach the embedder to \abr{mimick} pre-trained word embeddings
+in the source language~\citep{pinter-17}, which exposes the model to
+more word types.
+When we have a good reference model in another high-resource language, we can
+train our model to make similar predictions as the reference model on
+parallel text~\citep{xu-17}.
+
+We verify the effectiveness of character-level knowledge transfer on two
+\abr{cldc} benchmarks.
+When we have enough data to learn high-quality \abr{clwe}, training classifiers
+with \abr{clwe} as input features is a strong \abr{cldc} baseline.
+\name{} can match the accuracy of \abr{clwe}-based models \emph{without}
+using any target language data, and fine-tuning the embedder with a
+small amount of additional resources improves \name{}'s accuracy.
+Finally, \name{} is also useful when we have enough resources to train
+good \abr{clwe}---using \abr{clwe} as extra features, \name{} outperforms the
+baseline \abr{clwe}-based models by a large margin.

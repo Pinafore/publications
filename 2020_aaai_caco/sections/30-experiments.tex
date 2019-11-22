@@ -1,0 +1,355 @@
+\section{Experiments}\label{sec:experiments}
+
+When the source language and the target language are related, we expect
+character-level knowledge transfer to be more data-efficient than word-level
+knowledge transfer because character-level transfer allows generalization
+across words with similar forms. 
+We test this by comparing \name{} models trained in low-resource settings and
+with \abr{clwe}-based models trained in high-resource settings on two
+\abr{cldc} datasets.
+We also compare \name{} with a supervised monolingual model.
+On both datasets, \name{} models have similar average accuracy as the
+baselines \emph{while requiring much less target language data}.
+Finally, we train models that combine \name{} with \abr{clwe}, which have
+significantly higher accuracy than models with only \abr{clwe} as features.
+These results confirms that character-level similarities between related
+languages effectively transfer knowledge for \abr{cldc}.
+
+\subsection{Classification Dataset} 
+
+Our first dataset is Reuters multilingual corpus (\abr{rcv2}), a collection of
+news stories labeled with four topics~\citep{lewis-04}:Corporate/Industrial
+(\abr{ccat}), Economics (\abr{ecat}), Government/Social (\abr{gcat}), and
+Markets (\abr{mcat}).
+Following \citet{klementiev-12}, we remove documents with multiple topic
+labels.  For each language, we sample 1,500 training documents and 200 test
+documents with balanced labels.  We conduct \abr{cldc} experiments between two
+North Germanic languages, Danish~(\abr{da}) and Swedish~(\abr{sv}), and three
+Romance languages, French~(\abr{fr}), Italian~(\abr{it}), and
+Spanish~(\abr{es}).
+
+To test \name{} on truly low-resource languages, we build a second \abr{cldc}
+dataset with famine-related documents sampled from Tigrinya~(\abr{ti}) and
+Amharic~(\abr{am}) \abr{lorelei} language packs~\citep{strassel-16}.
+We train binary classifiers to detect whether the document describes widespread
+crime or not.  For Tigrinya documents, the labels are extracted from the
+situation frame annotation in the language pack.  We mark all documents with a
+``widespread crime/violence'' situation frame as positive.  The Amharic
+language pack does not have annotations, so we label Amharic sentences
+based on English reference translations included from the language pack.
+Our dataset contains 394 Tigrinya and 370 Amharic documents with balanced
+labels.
+
+\begin{table*}
+  \centering
+  \begin{tabular}{llccccccc}
+    \toprule
+    & & \multicolumn{4}{c}{\name{}}\\
+    \cmidrule(lr){3-6}
+    source & target & \abr{src} & \abr{dict} & \abr{mim} & \abr{all} & \abr{clwe} & \abr{sup} & \abr{com}\\
+    \midrule
+    \flag{da}~\abr{da} & \flag{sv}~\abr{sv} & 56.0 & 62.8 & 60.4 & 62.9 & 69.3 & 59.7 & {\bf 69.7} \\
+    \flag{sv}~\abr{sv} & \flag{da}~\abr{da} & 56.7 & 60.2 & 58.4 & 62.2 & 51.4 & 40.8 & {\bf 67.5} \\
+    \flag{fr}~\abr{fr} & \flag{es}~\abr{es} & 49.6 & 59.3 & 48.3 & 57.4 & 63.9 & 56.6 & {\bf 70.8} \\
+    \flag{it}~\abr{it} & \flag{es}~\abr{es} & 50.2 & 54.6 & 51.4 & 54.7 & 43.4 & 56.6 & {\bf 63.5} \\
+    \flag{es}~\abr{es} & \flag{fr}~\abr{fr} & 48.5 & 49.7 & 49.2 & 48.8 & {\bf 63.1} & 48.9 & 61.3 \\
+    \flag{it}~\abr{it} & \flag{fr}~\abr{fr} & 45.9 & 52.1 & 46.6 & 48.2 & 26.7 & 48.9 & {\bf 62.8} \\
+    \flag{fr}~\abr{fr} & \flag{it}~\abr{it} & 43.3 & 53.2 & 44.3 & 51.2 & 43.6 & 44.9 & {\bf 60.2} \\
+    \flag{es}~\abr{es} & \flag{it}~\abr{it} & 49.7 & 53.5 & 53.4 & 52.5 & 51.3 & 44.9 & {\bf 59.7} \\
+    \multicolumn{2}{r}{average} & 50.0 & 55.7 & 51.5 & 54.7 & 51.6 & 51.9 & {\bf 64.5} \\
+    \bottomrule
+  \end{tabular}
+  \caption{\abr{cldc} experiments between eight related European language pairs
+  on \abr{rcv2} topic identification.
+  The average accuracy of \name{} models are competitive with word-based models
+  that use \emph{more resources} such as target language corpora or labeled
+  data (Table~\ref{tab:model}).
+  The combined model (\abr{com}) has the highest
+  average test accuracy.  We \textbf{boldface} the best result for each row.}
+  \label{tab:rcv2} 
+\end{table*}
+
+\begin{table*}
+  \centering
+  \begin{tabular}{llcccccc}
+    \toprule
+    & & \multicolumn{4}{c}{\name{}}\\
+    \cmidrule(lr){3-6}
+    source & target & \abr{src} & \abr{mim} & \abr{src\pp{}} & \abr{mim\pp{}} & \abr{clwe} & \abr{com}\\
+    \midrule
+    \flag{am}~\abr{am} & \flag{ti}~\abr{ti} & 55.5 & 56.3 & 57.0 & 57.6  & 59.1 & {\bf 60.1} \\
+    \flag{ti}~\abr{ti} & \flag{am}~\abr{am} & 56.8 & 55.1 & * & * & 58.1 & {\bf 59.5} \\
+    \bottomrule
+  \end{tabular}
+  \caption{\abr{cldc} experiments between Amharic and Tigrinya on \abr{lorelei}
+  disaster response dataset.  \name{} models are only slightly worse than
+  \abr{clwe}-based models without using any target language data.
+  For \abr{am}-\abr{ti}, knowledge distillation (\abr{src\pp{}} and
+  \abr{mim\pp{}}) further improves \name{} models.
+  We do not experiment with knowledge distillation on \abr{ti}
+  because we cannot find enough unlabeled parallel text in the language pack.
+  Combining \name{} with pre-trained \abr{clwe} gives the highest test accuracy.}
+  \label{tab:lorelei} 
+\end{table*}
+
+\subsection{Models}
+\label{ssec:model}
+
+We compare \name{} trained under low-resource settings with word-based models
+that use more resources.
+Table~\ref{tab:model} summarizes our models.
+
+\paragraph{\name{} Variants.}
+We experiment with several variants of \name{} that uses different resources.
+The \textbf{\abr{src}} model uses the least amount of resource.
+It is only trained on labeled source language documents and do not use any
+unlabeled data.
+The \textbf{\abr{dict}} model requires a dictionary and is trained with the
+word translation auxiliary task.
+The \textbf{\abr{mim}} model requires a pre-trained source language embedding
+and uses the mimick auxliliary task.
+The \textbf{\abr{all}} model is the most expensive variant.  It is trained with
+both the word translation and the mimick auxiliary tasks.  
+In \abr{lorelei} experiments, we also use knowledge distillation to provide
+more classification signals for some models.
+We mark these models with a superscript~``\abr{p}'' in Table~\ref{tab:lorelei}.
+
+\paragraph{\abr{clwe}-Based Model.}
+Our first word-based model is a \abr{dan} with pre-trained multiCCA \abr{clwe}
+features~\citep{ammar-16}.
+The \abr{clwe} are trained on large target language corpora with millions of
+tokens and high-coverage dictionaries with hundreds of thousands of word types.
+In contrast, we train \name{} models in a simulated low-resource setting with
+few or no target language data.
+Despite the resource gap, \name{} models have similar average test accuracy as
+\abr{clwe}-based models, demonstrating the effectiveness of character-level
+transfer learning.
+
+\paragraph{Supervised Model.}
+Next, we compare \name{} with a lightly-supervised monolingual model
+(\textbf{\abr{sup}}), a word-based \abr{dan} trained on fifty labeled target
+language documents.
+We only apply this baseline to \abr{rcv2}, because the labeled document sets in
+\abr{lorelei} are too small to split further.
+The supervised model requires labeled target language documents, which often
+do not exist in labeled documents.
+Without using any target language supervision, \name{} models have similar
+(and sometimes higher) test accuracies as \abr{sup}, showing that \name{}
+effectively learns from a related language.
+
+\paragraph{Combined Model.}
+Finally, we experiment with a model that combines \name{} and
+\abr{clwe} (\textbf{\abr{com}}) by feeding pre-trained \abr{clwe} as
+additional features for the classifier of a \name{} model (\abr{src}
+variant).
+This model requires the same amount of resource as the \abr{clwe}-based model.
+The combined model on average has much higher accuracy than
+both \abr{caco} variants and \abr{clwe}-based model, showing that
+character-level knowledge transfer is useful even when we have enough
+unlabeled data to train high-quality \abr{clwe}.
+
+\begin{table*}
+  \tabcolsep=0.12cm
+  \centering
+  \begin{subtable}{.47\linewidth}
+    \centering
+    \begin{tabular}{llccccc}
+      \toprule
+      & & \multicolumn{4}{c}{\name{}}\\
+      \cmidrule(lr){3-6}
+      source & target & \abr{src} & \abr{dict} & \abr{mim} & \abr{all} & \abr{clwe} \\
+      \midrule
+      \flag{da}~\abr{da} & \flag{es}~\abr{es} & 32.5 & 34.8 & 30.6 & 38.2 & {\bf 65.7} \\
+      \flag{da}~\abr{da} & \flag{fr}~\abr{fr} & 34.1 & 41.8 & 35.5 & 43.3 & {\bf 45.9} \\
+      \flag{da}~\abr{da} & \flag{it}~\abr{it} & 36.8 & 43.7 & 37.2 & 41.5 & {\bf 47.4} \\
+      \flag{sv}~\abr{sv} & \flag{es}~\abr{es} & 35.2 & 42.5 & 34.6 & 46.8 & {\bf 48.5} \\
+      \flag{sv}~\abr{sv} & \flag{fr}~\abr{fr} & 27.4 & 29.9 & 29.1 & 28.3 & {\bf 49.0} \\
+      \flag{sv}~\abr{sv} & \flag{it}~\abr{it} & 34.6 & 36.4 & 33.3 & 35.2 & {\bf 40.4} \\
+      \multicolumn{2}{r}{average} & 33.4 & 38.2 & 33.4 & 37.2 & {\bf 49.5} \\
+      \bottomrule
+    \end{tabular}
+    \caption{North Germanic to Romance}
+  \end{subtable}
+  \hspace{1em}
+  \begin{subtable}{.47\linewidth}
+    \centering
+    \begin{tabular}{llccccc}
+      \toprule
+      & & \multicolumn{4}{c}{\name{}}\\
+      \cmidrule(lr){3-6}
+      source & target & \abr{src} & \abr{dict} & \abr{mim} & \abr{all} & \abr{clwe} \\
+      \midrule
+      \flag{es}~\abr{es} & \flag{da}~\abr{da} & 47.7 & 48.3 & 46.1 & 52.0 & {\bf 56.7} \\
+      \flag{es}~\abr{es} & \flag{sv}~\abr{sv} & 50.6 & {\bf 53.7} & 48.5 & 51.4 & 52.4 \\
+      \flag{fr}~\abr{fr} & \flag{da}~\abr{da} & 46.7 & 44.2 & 44.7 & {\bf 48.6} & 45.3 \\
+      \flag{fr}~\abr{fr} & \flag{sv}~\abr{sv} & 52.9 & 53.2 & 53.6 & 52.8 & {\bf 57.2} \\
+      \flag{it}~\abr{it} & \flag{da}~\abr{da} & 36.6 & 43.6 & 34.8 & 43.0 & {\bf 48.2} \\
+      \flag{it}~\abr{it} & \flag{sv}~\abr{sv} & 37.8 & {\bf45.3} & 30.7 & 43.9 & 31.1 \\
+      \multicolumn{2}{r}{average} & 45.4 & 48.1 & 43.1 & {\bf 48.6} & 48.5 \\
+      \bottomrule
+    \end{tabular}
+    \caption{Romance to North Germanic}
+  \end{subtable}
+  \caption{\abr{cldc} experiments between languages from different families on
+  \abr{rcv2}.  When transferring from a North Germanic language to a Romance
+  language, \name{} models score much lower than \abr{clwe}-based models (left).
+  Surprisingly, \name{} models are on par with \abr{clwe}-based when
+  transferring from a Romance language to a North Germanic language (right).
+  We \textbf{boldface} the best result for each row.}
+  \label{tab:unrelated} 
+\end{table*}
+
+\subsection{Auxiliary Task Data}
+
+Some of the \name{} models (\abr{dict} and \abr{all}) use a dictionary to learn
+word translation patterns.
+We train them on the same training dictionary used for pre-training the
+\abr{clwe}.
+To simulate the low-resource setting, we sample \textbf{only 100 translation
+pairs} from the original dictionary for \name{}.
+Pilot experiments confirm that a larger dictionary can help, but we focus on
+the low-resource setting where only a small dictionary is available.
+
+The Amharic labeled dataset is very small compared to other
+languages because each Amharic example only contains one sentence.
+As introduced in Section~\ref{ssec:objective}, one way to provide additional
+training signal is by knowledge distillation from a third high-resource
+language.
+For the Amharic to Tigrinya \abr{cldc} experiment, we apply knowledge
+distillation using English-Amharic parallel text.
+We first train a reference English \abr{dan} on a large collection of labeled
+English documents compiled from other \abr{lorelei} language packs.
+We then use the knowledge distillation objective to train the \name{} models to
+match the output of the English model on 1,200 English-Amharic parallel
+documents sampled from the Amharic language pack.
+To avoid introducing extra label bias, we sample the parallel documents such
+that the English model output approximately follows a uniform distribution.
+
+We do not use knowledge distillation on other language pairs.
+For \abr{rcv2}, we already have enough labeled examples and therefore do not
+need knowledge distillation.
+For Tigrinya to Amharic \abr{cldc} experiment, we do not have enough unlabeled
+parallel text in the Tigrinya language pack to apply knowledge distillation.
+
+\subsection{Training Details}
+\label{sec:hyperparameter}
+
+For \abr{clwe}-based models, we use forty dimensional multiCCA
+word embeddings~\citep{ammar-16}. 
+We use three ReLU layers with 100 hidden units and 0.1 dropout for the
+\abr{clwe}-based \abr{dan} models and the \abr{dan} classifier of the \name{}
+models.
+The \abr{bi-lstm} embedder uses ten dimensional character embeddings and forty
+hidden states with no dropout.  The outputs of the embedder are forty
+dimensional word embeddings.
+We set $\lambda_d$ to 1, $\lambda_e$ to $0.001$, and $\lambda_p$ to 1 in the
+multi-task objective~(Equation~\ref{eq:full_obj}).
+The hyperparameters are tuned in a pilot Italian-Spanish \abr{cldc} experiment
+using held-out datasets.
+
+All models are trained with Adam~\citep{kingma-15} with default settings.
+We run the optimizer for a hundred epochs with mini-batches of sixteen
+documents.  For models that use additional resources, we also sample sixteen
+examples from each type of training data (translation pairs, pre-trained
+embeddings, or parallel text) to estimate the gradients of the auxiliary task
+objectives $L_d$, $L_e$, and $L_p$ (defined in Section~\ref{ssec:objective}) at each
+iteration.
+
+\subsection{Effectiveness of \name{}}\label{ssec:analysis}
+ 
+We train each model using ten different random seeds and report their average
+test accuracy.
+For models that use dictionaries, we also re-sample the training dictionary for
+each run.
+Table~\ref{tab:model} compares resource requirement and average \abr{rcv2}
+accuracy of \name{} and baselines.
+Table~\ref{tab:rcv2} and~\ref{tab:lorelei} show test accuracies on nine related
+language pairs from $\abr{rcv2}$ and $\abr{lorelei}$.
+
+\paragraph{Character-Level Knowledge Transfer.}
+Experiments confirm that character-level knowledge transfer is sample-efficient
+and complementary to word-level knowledge transfer.
+The low-resource character-based \name{} models have similar average test
+accuracy as the high-resource word-based models.
+The \abr{src} variant does not use any
+target language data, and yet its average test accuracy on \abr{rcv2} (50.0\%)
+is very close to the \abr{clwe} model (51.6\%) and the supervised model
+\abr{sup} (51.6\%).
+When we already have a good \abr{clwe}, we can get the best of both worlds by
+combining them (\abr{com}), which has a much higher average test accuracy
+(64.5\%) than \name{} and the two baselines.
+
+\paragraph{Multi-Task Learning.}
+Training \name{} with multi-task learning further improves the accuracy.  For
+almost all language pairs, the multi-task \name{} variants have higher test
+accuracies than \abr{src}.
+On \abr{rcv2}, word translation (\abr{dict}) is particularly effective even
+with only 100 translation pairs. 
+It increases average test accuracy from 50.0\% to 55.7\%, outperforming both
+word-based baseline models.
+Interestingly, word translation and mimick tasks together (\abr{all}) do not
+consistently increase the accuracy over only using the dictionary (\abr{dict}).
+On the \abr{lorelei} dataset where labeled document is limited, knowledge
+distillation (\abr{src\pp{}} and \abr{mim\pp{}}) also increases
+accuracies by around 1.5\%.
+
+\paragraph{Language Relatedness.}
+We expect character-level knowledge transfer to be less effective on language
+pairs when the source language and the target language are less close to each
+other.
+For comparison, we experiment on \abr{rcv2} with transferring between more
+distantly related language pairs: a North Germanic language and a Romance
+language~(Table~\ref{tab:unrelated}).
+Indeed, \name{} models score consistently
+lower than the \abr{clwe}-based models when transferring from a North Germanic
+source language to a Romance target language.  However, \name{} models are
+surprisingly competitive with \abr{clwe}-based models when transferring from
+the opposite direction.  This asymmetry is likely due to morphological
+differences between the two language families.
+Unfortunately, our datasets only have a limited number of language families.
+We leave a more systematic study on how language proximity affect the
+effectiveness of \name{} to future work.
+
+\paragraph{Multi-Source Transfer.}
+Languages can be similar along different dimensions, and therefore adding more
+source languages may be beneficial.
+On \abr{rcv2}, we experiment with training \name{} models on \emph{two} Romance
+languages and testing on a third Romance language.
+Moreover, using multiple source languages has a regularization
+effect and prevents the model from overfitting to a single source language.
+For fair comparison, we sample 750 training documents from each source
+language, so that the multi-source models are still trained on 1,500 training
+documents (like the single-source models).  We use a similar strategy to sample
+the training dictionaries and pre-trained word embeddings.  Multi-source models
+(Table~\ref{tab:multisrc}) consistently have higher accuracies than single-source models
+(Table~\ref{tab:rcv2}).
+
+\paragraph{Learned Word Representation.}
+Word translation is a popular intrinsic evaluation task for cross-lingual 
+word representations.
+Therefore, we evaluate the word representations learned by the \abr{bi-lstm}
+embedder on a word translation benchmark.
+Specifically, we use the \abr{src} embedder to generate embeddings for all
+French, Italian, and Spanish words that appear in multiCCA's vocabulary and 
+translate each word with nearest-neighbor search.
+%\footnote{\abr{es}: 220,063 words, \abr{fr}: 219,635 words, \abr{it}: 234,366 words.}
+Table~\ref{tab:bli} shows the top-1 word translation accuracy on the test
+dictionaries from \abr{muse}~\citep{conneau-18}.
+Although the \abr{src} embedder is not exposed to any cross-lingual signal, it
+rivals \abr{clwe} on the word translation task by exploiting character-level
+similarities between languages.
+
+\paragraph{Qualitative Analysis.}
+To understand how cross-lingual character-level similarity helps
+classification, we manually compare the output of a \abr{clwe}-based model and
+a \name{} model (\abr{dict} variant) from the Spanish to Italian \abr{cldc}
+experiment.
+Sometimes \name{} avoids the mistakes of \abr{clwe}-based models by correctly
+aligning word pairs that are misaligned in the pre-trained \abr{clwe}.
+For example, in the \abr{clwe}, ``relevancia'' (relevance) is the closest
+Spanish word for the Italian word ``interesse'' (interest), while the
+\abr{caco} embedder maps both the Italian word ``interesse'' (interest) and the
+Spanish word ``interesse'' (interest) to the same point.  Consequently,
+\abr{caco} correctly classifies an Italian document about the interest rate
+with \abr{gcat} (government), while the \abr{clwe}-based model predicts
+\abr{mcat} (market).
