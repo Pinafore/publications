@@ -1,0 +1,15 @@
+\section{Conclusion}
+\label{sec:conclusion}
+
+\abr{adagrad} is a simple and popular technique for online learning,
+but is not compatible with traditional initializations and objective
+functions for online topic models.  We show that practitioners are
+best off using simpler online learning techniques or \abr{adadelta} and
+\abr{adam}, which are two variants of \abr{adagrad}, which use the moving average of
+gradients as denominator. These two methods avoid \abr{adagrad}'s problem. In
+particular, \abr{adam} performs much better for prediction.
+
+We would like to build a deeper understanding of which aspects of an
+unsupervised objective, near-uniform initialization, and
+non-identifiability contribute to these issues and to discover other
+learning problems that may share these issues.
