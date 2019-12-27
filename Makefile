@@ -1,4 +1,3 @@
-
 TEX = $(wildcard */sections/*.tex *.tex */*.tex */tables/*.tex)
 BIB = $(wildcard bib/*.bib)
 FIG = $(wildcard */figures.*)
@@ -9,7 +8,8 @@ clean:
 	rm -fR */auto_fig
 	rm -fR *.tgz
 
-%/auto_fig/res.txt: $(FIG)
+# TODO: make it so that this actually runs if the figure file (R or python) or data are updated.  Perhaps requires messing with the script.
+%/auto_fig/res.txt:
 	mkdir -p $(@:/res.txt=)
 	./scripts/rscript_if_ne.sh $(@:/auto_fig/res.txt=) > $@
 
@@ -25,12 +25,6 @@ clean:
 	cp $< $@
 	cp $@ ~/public_html/temp || true
 	./scripts/style-check.rb $(<:.pdf=)/*.tex $(<:.pdf=)/sections/*.tex
-
-2020_aaai_sense.appendix.pdf: 2020_aaai_sense.paper.pdf
-	python scripts/split_pdf.py 2020_aaai_sense.paper.pdf 8
-	mv 2020_aaai_sense_page_8.pdf 2020_aaai_sense.appendix.pdf
-	mv 2020_aaai_sense_page_0.pdf 2020_aaai_sense.submission.pdf
-
 
 # cd $(<:.paper.pdf=)/supporting && pdflatex summary
 %.nsf.pdf: %.paper.pdf
@@ -56,3 +50,30 @@ clean:
 %.arxiv.tgz: %.bbl
 	tar cvfz $@ Makefile $< style/*.sty style/*.bst style/*.cls $(<:.bbl=.tex) style/*.tex $(<:.bbl=)/figures/* $(<:.bbl=)/auto_fig/* $(<:.bbl=)/sections/*.tex
 
+2020_acl_metaanswer.appendix.pdf: 2020_acl_metaanswer.paper.pdf
+	python3 scripts/split_pdf.py 2020_acl_metaanswer.paper.pdf 10
+	mv 2020_acl_metaanswer_page_10.pdf 2020_acl_metaanswer.appendix.pdf
+	mv 2020_acl_metaanswer_page_0.pdf 2020_acl_metaanswer.submission.pdf
+
+2020_acl_biasqa.appendix.pdf: 2020_acl_biasqa.paper.pdf
+	python3 scripts/split_pdf.py 2020_acl_biasqa.paper.pdf 6
+	mv 2020_acl_biasqa_page_6.pdf 2020_acl_biasqa.appendix.pdf
+	mv 2020_acl_biasqa_page_0.pdf 2020_acl_biasqa.submission.pdf
+
+2020_lrec_sense.appendix.pdf: 2020_aaai_sense.paper.pdf
+	python3 scripts/split_pdf.py 2020_aaai_sense.paper.pdf 9
+	mv 2020_aaai_sense_page_9.pdf 2020_aaai_sense.appendix.pdf
+	mv 2020_aaai_sense_page_0.pdf 2020_aaai_sense.submission.pdf
+
+2020_acl_trivia_tournament.appendix.pdf: 2020_acl_trivia_tournament.paper.pdf
+	python3 scripts/split_pdf.py 2020_acl_trivia_tournament.paper.pdf 11
+	mv 2020_acl_trivia_tournament_page_11.pdf 2020_acl_trivia_tournament.appendix.pdf
+	mv 2020_acl_trivia_tournament_page_0.pdf 2020_acl_trivia_tournament.submission.pdf
+
+2020_acl_diplomacy.appendix.pdf: 2020_acl_diplomacy.paper.pdf
+	python3 scripts/split_pdf.py 2020_acl_diplomacy.paper.pdf 10
+	mv 2020_acl_diplomacy_page_10.pdf 2020_acl_diplomacy.appendix.pdf
+	mv 2020_acl_diplomacy_page_0.pdf 2020_acl_diplomacy.submission.pdf
+
+
+acl: 2020_acl_clime.paper.pdf 2020_acl_diplomacy.paper.pdf 2020_acl_refine_clwe.paper.pdf 2020_acl_trivia_tournament.appendix.pdf
