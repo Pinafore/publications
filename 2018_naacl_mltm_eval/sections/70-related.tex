@@ -1,0 +1,38 @@
+\section{Related Work}
+\label{sec:related}
+
+
+
+
+
+\paragraph{Topic Coherence} 
+Many coherence metrics based on co-occurrence statistics have been proposed besides \npmi{}.
+Similar metrics---such as asymmetrical
+word pair metrics~\cite{MimnoWTLM11} and combinations of existing
+measurements~\cite{LauNB14,RoderBH15}---correlate well with human
+judgments. \npmi{} has been the current gold standard for evaluation
+and improvements of monolingual topic
+models~\cite{Pecina10,NewmanBB11}.
+
+\paragraph{External Tasks} 
+Another approach is to use a model for predictive tasks: the better the results are
+on external tasks, the better a topic model is assumed to be.
+A common task is held-out likelihood~\cite{WallachMSM09,JagarlamudiD10,FukumasuEX12},
+but as \newcite{ChangBGWB09} show, this does not always reflect
+human interpretability.
+Other specific tasks have also been used,
+such as bilingual dictionary extraction~\cite{LiuDM15,MaN17},
+cultural difference deteciton~\cite{GutierrezSLMG16},
+and crosslingual document clustering~\cite{VulicSTM15}.
+
+\paragraph{Representation Learning}
+
+Topic models are one example of a broad class of techniques of
+learning representations of documents~\cite{bengio-13}.  Other
+approaches learn respresentations at the
+word~\cite{klementiev-12,vyas-15}, paragraph~\cite{mogadala-16}, or
+corpus level~\cite{sogaard-15}.  However, neural representation
+learning approaches are often data hungry and not adaptable to
+low-resource languages.  The approaches here could help improve the
+evaluation of all multilingual representation learning
+algorithms~\cite{schnabel-15}.

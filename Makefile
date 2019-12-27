@@ -19,9 +19,16 @@ clean:
 %.bbl: %.pdf $(BIB)
 	bibtex $*
 
-%.paper.pdf: %.pdf %.bbl 
+scripts/hunspell_dictionary.dic: scripts/dictionary.txt
+	wc -l $< > $@
+	sort $< | uniq >> $@
+
+%.spell: %.pdf scripts/hunspell_dictionary.dic
+	python scripts/spell.py --files $(<:.pdf=)/*.tex $(<:.pdf=)/sections/*.tex
+
+%.paper.pdf: %.pdf %.bbl
 	pdflatex $*
-	pdflatex $*
+	pdflatex -halt-on-error $*
 	cp $< $@
 	cp $@ ~/public_html/temp || true
 	./scripts/style-check.rb $(<:.pdf=)/*.tex $(<:.pdf=)/sections/*.tex

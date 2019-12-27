@@ -1,0 +1,9 @@
+train	test	corpus	npmi	var	group
+ZH	EN	Wikipedia	0.985	0.009	ZH-EN
+ZH	EN	Bible	0.949	0.022	ZH-EN
+EN	ZH	Wikipedia	0.985	0.005	ZH-EN
+EN	ZH	Bible	0.949	0.034	ZH-EN
+TR 	EN	Wikipedia	0.98	0.004	TR-EN
+TR 	EN	Bible	0.936	0.044	TR-EN
+EN 	TR 	Wikipedia	0.96	0.036	TR-EN
+EN 	TR 	Bible	0.940	0.025	TR-EN

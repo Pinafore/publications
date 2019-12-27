@@ -1,0 +1,126 @@
+
+\pgfplotscreateplotcyclelist{mycolorlist}{%
+	cyan,every mark/.append style={fill=blue!80!black},mark=*\\%
+	cyan,every mark/.append style={fill=blue!80!black},mark=*\\%
+	magenta,every mark/.append style={fill=red!80!black},mark=square*\\%
+	magenta,every mark/.append style={fill=red!80!black},mark=square*\\%
+}
+\begin{tikzpicture}
+\begin{axis}[
+	ylabel=\LARGE \textbf{CNPMI},
+	smooth,
+	xmajorgrids,
+	legend style={at={(1.08,1.1)},anchor=south west,legend cell align=left,legend columns=1},
+	x tick label style={font=\LARGE\bf\scshape,align=left},
+	y tick label style={/pgf/number format/.cd,fixed, fixed zerofill,precision=1,/tikz/.cd,font=\LARGE\boldmath},
+	symbolic x coords={BASE,GAP,ERA,DRIFT},
+	xticklabels={base,{base+\\gap},{base+\\gap+\\era},{base+\\gap+\\era+\\drift}},
+	ylabel near ticks,
+	every axis plot/.append style={very thick},
+	width=20cm,height=8cm,
+	xtick=data,
+	ytick={0.025,0.05,0.075},
+	every axis plot/.append style={very thick},
+	cycle list name=mycolorlist,
+	clip=false
+]
+
+% Topic 1 ``increasing''
+\addlegendentry{CNPMI Predicted (Topic 1)};
+\addplot+[smooth] coordinates {
+	(BASE,0.035441702488317794)
+	(GAP,0.038306213881622184)
+	(ERA,0.067658741204787556)
+	(DRIFT,0.084535504502966055)
+};
+\node[coordinate, pin={[pin edge={white}, align=left,pin distance = 30mm]180:{
+		\bfseries\LARGE Features}}]
+at (axis cs:BASE,-0.03) {};
+\node[coordinate, pin={[align=left,draw=cyan]-90:{
+		\sffamily\large CNPMI = 0.081\\
+		\sffamily\large C = 5\\
+		\sffamily\large TWC(EN) = 0.6\\
+		\sffamily\large TWC(AM) = 1.0 \\
+		\sffamily\large MTA = 0.0}}]
+at (axis cs:BASE,-0.01) {};
+\node[coordinate, pin={[align=left,draw=cyan]-90:{
+		\sffamily\large MC(EN) = 2.371\\
+		\sffamily\large MC(AM) = 0.462\\
+		\sffamily\large ICC(EN,AM) = 0.195}}]
+at (axis cs:GAP,-0.01) {};
+\node[coordinate, pin={[align=left,draw=cyan]90:{
+		\sffamily\large Word Era (mean) = 1823\\
+		\sffamily\large Word Era (std) = 21}}]
+at (axis cs:ERA,0.105) {};
+\node[coordinate, pin={[align=left,draw=cyan]90:{
+		\sffamily\large WS (mean) = 0.204\\
+		\sffamily\large WS (std) = 0.208}}]
+at (axis cs:DRIFT,0.105) {};
+
+
+% Topic 1 constant
+\addlegendentry{CNPMI by Wikipedia (Topic 1)};
+\addplot+[smooth,dotted] coordinates {
+	(BASE,0.077189)
+	(GAP,0.077189)
+	(ERA,0.077189)
+	(DRIFT,0.077189)
+};
+\node[coordinate, pin={[align=left,draw=cyan,pin distance = 30mm]360:{
+		\includegraphics[scale=0.3]{2017_emnlp_mltm_eval/figures/topic1}}}]
+at (axis cs:DRIFT,0.077189) {};
+
+
+% Topic 8 ``decreasing''
+\addlegendentry{CNPMI Predicted (Topic 8)};
+\addplot+[smooth,] coordinates {
+	(BASE,0.090490972851097418)
+	(GAP,0.084815383345466372)
+	(ERA,0.041477214458944811)
+	(DRIFT,0.038303362931064427)
+};
+\node[coordinate, pin={[pin edge={white}, align=left,pin distance = 30mm]180:{
+		\bfseries\LARGE Features}}]
+at (axis cs:BASE,0.125) {};
+\node[coordinate, pin={[align=left,draw=magenta]90:{
+		\sffamily\large CNPMI = 0.007\\
+		\sffamily\large C = 40\\
+		\sffamily\large TWC(EN) = 0.58\\
+		\sffamily\large TWC(AM) = 0.5 \\
+		\sffamily\large MTA = 0.0}}]
+at (axis cs:BASE,0.105) {};
+\node[coordinate, pin={[align=left,draw=magenta]90:{
+		\sffamily\large MC(EN) = 0.691\\
+		\sffamily\large MC(AM) = 0.757\\
+		\sffamily\large ICC(EN,AM) = 1.095}}]
+at (axis cs:GAP,0.105) {};
+\node[coordinate, pin={[align=left,draw=magenta]-90:{
+		\sffamily\large Word Era (mean) = 1923\\
+		\sffamily\large Word Era (std) = 60}}]
+at (axis cs:ERA,-0.01) {};
+\node[coordinate, pin={[align=left,draw=magenta]-90:{
+		\sffamily\large WS (mean) = 0.212\\
+		\sffamily\large WS (std) = 0.224}}]
+at (axis cs:DRIFT,-0.01) {};
+
+% Topic 8 constant
+\addlegendentry{CNPMI by Wikipedia (Topic 8)};
+\addplot+[smooth,dotted] coordinates {
+	(BASE,0.027725)
+	(GAP,0.027725)
+	(ERA,0.027725)
+	(DRIFT,0.027725)
+};
+\node[coordinate, pin={[align=left,draw=magenta,pin distance = 30mm]360:{
+		\includegraphics[scale=0.3]{2017_emnlp_mltm_eval/figures/topic8}}}]
+at (axis cs:DRIFT,0.027725) {};
+\node[coordinate, pin={[pin edge={white}, align=left,pin distance = 110mm]360:{
+		\sffamily\LARGE \color{magenta}Topic 8}}]
+at (axis cs:DRIFT,0.05) {};
+\node[coordinate, pin={[pin edge={white}, align=left,pin distance = 110mm]360:{
+		\sffamily\LARGE \color{cyan}Topic 1}}]
+at (axis cs:DRIFT,0.095) {};
+
+\end{axis}
+\end{tikzpicture}
+	

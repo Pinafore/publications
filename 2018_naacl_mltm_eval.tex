@@ -1,0 +1,149 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage{style/naaclhlt2018}
+
+\usepackage{times}
+\newif\ifcomment\commentfalse
+\input{style/preamble}
+\usepackage{latexsym}
+\usepackage{xcolor,colortbl}
+\usepackage{latexsym}
+\usepackage{enumitem}
+\usepackage{graphicx}
+\usepackage{comment}
+\usepackage[T1]{fontenc}
+\usepackage{diagbox}
+\usepackage{amsmath,amssymb,amsthm,amsfonts,enumitem}
+\usepackage{dsfont}
+\usepackage{lipsum}
+\usepackage{multirow}
+\usepackage{relsize}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{pgfplotstable}
+\usepackage{rotating}
+\usepackage{adjustbox}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{subcaption}
+\usepackage{scrextend}
+\usepackage{hhline}
+\usepackage{csquotes}
+\usepackage{sansmath,url}
+\usepackage[ruled,vlined,noend,linesnumbered]{algorithm2e}
+\usepackage[framemethod=tikz, innerleftmargin=0.3\baselineskip]{mdframed}
+
+
+
+
+\usepackage{url}
+
+\allowdisplaybreaks
+
+
+
+\theoremstyle{theoremdd}
+\newtheorem{theorem}{Theorem}
+\newtheorem{prop}{Proposition}
+\newtheorem{corollary}{Corollary}
+\newtheorem{lemma}{Lemma}
+\newtheorem{assumption}{Assumption}
+\newtheorem{remark}{Remark}
+\newtheorem{definition}{Definition}
+\newtheorem{example}{Example}
+
+\newcommand{\cnpmi}[0]{\textsc{cnpmi}}
+\newcommand{\npmi}[0]{\textsc{npmi}}
+\newcommand{\inpmi}[0]{\textsc{inpmi}}
+\newcommand{\mta}[0]{\textsc{mta}}
+\newcommand{\mc}[0]{\textsc{mc}}
+\newcommand{\icc}[0]{\textsc{icc}}
+\newcommand{\twc}[0]{\textsc{twc}}
+\aclfinalcopy 
+\def\aclpaperid{475} 
+
+\DeclareCaptionFont{10pt}{\fontsize{10pt}{12pt}\selectfont}
+\captionsetup{font=10pt}
+
+
+
+
+
+\newcommand\BibTeX{B{\sc ib}\TeX}
+
+\title{Lessons from the Bible on Modern Topics: \\ Low-Resource Multilingual Topic
+  Model Evaluation}
+
+
+
+\author{Shudong Hao \\
+		Computer Science \\
+		University of Colorado\\
+		Boulder, CO \\
+		{\small \url{shudong@colorado.edu}}
+        \And
+        Jordan Boyd-Graber \\   
+        Computer Science, iSchool, \\ \textsc{lsc}, and \textsc{umiacs},\\
+        University of Maryland \\
+        College Park, MD \\
+        {\small \url{jbg@umiacs.umd.edu}}
+        \And
+        Michael J. Paul \\
+		Information Science \\
+		University of Colorado\\
+		Boulder, CO \\
+		{\small \url{mpaul@colorado.edu}}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\date{}
+
+\begin{document}
+\maketitle
+\begin{abstract}
+\input{2018_naacl_mltm_eval/sections/00-abstract}
+\end{abstract}
+
+
+\input{2018_naacl_mltm_eval/sections/10-intro}
+\input{2018_naacl_mltm_eval/sections/20-coherence}
+\input{2018_naacl_mltm_eval/sections/30-estimator}
+\input{2018_naacl_mltm_eval/sections/40-expr}
+\input{2018_naacl_mltm_eval/sections/50-topiclevel}
+\input{2018_naacl_mltm_eval/sections/60-modellevel}
+\input{2018_naacl_mltm_eval/sections/70-related}
+\input{2018_naacl_mltm_eval/sections/80-conclusion}
+\input{2018_naacl_mltm_eval/sections/90-ack}
+
+
+\bibliography{bib/journal-full,bib/shudong,bib/jbg}
+\bibliographystyle{style/acl_natbib}
+
+
+\end{document}

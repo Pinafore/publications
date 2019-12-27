@@ -1,0 +1,41 @@
+\section{Introduction}
+\label{intro}
+
+
+Topic models provide a high-level view of the main
+themes of a document collection~\cite{Boyd-Graber-17}.
+Document collections, however, are
+often not in a single language, driving the development of
+\textbf{multilingual} topic models.  These models discover topics that
+are consistent across languages, providing useful tools for
+multilingual text analysis~\cite{VulicSTM15}, such as detecting
+cultural differences~\cite{GutierrezSLMG16} and bilingual dictionary
+extraction~\cite{LiuDM15}.
+
+
+Monolingual topic models can be evaluated through
+likelihood~\cite{WallachMSM09} or coherence~\cite{NewmanLGB10}, but
+topic model evaluation is not well understood in multilingual settings.
+Our contributions are two-fold.
+	We introduce an improved intrinsic evaluation metric for multilingual topic models,
+	called Crosslingual Normalized Pointwise Mutual Information (\cnpmi{}, Section~\ref{sec:eval}).
+	We explore the behaviors of \cnpmi{} at both the model and topic levels
+	with six language pairs and varying model specifications.
+	This metric correlates well with human judgments
+	and crosslingual classification results
+	(Sections~\ref{sec:topic-level} and
+	\ref{sec:model-level}).
+	
+We also focus on evaluation in low-resource languages,
+which lack large parallel corpora, dictionaries,
+and other tools that
+are often used in learning and evaluating topic models.
+To adapt \cnpmi{} to these settings, we create a coherence estimator
+(Section~\ref{sec:coherence-estimator}) that extrapolates statistics
+derived from antiquated, specialized texts like the Bible:
+often the only resource available for many languages.  
+
+
+
+
+

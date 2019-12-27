@@ -1,0 +1,78 @@
+
+
+\begin{table}
+	\centering
+	\small
+	\setlength\tabcolsep{3pt}
+	\begin{tabular}{c|c|ccc}
+		\hline
+		Pair & Training &\multicolumn{3}{c}{Reference} \\ \cline{3-5}
+		 &  & \multicolumn{1}{c}{Wikipedia} & The Bible & Wiktionary\\ \hline\hline
+		\textsc{en-ro} &  $1{,}272$ & $8{,}126$ & $1{,}189$ & $29{,}836$ \\ \hline
+		\textsc{en-sv} & $3{,}378$ & $9{,}067$ & $1{,}189$ & $42{,}953$ \\ \hline
+		\textsc{en-am}  & $421$  & $1{,}581$ & $1{,}189$ & $1{,}091$ \\ \hline
+		\textsc{en-tl}  & $542$  & $4{,}166$ & $1{,}189$ & $10{,}970$ \\ \hline
+		\textsc{en-tr}  & $874$ & $5{,}524$ & $1{,}189$ & $16{,}853$\\ \hline
+		\textsc{en-zh}  & $874$ & $10{,}000$ & $1{,}189$ & $22{,}946$\\ \hline
+	\end{tabular}
+	\caption{Number of document pairs in the training and reference datasets and number of dictionary entries for each language pair.}
+	\label{tab:dataset}
+\end{table}
+
+\section{Experiments: Bible to Wikipedia}
+\label{sec:settings}
+
+We experiment on six languages (Table~\ref{tab:dataset}) from three
+corpora: Romanian (\textsc{ro}) and Swedish (\textsc{sv}) from
+EuroParl as representative of well-studied and rich-resource
+languages~\cite{europarl}; Amharic (\textsc{am}) and Tagalog
+(\textsc{tl}) from collected news, as low-resource
+languages~\cite{amharicdata,tagalogdata}; and Chinese (\textsc{zh})
+and Turkish (\textsc{tr}) from TED Talks 2013~\cite{Tiedemann12},
+adding language variety to our experiments. Each language is
+ paired with English as a bilingual corpus.
+
+ Typical preprocessing methods (stemming, stop word removal,
+ \textit{etc.}) are often unavailable for low-resource languages. For
+ a meaningful comparison across languages, we do not apply any
+ stemming or lemmatization strategies, including English, except
+ removing digit numbers and symbols. However, we remove words that
+ appear in more than $30\%$ of documents for each language.
+
+Each language pair is separately trained using the
+\texttt{MALLET}~\cite{McCallumMALLET} implementation of the
+polylingual topic model.
+Each experiment runs five Gibbs sampling
+chains with $1{,}000$ iterations per chain with twenty topics.
+The hyperparameters are set to the default values ($\alpha = 0.1$, $\beta = 0.01$),
+and are optimized every $50$ iterations in \texttt{MALLET} using slice
+sampling~\cite{wallach-09b}.
+
+\subsection{Evaluating Multilingual Topics}
+
+We use Wikipedia and the Bible as reference corpora for calculating
+co-occurrence statistics. Different numbers of Wikipedia articles are
+available for each language pair (Table~\ref{tab:dataset}), while the
+Bible contains a complete set of $1{,}189$ chapters for all of its
+translations~\cite{Christodoulopoulos15}. We use Wiktionary as the
+dictionary to calculate \mta{}.
+
+
+
+\subsection{Training the Estimator}
+\label{sec:est-train}
+
+
+In addition to experimenting on Wikipedia-based \cnpmi{}, we also
+re-evaluate the topics' Bible coherence using our estimator.  In the
+following experiments, we use an \mbox{AdaBoost} regressor with linear
+regression as the coherence estimator~\cite{friedman2002stochastic,CollinsSS00}.
+The estimator
+takes a topic and low-quality \cnpmi{} score as input and outputs
+(hopefully) an improved \cnpmi{} score.
+
+To make our testing scenario more realistic, we treat one language as
+our estimator's test language and train on multilingual topics from
+the other languages.  We use three-fold cross-validation over
+languages to select the best hyperparameters, including the learning
+rate and loss function in \texttt{AdaBoost.R2}~\cite{Drucker97}.
