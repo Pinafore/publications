@@ -1,0 +1,97 @@
+\def\year{2020}\relax
+\documentclass[letterpaper]{article}
+\usepackage{style/aaai20}
+\usepackage{times}
+\usepackage{helvet}
+\usepackage{courier}
+\usepackage[hyphens]{url}
+\usepackage{graphicx}
+\urlstyle{rm}
+\def\UrlFont{\rm}
+\usepackage{graphicx}
+\frenchspacing
+\setlength{\pdfpagewidth}{8.5in}
+\setlength{\pdfpageheight}{11in}
+ \pdfinfo{
+/Title (Exploiting Cross-Lingual Subword Similarities in Low-Resource Document Classification)
+/Author (Mozhi Zhang, Yoshinari Fujinuma, Jordan Boyd-Graber)
+}
+\setcounter{secnumdepth}{2}
+\newcommand{\citet}[1]{\citeauthor{#1} \shortcite{#1}}
+\newcommand{\citep}{\cite}
+
+\newcommand{\latexfile}[1]{\input{2020_aaai_caco/sections/#1}}
+\newcommand{\figfile}[1]{2020_aaai_caco/figures/#1}
+\newcommand{\autofig}[1]{2020_aaai_caco/auto_fig/#1}
+
+\usepackage{amssymb}
+\usepackage{booktabs}
+\usepackage{subcaption}
+\newcommand{\g}{\, | \,}
+\newcommand{\abr}[1]{\textsc{#1}}
+
+\usepackage{bm}
+\newcommand{\vect}[1]{\bm{\mathbf{#1}}}
+
+\newcommand{\name}[0]{\textsc{caco}}
+\newcommand{\id}[0]{\textsuperscript{+}}
+\newcommand{\pp}[0]{\textsuperscript{p}}
+
+\usepackage{mathtools}
+\DeclarePairedDelimiterX{\infdivx}[2]{(}{)}{%
+  #1\;\delimsize\|\;#2%
+}
+\newcommand{\kldiv}{\mathrm{KL}\infdivx}
+\DeclarePairedDelimiter{\norm}{\lVert}{\rVert}
+
+\usepackage{array}
+\newcolumntype{R}[0]{>{\raggedleft\let\newline\\\arraybackslash\hspace{0pt}}p{1cm}}
+
+\newcommand{\flag}[1]{\includegraphics{\figfile{flags/#1.pdf}}}
+
+\title{Exploiting Cross-Lingual Subword Similarities in Low-Resource Document
+Classification}
+
+\author{Mozhi Zhang \\
+  \textsc{cs} and \textsc{umiacs} \\
+  University of Maryland \\
+  College Park, MD, USA \\
+  mozhi@cs.umd.edu
+  \And
+  Yoshinari Fujinuma \\
+  Computer Science \\
+  University of Colorado \\
+  Boulder, CO, USA \\
+  fujinumay@gmail.com
+  \And
+  Jordan Boyd-Graber\thanks{Now at Google Research Z\"urich} \\
+  \textsc{cs}, iSchool, \textsc{lsc}, and \textsc{umiacs}\\
+  University of Maryland \\
+  College Park, MD, USA \\
+  jbg@umiacs.umd.edu \\}
+
+\begin{document}
+
+\maketitle
+
+\latexfile{00-abstract}
+\latexfile{10-intro}
+\latexfile{20-model}
+\latexfile{30-experiments}
+\latexfile{40-related}
+\latexfile{50-conclusion}
+
+\section*{Acknowledgement}
+We thank the members of UMD CLIP and the anonymous reviewers for their
+feedback.
+Zhang and Boyd-Graber are supported by DARPA award HR0011-15-C-0113 under
+subcontract to Raytheon BBN Technologies.
+Fujinuma and Boyd-Graber are supported by NSF grant IIS-1564275.
+Any opinions, findings, conclusions, or recommendations expressed here are
+those of the authors and do not necessarily reflect the view of the sponsors.
+
+\fontsize{9.0pt}{10.0pt} \selectfont
+\bibliographystyle{style/aaai}
+\bibliography{bib/journal-abbrv,bib/jbg,bib/mozhi}
+
+\end{document}
