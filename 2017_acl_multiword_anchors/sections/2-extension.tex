@@ -1,0 +1,218 @@
+\section{Tandem Anchor Extension}
+\label{sec:multiword-extension}
+
+\begin{table}
+\begin{center}
+\small
+\begin{tabular}{p{.1\textwidth} p{.35\textwidth}}
+\hline\hline
+Anchor   & Top Words in Topics\\\hline
+backpack & backpack camera lens bag room carry fit cameras equipment comfortable\\
+camera   & camera lens pictures canon digital lenses batteries filter mm photos\\
+bag      & bag camera diaper lens bags genie smell room diapers odor\\\hline
+\end{tabular}
+\end{center}
+\caption{Three separate attempts to construct a topic concerning camera bags in
+Amazon product reviews with single word anchors.
+This example is drawn from preliminary experiments with an author as the user.
+The term ``backpack'' is a
+good anchor because it uniquely identifies the topic. However,
+both ``camera'' and ``bag'' are poor anchors for this topic.}
+\label{tab:camera}
+\end{table}
+
+Single word anchors can be opaque to users.
+For an example of bewildering anchor words, consider a \underline{camera bag}
+topic from a collection of Amazon product reviews (Table~\ref{tab:camera}).
+The anchor word ``backpack'' may seem strange.
+However, this dataset contains nothing about regular backpacks; thus, ``backpack'' is unique to \underline{camera bags}.
+Bizarre, low-to-mid frequency words are often anchors because anchor words must
+be \emph{unique} to a topic;
+intuitive or high-frequency words cannot be anchors if they have
+probability in \emph{any other topic}.
+
+The anchor selection strategy can mitigate this problem to some degree.
+For example, rather than selecting anchors using an approximate convex hull in
+high-dimensional space, we can find an exact convex hull in a low-dimensional
+embedding~\cite{anchors-tsne}.
+This strategy will produce more salient topics but still makes it difficult
+for users to manually choose unique anchor words for interactive topic
+modeling.
+
+If we instead ask users to give us representative words for this topic, we
+would expect combinations of words like ``camera'' and ``bag.''
+However, with single word anchors we must choose a single word to anchor each
+topic.
+Unfortunately, because these words might appear in multiple topics,
+individually they are not suitable as anchor words.
+The anchor word ``camera'' generates a general camera topic instead of camera
+bags, and the topic anchored by ``bag'' includes bags for diaper
+pails (Table~\ref{tab:camera}).
+
+Instead, we need to use sets of representative terms as an interpretable,
+parsimonious description of a topic.
+This section discusses strategies to build anchors from multiple words and
+the implications of using multiword anchors to recover topics.
+This extension not only makes anchors more interpretable but also
+enables users to manually construct effective anchors in interactive
+topic modeling settings.
+
+\subsection{Anchor Facets}
+
+We first need to turn words into an anchor.
+If we interpret the anchor algorithm geometrically, each row of $\bm{Q}$
+represents a word as a point in $V$-dimensional space.
+We then model each point as a convex
+combination of anchor words to
+reconstruct the topic matrix $\bf{A}$ (Equation~\ref{eq:solve-c}).
+Instead of individual anchor words (one anchor word per topic), we use anchor
+{\bf facets}, or sets of words that describe a topic.
+The facets for each anchor form a new {\bf pseudoword},
+or an invented point in $V$-dimensional space
+(described in more detail in Section~\ref{sec:combine-facets}).
+
+While these new points do not correspond to words in the vocabulary,
+we can express non-anchor words as convex combinations of
+pseudowords.
+To construct these pseudowords from their facets, we combine the
+co-occurrence profiles of the facets.
+These pseudowords then augment the original cooccurrence
+matrix $\bm{Q}$ with $K$ additional rows corresponding to synthetic
+pseudowords forming each of $K$ multiword anchors.
+We refer to this augmented matrix as $\bm{S}$.
+The rest of the anchor algorithm proceeds unmodified.
+
+Our augmented matrix~$\bm{S}$ is therefore a $(V+K) \times V$ matrix.
+As before, $V$ is the number of token types in the data and $K$ is the number
+of topics.
+The first $V$ rows of $\bm{S}$ correspond to the $V$ token types observed in the
+data, while the additional $K$ rows correspond to the pseudowords constructed
+from anchor facets.
+Each entry of $\bm{S}$ encodes conditional probabilities so
+that $S_{i,j}$ is equal to $p(w_i \g w_j)$.
+For the additional $K$ rows, we invent a cooccurrence pattern that can
+effectively explain the other words' conditional probabilities.
+
+This is similar in spirit to supervised anchor
+words~\cite{supervised-anchors}.
+This supervised extension of the anchor words algorithm adds columns
+corresponding to conditional probabilities of metadata values after having
+seen a particular word.
+By extending the vector-space representation of each word, anchor words
+corresponding to metadata values can be found.
+In contrast, our extension does not add dimensions to the representation, but
+places additional points corresponding to pseudoword words in the
+vector-space representation.
+
+\subsection{Combining Facets into Pseudowords}
+\label{sec:combine-facets}
+
+We now describe more concretely how to combine an anchor facets to describe
+the cooccurrence pattern of our new pseudoword anchor.
+In tandem anchors, we create vector representations that combine
+the information from anchor facets.
+Our anchor facets are $\anch{1} \dots \anch{K}$, where $\anch{k}$ is a set of
+anchor facets which will form the $k$th pseudoword anchor.
+The pseudowords are $\pword{1} \dots
+\pword{K}$, where $\pword{k}$ is the pseudoword from $\anch{k}$.
+These pseudowords form the new rows of $\bm{S}$.
+We give several candidates for combining anchors facets into a single
+multiword anchor;
+we compare their performance in Section~\ref{sec:oraclular-experiments}.
+
+\textbf{Vector Average}
+An obvious function for computing the central tendency is the vector
+average.
+For each anchor facet,
+\begin{equation}
+\bm{S}_{g_k,j} = \sum_{i \in \anch{k}} \frac{\bm{S}_{i,j}}{|\anch{k}|},
+\label{eq:vector-average}
+\end{equation}
+where $|\anch{k}|$ is the cardinality of $\anch{k}$.
+Vector average makes the pseudoword $\bm{S}_{g_k,j}$ more central,
+which is intuitive but inconsistent with the interpretation
+from~\newcite{anchors-practical} that anchors should
+be extreme points whose linear combinations explain more central words.
+
+\textbf{Or-operator}
+An alternative approach is to consider a cooccurrence with \emph{any}
+anchor facet in $\anch{k}$.
+For word~$j$, we use De Morgan's laws to set
+\begin{equation}
+\bm{S}_{g_k,j} = 1 - \prod_{i \in \anch{k}} (1 - \bm{S}_{i, j}).
+\label{eq:vector-or}
+\end{equation}
+Unlike the average, which pulls the pseudoword inward, this or-operator pushes
+the word outward, increasing each of the dimensions.
+Increasing the volume of the simplex spanned by the anchors explains
+more words.
+
+\textbf{Element-wise Min}
+Vector average and or-operator are both sensitive to outliers and cannot
+account for polysemous anchor facets.
+Returning to our previous example, both ``camera'' and ``bag'' are bad anchors
+for \underline{camera bags} because they appear in documents discussing
+other products.
+However, if both ``camera'' and ``bag'' are anchor facets, we can look at an
+\emph{intersection} of their contexts: words that appear with both.
+Using the intersection, the cooccurrence pattern of our anchor facet will only
+include terms relevant to camera bags.
+
+Mathematically, this is an element-wise min operator,
+\begin{equation}
+\bm{S}_{g_k,j} = \min_{i \in \anch{k}} \bm{S}_{i, j}.
+\label{eq:vector-min}
+\end{equation}
+This construction, while perhaps not as simple as the previous two, is robust
+to words which have cooccurrences which are not unique to a single topic.
+
+\textbf{Harmonic Mean}
+Leveraging the intuition that we should use a combination function which is
+both centralizing (like vector average) and ignores large outliers (like
+element-wise min), the final combination function is the element-wise harmonic
+mean.
+Thus, for each anchor facet
+\begin{equation}
+\bm{S}_{g_k,j} = \sum_{i \in
+\anch{k}}\left(\frac{\bm{S}_{i,j}^{-1}}{|\anch{k}|} \right)^{-1}.
+\end{equation}
+Since the harmonic mean tends towards the lowest values in the set, it is not
+sensitive to large outliers, giving us robustness to polysemous words.
+
+\subsection{Finding Topics}
+
+After constructing the pseudowords of $\bm{S}$ we
+then need to find the coefficients $\bm{C}_{i,k}$ which describe each word in our
+vocabulary as a convex combination of the multiword anchors.
+Like standard anchor methods, we solve the
+following for each token type:
+\begin{equation}
+\bm{C}^*_{i,\cdot} = \argmin_{\bm{C}_{i,\cdot}} D_{KL} \left( \bm{S}_{i,\cdot}\, \bigg\| \sum_{k=1}^K \bm{C}_{i,k} \bm{S}_{g_k,\cdot} \right).
+\label{eq:solve-c-with-s}
+\end{equation}
+Finally, we appeal to Bayes' rule, we recover the topic-word matrix $\bm{A}$
+from the coefficients of $\bm{C}$.
+
+The correctness of the topic recovery algorithm hinges upon the assumption of
+separability.
+Separability means that the occurrence pattern across documents of the anchor
+words across the data mirrors that of the topics themselves.
+For single word anchors, this has been observed to hold for a wide variety of
+data~\cite{beyond-svd}.
+With our tandem anchor extension, we make similar assumptions as the vanilla
+algorithm, except with pseudowords constructed from anchor facets.
+So long as the occurrence pattern of our tandem anchors mirrors that of the
+underlying topics, we can use the same reasoning as \newcite{nmf-provably} to
+assert that we can provably recover the topic-word matrix $\bm{A}$ with all of
+the same theoretical guarantees of complexity and robustness.
+Furthermore, we runtime analysis given by~\newcite{anchors-practical} applies
+to tandem anchors.
+
+If desired, we can also add further robustness and extensibility to tandem
+anchors by adding regularization to Equation~\ref{eq:solve-c-with-s}.
+Regularization---mathematically similar to
+priors---improves the vanilla anchor word
+algorithm~\cite{anchors-regularized}.
+We leave the question of the best regularization for tandem anchors as future
+work and focus our efforts on solving the problem of interactive topic
+modeling.

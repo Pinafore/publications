@@ -1,0 +1,55 @@
+\section{Vanilla Anchor Algorithm}
+\label{sec:vanilla-algo}
+
+The anchor algorithm computes the topic matrix $\bm{A}$,
+where $\bm{A}_{v,k}$ is the conditional probability of observing word $v$ given
+topic $k$, e.g., the probability of seeing the word ``lens'' given the
+\underline{camera} topic in a corpus of Amazon product reviews.
+\newcite{nmf-provably} find these probabilities by assuming that every topic
+contains at least one `anchor' word which has a non-zero probability only in
+that topic.
+Anchor words make computing the topic matrix $\bm{A}$ tractable because the
+occurrence pattern of the anchor word mirrors the occurrence pattern of the
+topic itself.
+
+To recover the topic matrix $\bm{A}$ using anchor words, we first compute a $V
+\times V$ cooccurrence matrix $\bm{Q}$, where $\bm{Q}_{i,j}$ is the conditional
+probability $p(w_j \g w_i)$ of seeing word type $w_j$ after having seen $w_i$ in the
+same document.
+A form of the Gram-Schmidt process on $\bm{Q}$ finds anchor words $\{g_1 \dots
+g_k\}$~\cite{anchors-practical}.
+
+Once we have the set of anchor words, we can compute the probability of a topic
+given a word (the inverse of the conditioning in $\bm{A}$).
+This coefficient matrix $\bm{C}$ is defined row-wise for each word~$i$
+\begin{equation}
+\bm{C}^*_{i,\cdot} = \argmin_{C_{i,\cdot}} D_{KL} \left( \bm{Q}_{i,\cdot} \bigg\| \sum_{k=1}^K \bm{C}_{i,k} \bm{Q}_{g_k,\cdot} \right),
+\label{eq:solve-c}
+\end{equation}
+which gives the best reconstruction (based on \mbox{Kullback-–Leibler}
+divergence $D_{KL}$) of non-anchor words given anchor words' conditional probabilities.
+For example, in our product review data, a word such as ``battery'' is a convex combination of the anchor words' contexts ($
+\bm{Q}_{g_k,\cdot}$) such as ``camera'', ``phone'', and ``car''.
+Solving each row of $C$ is fast and is embarrassingly parallel.
+Finally, we apply Bayes' rule to recover the topic matrix $\bm{A}$ from the
+coefficient matrix $\bm{C}$.
+
+The anchor algorithm can be orders of magnitude faster
+than probabilistic inference~\cite{anchors-practical}.
+The construction of $\bm{Q}$ has a runtime of $O(D N^2)$ where $D$ is the
+number of documents and $N$ is the average number of tokens per document.
+This computation requires only a single pass over the data and can
+be pre-computed for interactive use-cases.
+Once $\bm{Q}$ is constructed, topic recovery requires $O(K V^2 + K^2 V I)$,
+where $K$ is the number of topics, $V$ is the vocabulary size, and $I$ is the
+average number of iterations (typically 100--1000).
+In contrast, traditional topic model inference typically
+requires multiple passes over the entire data.
+Techniques such as Online \textsc{lda}~\cite{online-lda} or Stochastic Variation
+Inference~\cite{stochastic-variational} improves this to a single
+pass over the entire data.
+However, from Heaps' law~\cite{heaps-law} it follows that $V^2 \ll D N$ for large datasets,
+leading to much faster inference times for anchor methods compared to
+probabilistic topic modeling.
+Further, even if online inference could incorporate human guidance, a
+single pass takes too long for interactive use.
