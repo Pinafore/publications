@@ -1,0 +1,251 @@
+\documentclass{style/sigchi}
+
+\toappear{\scriptsize Permission to make digital or hard copies of all or part of this work for personal or classroom use is granted without fee provided that copies are not made or distributed for profit or commercial advantage and that copies bear this notice and the full citation on the first page. Copyrights for components of this work owned by others than ACM must be honored. Abstracting with credit is permitted. To copy otherwise, or republish, to post on servers or to redistribute to lists, requires prior specific permission and/or a fee. Request permissions from permissions@acm.org. \\
+{\emph{CHI '20, April 25--30, 2020, Honolulu, HI, USA.} } \\
+\Copyright~2020 Association of Computing Machinery. \\
+ACM ISBN 978-1-4503-6708-0/20/04\ ...\$15.00. \\
+http://dx.doi.org/10.1145/3313831.3376624}
+% Update the XXXX string to your assigned DOI from ACM.
+
+\clubpenalty=10000
+\widowpenalty = 10000
+
+% Arabic page numbers for submission.  Remove this line to eliminate
+% page numbers for the camera ready copy
+% \pagenumbering{arabic}
+
+% Load basic packages
+\usepackage{balance}       % to better equalize the last page
+\usepackage{graphics}      % for EPS, load graphicx instead 
+\usepackage[T1]{fontenc}   % for umlauts and other diaeresis
+\usepackage{txfonts}
+\usepackage{mathptmx}
+\usepackage[pdflang={en-US},pdftex]{hyperref}
+\usepackage{color}
+\usepackage[table]{xcolor}
+\usepackage{colortbl}
+\usepackage{mdwlist}
+\usepackage{booktabs}
+\usepackage{textcomp}
+
+% Some optional stuff you might like/need.
+\usepackage{microtype}        % Improved Tracking and Kerning
+% \usepackage[all]{hypcap}    % Fixes bug in hyperref caption linking
+\usepackage{ccicons}          % Cite your images correctly!
+% \usepackage[utf8]{inputenc} % for a UTF8 editor only
+
+% If you want to use todo notes, marginpars etc. during creation of
+% your draft document, you have to enable the "chi_draft" option for
+% the document class. To do this, change the very first line to:
+% "\documentclass[chi_draft]{sigchi}". You can then place todo notes
+% by using the "\todo{...}"  command. Make sure to disable the draft
+% option again before submitting your final document.
+\usepackage{todonotes}
+
+% Paper metadata (use plain text, for PDF inclusion and later
+% re-using, if desired).  Use \emtpyauthor when submitting for review
+% so you remain anonymous.
+\def\plaintitle{No Explainability without Accountability: An Empirical Study of Explanations and Feedback in Interactive ML}
+\def\plainauthor{Alison Smith-Renner, Ron Fan, Melissa Birchfield, Tongshuang Wu, Jordan Boyd-Graber, Dan Weld, Leah Findlater}
+%\def\emptyauthor{}
+\def\plainkeywords{Interactive machine learning; explainable machine learning}
+\def\plaingeneralterms{Documentation, Standardization}
+
+% llt: Define a global style for URLs, rather that the default one
+\makeatletter
+\def\url@leostyle{%
+  \@ifundefined{selectfont}{
+    \def\UrlFont{\sf}
+  }{
+    \def\UrlFont{\small\bf\ttfamily}
+  }}
+\makeatother
+\urlstyle{leo}
+
+% To make various LaTeX processors do the right thing with page size.
+\def\pprw{8.5in}
+\def\pprh{11in}
+\special{papersize=\pprw,\pprh}
+\setlength{\paperwidth}{\pprw}
+\setlength{\paperheight}{\pprh}
+\setlength{\pdfpagewidth}{\pprw}
+\setlength{\pdfpageheight}{\pprh}
+
+% Make sure hyperref comes last of your loaded packages, to give it a
+% fighting chance of not being over-written, since its job is to
+% redefine many LaTeX commands.
+\definecolor{linkColor}{RGB}{6,125,233}
+\hypersetup{%
+  pdftitle={\plaintitle},
+% Use \plainauthor for final version.
+%  pdfauthor={\plainauthor},
+%  pdfauthor={\emptyauthor},
+  pdfkeywords={\plainkeywords},
+  pdfdisplaydoctitle=true, % For Accessibility
+  bookmarksnumbered,
+  pdfstartview={FitH},
+  colorlinks,
+  citecolor=black,
+  filecolor=black,
+  linkcolor=black,
+  urlcolor=linkColor,
+  breaklinks=true,
+  hypertexnames=false
+}
+
+% create a shortcut to typeset table headings
+% \newcommand\tabhead[1]{\small\textbf{#1}}
+
+
+\newcommand{\g}{\, | \,}
+
+\newcommand{\latexfile}[1]{\input{sections/#1}}
+\newcommand{\figfile}[1]{figures/#1}
+
+%\newif\ifcomment\commenttrue
+\newif\ifcomment\commentfalse
+
+\ifcomment
+\newcommand{\pinaforecomment}[3]{\textcolor{#1}{\bf\small [#3 -#2]}}
+\else
+\newcommand{\pinaforecomment}[3]{}
+\fi
+
+
+\newcommand{\sherry}[1]{\pinaforecomment{blue}{Sherry}{#1}}
+\newcommand{\jbg}[1]{\pinaforecomment{green}{JBG}{#1}}
+\newcommand{\lkf}[1]{\pinaforecomment{magenta}{LF}{#1}}
+\newcommand{\amr}[1]{\pinaforecomment{green}{Alison}{#1}}
+%\usepackage{authblk}
+%\newcommand{\affiliation}[1]{\thanks{\scriptsize{#1}}}
+\newcommand{\revised}[1]{\textcolor{blue}{#1}}
+% End of preamble. Here it comes the document.
+\begin{document}
+
+\title{\plaintitle}
+%\author[1]{\textbf{\large Alison Smith-Renner}}
+%\author[2]{\textbf{\large Ron Fan}}
+%\author[2]{\textbf{\large Melissa Birchfield}}
+%\author[2]{\textbf{\large Tongshuang Wu}}
+%\author[1]{\\ \textbf{\large Jordan Boyd-Graber\thanks{Currently at Google Reseach in Zurich}}}
+%\author[2]{\textbf{\large Dan Weld}}
+%\author[2]{\textbf{\large Leah Findlater}}
+%\affil[1]{\affaddr{University of Maryland}, \texttt {amsmit@umd.edu, jbg@umiacs.umd.edu}}
+
+%\affil[2]{\affaddr{University of Washington}, \texttt{rfanhu@gmail.com}, \texttt {\{mbirch2,wtshuang,weld,leahkf\}@uw.edu}}
+
+% (I prefer my personal email here since I basically don't use UW email anymore - Ron)
+
+\numberofauthors{2}
+\author{%
+Alison Smith-Renner,$^\dag$ Ron Fan,$^\ddag$ Melissa Birchfield,$^\ddag$ Tongshuang Wu,$^\ddag$ \\
+Jordan Boyd-Graber,$^\dag$\thanks{Now at
+Google Research Z\"urich.}~~Dan Weld,$^\ddag$ and Leah Findlater$^\ddag$
+  \alignauthor{
+    \affaddr{${}^\dag$University of Maryland}\\
+    \affaddr{College Park, MD, USA}\\
+    \email{\textttt{amsmit@umd.edu, \\ jbg@umiacs.umd.edu}}}
+  \alignauthor{
+    \affaddr{${}^\ddag$University of Washington}\\
+    \affaddr{Seattle, WA, USA}\\
+    \email{rfanhu@gmail.com, \{mbirch2,wtshuang,weld,leahkf\}@uw.edu}}
+}
+
+
+\maketitle
+
+\begin{abstract}
+\input{sections/00-abstract}
+\end{abstract}
+
+
+% ACM Classfication
+
+\begin{CCSXML}
+<ccs2012>
+<concept>
+<concept_id>10003120.10003121.10003129</concept_id>
+<concept_desc>Human-centered computing~Interactive systems and tools</concept_desc>
+<concept_significance>500</concept_significance>
+</concept>
+<concept>
+<concept>
+<concept_id>10003120.10003121.10011748</concept_id>
+<concept_desc>Human-centered computing~Empirical studies in HCI</concept_desc>
+<concept_significance>300</concept_significance>
+</concept>
+<concept>
+<concept_id>10010147.10010257</concept_id>
+<concept_desc>Computing methodologies~Machine learning</concept_desc>
+<concept_significance>300</concept_significance>
+</concept>
+<concept>
+</ccs2012>
+\end{CCSXML}
+
+\ccsdesc[300]{Human-centered computing~Interactive systems and tools}
+\ccsdesc[300]{Human-centered computing~Empirical studies in HCI}
+\ccsdesc[300]{Computing methodologies~Machine learning}
+
+% Author Keywords
+\keywords{\plainkeywords}
+
+% Print the classficiation codes
+\printccsdesc
+
+
+
+\input{sections/10-intro}
+\input{sections/20-rw}
+\input{sections/30-method}
+\input{sections/40-study1}
+\input{sections/50-study2}
+%\input{sections/60-discussion}
+%\input{sections/70-conclusion}
+\input{sections/80-discussion-new.tex}
+
+\section{Acknowledgments}
+We thank the anonymous reviewers for their insightful and constructive
+comments, and we thank Simone Stumpf and James Fogarty for their feedback on early ideas for this study. This work was partially supported by NSF Grants \abr{IIS}-1822494 and \abr{IIS}-1409287, ONR grant N00014-18-1-2193, the WRF/Cable Professorship, and the Allen Institute for Artificial Intelligence.
+Any opinions, findings,
+conclusions, or recommendations expressed here are those of the
+authors and do not necessarily reflect the view of the sponsor.
+
+\clearpage
+
+% Balancing columns in a ref list is a bit of a pain because you
+% either use a hack like flushend or balance, or manually insert
+% a column break.  http://www.tex.ac.uk/cgi-bin/texfaq2html?label=balance
+% multicols doesn't work because we're already in two-column mode,
+% and flushend isn't awesome, so I choose balance.  See this
+% for more info: http://cs.brown.edu/system/software/latex/doc/balance.pdf
+%
+% Note that in a perfect world balance wants to be in the first
+% column of the last page.
+%
+% If balance doesn't work for you, you can remove that and
+% hard-code a column break into the bbl file right before you
+% submit:
+%
+% http://stackoverflow.com/questions/2149854/how-to-manually-equalize-columns-
+% in-an-ieee-paper-if-using-bibtex
+%
+% Or, just remove \balance and give up on balancing the last page.
+%\balance{}
+
+
+
+% BALANCE COLUMNS
+\balance{}
+
+% REFERENCES FORMAT
+% References must be the same font size as other body text.
+\bibliographystyle{SIGCHI-Reference-Format}
+\bibliography{bib/journal-full,bib/references,bib/bibliography}
+
+\end{document}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: t
+%%% End:

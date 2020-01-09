@@ -1,0 +1,102 @@
+%While lots of prior work has separately explored intelligible and interactive ML, limited work has explored the relationship between the two
+%Intelligible ML systems that provide explanations (or justifications) and interactive ML systems that allow users to effect change through feedback are generally favorable. Explanations have been shown to improve mental models and trust, and feedback allows for personalized and improved models. However, this is not always that case: explanations can be confusing or misleading and feedback can result in too specific models or reduced performance when the feedback is low quality.
+%And, while the intelligibility and interactivity of machine learning are both well studied, however, there has been limited exploration of the relationship between the two. In particular, might users abandon systems that consistently explain errors, but cannot be fixed? %it is unclear how users react to explanations without an opportunity for feedback nor 
+%And, how do explanations influence users expectations of how these systems will improve over time?
+%In this work, we explore how user satisfaction and expectation of improvement is affected by varying whether explanations are shown and feedback (feature-level or instance-level) is supported in a simple text classification system at both high and low quality. We find that for a low quality model, feedback positively and explanation negatively impacts frustration, trust, and acceptance. We show that for a high quality model, whether or not explanations are paired with feedback impacts trust and acceptance, and for both high and low quality models, feedback impacts expectation of improvement, while explanation does not. We also find that over half of participants who did not provide feedback predicted the model would correct itself, exemplifying possible misconceptions of ML models. 
+
+% findings related to frustration, trust, acceptance
+%For the low quality model, both feedback (whether
+%instance or feature) and explanation had significant impacts on
+%frustration, trust, and acceptance.
+%
+%While supporting feedback had positive effects, providing explanations was negative.
+%
+%Therefore, users were most frustrated with explanations coupled with
+%no opportunity for feedback and least frustrated with opportunity for feedback without explanation. This general dislike for explanations of the low quality model confirms prior work~\cite{Cai2019TheInterface}, which suggests that user perceptions are negatively impacted by explanations that expose algorithmic limitations. 
+%
+%For the high quality model, frustration was generally lower ($M=2.6, SD=1.5$) compared to the low quality model ($M=3.9, SD=1.9$), and we do not see significant impacts of any
+%condition on frustration. There were also no main effects for other user satisfaction measures, however, significant interaction effects on trust and acceptance suggest nuance in how explanations and feedback impact each other. For instance, participants trust feature-level feedback significantly less without explanation compared to simply having no explanation and no feedback. Further, we find some evidence that explanations without means for feedback decrease user experience.  
+
+% findings related to expectation of improvement
+%For both high and low quality models, feedback impacted users' expectations of model improvement, as
+%hypothesized. In particular, feature-level feedback significantly increased expectation of improvement over no feedback for the low quality model, and over \textit{both} instance-level and no feedback for the high quality model. 
+%
+%However, counter to our hypothesis, explanation did not have an effect on expectation of improvement.
+%
+%Users' predictions of model performance on previously seen emails show similar trends; for both the high and low quality models more
+%users who provided feedback predicted that the model would improve
+%(i.e. correctly label a previously incorrect email) than those who did
+%not provide feedback.
+%
+%However, surprisingly, participants in general thought the model would improve: for the lower quality model, $82\%$ of users who did provide feedback and $55\%$ of users who did \textit{not} provide feedback thought the mode would correctly label a previously incorrect email. For the high quality model, $62\%$ of participants who did provide feedback and $48\%$ who did not provide feedback thought this. %over half of all users who did not provide
+%feedback also predicted the model would correct itself.
+%
+%This finding exemplifies possible misconceptions of ML models by end users.
+
+
+% We hypothesize that support for feedback (either instance or feature) increases satisfaction (measured by frustration) and expectations of improvement compared to no feedback. While prior work (cite) suggests that explanations decrease frustration compared to no explanations, we hypothesize that without feedback, explanations increase frustration, as users given explanations know the particular reason for errors, but are unable to fix them. We also hypothesize that explanations increase expectations of improvement compared to no explanations.
+%Our findings show that both feedback and explanation have significant effects on frustration. Feedback (whether instance or feature) significantly reduces frustration and explanation significantly increases frustration. Therefore, the condition with explanation yet no feedback was the most frustrating in our study, as we hypothesized. However, the general negative effect of explanation might be due to the low model quality in our study, especially as compared to other work that finds positive effects of explanation (cite). 
+% Feedback also significantly affected users’ expectation that the model would improve, but we do not find that explanation has a significant effect on expectation of improvement, as we had hypothesized. Users predictions show similar trends, in that significantly more users who provide feedback predict that the model will correctly label a previously incorrect document. However, surprisingly, over half of all users who did not provide feedback still predicted the model to correctly label a previously incorrect document. We see a similar trend in the expectation of improvement responses, where 40% of users in the no feedback and no explanation and 53% of users in the feedback and explanation conditions expected the machine learning systems to improve. This exemplifies the misconceptions of machine learning systems by end users. 
+
+
+% initial model accuracy
+%Due to the simple, approachable, and crowdsourced nature of the task, user motivation is at risk. Unmotivated users will not care about the model, explanations, or ability to provide feedback. In real world systems, users' motivation is related to the importance of the model's performance on the task: motivation to correct occasionally irrelevant news recommenders is likely low, while motivation to correct smart cars that err solely when turning into users' neighborhoods is likely high. As it is hard to manipulate decision criticality in such a study that requires a model and task that crowdworkers can understand in a short time frame, we manipulate system accuracy as a means to motivate users to care about the model's performance. %We aimed to choose an initial system accuuracy that was low enough to motivate users to care about system performance (similarly to more critical tasks), but not too low that the utility of the system was not evident and users wouldn't abandon the system altogheter. 
+
+%leahkf: Hm... the framing here is a bit upside down IMO. I would argue that the most important consideration is that the phenomenon we are studying only makes sense if the model is less than perfect. Then, taking that into account, along with our task and participant population, we choose 75% because that would allow for mostly correct examples but enough incorrect examples that people would notice and hopefully develop an understanding of how to fix (for the feedback conditions). The $2 bonus is more closely tied to motivating quality data. If you want to chat about this comment from me, please let me know.
+
+
+% Therefore, we trained a Naive Bayes model for text classification on $16$ labeled emails (eight from each class), which resulted in $76.5\%$ classification accuracy on the test set. 
+
+% In the evaluation phase, the four additional emails were chosen such that two were shown previously in the interaction phase and two were similar to emails in the interaction phase. For each pair, we included one email that the initial model predicted correctly and one predicted incorrectly. We chose the similar emails by computing the cosine similarity between each pair of documents, using vectors of tf-idf features computed from the full corpus.
+%The emails shown to participants were predetermined from a set of criteria. Our criteria were designed to (1) select emails with consistent formatting when displayed in the testbed, (2) realistically reflect the true accuracy of the model, and (3) contain an even distribution of hockey and baseball email. 
+%In the interaction phase, participants were shown fifteen emails with correct predictions and five emails with incorrect predictions. We randomly chose one sport to have one more correct prediction than the other. Only emails with word counts between 30 and 120 were considered, for consistency in visual length and amount of content. Emails containing replies to other emails, as determined by the presence of a \texttt{>} "quoting" character at the start of a line, were also ignored.
+%After randomly selecting 20 emails based on these criteria, we manually reviewed the emails and removed two emails with potentially offensive language or ideas. We did this in order to ensure participants remained neutral and unbiased throughout the study. The removed emails were replaced with two additional randomly selected emails.
+
+%\textbf{Explanations reduce trust while support for feedback increases it}. Trust was significantly impacted by \textit{Explanation} ($F_{1, 172}=14.57, p < .001$), where participants who received explanations %($Med=3, M=3.51, SD=1.75$) 
+%trusted the system less those who did not %($Med=5, M=4.59, SD=1.51$). 
+%There was also a significant main effect of \textit{Feedback} on trust ($F(2, 172)=4.27, p = .015$). Posthoc pairwise comparisons showed that no feedback %($Med=3, M=3.57, SD=1.78$) 
+%resulted in significantly lower trust than instance-level %($Med=5, M=4.25, SD=1.55$) ($U=2192, Z=2.29, p < .05, r=.21$) 
+%and feature-level feedback %($Med=5, M=4.36, SD=1.73$) ($U=2228, Z=2.49, p < .05, r=.23$)
+%(both comparisons $p<.05$).%, but there was no significant difference between instance-level and feature-level feedback for trust %($U=1813, Z=.40, ns, r=.04$). 
+%The interaction between \textit{Explanation} and \textit{Feedback} was not significant ($F_{2, 172}=.15, p=.863$). 
+
+%\textbf{Explanations reduce acceptance while feature-level feedback increases it (compared to no feedback)}.
+%\textit{Explanation} significantly impacted acceptance ($F_{1, 172}=19.49, p < .001$), where participants who received explanations %($Med=XXX, M=XXX, SD=XXX$) 
+%accepted the system less than those who did not %($Med=XXX, M=XXX, SD=XXX$). 
+%\textit{Feedback} also significantly impacted acceptance ($F_{2, 172}=3.76, p=.025$). Posthoc pairwise comparisons showed that no feedback %($Med=XXX, M=XXX, SD=XXX$) 
+%resulted in significantly lower acceptance than feature-level feedback ($p<.05$) %($Med=XXX, M=XXX, SD=XXX$) ($U=2251, Z=XXX, p < .05, r=XXX$), but there was no significant difference between none and instance-level %($Med=XXX, M=XXX, SD=XXX$) ($U=2151, Z=XXX, ns, r=XXX$) or instance-level and feature-level feedback ($U=1811, Z=XXX, ns, r=XXX$) for acceptance. 
+%The interaction between \textit{Explanation} and \textit{Feedback} was not significant ($F_{2, 172}=.97, p=.38$).
+
+%In unsupervised settings, where systems learn ``self-organization'',
+%such interaction allows end users to provide guidance; Such
+%interaction allows end users to guide model behavior, and has been
+%applied in unsupervised settings, such as interactive topic
+%modeling~\cite{} or interactive clustering~\cite{}, reinforcement
+%learning , and supervised settings, such as active learning.
+%commonly applied to supervised systems
+
+%In unsupervised settings, users influence models' organization, such
+%as in interactive topic
+%modeling~\cite{Andrzejewski2009IncorporatingPriors.,
+%Lee2012IVisClustering:Modeling} and interactive
+%clustering~\cite{Awasthi2017LocalClustering,
+%Balcan2008ClusteringFeedback}. %And, in reinforcement learning, users
+%can provide training through reward
+%functions~\cite{Knox2012ReinforcementTasks} or
+%interventions~\cite{Saunders2018TrialIntervention}.
+
+%\textbf{Participants almost always know when the model is right or wrong}.
+%Participants tell us the correct label of each email, including an option for ``unsure.'' In the majority of instances (91\%), participants correctly assessed the model (that it was either correct or incorrect).  For 8\% of emails participants were unsure; this occurred slightly more when the model was incorrect (5\%) than when it was correct (3\%); likely due to these emails being trickier. For only 1\% of emails, participants incorrectly assessed the model (either thinking it was incorrect when it was correct or that it was correct when it was incorrect).
+
+%\textbf{Participants may tell the model it is correct more often than incorrect when they are unsure}.
+%In the instance-feedback condition, participants tell the model the correct label for each email. We looked specifically at the instance feedback provided when the participant was unsure, and found that when the model was correct, but the participant was unsure, the participant more often told the model it was correct ($75\%$), but when the model was incorrect, participants equally as often told the model it was correct ($49\%$). \sherry{The second sentence is a bit confusing. How about: ``but when the model was incorrect, participants still (wrongly) told the model it was correct.''}
+
+%During the evaluation phase, participants predicted the label the model would give for four emails: two of which were the same as shown in the prior phase (one which the model had correctly labeled and one for which it was incorrect) and two which were similar (containing many similar words) to e-mails in the prior phase (one which the model had correctly labeled and one for which it was incorrect). %This gives us 716 predictions for 179 participants: 240 predictions for participants who did not give feedback and 476 for those who did provide feedback.
+%For the same emails, 55\% of participants who did not give feedback and 82\% who did thought the model would label correctly an email it had previously labeled incorrectly. %82\% of participants who did give feedback thought the model would label correctly an email that it had previously labeled incorrectly. 
+%And, for the similar emails, 63\% of participants who did not give feedback and 85\% who did thought the model would label correctly an email it had previously labeled incorrectly, and 85\% of participants who did give feedback thought the model would label correctly an email it had previously labeled incorrectly.
+
+%\textbf{As in Study 1, participants know the correct label for most of the emails}.
+%As Study 2 uses the same emails as Study 1, we see a similar breakdown for model assessments: the majority of participants knew the correct label, and therefore, whether the model was correct or incorrect (92\%); in 7\% of cases, users were unsure about the correct label, and in the 1\% of cases where users were incorrect, there were just as many false positives (.5\%) as false negatives (.5\%).
+
+%\textbf{Unlike Study 1, unsure participants may be less \textit{swayed} by the model's prediction}.
+%In Study 1, participants who were unsure showed a slight preference to telling the model it was correct, even when it was not, but that is not the case in Study 2. Here, unsure participants told the model it was correct 71\% of the time when it was correct and only 20\% of the time when it was incorrect.

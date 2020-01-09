@@ -1,0 +1,98 @@
+%\section{Discussion \& Conclusion}
+
+%We present two controlled experiments to understand how the combinations of explanation and feedback affect users' satisfaction and expectations of improvement of high and low quality ML models. We conclude that, for the simple models and task of our studies, when possible explanations and feedback should be provided together: (1) while explanations negatively impacted user satisfaction with the low quality model, they can show users how to fix models, and support for feedback had positive effects; and (2) for the higher accuracy model, requesting detailed feedback without explanations reduced trust.
+%Additionally, regardless of model quality, feature-level feedback increased expectations that models would improve, yet users generally expected model correction, regardless of whether they provided feedback or received explanations. 
+
+\section{Discussion}
+
+%\subsection{Main Takeaways}
+
+We relate our findings to prior work and provide design recommendations for interactive and explainable ML systems. 
+%
+We also discuss limitations and extensions to more complex tasks, models, explanations, and feedback mechanisms.
+%. 
+%Participants wanted the ability to provide feedback regardless of model quality, and in particular they wanted to provide more detailed feedback. 
+%
+%Explanations exposed models' strengths or weaknesses, so they reduced satisfaction for low quality models, particularly when feedback was not supported. 
+%
+%In high quality models, explanations importantly told participants \emph{what} feedback was needed.
+%
+%Finally, participants may have had preconceived notions of how these models can change over time, with or without feedback, so care is required to manage expectations. We reflect on each of these findings in turn. %We discuss these points in detail below. 
+
+% users want to provide feedback
+\textbf{Users want the opportunity to provide feedback, and in particular, provide more than just labels}. 
+%
+% And, the ability to provide feedback had positive impacts for the low quality models.
+%
+In both studies and all conditions, participants felt strongly that the \textit{opportunity} to provide feedback was important; however, this does not tell us how often or whether users will provide such feedback in practice. Although, successful commercial projects, such Common Voice,\footnote{https://voice.mozilla.org/en} exemplify that users might be willing to spend time improving models. 
+%
+
+Our studies provide additional evidence for how different levels of feedback impact user behavior and subjective response. In particular, we confirmed Amershi et al.'s~\cite{Amershi2014PowerLearning} recommendation that ``people naturally want to provide more than just data labels'' to ML models. 
+%
+With both the low and high quality models, only those participants who told the model what words were important (i.e., provided feature-level feedback) and not those who corrected or confirmed the model's predictions (i.e., instance-level), expected the model to improve more than participants in the no feedback condition. Similarly, some participants who provided instance-level feedback described their feedback as inadequate in open-ended responses.
+%
+Finally, not only was feature-level feedback better received by participants, for the low quality model it also improved accuracy more than instance-level feedback.
+%; this difference was not seen for the high quality model. 
+This ability of non-ML expert participants to improve the models in our study beyond just labeling data supports the goals of machine teaching~\cite{Wall2019UsingTeaching}.  
+
+
+% in low quality models, feedback is good and explanations are bad, particularly if feedback is not provided
+\textbf{Explanations can reveal model flaws, which users desire to fix}. 
+Displaying uncertainty scores for model predictions negatively impacts users' perceptions~\cite{Lim2011InvestigatingApplications}; similarly, for the low quality model, explanations were frustrating, precisely because they exposed flaws, including \textit{uncertainty} in the model's reasoning.
+Because feedback reduced frustration, the most frustrating combination of explanations and feedback for the low-quality model was thus a situation with explanations but no opportunity for feedback. Indeed, no explanations and no feedback may be the least frustrating design option; however, this combination would inherently limit the model's \textit{potential} performance, and likely result in disuse over time.
+In such cases, explanations provide insight to how to solve model errors~\cite{Kulesza2015PrinciplesLearning}. Therefore, for similar models and tasks, when the model quality is low, feedback should be supported alongside explanations.
+
+% in high quality models, feedback is good only if explanation is provided and explanations are particularly bad if feedback is not supported
+\textbf{Explanations and feedback complement each other}.
+%
+For the high quality model, explanations increased understanding and may have exposed model strengths. But, models are rarely perfect, and participants wanted the opportunity to provide feedback to improve models. Therefore, providing explanations without means for feedback may reduce satisfaction. Future work should explore this relationship between explanations and feedback in more detail. 
+%they can still have negative side effects if not employed with care. In our experiment, when feedback was not supported,  explanations appeared to reduce trust compared to no explanations. This aligns with our initial thinking that without feedback, explanations worsen user experience. Future work should explore this relationship in more detail. 
+Feedback alone is not always positive either: asking participants for feature-level feedback without providing explanations reduced trust compared to when explanations were provided. Users may not want to provide detailed feedback without understanding why it is needed or how best to help the model. 
+%
+Therefore, to improve satisfaction, similar systems should neither request detailed feedback without explanation nor provide explanation without some means for feedback.
+
+\textbf{Preconceived ML expectations should be managed}.
+%\sherry{Be careful to not mislead users towards high expectation.}
+%Finally, users may have preconceived notions of how these models can change over time, with or without feedback, so care is required to ensure expectations are managed. We discuss these points in detail below. 
+Whether from prior experience or general misunderstanding, users may have misconceptions about whether and how much models can improve. In our experiments, many participants expected the model to improve regardless of whether they provided feedback. 
+%
+Open-ended responses provide insight: participants described their understanding that ML models  %\textit{``automatically update [...] with corrections and new information''} (HP111, N-N),
+\textit{``get better as they function and learn algorithms''} (LP154, E-N), or even \textit{``gain consciousness''} (HP62, N-I).
+%
+%While more participants felt the low quality model had \textit{room for improvement} (about 25\%) than the high quality model (about 5\%), we see similar responses in both studies for expected improvement. This suggests that users may not fully understand to what extent these models are capable of improving.
+
+Interactive ML designers must ensure that these expectations are managed, such as by clarifying how model feedback is treated or what accuracy the model could achieve. Or if feedback is not supported, designers should ensure users do not think they are in some way providing feedback to the model. %We discuss design constructs that may yield such feelings in the Future Work.
+
+
+\subsection{Limitations \& Future Work}
+
+\emph{Generalization from a tightly scoped domain.}
+Our aforementioned findings are made in a tightly scoped domain, with a simple model and task (categorizing sports' emails). 
+While this constrained setting provides a necessary first step in illustrating the relationship between explanations and feedback---it is simple enough to support a controlled experiment for non-expert users, and common enough in IML research to be compared to past studies---our findings should be generalized with caution. 
+For example, explanations and feedback mechanisms in our studies were simple and intuitive. However, explanations in other domains, such as image classification, can be confusing or misleading~\cite{Adebayo2018SanityMaps}, and interaction with more complex models, such as topic models, exposes users to other challenges, such as instability and latency~\cite{Smith2018ClosingSystem}. These differences would likely affect satisfaction with and expectations of these systems. 
+%
+
+We hypothesize that even for more complex models or subjective tasks, 
+%(e.g., recommender systems~\cite{Herlocker2000ExplainingRecommendations} or topic-model based document organization tools~\cite{Chaney2012VisualizingModels})
+if users understand how models work and how they can better improve them, they will want the \textit{opportunity} to do so and may be frustrated if such feedback is restricted.
+However, the \emph{degree} of their frustration would likely vary along with their actual desire and ability to provide feedback in more realistic settings. All are likely affected by  task and model complexity, task importance (and therefore user motivation), and domain expertise.
+Would users be eager to provide feedback (in lieu of abandonment) in an imperfect self-driving car? Would they be less able to detect systems' mistakes for more subjective tasks?
+Future studies should further explore the relationship between feedback and explanation. 
+%Until then, we wish our observations that ``explanations and feedback should be provided together'' can encourage more cautious design of IML systems.
+
+
+\emph{The effect of explanation and feedback mechanisms.}
+Motivated by prior work~\cite{Narayanan2018HowExplanation, Kulesza2013TooModels}, our simple and truthful method chooses the top three overall important words for classification. 
+This method inherently exposes system uncertainty in the low quality model, as words that are probable for both classes may be highlighted. This does not occur as often in the high quality model as it is more certain about most of the emails. Therefore, this could explain some of the additional frustration in the lower quality model.
+Future work could explore the effects of different, more advanced, explanation types and feedback mechanisms.
+For example, global explanations (e.g., differential explanations~\cite{Lakkaraju2019FaithfulModels}) might be equivalently faithful, while better counteracting the user experience concerns.
+``Human-like'' explanations may increase expectations of improvement, as human-like characteristics in ML systems can cause users to believe systems will act rationally or take responsibility for their actions~\cite{Hook2000StepsReal}. 
+Furthermore, explanations that expose when models are right for the wrong reason might further increase frustration if adequate feedback is not allowed, as users would be unable to rectify apparent mistakes.
+For this case, to align the information received by the model and the user, feedback mechanisms should be changed accordingly.
+
+\section{Conclusion}
+
+We present two controlled experiments to understand how the combinations of explanation and feedback affect users' satisfaction and expectations of improvement of high and low quality ML models. We conclude that, for the simple models and task of our studies, when possible explanations and feedback should be provided together: (1) while explanations negatively impacted user satisfaction with the low quality model, they can show users how to fix models, and support for feedback had positive effects; and (2) for the higher accuracy model, requesting detailed feedback without explanations reduced trust.
+%participants were less frustrated with the higher accuracy model; however, requesting detailed feedback without explanations reduced trust
+%, and suggested similar patterns for providing explanations without feedback (compared to no explanation); (3) therefore, models should allow for feedback if explanations are provided; 
+Additionally, regardless of model quality, feature-level feedback increased expectations that models would improve, yet users generally expected model correction, regardless of whether they provided feedback or received explanations.  
