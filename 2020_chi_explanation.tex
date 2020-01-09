@@ -2,7 +2,7 @@
 
 \toappear{\scriptsize Permission to make digital or hard copies of all or part of this work for personal or classroom use is granted without fee provided that copies are not made or distributed for profit or commercial advantage and that copies bear this notice and the full citation on the first page. Copyrights for components of this work owned by others than ACM must be honored. Abstracting with credit is permitted. To copy otherwise, or republish, to post on servers or to redistribute to lists, requires prior specific permission and/or a fee. Request permissions from permissions@acm.org. \\
 {\emph{CHI '20, April 25--30, 2020, Honolulu, HI, USA.} } \\
-\Copyright~2020 Association of Computing Machinery. \\
+\textcopyright~2020 Association of Computing Machinery. \\
 ACM ISBN 978-1-4503-6708-0/20/04\ ...\$15.00. \\
 http://dx.doi.org/10.1145/3313831.3376624}
 % Update the XXXX string to your assigned DOI from ACM.
@@ -25,6 +25,7 @@ http://dx.doi.org/10.1145/3313831.3376624}
 \usepackage[table]{xcolor}
 \usepackage{colortbl}
 \usepackage{mdwlist}
+\usepackage{textcomp}
 \usepackage{booktabs}
 \usepackage{textcomp}
 
@@ -99,7 +100,7 @@ http://dx.doi.org/10.1145/3313831.3376624}
 
 \newcommand{\g}{\, | \,}
 
-\newcommand{\latexfile}[1]{\input{sections/#1}}
+\newcommand{\latexfile}[1]{\input{2020_chi_explanation/sections/#1}}
 \newcommand{\figfile}[1]{figures/#1}
 
 %\newif\ifcomment\commenttrue
@@ -144,7 +145,7 @@ Google Research Z\"urich.}~~Dan Weld,$^\ddag$ and Leah Findlater$^\ddag$
   \alignauthor{
     \affaddr{${}^\dag$University of Maryland}\\
     \affaddr{College Park, MD, USA}\\
-    \email{\textttt{amsmit@umd.edu, \\ jbg@umiacs.umd.edu}}}
+    \email{\texttt{amsmit@umd.edu, \\ jbg@umiacs.umd.edu}}}
   \alignauthor{
     \affaddr{${}^\ddag$University of Washington}\\
     \affaddr{Seattle, WA, USA}\\
@@ -155,7 +156,7 @@ Google Research Z\"urich.}~~Dan Weld,$^\ddag$ and Leah Findlater$^\ddag$
 \maketitle
 
 \begin{abstract}
-\input{sections/00-abstract}
+\input{2020_chi_explanation/sections/00-abstract}
 \end{abstract}
 
 
@@ -195,21 +196,24 @@ Google Research Z\"urich.}~~Dan Weld,$^\ddag$ and Leah Findlater$^\ddag$
 
 
 
-\input{sections/10-intro}
-\input{sections/20-rw}
-\input{sections/30-method}
-\input{sections/40-study1}
-\input{sections/50-study2}
-%\input{sections/60-discussion}
-%\input{sections/70-conclusion}
-\input{sections/80-discussion-new.tex}
+\input{2020_chi_explanation/sections/10-intro}
+\input{2020_chi_explanation/sections/20-rw}
+\input{2020_chi_explanation/sections/30-method}
+\input{2020_chi_explanation/sections/40-study1}
+\input{2020_chi_explanation/sections/50-study2}
+%\input{2020_chi_explanation/sections/60-discussion}
+%\input{2020_chi_explanation/sections/70-conclusion}
+\input{2020_chi_explanation/sections/80-discussion-new.tex}
 
 \section{Acknowledgments}
 We thank the anonymous reviewers for their insightful and constructive
-comments, and we thank Simone Stumpf and James Fogarty for their feedback on early ideas for this study. This work was partially supported by NSF Grants \abr{IIS}-1822494 and \abr{IIS}-1409287, ONR grant N00014-18-1-2193, the WRF/Cable Professorship, and the Allen Institute for Artificial Intelligence.
-Any opinions, findings,
-conclusions, or recommendations expressed here are those of the
-authors and do not necessarily reflect the view of the sponsor.
+comments, and we thank Kevin Seppi, Simone Stumpf, and James Fogarty for their
+feedback on early ideas for this study. This work was partially
+supported by NSF Grants IIS-1822494 and IIS-1409287 (UMD), ONR grant
+N00014-18-1-2193, the WRF/Cable Professorship, and the Allen Institute
+for Artificial Intelligence (UW).  Any opinions, findings, conclusions, or
+recommendations expressed here are those of the authors and do not
+necessarily reflect the view of the sponsor.
 
 \clearpage
 
@@ -240,8 +244,8 @@ authors and do not necessarily reflect the view of the sponsor.
 
 % REFERENCES FORMAT
 % References must be the same font size as other body text.
-\bibliographystyle{SIGCHI-Reference-Format}
-\bibliography{bib/journal-full,bib/references,bib/bibliography}
+\bibliographystyle{style/sigchi}
+\bibliography{bib/journal-full,bib/2020_chi_explanation}
 
 \end{document}
 
