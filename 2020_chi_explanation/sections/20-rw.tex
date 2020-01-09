@@ -1,0 +1,128 @@
+\section{Related Work}
+%This paper explores the relationship between explanations and feedback in ML. First 
+We review related work in interactive and explainable ML, separately, and then describe prior studies on their relationship. 
+
+%Interactive ML
+\subsection{Interactive Machine Learning}
+
+Compared to classical supervised ML's focus on static labels and
+datasets, interactive machine learning (IML) trains a model through rapid end \emph{user}
+interaction~\cite{Amershi2014PowerLearning}.
+%
+IML commonly produces higher quality models~\cite{Settles2010ActiveSurvey, Raghavan2006ActiveInstances}, personalized recommendations~\cite{Amershi2012Regroup:Networks, Gowacka2013DirectingKeywords} or
+models that are better aligned with users'
+understanding~\cite{Andrzejewski2009IncorporatingPriors,
+Lee2012IVisClustering:Modeling}.
+%
+However, user feedback can have negative effects: decreased system 
+performance~\cite{Ahn2007OpenHarm, Wu2019LocalAnalysis} or 
+inconsistent mental models~\cite{Bansal2019UpdatesTradeoff}.
+
+This ``human-in-the-loop'' approach has been applied across machine
+learning, including in supervised
+ML~\cite{Fails2003InteractiveLearning, Settles2010ActiveSurvey},
+unsupervised ML~\cite{Balcan2008ClusteringFeedback}, and reinforcement
+learning~\cite{Knox2012ReinforcementTasks,
+Saunders2018TrialIntervention}.
+%
+We focus on supervised ML as it provides intuitive mechanisms for non-ML expert, end user
+feedback, such as providing training
+examples~\cite{Fiebrink2009ALearning},
+preferences~\cite{Resnick1994GroupLens:Netnews}, or by
+reacting to model predictions with instance-level (i.e., correcting or
+confirming predictions~\cite{Fails2003InteractiveLearning,
+Culotta2006CorrectiveExtraction}) or feature-level feedback (i.e.,
+denoting features indicative of each
+class~\cite{Settles2011ClosingInstances,
+Kulesza2015PrinciplesLearning, Raghavan2006ActiveInstances}). Our focus on end users providing feedback, and in particular feature-level feedback aligns with ``Machine Teaching'', where non-ML experts build models from more than just labeled data~\cite{Wall2019UsingTeaching}.
+
+%
+%Our studies use a text classification system that supports instance
+%and feature-level feedback, similar to
+%Settles~\cite{Settles2011ClosingInstances} and Kulesza et
+%al.~\cite{Kulesza2015PrinciplesLearning}.
+
+\subsection{Explainable Machine Learning}
+% Explainable Machine Learning
+% in general
+Explainability (or intelligibility) in ML has received growing
+attention as ML models take on more important responsibilities in
+society.
+%
+More complex models are often more accurate.
+%
+Thus, intelligibility research both develops global explanations, such as more transparent
+models~\cite{caruana-kdd15,Alvarez-Melis2018TowardsNetworks,
+Lage2018Human-in-the-loopPrior, Si2013LearningDetection} or black-box explanations~\cite{Lakkaraju2019FaithfulModels}, and local explanations of individual algorithm decisions, which can include
+input evidence~\cite{Lei2016RationalizingPredictions,
+Feng2019WhatPlay},
+localizations~\cite{Selvaraju2017Grad-CAM:Localization,
+Park2017AttentiveAbstract}, natural language
+explanations~\cite{Camburu2018E-SNLI:Explanations,
+Ehsan2019AutomatedPerceptions, Gkatzia2016NaturalInformation}, or
+local approximations~\cite{Ribeiro2016WhyClassifier}.
+%
+We focus on local explanations (i.e., highlighting
+important words).
+
+Explanations can support
+fairness and bias assessments~\cite{Dodge2019ExplainingJudgment}, improve perceived understanding~\cite{Kocielnik2019WillSystems},
+promote system
+acceptance~\cite{Herlocker2000ExplainingRecommendations}, engender
+trust~\cite{Pu2006TrustInterfaces}, and convince users to accept
+recommendations~\cite{Cramer2008TheRecommender}. However, explanations can decrease users' perceptions when algorithmic limitations or uncertainty
+are portrayed~\cite{Cai2019TheInterface,
+Stowers2017InsightsUncertainty, Lim2011InvestigatingApplications}.
+%
+Explanations can have other negative effects, such as over-reliance~\cite{Stumpf2016ExplanationsSystems} or inability to detect
+mistakes~\cite{Poursabzi-Sangdeh2018ManipulatingInterpretability}.
+%
+ML-based systems can set expectations by exposing accuracy~\cite{Yin2019UnderstandingModels} or anticipated system mistakes~\cite{Kocielnik2019WillSystems}. This work explores whether such insight in turn increases users desire to fix mistakes and improve systems.
+%
+%This work explores how explanations with or without the opportunity
+%for feedback impact user satisfaction (frustration, trust, acceptance)
+%and how users expect these models to change.
+
+Prior work explores the effect of explanations on mental models, in
+particular on \textit{predictability}, or the users' ability to
+predict model
+behavior~\cite{Poursabzi-Sangdeh2018ManipulatingInterpretability,
+Chandrasekaran2019DoHuman, Bunt2007UnderstandingCustomization},
+finding conflicting results. Explanations improved predictability for apartment pricing~\cite{Poursabzi-Sangdeh2018ManipulatingInterpretability} and GUI customization~\cite{Bunt2007UnderstandingCustomization}, but did not have an effect for a visual question answering~\cite{Chandrasekaran2019DoHuman}.
+%
+This discrepancy could be because that users expected the ML model to change and therefore were less successful at predicting future model behavior.
+%
+Our studies measure expected change by asking
+users whether they think the system they evaluated will have higher, similar, or lower accuracy on new data.
+
+\subsection{Relationship of Explainability and Interactivity in ML}
+% explainable + interactive
+
+Users need to understand how models work~\cite{Fiebrink2009ALearning, Amershi2010ExaminingLearning, Kulesza2012TellAgent} to best fix
+them, and how models are explained changes user
+feedback~\cite{Rosenthal2010TowardsData,
+Kulesza2015PrinciplesLearning}.
+%
+%Rosenthal and Dey's study~\cite{Rosenthal2010TowardsData} suggest that presenting a system's prediction and low-level context (e.g., an email has
+%keywords ``A'' and ``B'') helps users give effective feedback.
+%
+Kulesza et al.~\cite{Kulesza2015PrinciplesLearning} introduced EluciDebug, based on the concept of
+``explanatory debugging'', in which a classifier
+explains binary predictions to users in the form of important input
+words and proportion of the data labeled as each class.
+%
+Users in turn inform the classifier by correcting the prediction---\textit{instance feedback}---or saying which words are important for each
+class---\textit{feature feedback}.
+%
+Users both better understood and corrected  EluciDebug's mistakes compared to a system without explanations or feature-level feedback.
+%
+%, yet for simplicity, we show and support interaction with only the
+%word features within each example.
+While these studies tell us that explanations foster better feedback,
+prior work has not investigated how user perceptions---such as
+frustration and trust---are shaped by the presence or (sometimes more
+importantly) absence of IML feedback and explanations. Therefore, we address this using a similar data set, task, explanation, and feedback mechanisms.
+
+
+
+

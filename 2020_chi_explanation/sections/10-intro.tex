@@ -1,0 +1,76 @@
+\section{Introduction}
+Complex machine learning (ML) models can be incomprehensible for end users who are not ML experts. While a model may have high accuracy on held-out test sets, users may also want to know {\em why} the model is making its predictions; if the model is right for the right reasons, they can be more confident that it will generalize or is operating without bias~\cite{Dodge2019ExplainingJudgment}. Automatic model explanations---such as ``why'' and ``why not'' justifications~\cite{Lim2009WhySystems} and feature visualizations~\cite{Kulesza2015PrinciplesLearning}---can provide intuition and increase user confidence and trust~\cite{Pu2006TrustInterfaces, Bunt2007UnderstandingCustomization}, human task performance~\cite{Stowers2017InsightsUncertainty, Feng2019WhatPlay,schmidt-aaai19},  satisfaction~\cite{Biran2017Human-centricPredictions}, and system acceptance~\cite{Herlocker2000ExplainingRecommendations}. Ongoing government research programs~\cite{Gunning2016ExplainableXAI}, focused academic conferences,\footnote{ACM Conference on Fairness, Accountability, and Transparency (https://fatconference.org/)} and recent legislation on the ``right to explanation''~\cite{Goodman2017EuropeanExplanation} have also fueled a general push for ML system transparency. 
+
+Explanations are not an unmitigated good, however. Complex explanations may promote over-reliance when they are convincing~\cite{Stumpf2016ExplanationsSystems} or lower user satisfaction when they are confusing~\cite{Narayanan2018HowExplanation}. Explanations that expose system uncertainty or algorithmic limitations may negatively affect users' perceptions~\cite{Lim2011InvestigatingApplications, Stowers2017InsightsUncertainty, Cai2019TheInterface}, and users may ignore explanations entirely if the benefit to attending to them is unclear~\cite{Kulesza2013TooModels}. 
+
+This paper investigates two additional complications of
+explanations. %in \emph{interactive} settings where users have 
+%when users are given varied (or no) support for providing
+%feedback to systems. 
+% RQ1 How does varying explanation (yes or no) and support for feedback (none, instance-level, feature-level) affect user experience; in particular, how does explanation without feedback affect frustration, trust, and acceptance?
+First, if explanations increase users'
+understanding of ML models and the errors they make, can
+this insight in turn increase users' desires to ``fix'' them and therefore reduce satisfaction if they cannot?
+%
+Interactive ML allows user feedback, which \emph{can} improve
+model accuracy~\cite{Fails2003InteractiveLearning,
+Raghavan2006ActiveInstances, Settles2011ClosingInstances}, but not
+always~\cite{Ahn2007OpenHarm, Wu2019LocalAnalysis}.
+%
+Here, explanations can help: by improving mental models, explanations
+can improve user
+feedback~\cite{Kulesza2015PrinciplesLearning,
+Rosenthal2010TowardsData}. Still, researchers have only begun to
+examine the relationship between explainability and interactivity in ML.
+%
+%The question of whether explanations impact the user's desire to
+%provide feedback has not been explored.
+% RQ2 Do users that do not provide feedback, still expect the model to improve (expectation of improvement)? And is this affected by whether they receive an explanation?
+
+Second, intuitively, users who provide feedback should expect model improvement, but what about those who do not give feedback; might
+explanations also cause users to expect model improvement over time?
+%
+Humans expect that others who are capable of explaining their mistakes will self-reflect and learn from those mistakes~\cite{Siegler2009MicrogeneticSelf-explanation}.
+Explanations reveal why the model was incorrect for
+particular instances, so ML novices, in particular, may similarly expect introspective behavior and learning from the experience, even without user feedback. 
+
+%This paper investigates two questions about the \textit{relationship} explanations and user feedback.  When a user sees explanations: (1) are they frustrated when they cannot provide feedback (2) do they expect the model to improve. 
+
+%method
+To study how explanations and supports for user feedback affect users' 
+experience with a ML model, we conducted two crowdsourced experiments
+with $180$ participants each.
+%
+Both experiments are a common classification task: is a message about
+``hockey'' or ``baseball''~\cite{Settles2011ClosingInstances, Kulesza2015PrinciplesLearning}.
+%
+Because we expected explanations and feedback would be particularly salient when the model could be improved, the first experiment used a \textit{lower quality} model~($\sim 75\%$ accuracy), trained on a handful of
+training documents.
+%
+Participants reviewed
+predictions made by the classification model with or
+without \textit{explanations},
+and with one of three levels of user \textit{feedback} to the
+model: none, instance-level (correcting or confirming the model's prediction), and feature-level (telling the model \textit{how} to predict). 
+%
+We measured participants' subjective post-task satisfaction, including frustration and trust, as well as
+how they expected the model to change. 
+%
+The second study experiment was exactly the same as the first, but with a \textit{higher quality} model ($\sim 95\%$ accuracy) to understand the effects of model quality.
+
+%contributions
+Our findings contribute the following observations to the nascent
+understanding of interactive and explainable machine learning:
+%(1) differing model quality results in different conclusions for impacts of explanations and feedback on user perceptions, as expected;
+%
+(1) users wanted the \textit{opportunity} to provide feedback, regardless of model quality or whether they received explanations; 
+%
+(2) for the low-quality model, feedback reduced frustration and increased trust and acceptance, but explanations had the opposite effect; therefore, explanations without the opportunity for feedback resulted in an especially negative user experience;
+%
+(3) for the high-quality model, users were not as frustrated, yet requesting feature-level feedback without an explanation reduced trust; %, and as with lower quality models, explanations without the opportunity for feedback may decrease satisfaction.
+%
+(4) regardless of model quality, when users  %told the model \textit{how} to work
+provided detailed feedback, they expected more improvement; yet, users generally expected model improvement even for conditions without any user feedback, demonstrating possible misconceptions of ML models by end users.
+%
+
+Despite the constrained setting (i.e., a classical, binary text classification task, with a simple explanation), we see this work as an important step in illustrating a key relationship between explanations and feedback. We conclude this paper by discussing extensions to more complex tasks and models with more sophisticated explanation and feedback mechanisms.
