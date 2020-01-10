@@ -1,0 +1,52 @@
+\section{Introduction}
+
+Machine Learning (\abr{ml}) is common in today's data-rich society.
+These techniques build models of data, either with explicit training
+labels or by finding patterns when labels are not provided.
+However, they are not perfect: data are noisy, models are
+deficient, and humans' needs and understanding sometimes conflict with
+\abr{ml} output~\cite{amodei2016concrete}.
+In these cases, a human--machine collaboration is required to iteratively improve and adapt models.
+Users can \textit{control} models by providing input such as additional training labels, re-weighting features, or modifying the underlying data representation.
+
+
+Effective human-machine collaboration requires model
+\textit{transparency}: users who understand models better can also
+better correct models'
+mistakes~\cite{Kulesza2010ExplanatoryPrograms,
+  Rosenthal2010TowardsData}.
+However, increased transparency has another effect in interactive \abr{ml}
+(\abr{iml}) settings: when users provide input to the model, they can tell whether the model uses their feedback
+\textit{predictably} (or not).
+For example, suppose users re-weight a regression model's features
+for predicting property prices, specifying that house color should
+not influence future predictions; they will be rightly
+surprised if the model later \textit{explains} a predicted price using
+the color.
+Therefore, with transparent models---where controls are easy to validate---we cannot  provide
+users with mechanisms to control the model and expect for a positive
+outcome---we must also consider \textit{how} models update and what
+cascading side effects might occur. This need introduces a problematic
+tension:
+ models must balance respecting user inputs and faithfully modeling
+ the data.
+
+This paper explores how users perceive and are affected by two specific aspects of control as it relates to predictability: whether input is applied as expected (\textit{adherence}) and whether other unexpected changes occur (\textit{instability}). \abr{iml} models also vary in other attributes that affect user experience, particularly their \textit{latency}, or how long they take to update, and their \textit{performance}, or how well they model the data or accuracy on held out test sets. These are not just attributes of \abr{iml} systems; human--computer interaction guidelines prescribe that interactive systems should be predictable, controllable, and provide immediate updates~\cite{Hoekman2007DesigningDesign, Shneiderman1996TheVisualizations}. While prior work has highlighted control and predictability for intelligent user interfaces~\cite{Hook2000StepsReal}, the interaction between these constructs, particularly for highly transparent models, has not been fully explored.
+
+We study adherence, instability, latency, and quality in Human-in-the-Loop Topic Modeling~\cite[\hltm{}]{Andrzejewski2009IncorporatingPriors.}. In \hltm{}, users are exposed to and interact directly with model representations, meaning users can more easily validate when their changes are not applied as expected---or if other unexpected changes also occur compared to less transparent systems with abstract representations. Prior studies have exposed adherence and instability of \hltm{} through user interviews~\cite{Smith2018ClosingSystem,Lee2017TheModels}. However, these attributes and their effects on end users have
+not been studied at a large scale or compared between models.
+
+To explore how participants responded to varied system attributes of adherence, instability, latency, and quality, 100 crowdworkers used
+three \hltm{} systems for document understanding and organization.  
+We compared three distinct modeling approaches---varying objective functions and optimization strategies---as these approaches result in different computed adherence and stability, update times, and final model quality.
+We explore whether user perceptions and experience differ between these systems,
+and examine user behavior more generally, to better understand how end users approach and interact with interactive models with easy-to-validate controls.
+
+The systems had significantly different \textit{computed} adherence, instability, and latency, yet only \textit{perceived} adherence differences were significant.
+This finding suggests that participants noticed when the systems did not apply their input as expected, a phenomenon that  was particularly evident for easy-to-track refinements, such as adding or removing topic words. Participants were polarized by instability: some liked that it surfaced interesting information, others disliked it, and even others reported not noticing it.
+Participants thought all three systems were slow but performed well. Interestingly, the majority of participants thought that they improved the model quality, but on average they reduced computed topic coherence, suggesting a possible disconnect between traditional topic coherence measures and user perceptions of \hltm{} quality.
+Overall, users trusted all three systems and thought the task was easy, yet some were frustrated, particularly by slow updates.
+
+
+This paper provides three major contributions to our understanding of user interaction with transparent systems:  (1) an analysis of how users perceive adherence and instability, and whether these attributes affect users' experience; (2) an understanding of the trade offs between system attributes of adherence, instability, latency, and performance; and (3) design recommendations for transparent, interactive systems.
+

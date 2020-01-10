@@ -1,0 +1,32 @@
+\section{Discussion and Future Work}
+\label{discussion}
+
+This paper explores users' perceptions, experience, and behavior with systems with easy-to-validate controls---in particular, those that provide varied levels of control for both adherence and instability.  This section discusses implications and design recommendations for such systems as well as limitations of this study and suggestions for future work.
+
+\paragraph{Users want to be heard}
+End users want to be in control~\cite{Vaccaro2018TheSettings, Kocielnik2019WillSystems}, but what about when systems cannot respect user inputs? While users may expect that their input will be adhered to, as demonstrated by qualitative comments in our study, modeling approaches differ in how user input is incorporated, particularly when it conflicts with the underlying data. For example, suppose a user interacting with a property pricing tool tries to remove all weight from crucial features (e.g., house price or acreage); if the model follows this guidance, prediction quality will decrease. Or, suppose a user tries to add a word to a topic that does not appear in any of the documents; the model cannot add this word as it is out of vocabulary. 
+In our study, refinements that did not work as expected were less popular (e.g., change word order and add word), whereas users preferred refinements that reflected their intent well (e.g., merge topics). Adherence is thus an important quality for developers of human-in-the-loop systems to consider. To account for this, when user input cannot be adhered to, transparent systems could either \textit{explain} why or provide superficial adherence (i.e., treating word-level refinements as modifications of the model \textit{representation}, which do not impact the underlying model).
+
+\paragraph{Users might be willing to share control if they have a helpful partner}
+Importantly, our study also shows that users think about instability differently than the related concept of adherence. Instability was a lower priority consideration, and not all participants perceived it. For those who did, it was polarizing: some preferred ``help'' from the system, while others disliked it, particularly when model updates reverted prior changes (e.g., reintroducing previously removed words) or changed topics that users thought were already high quality. Therefore, our recommendation is to (1) better inform users to how models might update and clarifying why models might make other unexpected changes (i.e. faithfully modeling all underlying data); and (2) provide mechanisms for users to \textit{lock} portions of the model which should not be updated and easily revert low quality, unstable updates. These recommendations should promote a healthier human-machine collaboration in which users and models can share control.  
+
+\paragraph{Different users, different needs} 
+Users do not have a homogeneous process for interacting with models.
+As human-in-the-loop systems become more ubiquitous, designers should
+ensure that models and interfaces are robust to innate user variation. For example, while we did not explore this in our study, different levels of expertise, both with ML and the domain, could impact use: ML experts or those using the system on their own data are more likely to perceive when models update in unexpected ways, and while ML experts might be understanding of this, domain experts (without ML background), are likely to become frustrated. Similarly, personality traits, such as confidence and locus of control, are likely to affect users' desire to be in control, and increase their frustration if systems limit control.
+
+\paragraph{Need for speed: latency and granularity}
+Machine learning pipelines typically focus on \emph{throughput} as the
+metric of choice~\citep{Landset2015AEcosystem,Gani2016AEvaluation}.  This is indeed important for sating data-hungry
+models, but humans typically inspect high-level summaries rather than
+minuti\ae{}.  Computational frameworks that can serve intermediate updates quickly would best address users' complaints
+about ``slowness''. 
+Further, better management of latency expectations may have reduced frustration in our study; tutorials and initial introductions to ML tools should set expectations regarding latency, as well as other system attributes (e.g., instability and adherence).  
+
+
+
+\paragraph{Limitations}
+This study used a simple, and fairly short document organization task. Had participants been working with their own data, or working with the systems for longer periods of time, they might have been more invested in model quality, which in turn might have affected their perceptions and experience. Similarly, while our study was aimed at understanding how non-ML experts interact with highly transparent systems, ML experts would likely have differing perceptions and experience.
+
+
+

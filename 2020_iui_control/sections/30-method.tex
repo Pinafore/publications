@@ -1,0 +1,236 @@
+\section{Comparative evaluation of \hltm{} modeling approaches}
+
+For this study, crowd workers interacted with a topic model to organize documents using one of three contrasting
+\hltm{} approaches based on \lda~\cite{blei-03}. The approaches support the same set of nine refinement operations (e.g., merging topics and removing words or documents from topics), and differed only in implementation details, as these criteria affect model attributes, such as adherence, instability, quality, and latency.
+
+This study used a between-subjects experimental design with a single factor (\textit{Modeling Approach}): informed priors using Gibbs sampling
+(\textit{info-gibbs}), informed priors using variational inference~(\textit{info-vb}), and constraints using Gibbs sampling
+(\textit{const-gibbs}). 
+
+The goal of this study was to explore how users perceive and interact with transparent systems with varied attributes: adherence, instability, latency, and quality. This study explored specifically: 
+(RQ1) How do users perceive instability and adherence across the three \hltm{} approaches? 
+(RQ2) How does user experience vary given these differing attributes? 
+(RQ3) How do users behave with the three \hltm{} approaches?
+
+\subsection{Modeling Approaches}
+
+We implemented three \hltm{} systems, based on \lda{}, following modeling approaches
+proposed in prior work~\citep{kumar-19}. These modeling
+approaches differ in how user input (e.g., added words) is conveyed to the model---informed priors~\cite{Smith2018ClosingSystem} or constraints~\cite{yang-15}---and inference strategies---variational inference~\cite{blei-03} or Gibbs sampling~\cite{griffiths-04}.
+
+While other topic modeling approaches exist~\cite{Larochelle2012AModel,Hofmann1999ProbabilisticIndexing}, we chose these  \lda-based variants because they support the same user-preferred refinement set. For example, ``anchor words''-variants~\cite{Lund2017TandemModeling} also generate topics, but cannot support word-level operations like adding words. Also, these approaches may differ by the attributes of interest. For example, prior work asserts that informed priors better \textit{adhere} to refinement operations~\cite{kumar-19}, and Gibbs sampling-based methods
+can yield more coherent topics~\cite{Nguyen2015ImprovingModeling}.
+Also, Gibbs sampling and variational inference have different convergence rates~\cite{asuncion-09b}. While Gibbs sampling is often preferred for small datasets and interactive settings because of its low latency, variational inference can scale to millions of documents~\cite{hoffman-10,zhai-12}. 
+Our setting allows a focused, task-center comparison (Section~\ref{sec:calculated-differences}).
+
+For \textit{info-gibbs} and \textit{const-gibbs}, we trained initial \lda{}
+models with $300$ Gibbs sampling iterations and default Mallet toolkit\footnote{\url{http://mallet.cs.umass.edu/}} hyperparameters ($\alpha=0.1; \beta=0.01$)
+and, for \textit{info-vb}, $30$ \abr{em} iterations.
+For each subsequent update during the task, we applied the refinement
+and ran inference.
+
+
+\subsection{Refinement Implementations}
+
+For each of the three \hltm{} modeling approaches, we implemented the same nine
+refinement operations preferred by users in prior
+work~\cite{Lee2017TheModels,Musialek2016UsingApproach,Smith2018ClosingSystem}. These include four topic-level refinements: \textbf{add word, change word order, remove word, remove document} and five model-level refinements: \textbf{merge topics, split topic, create topic, delete topic, add to stop words}. 
+
+For \textbf{remove word, add word, remove document, merge topics, split
+  topic, change word order} and \textbf{create topic}, we
+applied the refinements following the implementation proposed by
+\etalcite{Kumar}{kumar-19}.
+For \textbf{add to stop words}, to add a word $w$ to the stop words list, we excluded $w$ from
+the model vocabulary. For \textbf{delete topic}, to delete a specified topic $t$, in all three
+models, we first forgot all latent topic assignment which were
+assigned to $t$, and then reduced the number of topics by one.
+
+When these refinements were used during the task, we applied them
+and ran inference for fixed $N$ iterations.
+We chose a fixed $N$ approach to limit the model latency, instead of running inference until convergence.
+Moreover, all refinements have different levels of complexity, meaning the models
+converge faster for certain refinements than others.
+For example, \textbf{add to stop words} is a simpler refinement than
+\textbf{create topic}, and hence requires fewer iterations to
+converge.
+For each refinement, we empirically fine-tuned $N$ on $9000$ tweets
+randomly selected from a different
+dataset.\footnote{\url{https://www.kaggle.com/kazanova/sentiment140/}} In
+particular, to fine-tune $N$ for a refinement, we randomly applied a
+refinement multiple times and observed how fast the model converged.
+For \textit{info-gibbs} and \textit{const-gibbs}, $N$ ranged from one
+for \textbf{add to stop words} to $20$ for \textbf{create topic}. For
+\textit{info-vb}, $N$ varied from one for \textbf{add to stop words}
+to four for \textbf{create topic}.
+
+\subsection{Dataset}
+For the study we used the Twitter Airline Sentiment Dataset, which
+includes tweets directed at various common airlines (e.g., United,
+Southwest Airlines, Jet Blue) and manually tagged by sentiment
+(positive, negative,
+neutral).\footnote{https://www.kaggle.com/crowdflower/twitter-airline-sentiment}
+We produced initial topic models of
+$10$ topics from only the $9,178$ negative sentiment tweets, as these
+reflect a distinct set of complaints regarding air
+travel. 
+
+        
+\begin{figure*}[t]
+  \centering
+  
+  \includegraphics[width=0.75\textwidth]{\figfile{ui5}}
+  \caption{\hltm{} interface. Initial model (top)
+    represented as a list of topics, each displayed with topic \abr{id}
+    and three most probable words. Selecting a topic reveals the top 20 words and top 20 documents.  
+    Participants refined the model, including merging topics by
+    clicking ``merge'' next to the topic and selecting
+    additional topics with which to merge (bottom left), and splitting
+    topics by clicking ``split'' next to the topic and
+    dragging to separate words into sub-topics (bottom right).  }
+  \label{fig:ui}
+\end{figure*}
+
+\subsection{Task Interface}
+
+The \hltm{} task user interface was the same for all three modeling
+approaches (Figure~\ref{fig:ui}).
+The topics are listed on the left, each initially represented by a generic topic label (e.g.,
+``Topic 1'') and the three most probable words for the topic. 
+The selected topic is on the right, which displays
+the top 20 topic words and the top 20 topic documents. Documents
+are ordered by their probability for the topic $t$ given the document
+$d$, or $p(t \g d)$.
+Each word, $w$, is ordered and sized by its probability for the topic
+$t$, or $p(w \g t)$; this simple word list representation provides
+a quick understanding of the
+topic~\cite{Alexander2016AssessingGist-Forming,Smith2017EvaluatingLabels}. Hovering
+or clicking on topic words highlights the word in the displayed
+document snippets. Participants can click the pencil icon to rename the topic
+labels to be more descriptive.
+
+Participants can explore and update the model using the set of nine
+refinement operations:
+click ``x'' next to words or documents to remove them, select and drag
+words to re-order them, type new words into the input box and press
+``enter'' to add them, select a word and click ``remove selected word
+from all topics'' to add it to the stop words list, click ``delete
+topic'' to remove the selected topic, or click ``create a new topic'',
+``split'', or ``merge'' (in the topic list) to enter into create,
+split, or merge modes, respectively (Figure~\ref{fig:ui}).
+Each refinement is immediately saved and the model is updated. After
+updates, participants can \textit{undo} to revert models to prior states.
+
+\subsection{Participants}
+We recruited $100$ participants ($32$ male and $68$ female) on the
+Upwork platform.\footnote{https://www.upwork.com/} Participants were
+  required to have a 90\% or higher job success score and be native or
+  bilingual English speakers. 
+  We designed the task to take approximately 60 minutes and paid participants $20$ \abr{usd}. We used Upwork instead of other common crowdworker platforms (e.g., Mechanical Turk), to recruit more motivated participants; participants were paid a higher rate and could always contact one of the researchers in case of questions. 
+  
+Participants varied in age ($<19$: four, $20-29$: $46$, $30-39$: $23$, $40-49$: $13$, $50-59$: seven, $>60$: eight), education (college degree: $49$, graduate degree: $29$, some college: $17$, high school or GED: $5$), and
+background (most common include $12$ participants with background in
+English or writing, seven in education, and five in business). 
+
+To understand participants' prior exposure to topic models and machine learning, as this could affect our results, study participants rated prior experience with statistical topic modeling and machine learning, respectively.
+Participants varied for prior
+experience (rated on a scale from one to five) with topic models (``none'' (one): $44$, two: $25$, three: $18$, four: seven, ``significant'' (five): six) and machine learning (``none'' (one): $44$, two: $19$, three: $19$, four: nine, ``significant'' (five): seven). 
+
+\subsection{Procedure}
+\label{sec:procedure}
+Each participant was randomly assigned to one of the three
+modeling approaches and all used the same \hltm{}
+user interface (Figure~\ref{fig:ui}). 
+Each user got a unique starting model from a pool of $50$ pre-trained initial \lda{} models with $10$
+topics for each of the three \hltm{} modeling approaches. 
+Given the assigned approach, we randomly selected an initial topic model from the pool
+of pre-trained models and then removed the selected model from the
+pool. 
+The study began with a tutorial, which introduced participants to topic modeling, relevant terminology, and the task interface. The tutorial also required participants to experiment with each of the nine refinement operations. 
+After the tutorial, participants were given the following task instructions: 
+\begin{quote}
+    ``Imagine you have been asked to write a travel blog post about the common complaints that travelers have when flying. The system has gathered 9000 tweets of people complaining about their air travel experience directed at various popular airlines and has generated an initial set of 10 topics to organize these air travel complaint tweets. Use the tool to improve these topics, so that you can write a blog post about common air travel complaints with a few example tweets from each. You do not need to write the actual blog post as part of this task.''
+\end{quote}
+
+Participants were then asked to spend about
+$30$ minutes interacting with the model and to click the ``finish task'' button when they
+were happy with the organization they had achieved. 
+The interface required participants to spend at least $20$ and no more
+than $45$ minutes on the task. 
+The task goal and time elapsed were denoted in the interface
+(Figure~\ref{fig:ui}).
+
+After the task, participants completed a survey containing closed- and
+open-ended questions on their perceptions and experience with the
+system (Table~\ref{tab:subjective_measures}) and which refinements
+they felt were the most and least useful, with follow up ``why''
+questions. Participants also responded to whether they noticed any
+unexpected behavior while using the tool and what they liked and did
+not like about using the tool for the task.
+
+\begin{table}[t!]
+    \caption{Seven-point rating scale statements for nine subjective measures. All are on a scale from ``strongly disagree'' to ``strongly agree'' aside from satisfaction, which is on a scale from ``not at all'' to ``very'' and improvement, which is on a scale from ``much worse'' to ``much better.''}
+    \scriptsize
+    \begin{center}
+       \begin{tabular}{l p{5cm}}
+        \toprule
+        Measure & Statement \\
+        \midrule
+        frustration & ``Using this tool to perform the task was frustrating''\\
+        trust & ``I trusted that the tool would update the organization of tweets well''\\
+        task ease & ``It was easy to use this tool to perform the task''\\
+        confidence & ``I was confident in my specified changes to the tool''\\
+        final model satisfaction & ``How satisfied are you with the final organization of the tweets into categories of air travel complaints?''\\
+        model improvement & ``How do you think the final organization compares to the initial organization of tweets?''\\
+        low latency & ``After my changes, the tool updated quickly''\\
+        adherence (overall) & ``The tool made the changes I asked it to make''\\
+        instability & ``The tool made unexpected changes beyond what I asked it to make''\\
+        \bottomrule
+    \end{tabular}
+    \end{center}
+    \label{tab:subjective_measures}
+\end{table}
+
+\subsection{Measures}
+We report on nine overall subjective measures, collected using seven-point rating scales (Table~\ref{tab:subjective_measures}): four \textit{user experience} measures (frustration, trust, task ease, confidence) and five \textit{user perception} measures (perceived adherence, perceived instability, perceived latency, final model satisfaction, and perceived improvement). We also report on subjective per-refinement adherence, collected using seven-point rating scales (strongly disagree to strongly agree) for nine statements of the form, ``the system incorporated the [refinement] operation as I asked it to.'' These statements also included a ``did not use operation'' option.
+
+We also report on quantitative measures of the system attributes: adherence, instability, latency, and quality (initial, final, and improved). 
+To compute \textit{adherence} for each of the nine refinements we use the metrics provided by~\etalcite{Kumar}{kumar-19}:
+\begin{itemize}
+    \item \textbf{add word}, \textbf{remove word}, and \textbf{change word order}: treat the topic as a ranked word list, and then take the ratio of the actual rank change (where the added, removed, or reordered word is in the updated model) and the expected rank change.
+    \item \textbf{remove document}: compute similarly to \textbf{remove word}, except treat the topic as a ranked document list.
+    \item \textbf{create topic}: compute the ratio of the number of seed words in the created topic out of the total number provided.
+    \item \textbf{split topic}: compute the average adherence of the parent and child topic, using the adherence measure for \textbf{create topic}.
+    \item \textbf{merge topics}: compute the ratio of the number of the words in the merged topic that came from either of the parent topics over the total number of words shown to the user.
+    \item \textbf{add to stop words} and \textbf{delete topic}: these refinements are deterministic, and therefore always have a perfect adherence score.
+\end{itemize}
+Adherence is measured on a range from $0.0$, meaning the system ignores the user's input, to
+$1.0$, meaning the system does exactly as the user asks.
+  The exception is adherence to
+\textbf{change word order}, which ranged from $-\infty$ to $\infty$, and where a
+negative adherence value means the system did the opposite of what the
+user asked. For example, if a user moves a word up two positions, but it is instead moved down one, the adherence would be $-.5$. 
+Overall adherence is computed as the average adherence score over all refinements applied by the user.
+
+
+To estimate the \textit{instability} caused by a refinement, we use a modified topic-term stability metric~\cite{belford2018stability}. We first compute the difference between each topic as $1.0$ minus the overlap coefficient~\cite{M.K2016AMining} between the top 20 words of the topic, before and after the refinement. Instability is then measured as the average difference between each topic excluding the refined topic(s). Put simply, we compute what percentage of topic words are removed after an update for the untouched topics. Instability is scored from $0.0$ (all topics the same) to $1.0$ (all topics completely different). 
+\textit{Latency} is the time the model takes to incorporate each refinement. 
+We also computed each participants' initial and final topic model quality as the models' average
+\npmi{}-based topic coherence~\cite{Lau2014MachineQuality}; \textit{quality} is thus the difference (i.e., improvement or degradation) from initial to final model quality.\footnote{Automatic coherence metrics require an external reference corpus for \npmi{} computation; as in prior work, we use Wikipedia.  As the Twitter-based topics included many words not found in the
+Wikipedia reference corpus, their overall topic coherence scores were
+relatively low, but are still useful for \emph{relative} comparison.} We additionally logged all interactions with the system including how
+many and which refinements participants applied.
+
+\subsection{Data and analysis}
+\label{sec:analysis}
+We disqualified five of the $100$ participants because they made an outlying number of survey
+response ``mistakes'' on per-refinement adherence statements. We considered a response to be a ``mistake'' if
+the participant said they had used a refinement for the task when they had not, or vice versa, and
+used an interquartile range (IQR) approach to determine outliers based on the count of mistakes~\cite{Tukey1977ExploratorySection}: the median
+number of mistakes was two, and the upper
+quartile bound for outliers ($Q3 + 1.5IQR$) was five (out of nine
+possible mistakes). Removing outliers above this bound resulted in $95$ participants in our final dataset: $31$ in the \textit{info-gibbs} condition, $33$ in the
+\textit{const-gibbs} condition, and $31$ in the \textit{info-vb}
+condition.  
+
+For quantitative analysis, we used separate Kruskal Wallis tests to determine significance across the conditions for each of the subjective rating responses and the quantitative measures. For qualitative analysis, we followed a thematic
+approach~\cite{Braun2006UsingPsychology}, and coded the open-ended responses related to what participants found unexpected, liked and did not like, and which refinements they found were most and least useful. Two annotators independently coded a random subset of 20 of the 95 responses for each of the statements regarding what was \textit{unexpected}, what participants \textit{liked}, and what they \textit{disliked}; agreement was scored using Cohen's $\kappa$: $\kappa=.93$ for \textit{unexpected} responses, $\kappa=.88$ for \textit{liked} responses, and $\kappa=.89$ for \textit{disliked} responses.
