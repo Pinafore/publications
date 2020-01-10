@@ -153,7 +153,7 @@
 
 \typeout{Document Class SIGCHI}
 
-\typeout{Available at https://github.com/sigchi.}
+%\typeout{Available at https://github.com/sigchi.}
 
 \typeout{}
 
@@ -1448,10 +1448,10 @@
        {References}
         \@mkboth{{\refname}}{{\refname}}%
     }%
-%    \list{[\arabic{enumi}]}{%
-    \list{\arabic{enumi}.}{% DLC
-%        \settowidth\labelwidth{[#1]}%
-        \settowidth\labelwidth{#1.}% DLC
+    \list{[\arabic{enumi}]}{%
+%    \list{\arabic{enumi}.}{% DLC
+        \settowidth\labelwidth{[#1]}%
+%        \settowidth\labelwidth{#1.}% DLC
         \leftmargin\labelwidth
         \advance\leftmargin\labelsep
         \advance\leftmargin\bibindent
