@@ -23,9 +23,10 @@
 
 % This is required by NSF.  Do not remove; if it conflicts with
 % another package, fix that problem without removing this from
-% Preamble.
-% Unless for AAAI ... this needs a new bibfile that plays well with hyperref.
-%\usepackage[a-1b]{pdfx}
+% Preamble.  This may involved editing style files or bst files.  It's
+% painful, but do that rather than messing with this.  This is
+% required by federal government.
+\usepackage[a-1b]{pdfx}
 
 % Below should be safe
 \usepackage{framed}
@@ -49,10 +50,34 @@
 % Don't use hyperref or url, as it can screw up AAAI / ICML formatting
 %\usepackage{url}
 \usepackage{latexsym,comment}
+\usepackage[normalem]{ulem}
 
 \newcommand{\breakalign}{\right. \nonumber \\ & \left. \hspace{2cm}}
 
-
+\newcommand*{\missingreference}{{\Huge \colorbox{red}{?reference?}}}
+\newcommand*{\missingcitation}{{\Huge \colorbox{red}{?citation?}}}
+\makeatletter
+\def\@setref#1#2#3{%
+   \ifx#1\relax
+    \protect\G@refundefinedtrue
+    \nfss@text{\reset@font\missingreference}%
+    \@latex@warning{Reference `#3' on page \thepage \space
+              undefined}%
+   \else
+    \expandafter#2#1\null
+   \fi}
+\def\@citex[#1]#2{\leavevmode
+   \let\@citea\@empty
+   \@cite{\@for\@citeb:=#2\do
+     {\@citea\def\@citea{,\penalty\@m\ }%
+      \edef\@citeb{\expandafter\@firstofone\@citeb\@empty}%
+      \if@filesw\immediate\write\@auxout{\string\citation{\@citeb}}\fi
+      \@ifundefined{b@\@citeb}{\hbox{\reset@font\missingcitation}%
+        \G@refundefinedtrue
+        \@latex@warning
+          {Citation `\@citeb' on page \thepage \space undefined}}%
+        {\@cite@ofmt{\csname b@\@citeb\endcsname}}}}{#1}}
+\makeatother
 
 \newcommand{\feat}[1]{{\small \texttt{#1}}}
 \newcommand{\act}[1]{{\small \texttt{#1}}}
@@ -182,3 +207,8 @@
 \newcommand{\elmo}{\textsc{elm}{\small o}}
 \newcommand{\fone}{$F_1$}
 \newcommand{\jeopardy}{\textit{Jeopardy!}}
+
+\newcommand{\glove}{\abr{gl}{\small o}\abr{ve}}
+\newcommand{\bert}{\abr{bert}}
+\newcommand{\drqa}{\abr{d}{\small r}\abr{qa}}
+\newcommand{\docqa}{\abr{d}{\small oc}\abr{qa}}
