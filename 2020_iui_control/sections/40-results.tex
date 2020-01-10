@@ -1,0 +1,346 @@
+\begin{table}[t]
+  \caption{Measures for system attributes: instability, adherence, latency (seconds), and quality---final model quality (coherence) and percent improvement. Coherence scores multiplied by 1000 for readability. Responses reported as ``mean, $\sigma$''. Kruskal-Wallis
+    results reported as
+    ``${\chi}^2(2)$, p''.
+        The modeling approaches differed significantly (bold) for all computed attributes except improvement; cell shading for significantly differences highlights better approaches (darker is better).}
+  \label{tab:attributes}
+  \scriptsize
+    \begin{center}
+    \small
+      \begin{tabular}{c c c c c }
+        \hline
+        & \textit{info-gibbs} & \textit{const-gibbs} & \textit{info-vb} & Kruskal-Wallis \\
+        \hline \hline
+        \textbf{adherence} &  \cellcolor[gray]{0.7}.84, .10  &  \cellcolor[gray]{0.9}.70, .14 & \cellcolor[gray]{0.7}.82, .09 & \textbf{20.8, p<.001} \\
+        \textbf{stability} & \cellcolor[gray]{0.9}.12, .03 & \cellcolor[gray]{0.9}.12, .03 & \cellcolor[gray]{0.7}.03, .03 & \textbf{1754.8, p<.001} \\   
+        \textbf{latency (s)} & \cellcolor[gray]{0.7}15.2, 6.2 & \cellcolor[gray]{0.9}19.3, 9.2 & \cellcolor[gray]{0.9}20.4, 5.9 & \textbf{18.1, p<.001} \\ 
+        \textbf{final quality}  & \cellcolor[gray]{0.7}7.4, 3.5 & \cellcolor[gray]{0.7}.7.0, 1.9 & \cellcolor[gray]{0.9}.5.7, 1.5 & \textbf{8.5, .014} \\ 
+        improvement & 6\%, 42\% & 4\%, 34\% & -7\%, 30\% & 1.4, .489 \\
+        \hline
+      \end{tabular}
+    \end{center}
+    \bigskip\centering
+\end{table}
+
+
+
+\subsection{Results}
+
+Each of the 95 participants started with a distinct initial random topic model
+and applied refinements with the
+goal of improving the model for their imagined travel blog. 
+
+
+In the following sections, we provide detailed results regarding computed model attributes followed by user perceptions, experience and behavior given these different attributes, and with highly transparent, interactive models. We refer to participants throughout this section as P1-P95.
+
+\subsubsection{Computed Differences}
+\label{sec:calculated-differences}
+The three modeling approaches differed significantly for four out of
+the five computed attributes: adherence, instability, latency, and
+final model quality, but not model improvement
+(Table~\ref{tab:attributes}). The Gibbs sampling approaches
+(\textit{const-gibbs} and \textit{info-gibbs}) had higher final model
+quality than variational inference (\textit{info-vb}), while
+variational inference was more stable than Gibbs. Informed priors with
+Gibbs sampling (\textit{info-gibbs}) provided the fastest updates over
+\textit{const-gibbs} and \textit{info-vb}. Finally, informed priors
+(\textit{info-gibbs} and \textit{info-vb}) provided higher control
+than constraints (\textit{const-gibbs}).
+
+Analyzing adherence in more detail, Table~\ref{tab:ref_adherence_computed} shows the average computed per-refinement adherence for each modeling approach. Computed adherence differed significantly across modeling approaches for four of the nine refinements: \textit{const-gibbs} provided less control for \textbf{add word}, \textbf{change word order}, and \textbf{create topic} than the other approaches. For \textbf{split topic}, \textit{info-vb} provided the most control followed by \textit{const-gibbs}, and \textit{info-gibbs} provided the least.
+
+
+\begin{table}
+  \caption{Computed per-refinement adherence measurements      reported as ``mean, 
+    $\sigma$''. Kruskal-Wallis
+    results reported as
+    ``${\chi}^2(2)$, p''. There were significant differences (bold) between modeling approaches
+    for add word, change word order, create topic, and split topic; cell shading reflects adherence to that refinement (darker is better).}
+  \label{tab:ref_adherence_computed}
+    \begin{center}
+    \small
+      \begin{tabular}{c c c c c}
+        \hline
+        & \textit{info-gibbs} & \textit{const-gibbs} & \textit{info-vb}  & Kruskal-Wallis\\
+        \hline \hline
+        \textbf{add word} & \cellcolor[gray]{0.7}.99, .01 & \cellcolor[gray]{0.9}.62, .28 & \cellcolor[gray]{0.7}0.96, .04& \textbf{49.4, p<.001} \\
+        remove word & .91, .17 & .97, .08 & .99, .03 & 3.4, .180 \\
+        remove doc & .78, .32 & .88, .22 & .69, .28 & 3.6, .160\\
+        \textbf{change order} & \cellcolor[gray]{0.7}.67, .26 & \cellcolor[gray]{0.9}.06, .50 & \cellcolor[gray]{0.7}.53, .36 &\textbf{29.7, p<.001} \\
+        \textbf{create topic} & \cellcolor[gray]{0.7}1.0, 0 & \cellcolor[gray]{0.9}.53, .24 & \cellcolor[gray]{0.7}1.0, 0 & \textbf{21.9, p<.001} \\
+        delete topic  & 1.0, 0 & 1.0, 0 & 1.0, 0 & NA \\
+        merge topics  & .82, .08 & .79, .07 & .83, .09 & 4.0, .130 \\
+        stop word  & 1.0, 0 & 1.0, 0 & 1.0, 0 & NA\\
+        \textbf{split topic} & \cellcolor[gray]{0.9}.80, .27 & \cellcolor[gray]{0.8}.88, .08 & \cellcolor[gray]{0.7}.94, .12 & \textbf{10.0, .007}\\
+        \hline
+      \end{tabular}
+    \end{center}
+    \bigskip\centering
+\end{table}
+
+\begin{figure}[t]
+    \begin{center}
+    \includegraphics[width=.48\textwidth]{\figfile{perceptions-plots}}
+    \end{center}
+    \caption{
+  Seven-point rating scale responses by modeling approach for perceived adherence, instability, and low latency (quick updates), from ``strongly disagree'' to ``strongly agree.'' Participants thought the systems adhered to their input, but updated slowly. There was high variability for whether participants perceived instability. }
+    \label{fig:per}
+\end{figure}
+
+
+\subsubsection{User Perceptions}
+We analyzed participants' perceptions regarding adherence, instability, latency, and model quality through subjective responses (Figure~\ref{fig:per} and Figure~\ref{fig:qual}). 
+While computed adherence, instability, latency, and final model quality differ across modeling approaches, for subjective measures, only adherence is significantly impacted by condition: participants in \textit{const-gibbs} perceived lower adherence than the other modeling approaches.
+It is important to note that we did not control for these characteristics nor for the magnitude of their differences, which may explain why users did not perceive differences in all dimensions.
+
+Overall, participants thought the systems adhered to their input
+($M=5.3$ of 7, $\sigma=1.8$), but were mixed on whether the systems
+were unstable ($M=3.3$, $\sigma=2.2$). Participants thought
+the final models improvemed ($M=5.8$, $\sigma=1.1$) and they
+were satisfied with the quality ($M=5.1$, $\sigma=1.3$), but they
+thought the model updates were slow ($M=2.7$, $\sigma=1.6$).
+
+\paragraph{Participants noticed when word-level refinements did not adhere}
+\label{sec:control}
+
+Adherence was lower for \textit{const-gibbs} than other approaches
+(Table~\ref{tab:attributes}), particularly for three refinements:
+\textbf{add word, change word order}, and \textbf{create topic}
+(Table~\ref{tab:ref_adherence_computed}).
+
+Participants thought that the system \textit{adhered to} their input
+(Figure~\ref{fig:per}) more in the \textit{info-vb} ($M=5.7$,
+$\sigma=1.6$) and \textit{info-gibbs} approaches ($M=5.5$,
+$\sigma=1.5$) than \textit{const-gibbs} ($M=4.6$, $\sigma=1.9$).
+These differences were significant (${\chi}^2(2)=6.3,
+p=.042$).
+
+Perceived adherence was also significantly lower for
+\textit{const-gibbs} for two easy-to-validate word-level refinements
+(Table~\ref{tab:ref_control}): \textbf{add word} (${\chi}^2(2)=10.1,
+p=.006$) and \textbf{change word order} (${\chi}^2(2)=11.5, p=.003$).
+However, there was no significant difference between the modeling
+approaches for perceived adherence of the \textbf{create topic}
+(${\chi}^2(2)=.9, p=.62$) or \textbf{split topic} refinements
+(${\chi}^2(2)=3.6, p=.17$), even though these differed for computed
+adherence (Table~\ref{tab:ref_adherence_computed}).  Perhaps because
+it is harder for users discern perfect refinements (all requested
+words appear in the new topic) from ``good enough'' refinements.
+
+\begin{figure}[t]
+    \begin{center}
+    \includegraphics[width=.48\textwidth]{\figfile{quality-plots}}
+    \end{center}
+    \caption{Seven-point rating scale responses for subjective model quality: final model satisfaction from ``not at all satisfied'' to ``very satisfied'' and model improvement from ``much worse'' to ``much better'', reported by modeling approach. Overall participants were satisfied with the final model quality and thought the models  improved.}
+    \label{fig:qual}
+\end{figure}
+
+
+
+\paragraph{Participants were mixed on whether they observed instability}
+The computed instability metric shows that the \textit{info-vb} condition was significantly more stable than the other modeling approaches (Table~\ref{tab:attributes}).
+However, participants' responses for whether they observed instability had high variability, a pattern that was similar for all modeling approaches
+(Figure~\ref{fig:per}). 
+While \textit{info-vb} was perceived as the most stable ($M=2.6$, $\sigma=2.0$) compared to \textit{info-gibbs} ($M=3.5$, $\sigma=2.3$) and \textit{const-gibbs} ($M=3.8$, $\sigma=2.3$), these differences were not
+significant (${\chi}^2(2)=5.6, p=.105$).
+
+\paragraph{Participants thought they improved the models, but coherence scores disagree}
+
+We measured quality and improvement using qualitative (Figure~\ref{fig:qual})---judged
+by the user---and quantitative---automatic
+topic coherence, Table~\ref{tab:attributes}---methods.
+Confirming that our initial random model creation was effective; there were no significant differences between modeling approaches for the initial
+model quality (${\chi}^2(2)=4.1, p=.130$).
+Automatic coherence declined on average for models, most notably for \textit{info-vb}, confirming previous reports that variational inference can produce less coherent topics than Gibbs sampling~\cite{Nguyen2015ImprovingModeling}. 
+In contrast, participants believed they improved the models: 
+while only $42\%$ of the 95 participants improved the model (as measured by \npmi{}),
+ $98\%$ thought the final model was
+better than the initial model (subjective response $> 4$ out of 7).
+
+Topic coherence is intended to reflect human rating of individual
+topics~\cite{Chang2009ReadingModels}, but our users \emph{reduced} the overall model quality while
+feeling that they improved it.  One possible reason for this discrepancy is the limited
+view of traditional topic coherence metrics: they examine each topic by only top words, and
+model-wide measures average over all topics; whereas participants typically care about the model as a whole or sometimes prefer a particular subset of topics. Future work should explore robust metrics that better capture how topics model all of the data or put weight on particular topics of interest. Also, topics should be evaluated as both their words and associated documents. Additionally, ideal metrics would be less dependent on the data being modeled.
+
+\paragraph{Participants thought all the systems were too slow}
+
+Objectively, the \textit{info-gibbs} condition had significantly faster updates (Table~\ref{tab:attributes}).
+However, users thought all the systems were slow (Figure~\ref{fig:per}), and the perceived latency differences between modeling approaches were not significant (${\chi}^2(2)=1.0, p=.610$).
+This was likely a combination of participants wanting the systems to be
+faster and of unrealistic expectations for speed given participants'
+experiences in the tutorial. For example, P71 (\textit{info-gibbs}) asked, \textit{``is there any way to make it a bit
+faster?\dots It would be better if the tutorial wasn't so fast\dots
+so you don't have the expectation of speed with this tool.''}
+
+
+
+\subsubsection{User Experience}
+\label{sec:experience}
+
+\begin{figure}[t]
+    \begin{center}
+    \includegraphics[width=.48\textwidth]{\figfile{experience-plots}}
+    \end{center}
+    \caption{
+  Seven-point rating scale responses for four subjective user experience measures from ``strongly disagree'' to ``strongly agree'', reported by condition. On average, participants were confident in their input, trusted the system, and thought the task was easy; frustration varied.}
+    \label{fig:exp}
+\end{figure}
+
+To understand how variations in adherence, instability, latency, and model quality may affect user
+experience, participants responded to statements regarding
+frustration, trust, task ease, and confidence
+(Figure~\ref{fig:exp}). Participants were 
+confident, found the task easy, and trusted the tool:
+mean response for these measures across all modeling approaches was $5.4$, $5.0$, and $5.3$ out of $7$,
+respectively. Participants were neutral regarding frustration, at $3.5$ out of $7$ for all models, with
+\textit{info-gibbs} the least frustrating
+($M=2.9$, $\sigma=1.7$) and \textit{const-gibbs} ($M=3.8$, $\sigma=1.8$) and \textit{info-vb} ($M=3.7$, $\sigma=2.2$)
+the most. There were no significant effects of modeling approach on these experience measures, but the open-ended responses provide additional insight into how adherence, instability, and so on affect user experience.
+
+
+\begin{table}
+  \caption{Likert scale responses for agreement with statements of the form ``the system incorporated the [refinement] operation as I asked it to'' for each of the nine refinements. Measurements reported as ``mean,
+    $\sigma$''. Kruskal-Wallis
+    results reported as
+    ``${\chi}^2(2)$, p''. Overall, change word order had low perceived adherence, and there were significant (bold) perceived adherence differences between modeling approaches
+    for add word and change word order; cell shading reflects participant perception that the modeling approach adheres to that refinement (darker is better).}
+  \label{tab:ref_control}
+    \begin{center}
+    \small
+      \begin{tabular}{c c c c c}
+        \hline
+        & \textit{info-gibbs} & \textit{const-gibbs} & \textit{info-vb} & Kruskal-Wallis \\
+        \hline \hline
+        \textbf{add word} & \cellcolor[gray]{0.7}6.1, 1.5 & \cellcolor[gray]{0.9}4.6, 2.5 & \cellcolor[gray]{0.7}6.5, 1.4 & \textbf{9.2, .010} \\
+        remove word & 6.5, 1.1 & 5.9, 2.1 & 6.7, .6 & .8, .660 \\
+        remove doc & 6.3, 1.5 & 6.8, .5 & 5.6, 2.1 & 5.0, .080 \\
+        \textbf{change order} & \cellcolor[gray]{0.8}4.9, 2.2 & \cellcolor[gray]{0.9}2.9, 2.5 & \cellcolor[gray]{0.8}5.2, 2.4 & \textbf{11.5, .003} \\
+        create topic & 6.0, 1.9 & 6.1, 1.4 & 6.3, 2.1 & .9, .620 \\
+        delete topic & 6.8, .7 & 6.4, 1.3 & 6.9, .3 & 1.5, .470\\
+        merge topics  & 6.7, .8 & 6.8, .5 & 6.7, .7 & .2, .900\\
+        stop word  & 6.0, 2.0 & 6.3, 1.4 & 6.6, .7 & .3, .860 \\
+        split topic & 5.6, 2.2 & 5.9, 2.0 & 6.9, .3 & 3.6, .170 \\
+        \hline
+      \end{tabular}
+    \end{center}
+    \bigskip\centering
+\end{table}
+
+
+
+\paragraph{Open-ended responses regarding likes, dislikes, and unexpected behavior}
+
+Our coding of open-ended responses (Section~\ref{sec:analysis}) resulted in seven \textit{disliked}, seven \textit{liked}, and five \textit{unexpected} codes.
+
+Participants disliked ``latency'' the most (42 of 95) followed by ``lack of control'' (21 participants).
+10 participants thought the systems were ``missing functionality'', requesting support for dragging documents between topics or comparing two topics at once. Eight participants thought the tool was ``overwhelming'', while five said there was ``nothing'' they did not like. Five disliked ``model qualities'', such as too many similar topics (P46, \textit{const-gibbs}). Finally, two participants mentioned disliking ``instability''. 
+
+Participants liked that the systems were ``useful'' for organizing and
+filtering the documents (40 of 95) and that they were ``intuitive''
+(28). 10 participants liked the ``refinements'', particularly when
+they worked as expected, such as P22 (\textit{const-gibbs}),
+\textit{``the removing of terms was neat and operated as expected''},
+while three participants said they liked when the systems ``worked as
+expected''. Five participants liked the systems' ``design'', two
+participants said they liked ``instability'', and one liked that the
+tool was ``fast''.
+
+Of the measured attributes, participants thought ``lack of control'', or adherence, (35 of 95) was most unexpected, such as P14 (\textit{info-gibbs}) who said,\textit{ ``once the change word order did not happen, even though I tried it three times'',} followed by ``slowness'' (22) and ``instability'' (12).
+20 participants said ``nothing'' was unexpected and six mentioned ``other'' things, like issues with the tutorial. 
+
+Instability was the most
+polarizing attribute.  Not all noticed it, but those that did disagreed, confirming
+ prior work~\cite{Smith2018ClosingSystem}. While 12 of 95 participants said ``instability'' (as opposed to other attributes) was unexpected, some participants, such as P79 (\textit{info-vb}) said, \textit{``I didn't expect the word list to automatically update after adding a new word but I thought that was cool.''} While other participants said instability was negative, such as, \textit{``I [removed a word] and saw it in a later topic\dots bad \abr{ml}!''} (P20, \textit{info-gibbs}). 
+ 
+\subsubsection{User Behavior}
+In addition to measuring participants' subjective responses regarding whether they perceived differences in system attributes and how this affected their experience, we were also interested in understanding how users interact with these systems. On average, each participant used six ($\sigma=1.4$) of the nine operations to make a total of $31.3$ ($\sigma=16.1$) changes to their model. In the following, we detail whether user behavior differed given the varied attributes and how users behaved with these systems.
+
+\paragraph{Low adherence may have led participants to stop the task early}
+Table~\ref{tab:effort} shows the average time spent on the task and number of refinements for each condition.
+The \textit{const-gibbs} modeling approach had significantly slower updates, so we might have expected those participants to spend the longest time on the task, but they did not: participants in the \textit{const-gibbs} condition on
+average made fewer refinements ($M=27$, $\sigma=13$) and spent significantly less
+time on the task ($M=1859$ seconds, $\sigma=352$) than with the other modeling approaches. This might be explained by adherence: the \textit{const-gibbs} modeling approach had significantly lower computed and perceived adherence (Table~\ref{tab:attributes} and Figure~\ref{fig:per}), suggesting participants may have abandoned the task if they thought the system was ignoring their input.
+
+\paragraph{Participants used ``undo'' infrequently, but reverted delete and split topic the most}
+
+Participants used ``undo'' $58$ times to revert after applying a refinement. $36$ of the $95$ participants used ``undo'' an average of $1.6$ times ($min=1$, $max=5$). Figure~\ref{fig:undo-norm} shows the distribution of refinements that preceded undo normalized by the usage of the refinement. The most frequently undone refinements were \textbf{delete topic}, which was undone $10\%$ of the time, and \textbf{split topic}, which was undone $8\%$ of the time.
+
+The high frequency of undoing \textbf{delete topic} is unexpected. While we had anticipated that participants might undo if operations were not applied as expected, all systems perfectly adhered to the \textbf{delete topic} refinement; that is, in these cases, participants were likely exhibiting \textit{experimentation} behavior~\cite{Amershi2010ExaminingLearning}--perhaps looking for instability to update other areas of the model and then undoing the change if they were not happy with it. 
+
+\begin{figure}[t]
+  \centering
+  \includegraphics[width=.45\textwidth]{\figfile{undone}}
+  \caption{Proportion of refinement usage that is followed by undo. \textbf{Delete topic}~(10\%) and \textbf{split topic}~(8\%) are undone the most often.}
+  \label{fig:undo-norm}
+\end{figure}
+
+\paragraph{Participants attended to prominent and low quality topics} 
+Figure~\ref{fig:refined-topics} shows which topics were refined by participants based on their location in the topic list (left) and their relative coherence (right). All participants saw a random topic model with random topic ordering, yet participants focused their refinements on the topics at the top of the list ($corr=-0.98$) and on the topics that had the lowest coherence ($corr=-0.94$). 
+\begin{figure}
+\centering
+\includegraphics[width=\linewidth]{\figfile{location_rank}}
+\caption{Distribution of refined topics by location in the topic list (left) and ranked \npmi{} quality (right). Participants refined low quality topics and topics at the top of the list.}
+\label{fig:refined-topics}
+\end{figure}
+
+
+
+\paragraph{Which refinement operations were used and preferred?}
+
+Participants refined models at the topic-level 
+more often than at the model-level: \textbf{remove document} was
+used most ($8.0$ times per
+participant), followed by \textbf{remove word} ($7.3$), \textbf{change
+  word order} ($6.5)$, and \textbf{add word} ($4.1$).  Of the topic-level refinements, the two least used (\textbf{add word} and \textbf{change word order}) were also those that had lower perceived adherence. The most common
+model-level refinement was \textbf{merge topics}, used $2.4$ times per
+participant on average, followed by \textbf{add to stop words}
+($1.4$), \textbf{delete topic} ($0.7$), \textbf{split topic} ($0.6$),
+and \textbf{create topic} ($0.5$). 
+
+Participants specified which refinements were most and least useful: \textbf{merge topics} was overwhelmingly favored (46 of 95 participants said it was most useful), while
+\textbf{change word order} was unpopular (25 of 95 participants thought it least useful).
+To better understand why, 
+ we look to the open-ended questions.
+
+\textbf{Participants may have disliked that change word order did not work as expected}.
+$13$ of the $25$ participants who thought \textbf{change word order} was the least useful were in the
+\textit{const-gibbs} condition, likely because
+this refinement had significantly lower computed and perceived
+adherence than in other modeling approaches. Further,
+many of the participants who did not like \textbf{change word order} explained that it ``did not work'' or had no noticeable effect on the updated
+model. For example P98 (\textit{const-gibbs}) said, \textit{``for some reason, [change word order] would not work with me.''} 
+
+\textbf{Merge topic was a useful refinement for the data and task}.
+$49$ of $95$ participants said that \textbf{merge topic} was the most
+useful refinement, while none thought it least useful. Many of these participants thought \textbf{merge topic} was ``especially useful for the task and model''; for example, P82 (\textit{const-gibbs}) said, \textit{``There were multiple topics generated that meant the same thing as another. Putting them together made it more organized.''} 
+
+
+
+ 
+
+
+
+
+
+
+
+
+\begin{table}[t]
+  \caption{Task time (seconds) and number of refinements per condition. Responses reported as ``mean, $\sigma$''. Kruskal
+    Wallis results reported as
+    ``${\chi}^2(2)$, p'', with significant results in bold.}
+  \label{tab:effort}
+    \begin{center}
+    \small
+      \begin{tabular}{c c c c c}
+        \hline
+         & \textit{info-gibbs} & \textit{const-gibbs} & \textit{info-vb} & Kruskal Wallis \\
+        \hline \hline
+        Task Time (s) & 1970, 356 & 1859, 352 & 2071, 352 & \textbf{6.1, .048} \\
+        \# Refinements & 33, 18 & 27, 13 & 37, 18 & 3.8, .150 \\
+        \hline
+      \end{tabular}
+    \end{center}
+    \bigskip\centering
+\end{table}

@@ -1,0 +1,114 @@
+\documentclass[sigconf,table,prologue]{acmart}
+
+
+
+
+\AtBeginDocument{  \providecommand\BibTeX{{    \normalfont B\kern-0.5em{\scshape i\kern-0.25em b}\kern-0.8em\TeX}}}
+
+\copyrightyear{2019}
+\acmYear{2019}
+\setcopyright{rightsretained}
+
+
+\acmConference{IUI 2020}{March 17 - March 20, 2020}{Italy}
+
+
+\usepackage{amsfonts}  
+\usepackage{amsmath} 
+\usepackage{caption}
+\usepackage{subcaption}
+
+\newif\ifcomment\commentfalse
+\input{style/preamble}
+\newcommand\BibTeX{B\textsc{ib}\TeX}
+
+\newcommand{\lda}[0]{\textsc{lda}}
+\newcommand{\npmi}[0]{\textsc{npmi}}
+\newcommand{\hltm}[0]{\textsc{hl-tm}}
+
+\newcommand{\latexfile}[1]{\input{2020_iui_control/sections/#1}}
+\newcommand{\figfile}[1]{2020_iui_control/figures/#1}
+\newcommand{\etalcite}[2]{#1 et al.\,\cite{#2}}
+
+
+
+
+\begin{document}
+
+\title{Digging into User Control: Perceptions of Adherence and Instability in Transparent Models}
+
+
+
+
+\author{Alison Smith-Renner}
+\email{amsmit@cs.umd.edu}
+\affiliation{  \institution{University of Maryland}
+  \city{College Park}
+  \state{Maryland}
+  \country{USA}
+}
+
+\author{Varun Kumar}
+\email{varunk@cs.umd.edu}
+\affiliation{  \institution{Amazon Alexa}
+  \city{Cambridge}
+  \state{MA}
+  \country{USA}}
+
+\author{Jordan Boyd-Graber$^\dagger$}
+\thanks{$\dagger$ Now at Google Research Z\"urich}
+\email{jbg@umiacs.umd.edu}
+\affiliation{  \institution{University of Maryland}
+   \city{College Park}
+  \state{Maryland}
+  \country{USA}}
+
+\author{Kevin Seppi}
+\email{kseppi@byu.edu}
+\affiliation{  \institution{Brigham Young University}
+  \city{Provo}
+  \state{Utah}
+  \country{USA}}
+
+\author{Leah Findlater}
+\email{leahkf@uw.edu}
+\affiliation{  \institution{University of Washington}
+  \city{Seattle}
+  \state{Washington}
+  \country{USA}}
+
+\renewcommand{\shortauthors}{Smith-Renner et al.}
+
+\begin{abstract}
+\latexfile{00-abstract}
+\end{abstract}
+
+
+
+\keywords{Interactive machine learning, topic modeling, control, transparency, intelligent user interface evaluation}
+
+\maketitle
+
+
+\latexfile{10-introduction}
+\latexfile{20-background}
+\latexfile{30-method}
+\latexfile{40-results}
+\latexfile{50-discussion}
+\latexfile{60-conclusion}
+
+\section{Acknowledgments}
+We thank the anonymous reviewers for their insightful and constructive
+comments. This work was supported by NSF Grant \abr{iis}-1409287 (\abr{umd}) and \abr{iis}-1409739 (\abr{byu}).
+Any opinions, findings,
+conclusions, or recommendations expressed here are those of the
+authors and do not necessarily reflect the view of the sponsor.
+
+\clearpage
+
+\bibliographystyle{ACM-Reference-Format}
+\bibliography{bib/journal-full,bib/2020_iui_control,bib/jbg}
+
+
+\end{document}
+\endinput

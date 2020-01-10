@@ -1,0 +1,52 @@
+\section{Background}
+We review control and transparency in \abr{ml} and provide background on \hltm{}, the case we use to explore these attributes.
+
+\subsection{Control with Transparent \abr{ml}}
+
+End users want to understand how \abr{ml} models work~\cite{Lim2009AssessingApplications}. Models can provide \textit{transparency} through explanations or justifications for particular decisions or actions~\cite{Biran2017Human-centricPredictions, Bilgic2005ExplainingPromotion}. Transparent models might also expose their inner workings, or how they model the underlying data for a deeper understanding of how they operate~\cite{Chaney2012VisualizingModels}. For example, \etalcite{Simonyan}{Simonyan2013Deep2014} increase the transparency of deep Convolutional Networks by producing artificial images representative of learned image classes. As transparency increases, end users form better mental models, which 
+in turn increases end user trust, satisfaction, and leads to continued usage~\cite{Lim2009WhySystems, Herlocker2000ExplainingRecommendations, Pu2006TrustInterfaces, Kulesza2013TooModels}.
+
+End users separately want and need mechanisms for control, both for user interfaces broadly~\cite{Shneiderman2009DesigningInteraction} and for \abr{ml}-based systems~\cite{Amershi2019GuidelinesInteraction}. Specifically, allowing users to control models can
+manage user expectations~\cite{Kocielnik2019WillSystems} and
+increase satisfaction~\cite{Roy2019AutomationBetter, Vaccaro2018TheSettings}. 
+Transparency is particularly important when users are given control~\cite{Kulesza2010ExplanatoryPrograms, Rosenthal2010TowardsData}, as making users aware of how models work in turn makes them better at providing feedback. 
+However, increased transparency also means that users can better discern what models do with their feedback, or whether models incorporate it predictably.
+For opaque systems, providing ``difficult-to-validate'' controls, whether or not they work, can increase satisfaction~\cite{Vaccaro2018TheSettings}. 
+But how will users react to unexpected behavior when controls are easier to validate?
+
+While prior work has highlighted the importance of control and predictability for intelligent systems~\cite{Hook2000StepsReal}, the interaction between the two has not been fully explored, particularly in transparent models where they are more easily perceived. This paper explores two specific aspects of control as it relates to predictability: \textit{adherence}---how well models apply user specifications during
+updates---and \textit{instability}---whether models make any other changes.
+
+\subsection{Topic Modeling with a Human-in-the-Loop}
+We explore adherence and instability in Human-in-the-Loop Topic Modeling (\hltm{}). Statistical topic models automatically identify the themes or topics that occur in collections of documents~\cite{boyd-graber-17}, and are typically represented as collections of topics, where topics are represented as their top words and associated documents~\cite{Chaney2012VisualizingModels}. Topic models allow users to understand and explore document collections by the themes they discuss.
+
+Latent Dirichlet Allocation ~\citep[\lda{}]{blei-03} is a common
+unsupervised topic modeling algorithm, which models each document in
+the corpus as a distribution of topics and each topic as distribution
+of words in the vocabulary.  However, topic models are not always
+perfect~\cite{boyd-graber-14}.  Several extensions to \lda{} incorporate
+human knowledge to improve topic
+models~\cite[\hltm{}]{Yang2015User-directedContent, hu-14,
+  Hoque2015ConVisIT:Conversations, xie2015incorporating, petterson2010word,
+  pleple-13, wang2019interactive}. With such techniques,
+users specify model \textit{refinements}, such as words or documents
+to be removed from topics.
+
+
+Our \hltm{} approach is transparent in that users are exposed to and interact directly with the underlying model---topic words ($\theta$) and associated documents ($\phi$)---as opposed to abstract representations such as labeled folders. Therefore, it is a good case for exploring adherence and instability: 
+users can more easily track if their changes are applied as expected (or other unexpected changes occur in the model). These issues may be less obvious in less transparent systems, such as recommenders~\cite{Herlocker2004EvaluatingSystems}, where users interact with abstract representations (recommended items) instead of the underlying model (decomposed user-item interaction matrix). \hltm{} is also a representative document understanding system, particularly one where users focus on both words and documents--more complex than interactive clustering~\cite{Cohn2008Semi-supervisedFeedback}, for example. 
+
+
+Like other \abr{iml} models, \hltm{} techniques
+differ how they adhere to input and whether they make any other unexpected changes. Prior studies have exposed these attributes through user interviews~\cite{Smith2018ClosingSystem,Lee2017TheModels}, yet the effects of these attributes on users have
+not been fully explored, either with many users or comparatively.
+\etalcite{Kumar}{kumar-19} implemented a set of
+user-preferred refinements~\cite{Lee2017TheModels} using three different modeling approaches and measured adherence provided by the different approaches using simulations.
+However, their simulated user experiments are \textit{prima facie} implausible: they ignore human variability, the depth of human insight, and the \emph{reaction} of humans to imperfect model updates.
+To correct these oversights, we use these three approaches to explore
+how users perceive adherence and instability and whether they affect
+user experience and behavior.
+
+Instability is not a new concept in ML; deterministic algorithms are \textit{stable} in that they always produce the same output given the same input. Prior work in statistical topic modeling explores instability in terms of the differences between learned topic models on subsequent runs~\cite{greene2014many,belford2018stability}. This paper specifically explores whether users perceive such instability on model updates.
+
+
