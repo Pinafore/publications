@@ -1,0 +1,12 @@
+\begin{comment}
+	\section{Discussion \& Future Work}
+\label{sec:discussion}
+
+  Recovery to perfect levels from noisy \textsc{asr} data does not appear to be possible, at least with a simple addition of confidences.  This in turn may mean that bespoke models are required for the similar tasks.  However, carefully scoping the problem for model feasibility is central to success.  We demonstrate that query expansion and end-to-end methods work better than more complicated approaches.  
+  
+  Confidences are a readily human-interpretable concept that may help build trust in the output of a system.  Our domain adaptation approach demonstrates how confidences can be generated, in addition to the standard \textsc{asr} approach.  Since much data in the real world contains noise, being transparent about the quality of up-stream content can likely lead to downstream performance in a plethora of \textsc{nlp} tasks.  
+	
+This work can sprout in several directions to solidify the claims.  Apropos  \textsc{asr}, different models should be evaluated on multiple speakers in different languages. For \textsc{qa}, extra unstructured data did not lead to an improvement.  Normalized posterior probabilities from the lattice should lead to further gains in using lattices for question answering. ~\cite{sperber17emnlp}, but alternate \textsc{ir} methods are worth investigating.  Taking lattices one-step further and breaking down words to phones seems promising, but difficult to execute successfully.  
+
+Data is key for machine learning performance.  We performed quick curriculum learning experiments and found expected results: training on two clean datasets was notably worse for model accuracy than training on clean data and fine-tuning on \textsc{asr} data , which in turn was notably worse than training on two \textsc{asr}  datasets.  The improvement from seeing additional data was larger than from seeing confidences.  The \textsc{ir} model serves as a proxy for data quality.  Since there is absolutely no integration of linguistic structure, it serves as a strong goal for handling noise.  One would expect sequence models---our \rnn---to be penalized by seeing both an incorrect word and for losing information about the sequence.  A query expansion result that guesses anything, rather than predicting an unknown word, can regain information at a level disproportionately higher than the \textsc{ir} or \dan{} models.  
+\end{comment}

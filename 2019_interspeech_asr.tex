@@ -1,0 +1,84 @@
+\documentclass[a4paper]{article}
+
+\usepackage{tabularx}
+\usepackage{style/INTERSPEECH2019}
+
+
+\usepackage{xcolor}
+\usepackage{times}
+\usepackage{latexsym}
+\usepackage{amsmath}
+\usepackage{url}
+\usepackage{algorithm}
+\usepackage{amsfonts}
+\usepackage[noend]{algpseudocode}
+\usepackage{lipsum}
+\usepackage{multirow}
+\usepackage{framed}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{longtable}
+\usepackage [english]{babel}
+\usepackage [autostyle, english = american]{csquotes}
+\MakeOuterQuote{"}
+
+
+\newif\ifcomment\commentfalse
+\input{style/preamble}
+
+\title{Mitigating Noisy Inputs for Question Answering}
+\name{Denis Peskov$^1$, Joe Barrow$^1$, Pedro Rodriguez$^1$, Graham Neubig$^2$, Jordan Boyd-Graber$^3$}
+\address{
+	$^1$University of Maryland Department of Computer Science and UMIACS\\
+	$^2$Carnegie Mellon University Language Technology Institute\\
+        $^3$University of Maryland Department of Computer Science, iSchool, UMIACS, and LSC}
+\small \email{\{\href{mailto:dpeskov@cs.umd.edu}{dpeskov},
+         \href{mailto:jdbarrow@cs.umd.edu}{jdbarrow},
+         \href{mailto:pedro@cs.umd.edu}{pedro\}@cs.umd.edu},
+         \emaillink{gneubig@cs.cmu.edu},
+         \emaillink{jbg@umiacs.umd.edu}}
+
+\date{}
+
+\newcommand{\latexfile}[1]{\input{2019_interspeech_asr/sections/#1}}
+\newcommand{\figfile}[1]{2019_interspeech_asr/figures/#1}
+\newcommand{\autofig}[1]{2019_interspeech_asr/auto_fig/#1}
+
+\newcommand{\gn}[1]{}
+
+\newcommand{\denp}[1]{}
+
+\makeatletter
+\def\BState{\State\hskip-\ALG@thistlm}
+
+\makeatother
+\raggedbottom
+
+\begin{document}
+
+\newcommand{\asr}{\textsc{asr}}
+\newcommand{\dan}{\textsc{dan}}
+\newcommand{\rnn}{\textsc{rnn}}
+\newcommand{\unk}{<\textit{unk}>}
+
+
+\maketitle
+
+\latexfile{00-abstract}
+\latexfile{10-intro}
+\latexfile{20-data}
+\latexfile{30-models}
+\latexfile{40-results}
+\latexfile{45-discussion}
+\latexfile{47-related}
+\latexfile{50-conclusion}
+\latexfile{60-acknowledgment}
+
+\bibliography{bib/journal-full,bib/denis}
+\bibliographystyle{style/IEEEtran}
+
+\clearpage
+
+\latexfile{appendix}
+
+\end{document}

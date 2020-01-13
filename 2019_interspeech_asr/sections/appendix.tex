@@ -1,0 +1,75 @@
+\appendix
+
+\section{Further Data Analysis}
+
+One potential concern with the synthetically-generated dataset is that \asr{} systems might be either better or worse at recognizing text-to-speech(\textsc{tts}) speech.
+If the \asr{}  system is trained on human data, then it might be an out-of-domain sample, or there might be systematic pronunciation issues that lower \asr{}  accuracy.  Alternatively, \textsc{tts}-generated speech might prove more regular or cleaner than human speech, so an \asr{} system may produce a higher transcription accuracy on this data.  Thus, we determine the distributional overlap between the \asr{} output  on both the synthetic and natural data.
+
+We compare \textsc{bleu} scores~\cite{papineni2002bleu} between the gold standard data and the decoded data for between the human and synthetic data variations.  By using \textsc{bleu} scores, which capture n-gram overlap between the target and source text, we can compare the variance in \asr{} between the two datasets.  Figure~\ref{fig:bleu_variance} illustrates this variance.  Additionally, Figure~\ref{fig:wer_variance} shows the comparison of Word Error Rate (\textsc{wer}).  Human data has more instances of higher \textsc{wer} and lower \textsc{bleu} scores than the auto-generated data on the same questions; however, the two sources of speech data generally follow a similar distribution and our results are comparable in accuracy to our synthetic data.  Therefore, we conclude that our method serves as a good approximation for the task, which allows weak supervision to work.
+
+
+\begin{figure}[t!]
+	\begin{center}
+	\includegraphics[width=\linewidth]{\figfile{human_tts_variance_v2.pdf}}
+    \caption{A comparison of \textsc{bleu} score distributions across human speakers (color-coded) to our artificial method, visualized by the step line.  The distributions of \textsc{bleu} scores are similar, with human data being slightly lower, justifying our weak supervision training approach.}
+
+	\label{fig:bleu_variance}
+	\end{center}
+\end{figure}
+
+\begin{figure}[t!]
+	\begin{center}
+		\includegraphics[width=\linewidth]{\figfile{human_tts_wer.pdf}}
+		\caption{Similarly a comparison of \textsc{wer} score distributions across human speakers (color-coded) to our artificial method, visualized by the step line.  The distributions of \textsc{wer} scores are similar as well.  Speakers are color-coded.  The background step line is the \textsc{wer} of the automatic TTS approach.}
+		
+		\label{fig:wer_variance}
+	\end{center}
+\end{figure}
+
+
+\section{Negative Results}
+
+Alternative methods were applied to mitigate \asr{}-induced noise in the course of experimentation, including noisy channel techniques typically used in Information Retrieval and lattice-structured Recurrent Neural Networks.
+For completeness, we discuss the results of these two experiments in this section.
+While neither method provided an improvement on the question answering task, their discussion might prove useful for future research.
+
+\subsection{Noisy Channel Expansion}
+
+In both Information Retrieval and \textsc{nlp} it is often useful to model processes that induce noise using Shannon's noisy channel model~\cite{shannon1948mathematical}.
+We know the answer would be predictable if we had access to certain words in the original question.
+The noisy channel model allows us to reconstruct the original data as cleanly as possible by modeling the process by which noise was induced, in this case the trip from text to speech and back to text.
+We propose two forms of query expansion based on this model, both of which are typically used in Cross Language Information Retrieval.
+
+The first model uses IBM Model 3 to generate an alignment table between the corrupted \asr{}  data and the original text data.
+The alignment table serves as the underlying corruption model which we are aiming to reverse.
+We use our training data a second time and generate possible word candidates that were missed during decoding.
+
+The second model uses a more robust version of the same Information Retrieval technique looks at two-way translations between \asr{} and original data based on (Xu, 2008).
+Whereas the first model included many junk translations---stop-words such as ``unk'' or ``the'' would be mapped to a long tail of meaningful words---this version does not suffer from this problem: even if ``the'' maps to ``Monte'', ``Monte'' does not map back to ``the''.
+
+In both cases, the reconstructed data was used to train the \textsc{DAN} model.
+That neither was able to improve over the confidence modeling \textsc{DAN} indicates that the errors made by the \asr{} system were likely not recoverable with the translation models we used.
+This is unsurprising, as many low-frequency important words were mapped to a handful of high-frequency terms, collapsing the space and preventing simple recoverability.
+
+\subsection{Lattice-Structured RNN}
+
+The confidence models are not calculate on a full lattice, and hence cannot not reconstruct alternate paths in situations with low confidences.
+A more complex model can ingest the entire lattice, and not the top word prediction.
+The lattice can update multiple words needed, as their relationships are preserved.
+``Leo Patrick'' can now be reinterpreted as ``Cleopatra'', as the lattice relationship allows alternate paths to be explored.
+The confidence values provide additional value about what path to follow within a lattice.
+
+We produce three variations:
+\begin{enumerate}
+\item  A ``lattice'' \textsc{lstm}  that consumes the full lattice by linearizing the graphs with a topological sort and feeding it through a normal \textsc{lstm}.  
+\item  A lattice \textsc{lstm}  without confidences.   This network only sees the word vectors when consuming the lattice structure.
+\item  A lattice \textsc{lstm}  with confidences integrated as features.  The confidences are concatenated to the word vector inputs.
+\end{enumerate}
+
+This sequence demonstrates the gain from each part of the model.
+The first tests the benefit of additional data.
+The second tests the benefit of the structure of this data.
+The third tests the importance of the confidence of each item in the data.
+
+Unfortunately, none of these experiments outperformed the confidence augmented \textsc{DAN}.
+These may be due to instability or training issues, however.

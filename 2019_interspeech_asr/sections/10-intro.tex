@@ -1,0 +1,90 @@
+\section{Introduction}
+\label{sec:introduction}
+
+
+Progress on question answering (\textsc{qa}) has claimed
+ human-level accuracy.  However, most factoid \textsc{qa}
+models are trained and evaluated on clean text input, which becomes
+noisy when questions are spoken due to Automatic Speech Recognition
+(\asr{}) errors.
+This consideration is disregarded in trivia match-ups between machines
+and humans: \textsc{ibm} Watson~\cite{Ferrucci10watson} on Jeopardy!
+and \qb{} matches between machines and trivia
+masters~\cite{Boyd-Graber:Feng:Rodriguez-2018} provide text data for
+machines while humans listen.  A fair test would subject both humans
+and machines to speech input.
+
+Unfortunately, there are no large \textit{spoken} corpora of factoid
+questions with which to train models; text-to-speech software can be used as a method for generating training data at scale for question answering models (Section~\ref{sec:data}).
+Although synthetic data is less realistic than true human-spoken
+questions it easier and cheaper to collect at scale, which is
+important for training.  
+These synthetic data are still useful; in
+Section~\ref{sec:human-data}, models trained on synthetic data are
+applied to human spoken data from \qb{} tournaments and Jeopardy!
+
+Noisy \asr{} is particularly challenging for \textsc{qa} systems
+(Figure~\ref{fig:noise_analysis}).
+While humans and computers might know the title of a ``revenge novel
+centering on Edmund Dantes by Alexandre Dumas'', transcription errors
+may mean deciphering ``novel centering on edmond dance by alexander
+\unk{}'' instead.   Dantes and Dumas are low-frequency words in the English language and hence likely to be misinterpreted by a generic \asr{} model; however, they are particularly important for answering the question.  Additionally, the introduction of distracting words (e.g., ``dance'') causes \textsc{qa} models to make errors~\cite{jia-liang-2017-adversarial}.
+Section~\ref{sec:noise} characterizes the signal in this noise: key
+terms like named entities are often missing, which is
+detrimental for \textsc{qa}.
+
+
+\begin{figure}[t]
+	\centering
+	\includegraphics[width=\linewidth]{\figfile{noise_analysis_v3_notitle.pdf}}
+	\caption{\textsc{asr} errors on \textsc{qa} data:
+          original spoken words (top of box) are garbled (bottom).  While many words become
+          into ``noise''---frequent words or the unknown
+          token---consistent errors (e.g.,
+          ``clarendon'' to ``clarintin'') can help downstream systems.  
+          Additionally, words reduced to \unk{} (e.g., ``kermit'') can
+          be useful through forced decoding into the closest
+          incorrect word (e.g., ``hermit'' or even
+          ``car'').}
+
+\begin{comment}
+\gn{There are lots of things I don't understand or think should be
+fixed here. (1) What does the title ``Scoping Information Loss''
+mean? Can it just be removed? Usually we don't have titles on
+figures, in favor of captions. (2) What are the words in the 16
+white boxes? Are they an example of one word out of the many that
+belong to the class? (3) What are the Cyan dots in the back? (4) It
+bugs me a little that your intervals are ``-0.001'' and ``1.001''
+despite the fact that these values are inherently out of range. I'd
+just use 0 and 1. (5) I don't understand why you focus on stopwords
+here? Why not just calculate the probability of being
+mis-recognized? (6) There is a mention in the main text of
+``repetitive errors'', but I can't tell how we can tell errors are
+repetitive by looking at this figure.}  \denp{Caption written by JBG
+and sounds fine to me.  Frequency dots seem explainable.  Title and
+small things can be changed if needed, but might be lower priority
+than other tasks} \gn{Thanks! I think (2) has been resolved, and (1)
+and (4) are low priority as you mentioned. (3) (5) and (6) are still
+genuinely unclear though, so I'd try to improve the explanation.}
+\end{comment}
+	\label{fig:noise_analysis}
+\end{figure}
+
+
+
+
+
+Previous approaches to mitigate \asr{} noise for answering mobile
+queries~\cite{mishra2010qme} or building bots~\cite{leuski2009building} typically use unsupervised methods, such as term-based information retrieval.
+ Our datasets for training and evaluation can produce \textit{supervised} systems that directly answer spoken questions. Machine translation~\cite{sperber17emnlp} also uses \asr{} confidences; we evaluate similar methods on \textsc{qa}.
+
+
+Specifically, some accuracy loss from noisy inputs can be mitigated
+through a combination of forcing unknown words to be decoded as the closest option
+(Section~\ref{sec:forced-decoding}), and incorporating the uncertainties of
+the \asr{} model directly in neural models
+(Section~\ref{sec:conf-dan}).  The forced decoding method reconstructs missing terms by using terms audibly similar to the transcribed input.
+Word-level confidence scores incorporate uncertainty from the \asr{}
+system into neural models.
+Section~\ref{sec:exp} compares these methods against baseline methods
+on our synthetic and human speech datasets for Jeopardy! and \qb{}.

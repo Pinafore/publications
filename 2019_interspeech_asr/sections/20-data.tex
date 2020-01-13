@@ -1,0 +1,238 @@
+	
+\section{Spoken question answering datasets}
+\label{sec:data}
+
+
+
+
+
+Neural networks require a large training corpus, but recording
+hundreds of thousands of questions is not feasible. Crowd-sourcing
+with the required quality control (speakers who say
+``cyclohexane'' correctly) is expensive.
+As an alternative, we generate a data-set with Google Text-to-Speech on 96,000 factoid questions from a trivia game called \qb{}~\cite{Boyd-Graber:Feng:Rodriguez-2018}, each with 4--6 sentences for a total of over 500,000 sentences.\footnote{\url{http://cloud.google.com/text-to-speech}}
+We then decode these utterances using the Kaldi chain model~\cite{peddinti2015jhu}, trained on the Fischer-English dataset~\cite{cieri2004fisher} for consistency with past results on mitigating \asr{} errors in \textsc{mt}~\cite{sperber17emnlp}.  This model has a Word Error Rate (\textsc{wer}) of 15.60\% on the eval2000 test set.  The \textsc{wer} increases to 51.76\% on our \qb{} data, which contains out of domain vocabulary.   The most \textsc{bleu} improvement in machine translation under noisy conditions could be found in this middle  \textsc{wer} range, rather than in values below 20\% or above 80\%~\cite{sperber17emnlp}.  Retraining the model on the \qb{} domain would mitigate this noise;
+however, in practice one is often at the mercy of a pre-trained
+recognition model due to changes in vocabularies or speakers.
+Intentional noise has been added to machine translation
+data~\cite{michel2018mtnt, belinkov2017synthetic}.
+Alternate methods for collecting large scale audio data include
+Generative Adversarial Networks~\cite{donahue2018exploring} and manual
+recording~\cite{lee2018odsqa}.
+
+   
+The task of \textsc{qa} requires the system to provide a correct answer out of many candidates based on the question's wording. We test on two varieties of different length and framing.  \qb{} questions, which are generally four to six sentences long, test a user's depth of knowledge; early clues are challenging and obscure but they progressively become easy and well-known.  Competitors can answer these types of questions at any point.
+Computer \abr{qa} is competitive with the top players~\cite{yamada2018studio}.  Jeopardy! questions are single sentences and can only be answered after the question ends.  To test this alternate syntax, we use the same method of data generation on a dataset of over 200,000 Jeopardy questions~\cite{Dunn2017SearchQAAN}.
+
+
+
+
+
+
+
+
+
+
+\subsection{Why \abr{qa} is challenging for \abr{asr}}
+\label{sec:noise}
+
+
+
+         
+
+
+
+\asr{} changes the features of the recognized text in several important ways: the overall vocabulary is quite different and important words are corrupted.
+First, it reduces the overall vocabulary.  In our dataset, the vocab drops from 263,271 in the original data to a mere 33,333.
+This is expected, as \textsc{asr} only has 42,000 words in its vocab, so the long tail of the Zipf's curve is lost.
+Second, unique words---which may be central to answering the question---are lost or misinterpreted; over 100,000 of the words in the original data occur only once.
+Finally, \asr{} systems tend to delete unintentionally delete words, which makes the sentences shorter.  In our \qb{} data, the average number of words decreases from 21.62 to 18.85 per sentence.
+
+The decoding system is able to express uncertainty by predicting \unk{}.
+These account for slightly less than 10\% of all our word tokens, but is a top-2 prediction for 30\% of the 260,000 original words.
+For \textsc{qa}, words with a high \textsc{tf-idf} measure are valuable.
+While some words are lost, others can likely be recovered: ``hellblazer' becoming ``blazer'', ``clarendon'' becoming ``claritin''.
+We evaluate this by fitting a \textsc{tf-idf} model on the Wikipedia dataset and then comparing the average \textsc{tf-idf} per sentence between the original and the \textsc{asr} data.  The average \textsc{tf-idf} score drops from 3.52 to 2.77 per sentence.
+
+
+ 
+
+
+
+
+
+\begin{comment}
+\begin{table}[t]
+	\small
+	\setlength\tabcolsep{4pt}
+	\centering
+	\begin{tabular}{ l r r r r}
+		\toprule
+		&&  \multicolumn{2}{c}{Accuracy}  \\
+		& \multicolumn{2}{c}{\dan} & \multicolumn{2}{c}{\rnn} \\
+		\cmidrule(lr){2-3} \cmidrule(lr){4-5}
+		Model&\multicolumn{1}{c}{Start}&{End} &\multicolumn{1}{c}{Start}&{End}\\
+		\midrule
+		Base &  0.0351 & 0.3347  & 0.0394 & 0.2831  \\
+		V1  &  0.0333& 0.3330 & 0.0344 & 0.3038 \\
+		V2  &  0.0288 & 0.3443  & N/A & N/A\\
+		V3  &  0.0316 & \textbf{0.354}  & \textbf{0.0433} & \textbf{0.3135} \\
+		\bottomrule
+	\end{tabular}
+	\caption{
+		Our confidence models can improve both end-of-question and first sentence accuracy for both a \dan{}s and a \rnn.  We determine that V3 is the best model to use in practice.
+	}
+	\label{table:confidence_models}
+\end{table}
+
+
+
+
+\begin{table}[t]
+	\small
+	\centering
+	\setlength\tabcolsep{4pt}
+	\begin{tabular}{ l r r r r r r}
+		\toprule
+		&&  \multicolumn{3}{c}{Accuracy}  \\
+		\cmidrule(lr){2-3} \cmidrule(lr){4-5} \cmidrule(lr){5-6}
+		& \multicolumn{2}{c}{IR}& \multicolumn{2}{c}{\dan} & \multicolumn{2}{c}{\rnn} \\
+		\cmidrule(lr){2-3} \cmidrule(lr){4-5} \cmidrule(lr){5-6}
+		Model&\multicolumn{1}{c}{Start}&{End}&\multicolumn{1}{c}{Start}&{End} &\multicolumn{1}{c}{Start}&{End}\\
+		\midrule
+		Base  & 0.021  & 0.422 & 0.0347 &  0.3347 & 0.039& 0.2831 \\
+		V1  &  0.020 & 0.402 & 0.0262 & 0.3653 & 0.0406 & 0.3009 \\
+		V2  &  0.019 & 0.412  &  0.0312 &  0.3413   & 0.0316  & 0.3092 \\
+		V3  &  0.032 &  \textbf{0.457}  & 0.036 & \textbf{0.374} &  \textbf{0.066} &  \textbf{0.353} \\
+		\bottomrule
+	\end{tabular}
+	\caption{
+		We systemically compare performance of the expansion on the neural data.  Neural models benefit more than the IR model from the addition of extra information.
+	}
+	\label{table:expansion}
+\end{table}
+
+\end{comment}
+
+
+
+
+
+
+
+
+
+
+
+
+\begin{comment}
+\begin{table}
+	\small
+	\begin{tabularx}{.4\textwidth}{lXXr}
+\hline
+	Extra Data & Original Data & Accuracy \\
+	\hline
+	Clean		& Clean		 &	  0.0089\\
+		\hline
+	Clean 	& \textsc{asr}	&  0.2178\\
+		\hline
+	\textsc{asr}	& \textsc{asr}	 & 0.2357 \\
+		\hline
+		\end{tabularx}
+	\label{tab:tune}
+	\caption{THIS WILL BE PURGED ENITIRELY UNLESS TOLD OTHERWISE.  Data of the desired style, \textsc{asr}, improves accuracy more than additional clean data.  }
+\end{table}
+\end{comment}
+
+\begin{comment}
+\begin{table}[b]
+	\small
+			\begin{tabularx}{.4\textwidth}{lXXr}
+		\toprule
+		&  \multicolumn{3}{c}{Accuracy}  \\
+		& \multicolumn{1}{c}{\textsc{qb}} & \multicolumn{1}{c}{Human} &  \multicolumn{1}{c}{Jeopardy}\\
+		Model & Accuracy \\
+		Baseline RNN & 0.2831& X & X \\
+		Query Expansion V2  & 0.3092 & X & X \\
+		Confidence  & 0.3135  & X & X \\
+		Confidence + QE V2 & 0.3217  & X & X \\
+		\bottomrule
+	\end{tabularx}
+	\caption{Both query expansion and the best confidence model lead to improvements.  Combining the two methods leads to a further joint improvement. }
+	\label{combination}
+\end{table}
+\end{comment}
+
+
+\begin{comment}
+\begin{table*}[t]
+	\small
+	\centering
+	\begin{tabular}{ l r r r r r}
+		\toprule
+		&&  \multicolumn{3}{c}{Accuracy}  \\
+		\cmidrule(lr) {2-6}
+		&\multicolumn{2}{c}{\qb}& \multicolumn{2}{c}{Human \qb} & \multicolumn{1}{c}{Jeopardy} \\
+		\cmidrule(lr){2-3} \cmidrule(lr){3-4} \cmidrule(lr){4-5}
+		Model & \multicolumn{1}{c}{Start}{End}&&\multicolumn{1}{c}{Start}{End} &&\multicolumn{1}{c}{End}\\
+		\midrule
+		Base  &  0.035 & 0.335 & 0.120 & 0.440  & 0.080  \\
+		QE V3  & 0.0316 & 0.354 & 0.120  & 0.440 & 0.087     \\
+		Conf V3 & 0.0355 &  0.3744 & 0.120  &  0.460  & 0.083  \\
+		QE+Conf &  0.0405  & 0.3705  & \textbf{0.160} & \textbf{0.440}  &  \textbf{0.088}  \\
+		\bottomrule
+	\end{tabular}
+	\caption{Both query expansion and the best confidence model lead to improvements.  Combining the two methods leads to a further joint improvement. }
+
+	\label{table:expansion_dan}
+\end{table*}
+
+
+\begin{table*}
+	\small
+	\centering
+	\begin{tabular}{ l r r r r r}
+		\toprule
+		&&  \multicolumn{3}{c}{Accuracy}  \\
+		\cmidrule(lr) {2-6}
+		&\multicolumn{2}{c}{\qb}& \multicolumn{2}{c}{Human \qb} & \multicolumn{1}{c}{Jeopardy} \\
+		\cmidrule(lr){2-3} \cmidrule(lr){3-4} \cmidrule(lr){4-5}
+		Model&\multicolumn{1}{c}{Start}{End}&&\multicolumn{1}{c}{Start}{End} &&\multicolumn{1}{c}{End}\\
+		\midrule
+		Base  &  0.0394  & 0.283  & 0.100  & 0.260  & 0.069  \\
+		QE V3  & 0.066  & 0.353 & 0.018 & 0.340&  0.061  \\
+		Conf V3 & 0.04327 &  0.314 & 0.010 & 0.460   &  0.065 \\
+		QE+Conf & 0.037  & \textbf{0.371} & 0.140 & \textbf{0.520}  & \textbf{0.071 }  \\
+		\bottomrule
+	\end{tabular}
+	\caption{Both query expansion and the best confidence model lead to improvements.  Combining the two methods leads to a further joint improvement. }
+
+	\label{table:expansion_rnn}
+\end{table*}
+
+\end{comment}
+
+\begin{comment}
+\begin{table}[b]
+	\small
+	\begin{tabular}{ l r r r}
+			\toprule
+		&  \multicolumn{3}{c}{Accuracy}  \\
+			\cmidrule(lr){2-4}
+
+		  \multicolumn{2}{c}{\textsc{qb}} & \multicolumn{2}{c}{Human} &  \multicolumn{2}{c}{Jeopardy}\\
+			Model&\multicolumn{1}{c}{Start}&{End} &\multicolumn{1}{c}{Start}&{End}\\
+		\midrule
+
+		Baseline RNN & 0.2831& X & X \\
+		Query Expansion V2  & 0.3092 & X & X \\
+		Confidence  & 0.3135  & X & X \\
+		Confidence + QE V2 & 0.3217  & X & X \\
+				\bottomrule
+	\end{tabular}
+	\caption{Both query expansion and the best confidence model lead to improvements.  Combining the two methods leads to a further joint improvement. }
+	\label{combination}
+\end{table}
+\end{comment}
+
+
