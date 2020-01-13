@@ -1,0 +1,189 @@
+
+\begin{figure*}[t!]
+\centering
+\includegraphics[height=.9\linewidth,angle=90]{\filename{auto_fig/oracle_acc}}
+\caption{Using metadata can improve anchor-based topic models. For all metrics,
+the unsupervised Gram-Schmidt anchors do worse than creating anchors based on
+Newsgroup titles (for all metrics except \abr{vi}, higher is better). For
+coherence, Gram-Schmidt does better than two functions for combining anchor
+words, but not the element-wise min or harmonic mean.}
+\label{fig:oracle-accuracy}
+\end{figure*}
+
+\section{High Water Mark for Tandem Anchors}
+\label{sec:oraclular-experiments}
+
+Before addressing interactivity, we apply tandem anchors to real world data,
+but with anchors gleaned from metadata.
+Our purpose is twofold.
+First, we determine which combiner from Section~\ref{sec:combine-facets} to use
+in our interactive experiments in Section~\ref{sec:interactive-experiments} and
+second, we
+confirm that well-chosen tandem anchors can improve topics.
+In addition, we examine the runtime of tandem anchors and compare to
+traditional model-based interactive topic modeling techniques.
+We cannot assume that we will have metadata available to build
+tandem anchors, but we use them here because they provide a high water mark
+without the variance introduced by study participants.
+
+\subsection{Experimental Setup}
+
+We use the well-known 20 Newsgroups
+dataset (\twentynews{}) used in previous interactive topic modeling work:
+18,846 Usenet postings from 20 different newgroups in the early
+1990s.\footnote{\url{http://qwone.com/~jason/20Newsgroups/}}
+We remove the newsgroup headers from each message, which contain the
+newsgroup names, but otherwise left messages intact with any footers or quotes.
+We then remove stopwords and words in fewer than 100 documents or
+more than 1,500.
+
+To seed the tandem anchors, we use the titles of newsgroups.
+To build each multiword anchor facet, we split the title on word boundaries and
+expand any abbreviations or acronyms.
+For example, the newsgroup title `comp.os.ms-windows.misc' becomes
+\{``computer'', ``operating'', ``system'', ``microsoft'', ``windows'',
+``miscellaneous''\}.
+We do not fully specify the topic; the title gives some intuition, but the
+topic modeling algorithm must still recover the complete topic-word
+distributions.
+This is akin to knowing the names of the categories used but nothing else.
+Critically, the topic modeling algorithm has no knowledge of document-label
+relationships.
+
+\subsection{Experimental Results}
+
+Our first evaluation is a classification task to predict
+documents' newsgroup membership.
+Thus, we do not aim for state-of-the-art accuracy,\footnote{The best system would incorporate topic features with other features,
+making it harder to study and understand the topical trends in isolation.}
+but the experiment shows title-based tandem anchors yield topics
+closer to the underlying classes than Gram-Schmidt anchors.
+After randomly splitting the data into test and training sets we learn topics
+from the test data using both the title-based tandem anchors and the
+Gram-Schmidt single word anchors.\footnote{With fixed anchors and data the anchor algorithm is deterministic, so
+we use random splits instead of the standard train/test splits so that we can
+compute variance.}
+For multiword anchors, we use each of the combiner functions from
+Section~\ref{sec:combine-facets}.
+The anchor algorithm only gives the topic-word distributions and not
+word-level topic assignments, so we infer token-level topic assignments using
+Latent Dirichlet Allocation~\cite{lda} with \emph{fixed} topics discovered by
+the anchor method.
+We use our own implementation of Gibbs sampling with fixed topics and a
+symmetric document-topic Dirichlet prior with concentration
+$\alpha=.01$.
+With fixed topics, inference is very fast and can be
+parallelized per-document.
+We then train a hinge-loss linear classifier on the newsgroup labels using
+Vowpal Wabbit\footnote{\url{http://hunch.net/~vw/}} with topic-word pairs as
+features.
+Finally, we infer topic assignments in the test data and evaluate the
+classification using those topic-word features.
+For both training and test, we exclude words outside the \textsc{lda} vocabulary.
+
+The topics created from multiword anchor facets are more accurate than
+Gram-Schmidt topics (Figure~\ref{fig:oracle-accuracy}).
+This is true regardless of the combiner function.
+However, harmonic mean is more accurate than the other functions.\statsigoracle{}
+
+Since \twentynews{} has twenty classes, accuracy alone does not capture
+confusion between closely related newsgroups.
+For example, accuracy penalizes a classifier just as much for labeling a
+document from `rec.sport.baseball' with `rec.sport.hockey' as with
+`alt.atheism' despite the similarity between sports newsgroups.
+Consequently, after building a confusion matrix between the predicted and true
+classes, external clustering metrics reveal confusion between classes.
+
+The first clustering metric is the adjusted Rand index~\cite{ari},
+which is akin to accuracy for clustering, as it gives the percentage of
+correct pairing decisions from a reference clustering.
+Adjusted Rand index (\textsc{ari}) also accounts for chance groupings of documents.
+Next we use F-measure, which also considers pairwise groups, balancing the
+contribution of false negatives but without true negatives.
+Finally, we use variation of information (\textsc{vi}).
+This metric measures information lost by switching from the gold
+standard labels to the predicted labels~\cite{vi}.
+Since we are measuring the amount of information lost, lower variation of
+information is better.
+
+Based on these clustering metrics, tandem anchors can yield
+superior topics to those created using single word anchors
+(Figure~\ref{fig:oracle-accuracy}).
+As with accuracy, this is true regardless of which combination function we use.
+Furthermore, harmonic mean produces the least confusion between
+classes.\statsigoracle{}
+
+The final evaluation is topic coherence by~\newcite{coherence-automatic}, which
+measures whether the topics make sense, and correlates with human judgments of
+topic quality.
+Given $V$, the set of the $n$ most probable words of a topic, coherence is
+\begin{equation}
+\sum_{v_1, v_2 \in V} log \frac{D(v_1, v_2) + \epsilon}{D(v_2)}
+\label{eq:coherence}
+\end{equation}
+where $D(v_1, v_2)$ is the co-document frequency of word types
+$v_1$ and $v_2$, and $D(v_2)$ is the document frequency of word type $v_2$.
+A smoothing parameter $\epsilon$ prevents zero logarithms.
+
+Figure~\ref{fig:oracle-accuracy} also shows topic
+coherence.
+Although title-based anchor facets produce better classification features,
+topics from Gram-Schmidt anchors have better coherence than
+title-based anchors with the vector average or the or-operator.
+However, when using the harmonic mean combiner, title-based anchors produce
+the most human interpretable topics.\statsigoracle{}
+
+
+Harmonic mean beats other combiner functions because it is robust
+to ambiguous or irrelevant term cooccurrences an anchor facet.
+Both the vector average and the or-operator are swayed by large
+outliers, making them sensitive to ambiguous terms in an anchor facet.
+Element-wise min also has this robustness, but harmonic mean better
+characterizes anchor facets: it has more centralizing tendency than the
+min.
+
+\subsection{Runtime Considerations}
+
+
+Tandem anchors will enable users to direct topic inference to improve topic
+quality.
+However, for the algorithm to be interactive we must also consider runtime.
+\newcite{user-wait} argue that for interactive applications
+with user-initiated actions like ours the response time should be less than ten seconds.
+Longer waits can increase the cognitive load on the user and harm
+the user interaction.
+
+Fortunately, the runtime of tandem anchors is amenable to interactive topic
+modeling.
+On \twentynews{}, interactive updates take a median time of 2.13
+seconds on a single core of an \abr{amd} Phemon II X6
+1090T processor.
+Furthermore, larger datasets typically have a sublinear increase in distinct
+word types, so we can expect to see similar run times, even on much larger
+datasets.
+
+Compared to other interactive topic modeling algorithms, tandem anchors has a
+very attractive run time.
+For example, using an optimized version of the sampler for the Interactive
+Topic Model described by~\newcite{itm-fast}, and the recommended 30 iterations
+of sampling, the Interactive Topic Model updates with a median time of 24.8
+seconds~\cite{itm-fast}, which
+is well beyond our desired update time
+for interactive use and an order of magnitude slower than tandem anchors.
+
+Another promising interactive topic modeling approach is
+Utopian~\cite{utopian}, which uses non-negative factorization, albeit without
+the benefit of anchor words.
+Utopian is much slower than tandem anchors.
+Even on the small InfoVis-VAST dataset which contains only 515 documents,
+Utopian takes 48 seconds to converge.
+While the times are not strictly comparable due to differing datasets,
+Utopian scales linearly with the size of the data, we can intuit that even for
+moderately sized datasets such as \twentynews{}, Utopian is too slow for
+interactive topic modeling.
+
+While each of these interactive topic modeling algorithms achieve reasonable
+topics, only our algorithm is fast enough for interactivity.
+Furthermore, since tandem anchors scales with vocabulary size rather
+than number of documents, this trend only becomes more pronounced
+with larger data.

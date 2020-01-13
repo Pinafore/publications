@@ -1,0 +1,53 @@
+\section*{}
+\label{sec:intro}
+
+Topic models distill large collections of text into topics,
+giving a high-level summary of the thematic structure of the data without
+manual annotation.
+In addition to facilitating discovery of topical
+trends~\cite{topical-guide}, topic modeling is used for a wide
+variety of problems including
+document classification~\cite{topic-classification},
+information retrieval~\cite{lda-ir},
+author identification~\cite{author-topic},
+and sentiment analysis~\cite{topic-sentiment}.
+However, the most compelling use of topic models is to help users understand
+large datasets~\cite{termite}.
+
+Interactive topic modeling~\cite{hu-14:itm} allows non-experts to refine
+automatically generated topics, making topic models less of a ``take it or
+leave it'' proposition.
+Including humans input during training improves the quality of the
+model and allows users to guide topics in a specific way, custom
+tailoring the model for a specific downstream task or
+analysis.
+
+The downside is that interactive topic modeling is slow---algorithms typically
+scale with the size of the corpus---and requires non-intuitive information from
+the user in the form of must-link and cannot-link
+constraints~\cite{andrzejewski-09}.
+We address these shortcomings of interactive topic modeling by using an
+interactive version of the \emph{anchor words} algorithm for topic models.
+
+The anchor algorithm~\cite{anchors-practical} is an alternative topic modeling
+algorithm which scales with the number of
+unique word types in the data rather than the number of documents or tokens
+(Section~\ref{sec:vanilla-algo}).
+This makes the anchor algorithm fast enough for interactive use, even in
+web-scale document collections.
+
+A drawback of the anchor method is that anchor words---words that have high
+probability of being in a \emph{single} topic---are not intuitive.
+We extend the anchor algorithm to use multiple anchor words in tandem (Section
+\ref{sec:multiword-extension}).
+Tandem anchors not only improve interactive refinement, but also make the
+underlying anchor-based method more intuitive.
+
+For interactive topic modeling,
+tandem anchors produce higher quality topics than single word anchors
+(Section~\ref{sec:oraclular-experiments}).
+Tandem anchors provide a framework for fast interactive topic modeling: users
+improve and refine an existing model through multiword anchors
+(Section~\ref{sec:interactive-experiments}).
+Compared to existing methods such as Interactive Topic Models~\cite{hu-14:itm},
+our method is much faster.

@@ -1,0 +1,49 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage{style/emnlp2017}
+
+\usepackage{times}
+\usepackage{latexsym}
+
+\emnlpfinalcopy
+\def\emnlppaperid{1129} 
+\newif\ifcomment\commenttrue
+\input{style/preamble}
+\emnlpfinalcopy
+
+\usepackage{url}
+\usepackage{footnote}
+\makesavenoteenv{table}
+
+\newcommand{\adagrad}[0]{\abr{adagrad}}
+
+\title{Why \abr{adagrad} Fails for Online Topic Modeling} 
+\author{You Lu\\ Computer Science (\abr{cs}) \\
+	University of Colorado Boulder \\
+        Boulder, \abr{co} \\
+	\tt you.lu@colorado.edu
+	\And
+	Jeffrey Lund \\ Computer Science (\abr{cs})\\
+	Brigham Young University \\
+        Provo, \abr{ut} \\
+	\tt jefflund@byu.edu
+	\And
+	Jordan Boyd-Graber\\ \abr{cs}, iSchool, \abr{lsc}, and \textsc{umiacs} \\
+	University of Maryland \\
+	College Park, \abr{md} \\
+	{\tt jbg@umiacs.umd.edu}
+	}
+
+\date{}
+
+\begin{document}
+	\maketitle
+	\input{2017_emnlp_adagrad_olda/sections/00-abstract}
+	\input{2017_emnlp_adagrad_olda/sections/10-intro}
+	\input{2017_emnlp_adagrad_olda/sections/21-problems}
+	\input{2017_emnlp_adagrad_olda/sections/40-experiments}
+	\input{2017_emnlp_adagrad_olda/sections/50-conclusion}
+	\input{2017_emnlp_adagrad_olda/sections/60-acknowledgements}
+        \clearpage
+    \bibliographystyle{style/acl_natbib}
+    \bibliography{bib/journal-full,bib/jbg,bib/youlu}
+\end{document}

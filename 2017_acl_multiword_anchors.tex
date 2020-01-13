@@ -1,0 +1,106 @@
+\documentclass[11pt]{article}
+\usepackage[table]{xcolor}
+\usepackage{style/acl2017}
+\usepackage{times}
+\usepackage{fixfoot}
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage{xspace}
+\usepackage{url}
+\usepackage{bm}
+
+\aclfinalcopy
+\def\aclpaperid{516}
+
+
+\newcommand{\apriori}{\textit{a priori} }
+\newcommand{\aposteriori}{\textit{a posteriori} }
+\newcommand{\map}{\textit{maximum a posteriori} }
+
+\newcommand{\g}{\, | \,}
+
+\newcommand{\argmax}{\operatornamewithlimits{argmax}}
+\newcommand{\argmin}{\operatornamewithlimits{argmin}}
+
+\newcommand{\ndim}[1]{#1\nobreakdash\discretionary{-}{-}{-}\hspace{0pt}dimensional}
+
+\newcommand{\dquote}[1]{\textquotedblleft#1\textquotedblright}
+\newcommand{\squote}[1]{\textquoteleft#1\textquoteright}
+\newcommand{\abr}[1]{\textsc{#1}\xspace}
+\newcommand{\twentynews}{\textsc{20news}}
+\newcommand{\hidetext}[1]{}
+
+\definecolor{byublue}{HTML}{00305E}
+\definecolor{byublue2}{HTML}{114477}
+\definecolor{byublue3}{HTML}{336699}
+\definecolor{byublue4}{HTML}{628CB6}
+\definecolor{byublue5}{HTML}{91B2D2}
+\definecolor{byublue6}{HTML}{ABC8E4}
+\definecolor{byublue7}{HTML}{D1E4F6}
+\definecolor{byutan}{HTML}{C5AF7D}
+\definecolor{byured}{HTML}{990011}
+\definecolor{byugreen}{HTML}{007722}
+\definecolor{byugreen2}{HTML}{CCEDCE}
+\definecolor{byuorange}{HTML}{EE8800}
+
+                                        
+\newcommand{\comment}[2]{\colorbox{cyan}{\parbox{.8\linewidth}{#1:#2}}}
+
+\newcommand{\jbgcomment}[1]{  \colorbox{red}{   \parbox{.8\linewidth}{ JBG: #1}  }}
+
+\newcommand{\anch}[1]{\mathcal{G}_{#1}}
+\newcommand{\pword}[1]{\mathit{g}_{#1}}
+
+\DeclareFixedFootnote{\statsigoracle}{Significant at $p<0.01/4$ under
+  two-tailed $t$-tests with a Bonferroni correction.  For each
+  evaluation, we verify the normality~\cite{scipy-normaltest} and use
+  two-tailed $t$-tests with Bonferroni correction to determine whether
+  the differences between methods are significant.}
+
+\DeclareFixedFootnote{\statsiguser}{Significant at $p<0.01$ when using
+  Wilcoxon's signed-rank test.}
+
+\newcommand{\filename}[1]{2017_acl_multiword_anchors/#1}
+\addtolength\titlebox{.2in}
+
+\title{Tandem Anchoring: \\ A Multiword Anchor Approach for Interactive Topic Modeling}
+
+\author{Jeffrey Lund, Connor Cook, Kevin Seppi \\
+        Computer Science Department \\
+        Brigham Young University \\
+        \{jefflund,cojoco,kseppi\}@byu.edu
+        \And
+        Jordan Boyd-Graber \\
+        Computer Science Department \\
+        University of Colorado Boulder \\
+        jordan.boyd.graber@colorado.edu}
+
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+\input{2017_acl_multiword_anchors/sections/abstract}
+\end{abstract}
+
+\input{2017_acl_multiword_anchors/sections/0-intro}
+\input{2017_acl_multiword_anchors/sections/1-vanilla}
+\input{2017_acl_multiword_anchors/sections/2-extension}
+\input{2017_acl_multiword_anchors/sections/3-titles}
+\input{2017_acl_multiword_anchors/sections/4-interactive}
+
+\newpage
+
+\input{2017_acl_multiword_anchors/sections/5-conclusion}
+
+\newpage
+
+\small
+\bibliographystyle{style/acl_natbib}
+\bibliography{bib/jlund,bib/jbg}
+
+\end{document}

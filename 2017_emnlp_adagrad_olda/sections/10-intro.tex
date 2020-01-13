@@ -1,0 +1,39 @@
+\paragraph{}
+\label{sec:introduction}
+
+
+
+Probabilistic topic models~\cite{blei2012probabilistic} are popular
+algorithms for uncovering hidden thematic structure in text. They
+have been widely used to help people understand and navigate
+document collections~\cite{blei2003latent}, multilingual collections~\cite{Hu:Zhai:Eidelman:Boyd-Graber-2014}, images~\cite{chong2009simultaneous},
+networks~\cite{chang2009relational, yang2016discriminative},
+etc. Probabilistic topic modeling usually requires computing a posterior
+distribution over thousands or millions of latent variables, which is
+often intractable. Variational
+inference~\cite[\abr{vi}]{blei2016variational} approximates posterior distributions. Stochastic
+variational inference~\cite[\abr{svi}]{hoffman2013stochastic} is its
+natural online extension
+and enables the analysis of large datasets.
+
+
+
+Online topic models~\cite{hoffman2010online,
+	bryant2012truly, paisley2015nested} optimize the global parameters of interest using
+stochastic gradient ascent. At each iteration, they sample data
+points to estimate the gradient. In practice, the sample has
+only a small percentage of the vocabulary.  The resulting sparse
+gradients hurt performance.  \adagrad{}~\cite{duchi2011adaptive} is
+designed for high dimensional online optimization problems and adjusts
+learning rates for each dimension, favoring rare features.
+This makes \adagrad{} well-suited for tasks with sparse gradients such as
+distributed deep networks~\cite{dean2012large},
+forward-backward splitting~\cite{duchi2009efficient},
+and regularized dual averaging methods~\cite{xiao2010dual}.
+
+Thus, it may seem reasonable to apply \adagrad{} to optimize online
+topic models. However, \adagrad{} is not suitable for
+online topic models (Section~\ref{sec:problems}). This is because to fit a topic model, the training algorithm must break the symmetry between parameters of words that are highly related to the topic and words that are not related to the topic. Before the algorithm converges, the magnitude of gradients of the parameters are very large. Since \abr{adagrad} uses the accumulation of previous gradients as learning rates' denominators, the learning rates shrink very quickly. Thus, the algorithm cannot break the symmetry quickly. We provide solutions for this problem. Two alternative learning rate methods, i.e., \abr{adadelta}~\cite{zeiler2012adadelta} and \abr{adam}~\cite{kingma2014adam}, can address this incompatibility with online topic models. When the dataset is small enough, e.g., a corpus with only hundreds of documents, \abr{adagrad} can still work.
+
+
+
