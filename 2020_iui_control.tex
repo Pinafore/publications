@@ -1,26 +1,19 @@
-\documentclass[sigconf,table,prologue]{acmart}
+%\documentclass[sigconf,table,prologue]{acmart}
+\documentclass[sigconf]{acmart}
 
 
-
-
-\AtBeginDocument{  \providecommand\BibTeX{{    \normalfont B\kern-0.5em{\scshape i\kern-0.25em b}\kern-0.8em\TeX}}}
-
-\copyrightyear{2019}
-\acmYear{2019}
+\copyrightyear{2020}
+\acmYear{2020}
 \setcopyright{rightsretained}
 
 
 \acmConference{IUI 2020}{March 17 - March 20, 2020}{Italy}
 
-
-\usepackage{amsfonts}  
-\usepackage{amsmath} 
 \usepackage{caption}
 \usepackage{subcaption}
 
 \newif\ifcomment\commentfalse
 \input{style/preamble}
-\newcommand\BibTeX{B\textsc{ib}\TeX}
 
 \newcommand{\lda}[0]{\textsc{lda}}
 \newcommand{\npmi}[0]{\textsc{npmi}}
@@ -31,14 +24,9 @@
 \newcommand{\etalcite}[2]{#1 et al.\,\cite{#2}}
 
 
-
-
 \begin{document}
 
 \title{Digging into User Control: Perceptions of Adherence and Instability in Transparent Models}
-
-
-
 
 \author{Alison Smith-Renner}
 \email{amsmit@cs.umd.edu}
@@ -84,6 +72,24 @@
 \end{abstract}
 
 
+\begin{CCSXML}
+<ccs2012>
+   <concept>
+       <concept_id>10003120.10003121.10003129</concept_id>
+       <concept_desc>Human-centered computing~Interactive systems and tools</concept_desc>
+       <concept_significance>300</concept_significance>
+       </concept>
+   <concept>
+       <concept_id>10003120.10003121.10011748</concept_id>
+       <concept_desc>Human-centered computing~Empirical studies in HCI</concept_desc>
+       <concept_significance>300</concept_significance>
+       </concept>
+ </ccs2012>
+\end{CCSXML}
+
+\ccsdesc[300]{Human-centered computing~Interactive systems and tools}
+\ccsdesc[300]{Human-centered computing~Empirical studies in HCI}
+
 
 \keywords{Interactive machine learning, topic modeling, control, transparency, intelligent user interface evaluation}
 
@@ -107,7 +113,7 @@ authors and do not necessarily reflect the view of the sponsor.
 \clearpage
 
 \bibliographystyle{ACM-Reference-Format}
-\bibliography{bib/journal-full,bib/2020_iui_control,bib/jbg}
+\bibliography{bib/journal-full,bib/alison,bib/jbg}
 
 
 \end{document}
