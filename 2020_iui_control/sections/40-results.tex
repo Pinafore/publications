@@ -123,9 +123,9 @@ However, there was no significant difference between the modeling
 approaches for perceived adherence of the \textbf{create topic}
 (${\chi}^2(2)=.9, p=.62$) or \textbf{split topic} refinements
 (${\chi}^2(2)=3.6, p=.17$), even though these differed for computed
-adherence (Table~\ref{tab:ref_adherence_computed}).  Perhaps because
-it is harder for users discern perfect refinements (all requested
-words appear in the new topic) from ``good enough'' refinements.
+adherence (Table~\ref{tab:ref_adherence_computed}).  This is perhaps because
+it is harder for users to discern perfect refinements (all requested
+words appear in the new topic) from those that are ``good enough''.
 
 \begin{figure}[t]
     \begin{center}
@@ -149,7 +149,7 @@ significant (${\chi}^2(2)=5.6, p=.105$).
 We measured quality and improvement using qualitative (Figure~\ref{fig:qual})---judged
 by the user---and quantitative---automatic
 topic coherence, Table~\ref{tab:attributes}---methods.
-Confirming that our initial random model creation was effective; there were no significant differences between modeling approaches for the initial
+Confirming that our initial random model creation was effective, there were no significant differences between modeling approaches for the initial
 model quality (${\chi}^2(2)=4.1, p=.130$).
 Automatic coherence declined on average for models, most notably for \textit{info-vb}, confirming previous reports that variational inference can produce less coherent topics than Gibbs sampling~\cite{Nguyen2015ImprovingModeling}. 
 In contrast, participants believed they improved the models: 
@@ -161,7 +161,7 @@ Topic coherence is intended to reflect human rating of individual
 topics~\cite{Chang2009ReadingModels}, but our users \emph{reduced} the overall model quality while
 feeling that they improved it.  One possible reason for this discrepancy is the limited
 view of traditional topic coherence metrics: they examine each topic by only top words, and
-model-wide measures average over all topics; whereas participants typically care about the model as a whole or sometimes prefer a particular subset of topics. Future work should explore robust metrics that better capture how topics model all of the data or put weight on particular topics of interest. Also, topics should be evaluated as both their words and associated documents. Additionally, ideal metrics would be less dependent on the data being modeled.
+model-wide measures average over all topics, whereas participants typically care about the model as a whole or sometimes prefer a particular subset of topics. Future work should explore robust metrics that better capture how topics model all of the data or put weight on particular topics of interest. Also, topics should be evaluated as both their words and associated documents. Additionally, ideal metrics would be less dependent on the data being modeled.
 
 \paragraph{Participants thought all the systems were too slow}
 
@@ -234,11 +234,11 @@ the most. There were no significant effects of modeling approach on these experi
 Our coding of open-ended responses (Section~\ref{sec:analysis}) resulted in seven \textit{disliked}, seven \textit{liked}, and five \textit{unexpected} codes.
 
 Participants disliked ``latency'' the most (42 of 95) followed by ``lack of control'' (21 participants).
-10 participants thought the systems were ``missing functionality'', requesting support for dragging documents between topics or comparing two topics at once. Eight participants thought the tool was ``overwhelming'', while five said there was ``nothing'' they did not like. Five disliked ``model qualities'', such as too many similar topics (P46, \textit{const-gibbs}). Finally, two participants mentioned disliking ``instability''. 
+Ten participants thought the systems were ``missing functionality'', requesting support for dragging documents between topics or comparing two topics at once. Eight participants thought the tool was ``overwhelming'', while five said there was ``nothing'' they did not like. Five disliked ``model qualities'', such as too many similar topics (P46, \textit{const-gibbs}). Finally, two participants mentioned disliking ``instability''. 
 
 Participants liked that the systems were ``useful'' for organizing and
 filtering the documents (40 of 95) and that they were ``intuitive''
-(28). 10 participants liked the ``refinements'', particularly when
+(28). Ten participants liked the ``refinements'', particularly when
 they worked as expected, such as P22 (\textit{const-gibbs}),
 \textit{``the removing of terms was neat and operated as expected''},
 while three participants said they liked when the systems ``worked as
@@ -247,7 +247,7 @@ participants said they liked ``instability'', and one liked that the
 tool was ``fast''.
 
 Of the measured attributes, participants thought ``lack of control'', or adherence, (35 of 95) was most unexpected, such as P14 (\textit{info-gibbs}) who said,\textit{ ``once the change word order did not happen, even though I tried it three times'',} followed by ``slowness'' (22) and ``instability'' (12).
-20 participants said ``nothing'' was unexpected and six mentioned ``other'' things, like issues with the tutorial. 
+Twenty participants said ``nothing'' was unexpected and six mentioned ``other'' things, like issues with the tutorial. 
 
 Instability was the most
 polarizing attribute.  Not all noticed it, but those that did disagreed, confirming
@@ -271,7 +271,7 @@ The high frequency of undoing \textbf{delete topic} is unexpected. While we had 
 \begin{figure}[t]
   \centering
   \includegraphics[width=.45\textwidth]{\figfile{undone}}
-  \caption{Proportion of refinement usage that is followed by undo. \textbf{Delete topic}~(10\%) and \textbf{split topic}~(8\%) are undone the most often.}
+  \caption{Proportion of refinement usage that is followed by undo. \textbf{Delete topic}~(10\%) and \textbf{split topic}~(8\%) are undone the most often. \textbf{Create topic} was never undone.}
   \label{fig:undo-norm}
 \end{figure}
 

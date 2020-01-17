@@ -28,7 +28,7 @@ users with mechanisms to control the model and expect for a positive
 outcome---we must also consider \textit{how} models update and what
 cascading side effects might occur. This need introduces a problematic
 tension:
- models must balance respecting user inputs and faithfully modeling
+ models must balance the user requested changes with faithfully modeling
  the data.
 
 This paper explores how users perceive and are affected by two specific aspects of control as it relates to predictability: whether input is applied as expected (\textit{adherence}) and whether other unexpected changes occur (\textit{instability}). \abr{iml} models also vary in other attributes that affect user experience, particularly their \textit{latency}, or how long they take to update, and their \textit{performance}, or how well they model the data or accuracy on held out test sets. These are not just attributes of \abr{iml} systems; human--computer interaction guidelines prescribe that interactive systems should be predictable, controllable, and provide immediate updates~\cite{Hoekman2007DesigningDesign, Shneiderman1996TheVisualizations}. While prior work has highlighted control and predictability for intelligent user interfaces~\cite{Hook2000StepsReal}, the interaction between these constructs, particularly for highly transparent models, has not been fully explored.
@@ -38,7 +38,7 @@ not been studied at a large scale or compared between models.
 
 To explore how participants responded to varied system adherence, instability, latency, and quality, 100 crowdworkers used
 three \hltm{} systems for document understanding and organization.  
-We compared three distinct modeling approaches---varying objective functions and optimization strategies---as these approaches result in different computed adherence and stability, update times, and final model quality.
+Rather than artificially manipulating adherence, instability, latency, and quality, we chose to compare three distinct modeling approaches that vary in these characteristics as a result of using different objective functions and optimatization strategies.
 We explore whether user perceptions and experience differ between these systems,
 and examine user behavior more generally, to better understand how end users approach and interact with interactive models with easy-to-validate controls.
 

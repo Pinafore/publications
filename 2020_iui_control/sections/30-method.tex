@@ -20,7 +20,7 @@ approaches differ in how user input (e.g., added words) is conveyed to the model
 
 While other topic modeling approaches exist~\cite{Larochelle2012AModel,Hofmann1999ProbabilisticIndexing}, we chose these  \lda-based variants because they support the same user-preferred refinement set. For example, ``anchor words''-variants~\cite{Lund2017TandemModeling} also generate topics, but cannot support word-level operations like adding words. Also, these approaches may differ by the attributes of interest. For example, prior work asserts that informed priors better \textit{adhere} to refinement operations~\cite{kumar-19}, and Gibbs sampling-based methods
 can yield more coherent topics~\cite{Nguyen2015ImprovingModeling}.
-Also, Gibbs sampling and variational inference have different convergence rates~\cite{asuncion-09b}. While Gibbs sampling is often preferred for small datasets and interactive settings because of its low latency, variational inference can scale to millions of documents~\cite{hoffman-10,zhai-12}. 
+Also, Gibbs sampling and variational inference have different convergence rates~\cite{asuncion-09b}. While Gibbs sampling is often preferred for small datasets and interactive settings because of its low latency, variational inference can scale to millions of documents~\cite{hoffman-10,Zhai2012MrMapReduce}. 
 Our setting allows a focused, task-center comparison (Section~\ref{sec:calculated-differences}).
 
 For \textit{info-gibbs} and \textit{const-gibbs}, we trained initial \lda{}
@@ -151,7 +151,7 @@ After the tutorial, participants were given the following task instructions:
     ``Imagine you have been asked to write a travel blog post about the common complaints that travelers have when flying. The system has gathered 9000 tweets of people complaining about their air travel experience directed at various popular airlines and has generated an initial set of 10 topics to organize these air travel complaint tweets. Use the tool to improve these topics, so that you can write a blog post about common air travel complaints with a few example tweets from each. You do not need to write the actual blog post as part of this task.''
 \end{quote}
 
-Participants were then asked to spend about
+Participants were then asked to spend
 $30$ minutes interacting with the model and to click the ``finish task'' button when they
 were happy with the organization they had achieved. 
 The interface required participants to spend at least $20$ and no more
@@ -220,7 +220,7 @@ Wikipedia reference corpus, their overall topic coherence scores were
 relatively low, but are still useful for \emph{relative} comparison.} We additionally logged all interactions with the system including how
 many and which refinements participants applied.
 
-\subsection{Data and analysis}
+\subsection{Data and Analysis}
 \label{sec:analysis}
 We disqualified five of the $100$ participants because they made an outlying number of survey
 response ``mistakes'' on per-refinement adherence statements. We considered a response to be a ``mistake'' if
