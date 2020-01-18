@@ -45,19 +45,17 @@ the model vocabulary. For \textbf{delete topic}, to delete a specified topic $t$
 models, we first forgot all latent topic assignment which were
 assigned to $t$, and then reduced the number of topics by one.
 
-When these refinements were used during the task, we applied them
-and ran inference for fixed $N$ iterations.
-We chose a fixed $N$ approach to limit the model latency, instead of running inference until convergence.
-Moreover, all refinements have different levels of complexity, meaning the models
-converge faster for certain refinements than others.
-For example, \textbf{add to stop words} is a simpler refinement than
+After refinements were applied, we ran inference for $N$ iterations to
+limit latency (rather than running inference until convergence).
+Moreover, all refinements have different levels of complexity, meaning
+the models converge faster for certain refinements than others.  For
+example, \textbf{add to stop words} is a simpler refinement than
 \textbf{create topic}, and hence requires fewer iterations to
-converge.
-For each refinement, we empirically fine-tuned $N$ on $9000$ tweets
-randomly selected from a different
-dataset.\footnote{\url{https://www.kaggle.com/kazanova/sentiment140/}} In
-particular, to fine-tune $N$ for a refinement, we randomly applied a
-refinement multiple times and observed how fast the model converged.
+converge.  For each refinement, we empirically fine-tuned $N$ on
+$9000$ tweets randomly selected from a different
+dataset.\footnote{\url{https://www.kaggle.com/kazanova/sentiment140/}}
+In particular, to fine-tune $N$ for a refinement, we randomly applied
+a refinement multiple times and observed how fast the model converged.
 For \textit{info-gibbs} and \textit{const-gibbs}, $N$ ranged from one
 for \textbf{add to stop words} to $20$ for \textbf{create topic}. For
 \textit{info-vb}, $N$ varied from one for \textbf{add to stop words}
@@ -127,9 +125,11 @@ Upwork platform.\footnote{https://www.upwork.com/} Participants were
   bilingual English speakers. 
   We designed the task to take approximately 60 minutes and paid participants $20$ \abr{usd}. We used Upwork instead of other common crowdworker platforms (e.g., Mechanical Turk), to recruit more motivated participants; participants were paid a higher rate and could always contact one of the researchers in case of questions. 
   
-Participants varied in age ($<19$: four, $20-29$: $46$, $30-39$: $23$, $40-49$: $13$, $50-59$: seven, $>60$: eight), education (college degree: $49$, graduate degree: $29$, some college: $17$, high school or GED: $5$), and
-background (most common include $12$ participants with background in
-English or writing, seven in education, and five in business). 
+Participants varied in age ($<19$: four, $20-29$: $46$, $30-39$: $23$,
+$40-49$: $13$, $50-59$: seven, $>60$: eight), education (college
+degree: $49$, graduate degree: $29$, some college: $17$, high school
+or \abr{ged}: $5$), and background ($12$ in English or writing, seven
+in education, and five in business).
 
 To understand participants' prior exposure to topic models and machine learning, as this could affect our results, study participants rated prior experience with statistical topic modeling and machine learning, respectively.
 Participants varied for prior
