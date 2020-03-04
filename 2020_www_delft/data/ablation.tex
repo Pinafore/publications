@@ -1,0 +1,17 @@
+\begin{table}[t]
+  \centering
+  \small
+  \begin{tabular}{lrr}
+    \textbf{Ablation}  & \multicolumn{2}{r}{\textbf{Accuracy}} \\ \toprule
+    No Node Pruning & 42.6 & -21.4\% \\ 
+    No Gloss Representation & 49.2 & -9.3\% \\ 
+    No Edge Evidence Sentence & 48.8 & -10.0\% \\ 
+    No Edge Importance & 52.6 & -3.0\% \\ 
+    No Self Attention Layer & 53.0 & -2.2\% \\ 
+    \name{}-\glove{} &54.2 & -- \\
+    \bottomrule
+  \end{tabular}
+  \caption{Ablation Study of \name{}-\abr{g}{\small love} on \qblink{} (ALL questions). 
+    Each \name{} variant removes one component and keeps everything else fixed. }
+    \label{tab:ablation} 
+\end{table}

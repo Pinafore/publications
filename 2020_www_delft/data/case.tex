@@ -1,0 +1,44 @@
+
+\begin{table*}[t]
+  \centering
+  \small
+  \begin{tabular}{p{0.5cm}p{7.5cm}p{8cm}}
+      id & Example  &Explanation  \\ \toprule
+      1(+)&\textbf{Q}: This general was the leader of the nationalist side in the 
+      \question{civil war} and ruled until his death in 1975. 
+      He kept \question{Spain} neutral in the \question{Second World War} and is still dead.
+
+
+      \textbf{A}: Francisco Franco  \hphantom{\dots\dots} \textbf{P}: \candidate{Francisco Franco}
+      
+      & The question directly maps to evidence sentence ``After the nationalist victory in the Spanish Civil War, until his (\candidate{Francisco Franco}) death in 1975''.\\ 
+
+      2(+)&\textbf{Q}: This \question{New England Patriots} quarterback was named \question{Super Bowl MVP}. He had three touchdown passes during the game: one each to \question{Deion Branch}, \question{David Givens}, and \question{Mike Vrabel}.
+
+      \textbf{A}: Tom Brady \hphantom{\dots\dots} \textbf{P}: \candidate{Tom Brady}
+
+      & Substantial evidence points to \candidate{Tom Brady} (correct): ``\candidate{Tom Brady}  plays for \question{New England Patriots}'', and ``\candidate{Tom Brady} had touchdown passes with \question{Deion Branch}''.
+      \name{} aggregates evidence and makes the correct prediction. Without the graph structure, \memnn{} instead 
+      predicts \candidate{Stephon Gilmore} (Another \question{New England Patriot}{}).\\
+      
+      3(-)&\textbf{Q}: Name this \question{European} nation which was divided into Eastern and Western regions after \question{World War II}. 
+
+      \textbf{A}: Germany  \hphantom{\dots\dots}  \textbf{P}: \candidate{Yumen Pass}
+
+      & No informative question entities that would lead to the key evidence sentence ``Germany divides into East Germany and West Germany''.\\ 
+
+      4(-)&\textbf{Q}: \question{Telemachus} is the son of this hero, who makes a really long journey back home after the \question{Trojan War} in an epic poem by \question{Homer}.
+
+
+      \textbf{A}: Odysseus  \hphantom{\dots\dots}  \textbf{P}: \candidate{Penelope}
+
+      & \name{} can't make right prediction since the wrong candidate \candidate{Penelope} (Odysseus's wife) shares 
+      most of the extracted evidence sentences with the correct answer (e.g., their son \question{Telemachus}). 
+      \\\bottomrule
+      
+
+  \end{tabular}
+  \caption{Four examples from \qblink{} dataset with \name{} output. Each example has a question (Q), gold answer (A) and \name{} predcition (P), along with an explanation of what happened. The first two are correct (+), while the last two are wrong (-). 
+  }
+  \label{tab:example}
+\end{table*}

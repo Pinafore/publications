@@ -1,0 +1,42 @@
+\section{The View Beyond \name{}}
+\label{sec:conclu}
+
+Real-world factoid \abr{qa} requires answering diverse questions across domains.
+%
+Relying on existing knowledge graph relations to answer these questions often leads to highly accurate but brittle systems:
+they suffer from low coverage.
+%
+To overcome the bottleneck of structure sparsity in existing knowledge graphs,
+% solve the sparse 
+% coverage issue, 
+\name{} inherits 
+\abr{kgqa}-style reasoning with the widely available free-text evidence.
+\name{} builds a high coverage and dense free-text knowledge graph, using
+natural language sentences as edges.
+%
+To answer questions, \name{} grounds the question into the related
+subgraph connecting entities with free-text graph edges and then uses
+a graph neural network to represent, reason, and select the answer
+using evidence from both free-text and the graph structure.
+
+Combining natural language and knowledge-rich graphs is a common
+problem:
+%
+e-mail and contact lists,
+%
+semantic ontologies and sense disambiguation,
+%
+and semantic parsing.
+%
+Future work should explore whether these approachs are also useful for
+dialog, language modeling, or \textit{ad hoc} search.
+
+More directly for question answering, more fine-grained reasoning
+could help solve the example of Table~\ref{tab:example}:
+%
+while both Odysseus and Penelope have Telemachus as a son, only
+Odysseus made a long journey and should thus be the answer.
+%
+Recognizing specific properties of nodes either in a traditional
+\abr{kg} or in free text could resolve these issues.
+

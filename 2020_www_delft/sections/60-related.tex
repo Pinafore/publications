@@ -1,0 +1,175 @@
+\section{Related Work: Knowledge Representation for QA}
+\label{sec:bg}
+
+\name{} is impossible without the insights of 
+traditional knowledge bases for question answering and question
+answering from natural language, which we combine using graph neural
+networks.
+%
+This section describes how we build on these subfields.
+
+\subsection{Knowledge Graph Question Answering}
+
+With knowledge graphs (\abr{kg}) like
+Freebase~\cite{bollacker2008freebase} and
+DBpedia~\cite{mendes2011dbpedia} enable question answering using their
+rich, dependable structure.
+%
+This has spurred \abr{kg}-specific \abr{qa} datasets on general domain
+large scale knowledge graphs: WebQuestions~\cite{berant2013semantic},
+SimpleQuestions~\cite{bordes2015large}, and special-domain \abr{kg}s,
+such as WikiMovies~\cite{miller2016key}.
+%
+In turn, these new datasets have prompted special-purpose 
+\abr{kgqa} algorithms.
+%
+Some convert questions to semantic parsing problems and execute the
+logical forms on the graph~\cite{cai2013large, kwiatkowski2013scaling,
+  reddy2014large, yih2015semantic}.
+%
+Others use information extraction
+ to first extract question related information in \abr{kg}
+and then find the answer~\cite{bao2014knowledge, yao2014information,
+  gardner2017open}.
+
+These work well on questions tailored for the underlying \abr{kg}.
+%
+For example,
+WebQuestions guarantee its questions can be answered by
+Freebase~\cite{berant2013semantic}.
+%
+Though modern knowledge graphs have good coverage on
+entities~\cite{cxthesis}, adding relations takes time and
+money~\cite{Paulheim2018HowMI}, often requiring human
+effort~\cite{bollacker2008freebase} or scraping human-edited
+structured resources~\cite{mendes2011dbpedia}.
+%
+These lacun\ae represent impede broader use and
+adoption.
+
+Like \name{}, \abr{quest}~\cite{Lu:2019:ACQ} seeks to address this by
+building a noisy quasi-\abr{kg} with nodes and edges, consisting of
+dynamically retrieved entity names and relational phrases from raw
+text.
+%
+Unlike \name{}, this graph is built using existing Open Information
+Extraction (\abr{ie}).
+%
+Then it answers questions on the extracted graph.
+%
+Unlike \name{}, which is geared toward recall, \abr{ie} errs toward
+precision and require regular, clean text.
+%
+In contrast, many real-world factoid questions contain linguistically
+rich structures, making relation extraction challenging.
+%
+We instead directly extract free-text sentences as indirect relations
+between entities, which ensures high coverage of evidence information
+to the question.
+
+
+Similarly, {\abr{graft}-\abr{n}\small et}~\cite{sun2018open} extends an existing \abr{kg} with 
+text information.
+%
+It grafts text evidence onto \abr{kg} nodes but retains the original \abr{kg} relations.
+%
+It then reasons over this graph to answer \abr{kg}-specific questions.
+%
+\name{}, in contrast, grafts text evidence onto both nodes and edges
+to enrich the relationships between nodes, building on
+the success of unconstrained ``machine reading'' \abr{qa} systems.
+
+\subsection{Question Answering over Text}
+
+Compared with highly structured \abr{kg}, unstructured text
+collections (e.g., Wikipedia, newswire, or Web scrapes) is cheaper but
+noisier for \abr{qa}~\cite{chen2018neural}.
+%
+Recent datasets such as \squad{}~\cite{rajpurkar2016squad},
+\triviaqa{}~\cite{joshi2017triviaqa}, \abr{ms marco}~\cite{marco} and
+natural questions~\cite{kwiatkowski2019natural} are typically solved
+via a coarse search for a passage (if the passage isn't given) and
+then finding a fine-grained span to answer the question.
+
+A rich vein of neural readers match the questions to the given
+passages and extract answer spans from them~\cite[inter
+  alia]{seo2016bidirectional, yu2018qanet}.  Its popular solutions
+include \abr{bidaf}, which matches the question and document passages
+by bi-directional attention flows~\cite{seo2016bidirectional},
+\abr{qan}{\small et}, which enriches the local contexts with global
+self-attention~\cite{yu2018qanet}, and pre-training methods such as
+\abr{bert}~\cite{devlin2018bert} and \abr{xln}{\small
+  et}~\cite{yang2019xlnet}.
+
+The most realistic models are those that also search for a passage:
+%
+\drqa{}~\cite{chen2017reading} retrieves documents from Wikipedia and
+use \abr{mr} to predict the top span as the answer, and
+\abr{orca}~\cite{lee-19} trains the retriever via an inverse cloze
+task.
+%
+Nonetheless, questions mainly answerable by \drqa{} and \abr{orca} only require
+single evidence from the candidate sets~\cite{min2018efficient}.
+%
+\name{} in contrast searches for edge evidence and nodes that can
+answer the question; this subgraph often corresponds to the same
+documents found by machine reading models.
+%
+Ideally, it would help synthesize information across \emph{multiple}
+passages.
+
+
+Multi-hop \abr{qa}, where answers require require assembling
+information~\citep{welbl2018constructing, yang2018hotpotqa}, is a
+\emph{task} to test whether machine reading systems can
+synthesize information.
+%
+\abr{h}{\small otpot}\abr{qa}~\cite{yang2018hotpotqa} is the 
+ multi-hop \abr{qa} benchmark: each answer is a text span requiring 
+one or two hops.
+%
+Several models~\cite{qiu-etal-2019-dynamically,
+  ding-etal-2019-cognitive, min2019multi} solve
+this problem using multiple \abr{mr} models to extract multi-hop
+evidence.
+%
+While we focus on datasets with Wikipedia entities as
+answers, expanding \name{} to span-based answers (like \abr{h}{\small otpot}\abr{qa}) is a
+natural future direction.
+
+
+
+\subsection{Graph Networks for \abr{qa}}
+
+\name{} is not the first to use graph neural networks~\cite[inter
+  alia]{scarselli2009graph, kipf2016semi, schlichtkrull2017modeling}
+for question answering.
+%
+\abr{e}{\small ntity}-\abr{gcn}~\cite{de2018question},
+\abr{dfgn}~\cite{qiu-etal-2019-dynamically}, and
+\abr{hde}~\cite{tu-etal-2019-multi} build the entity graph with entity
+co-reference and co-occurrence in documents and apply \abr{gnn} to
+the graph to rank the top entity as the answer.
+%
+\abr{c}{\small og}\abr{qa}~\cite{ding-etal-2019-cognitive} builds the
+graph starting with entities from the question, then expanding the
+graph using extracted spans from multiple \abr{mr} models as candidate
+span nodes and adopt \abr{gnn} over the graph to predict the answer
+from span nodes.
+%
+All these methods' edges are co-reference between entities or binary
+scores about their co-occurrence in documents; \name{}'s primary
+distinction is using free-text as graph edges which we then represent
+and aggregate via a \abr{gnn}.
+
+Other methods have learned representations of relationships between entities.
+%
+\abr{nubbi}~\cite{chang-09c} used an admixture over relationship
+prototypes, while Iyyer et al.~\cite{iyyer-16} used neural dictionary
+learning for analyzing literature.
+%(including a temporal component for analyzing literature).
+%
+\name{} draws on these ideas to find similarities between 
+passages and questions.
+
+

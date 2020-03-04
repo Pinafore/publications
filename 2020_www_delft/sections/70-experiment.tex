@@ -1,0 +1,101 @@
+\section{Experiments}
+\label{sec:exp}
+
+We evaluate on three datasets with expert-authored (as opposed to crowd-worker) questions.
+%
+\qblink~\cite{Elgohary:Zhao:Boyd-Graber-2018} is an entity-centric dataset with human-authored questions. 
+The task is to answer the entity the question describes. We use the released dataset for evaluation.
+%
+\qanta~\cite{iyyer2014neural} is a \abr{qa} dataset collected from \qb{} competitions. 
+Each question is a sequence of sentences providing increased information about the answer entity. 
+%
+\triviaqa~\cite{joshi2017triviaqa} includes questions from trivia
+games and is a benchmark dataset for \abr{mr}. We use its unfiltered
+version, evaluate on its validation set, and split 10\% from its
+unfiltered training set for model selection.
+%
+Unlike the other datasets, \triviaqa{} is relatively simpler; it
+mentions fewer entities per question; as a result \name{} has lower
+accuracy.
+
+
+\input{2020_www_delft/data/stat.tex}
+
+\input{2020_www_delft/data/para.tex}
+ 
+
+We focus on questions that are answerable by Wikipedia entities.  To
+adapt \triviaqa{} into this factoid setting, we filter out all
+questions that do not have Wikipedia title as answer. We keep $~70\%$
+of the questions, showing good coverage of Wikipedia Entities
+in questions.
+%
+All \qblink{} and \qanta{} questions have entities tagged by TagMe.
+%
+TagMe finds no entities in 11\% of \triviaqa{} questions; we further
+exclude these.
+%
+Table~\ref{tab:data} shows the statistics of these three datasets 
+sand the fraction of questions with entities.
+
+\subsection{Question Answering Methods}
+We compare the following methods:
+\begin{itemize*}
+\item \quest{}~\cite{Lu:2019:ACQ} is an unsupervised factoid \abr{qa}
+  system over text. For fairness, instead of Google results we apply \quest{} on \abr{ir}-retrieved 
+Wikipedia documents.
+
+\item \drqa{}~\cite{chen2017reading} is a machine reading model for open-domain 
+  \abr{qa} that retrieves documents and extracts answers.
+  
+\item \docqa{}~\cite{clark2018simple} improves multi-paragraph machine reading, 
+and is among the strongest on \triviaqa{}. Their suggested settings 
+and pre-trained model on \triviaqa{} are used.
+
+\item \bertet{} fine-tunes \bert{}~\cite{devlin2018bert} on the question-entity name pair to rank candidate entities in \name{}'s  graph.
+  
+\item \bertsent{} fine-tunes \bert{} on the question-entity gloss sequence pair to rank candidate entities in \name{}'s  graph.
+  
+\item \memnn{} is a memory network~\cite{weston2014memory} using fine-tuned \bert{}.
+It uses the same evidence as \name{} but collapses the 
+graph structure (i.e., edge evidence sentences) by concatenating all
+evidence sentences into a memory cell.
+%While we use this model for \rightnode{} filtering, it can also select
+%an answer directly.
+
+\item We evaluate our method, \name{}, with \glove{} embedding~\cite{pennington2014glove} and \bert{} embeddings.
+\end{itemize*}
+
+
+\input{2020_www_delft/data/coverage.tex}
+
+\subsection{Implementation}
+
+
+\input{2020_www_delft/data/overall.tex}
+
+
+Our implementation uses PyTorch~\cite{paszke2017automatic} and its \abr{dgl} \abr{gnn} library.\footnote{\url{https://github.com/dmlc/dgl}}
+%
+We keep top twenty candidate entity nodes in the training and fifty for testing; the top five sentences for each edge is kept.
+%
+The parameters of \name{}'s \abr{gnn} layers are listed in Table~\ref{tab:para}. For \name{}-\bert{}, we use \bert{} 
+output as contextualized embeddings. 
+
+For \bertet{} and \bertsent{}, we concatenate the question and entity
+name (entity gloss for \bertsent{}) as the \bert{} input and
+ apply an affine layer and sigmoid activation to the last \bert{} layer of the \abr{[cls]} token; the model
+outputs a scalar relevance score.
+
+
+\memnn{} concatenates all evidence sentences and the node gloss, and combines with the question
+as the input of \bert{}.  Like \bertet{} and \bertsent{}, an affine layer and sigmoid activation is
+applied on \bert{} output to produces the answer score.
+
+
+\drqa{} retrieves $10$ documents and then $10$ paragraphs from them; we use the default 
+setting for training. During inference, we apply TagMe to 
+each retrieved paragraph and 
+limit the candidate spans as tagged entities. 
+\docqa{} uses the pre-trained model on \triviaqa{}-unfiltered
+dataset with default configuration applied to our subset.

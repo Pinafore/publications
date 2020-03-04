@@ -1,0 +1,51 @@
+\begin{table*}[t]
+  \centering
+  \begin{tabular}{lrrrrr gg rrr}
+      & \multicolumn{5}{c}{\textbf{\qblink{}}} &
+                                                 \multicolumn{2}{c}{ \textbf{\qanta{}}} & \multicolumn{3}{c}{\textbf{\triviaqa{}}}  \\ 
+      & ALL
+      & 1-3 & 4-6 & 7-9 & 10+ 
+      & ALL
+      & 10+
+      & ALL
+      & 1-3  & 4-6   \\ \toprule
+    \quest{} & 0.07 & 0 & 0.09 & 0.09& 0& -&- &- &-&-\\ 
+    \drqa{} & 38.3 &  35.4 & 37.5 & 39.2 & 39.6
+    &  47.4 & 47.4
+    &  40.3 &40.1 & 41.2 \\ 
+     \docqa{} & - &- & - &- &-&-
+    & - 
+    & 49.4 & 49.3 & 49.8 \\ \hline
+    \bertet{} & 16.2  & 16.1& 16.3&16.2 &16.4
+    &  34.2 & 34.2
+     & 25.1 &24.5 & 29.0 \\ 
+    \bertsent{} & 34.8  & 34.7& 34.8& 34.7&34.6
+    & 54.2 & 54.2
+    & 44.5 &44.4 &45.1  \\  
+    \memnn{} & 35.8 & 32.7 & 36.1 & 36.5& 34.3
+    &  56.1 & 56.1
+    & 51.3 & 50.9& 54.0\\
+    \midrule
+    \name{}-\glove{} & 54.2 & 45.5 & 55.0 & 56.4 & 53.2
+    &   65.8 & 65.8
+    &  51.3 & 50.1 & 59.5 \\ 
+    \name{}-\bert{}  
+    & \textbf{55.1} & \textbf{46.8} & \textbf{55.5} & \textbf{57.1} & \textbf{55.5}
+    &   \textbf{66.2}  & \textbf{66.2}
+    & \textbf{52.0}  &\textbf{ 50.5} & \textbf{61.1} \\
+    \bottomrule
+  \end{tabular}
+  \caption{Answer Accuracy (Exact Match) on ALL questions as well as
+    question groups with different numbers of entities: e.g., 0--3 are
+    questions with fewer than four entities.  We omit empty ranges
+    (such as very long, entity-rich \qb{} questions).  \name{} has
+    higher accuracy than baselines, particularly on questions with
+    more entities.}
+
+  \label{tab:results}
+
+\end{table*}
+
+
+
+

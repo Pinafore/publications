@@ -1,0 +1,235 @@
+
+\section{Free-Text Graph Construction}
+\label{sec:evidence}
+
+%As discussed in previous sections, depending on current knowledge
+Answering real world factoid questions with current knowledge
+graphs falters when \kg{} relations lack coverage; we instead
+use a free-text \kg{} to resolve the coverage
+issue. One attempt to incorporate free-text corpus is to use Open
+Information Extraction~\cite[\openie]{Lu:2019:ACQ} to extract
+relations from natural language sentences as graph edges.
+%
+However \openie{} approaches
+favor precision over recall, and heavily rely on well defined semantics, falling prey to the same
+narrow scope that makes traditional \abr{kg} approaches powerful.
+%within some domains but brittle outside of them.
+%
+Instead, we build the knowledge graph directly from free-text corpus,
+represent indirect usings sentences which contain the two entities
+(endpoints of the edge) as indirect relations.
+%
+We leave the \abr{qa} model (which only needs to output an answer
+entity) to figure out \emph{which} sentences contain the information
+to answer the question, eliminating the intermediate information
+extraction step.
+
+This section first discusses the \textit{construction} of a
+\emph{free-text} knowledge graph and then \textit{grounding} questions
+to it.
+
+\subsection{Graph Construction}
+
+
+The free-text knowledge graph uses the same nodes $V$ as
+existing knowledge graphs: entities and their attributes, which can be
+directly inherited from existing knowledge graphs.
+%
+The \tweennode{}s~$E$, instead of closed-form relations, are harvested natural
+language sentences from a corpus.
+
+\paragraph{Entity Nodes}
+
+The graph inherits Wikipedia entities as the nodes $V$ (of course,
+entities from other corpora could be used).
+To represent the node, we use the first sentence of the corresponding
+document as its \textit{node gloss}.
+
+\paragraph{Free-Text Edges}
+
+The \tweennode{}s between nodes are sentences that pairs of entities
+in Wikipedia co-occur (again, other corpora such as
+ClueWeb~\cite{callan2009clueweb09} could be used).
+%
+For specificity, let us find the edges that could link entities $a$ and $b$.
+%
+First, we need to know where entities appear.
+%
+Both $a$ and $b$ have their own Wikipedia pages---but that
+does not give us enough information to find where the entities appear
+\emph{together}.
+%
+TagMe~\cite{ferragina2010tagme} finds entities mentioned in free text;
+we apply it to Wikipedia pages.
+%
+Given the entity linker's output, we collect the following sentences
+as potential edges: (1) sentences in $a$'s Wikipedia page that mention
+$b$, (2) sentences in $b$'s page that mention $a$, and (3) sentences
+(anywhere) that mention both $a$ and $b$.
+
+\subsection{Question Grounding}
+
+Now that we have described the general components of our graph, we
+next \textit{ground} a natural language question to a
+subgraph of the \abr{kg}.  We then find an answer candidate in
+this subgraph.
+
+Specifically, for each question, we ground the full free-text
+knowledge graph into a question-related subgraph
+(Figure~\ref{fig:graph}): a bipartite graph with \emph{\leftnode{}s}
+(e.g., \question{Dutch Golden Age}) on the left joined to
+\emph{\rightnode{}s} on the right (e.g., \candidate{Delft}) via
+\emph{\tweennode{}} (e.g., \edge{\candidate{Delft} played a highly
+  influential role in the \question{Dutch Golden Age}}).
+
+\paragraph{\leftnode{}s}
+
+\name{} starts with identifying the entities in
+question $\mathcal{X}_q$ as the \leftnode{}s $V_q=\{v_{i} \g v_i \in
+\mathcal{X}_q\}$.
+%
+In Figure~\ref{fig:graph}, for instance, \question{Vermeer},
+\question{The Little Street} and \question{Dutch Golden Age} appear in
+the question; these \leftnode{}s populate the left side of
+\name{}'s grounded graph. We use TagMe to identify question entities.
+
+%the candidate still exists, but no edges to question entities, 
+%so i slightly rephrase the next sentence.}
+
+\paragraph{\rightnode{}s}
+
+Next, our goal is to find \rightnode{}s.
+In our free-text \abr{kg}, \rightnode{}s are the entities with 
+ connections to the entities related to the question.
+For example, \candidate{Delft} occurs in the Wikipedia page associated
+with \leftnode{} \question{Vermeer} and thus becomes
+a \rightnode{}.
+The goal of this step is to build a set likely to
+contain---has high coverage of---the answer entity.
+
+We populate the \rightnode{} $V_a$ based 
+on the following two approaches.
+%
+First, we \textit{link} entities contained in the Wikipedia \emph{pages} of
+the \leftnode{}s to generate \rightnode{}s.
+%
+%Existing entity linking tools are 
+%not perfect; they sometimes links to wrong entities.
+%
+To improve \rightnode{} recall, we next \textit{retrieve} entities:
+after presenting the question text as a query to an \abr{ir} engine
+(ElasticSearch~\cite{Gormley:2015:EDG:2904394}), the entities in the
+top retrieved Wikipedia pages also become \rightnode{}s.
+
+These two approaches reflect different ways entities are mentioned
+in free text.
+%
+Direct mentions discovered by entity linking tools are straightforward
+and often correspond to the clear \emph{semantic} information encoded in
+Wikipedia (``In 1607, Khurram became engaged to Arjumand Banu Begum,
+who is also known as Mumtaz Mahal'').
+%
+However, sometimes relationships are more \emph{thematic} and are not
+mentioned directly; these are captured by \abr{ir} systems
+(``She was a recognizable figure in academia, usually wearing a
+distinctive cape and carrying a walking-stick'' describes
+\underline{Margaret Mead} without named entities).
+%
+Together, these two approaches have good recall of the \rightnode{}
+set $V_a$ (Table~\ref{tab:coverage}).
+
+\paragraph{\tweennode{}s}
+
+\name{} needs edges as evidence signals to know which \rightnode{} to select.
+%
+%This decision depends on the entities in the question and the text of
+%the question.
+%
+The edges
+connect \leftnode{}s $V_q$ to \rightnode{}s
+$V_a$ with natural language.
+%
+In Figure~\ref{fig:graph}, the Wikipedia sentence
+\edge{Vermeer was recognized during his lifetime in Delft} connects the
+\leftnode{} \question{Vermeer} to the \rightnode{}
+\candidate{Delft}.
+%
+%However, another \rightnode{} \candidate{Amsterdam}
+%lacks an \tweennode{} from \leftnode{} \question{Vermeer} since no Wikipedia sentence
+%connects them. 
+Given two entities, we directly find the \tweennode{}s connecting them
+from the free-text knowledge graph.
+
+
+\paragraph{Final Graph}
+
+Formally, for each question, our final graph of \name{} $G =(V, E)$
+%$G =(V, E, \Phi(V), \Phi(E))$ includes
+includes the follows:
+%  
+Nodes $V$ include \leftnode{}s $V_q$ and \rightnode{}s
+$V_a$;
+%
+\tweennode{}s $E$ connect the nodes: each edge~$e$ contains Wikipedia
+sentence(s) $\mathcal{S}({k}), k= 1,\dots, K$ linking the nodes.
+
+\subsection{Question Graph Pruning} 
+
+
+The graph grounding ensures high coverage of nodes and edges.
+%
+However, if the subgraph is \emph{too} big it slows training and inference.
+% noise to nodes and edges.
+\name{} prunes the graph with a simple filter to remove weak, 
+spurious clues and to improve computational efficiency.
+
+\paragraph{Candidate Entity Node Filter}
+
+We treat the \rightnode{}s filtering as a ranking problem: given input
+\rightnode{}s and question, score each connected \tweennode{} with a relevance score. 
+%
+During inference, the nodes with top-$K$ highest scores are kept (we choose the highest \tweennode{} score as the node relevance score), while
+the rest are pruned. 
+%
+\name{} fine-tunes \abr{bert} as the filter model.\footnote{For efficiency, We use \abr{tfidf} filtering (top 1000 \tweennode{}s are kept) before \abr{bert}.}
+%
+To be specific, for each connected \tweennode{},
+we concatenate the question and sentence, along with the \rightnode{}
+gloss as the node context into \abr{bert}:
+%\footnote{If the edge
+%  sentences overflow the \bert{} maximum length, we truncate the
+%  sentence field.}
+%
+%The inputs to the \abr{bert} are:
+\begin{verbatim}
+ [CLS] Question [SEP] Edge Sent [SEP] Node Gloss [SEP]
+\end{verbatim}
+We apply an affine layer and sigmoid 
+activation on the last layer's 
+[CLS] representation to produce scalar value.
+
+
+
+During training, for each question, we use \tweennode{} connected to the answer node as positive
+training example, and random sample $10$ negative \tweennode{}s as
+negative examples. To keep the \name{}'s \abr{gnn} training efficient,
+we keep the top twenty nodes 
+ for training set. For more
+comprehensive recall, development and test keep the top fifty nodes.
+If the answer node is not kept, \name{} cannot answer the question.
+
+
+\paragraph{Edge Sentence Filter}
+
+Since there is no direct supervision signal for which edge sentences
+are useful, we use \abr{tfidf}~\cite{salton1983introduction} to filter
+sentences.
+%
+For all sentences $\mathcal{S}$ in \tweennode{} $e \in E$, we compute
+each sentence's \abr{tfidf} cosine similarity to the question, and choose the
+top five sentences for each \tweennode{}.
+%We leave the details in Appendix.
+
+
+
+

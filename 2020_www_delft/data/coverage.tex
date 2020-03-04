@@ -1,0 +1,27 @@
+
+\begin{table*}[t]
+  \centering
+  %\small
+  \begin{tabular}{lrrr}
+      & \textbf{\qblink{}} & \textbf{\qanta{}} & \textbf{\triviaqa{}}  \\ \toprule
+    \# Candidate Answer Entities per Question &$1607\pm 504$ & $1857 \pm 489$ & $1533\pm 934$\\ 
+    Answer Recall in All Candidates
+    % Entity extraction recall 
+    & $92.4\%$&$92.6\%$  &$91.5\%$\\
+    Answer Recall after Filtering
+    % Entity filtering recall 
+    & $87.6\%$& $83.9\%$ &$86.4\%$ \\ 
+    Answer Recall within Two Hops along DBpedia Graph* & 38\% & -- & -- \\
+    \midrule
+    \# Edges to Correct Answer Node (+) & $5.07\pm2.17$&$12.33\pm5.59$ &$1.87\pm 1.12$\\
+    \# Edges to Candidate Entity Node (-) & $2.35\pm0.99$ & $4.41\pm2.02$& $1.21\pm0.35$ \\ 
+    \# Evidence Sentences per Edge (+) & $12.3\pm11.1$& $8.83\pm6.17$ & $15.53\pm17.52$ \\ 
+    \# Evidence Sentences per Edge (-) &$4.67\pm 3.14$& $4.48\pm1.88$&$3.96\pm3.33$\\
+    \bottomrule
+  \end{tabular}
+  \caption{Coverage and density of generated free-text entity graph. 
+  (+) and (-) mark the statistics on correct answer nodes and incorrect nodes, respectively.
+  (*) is the result from our manual labeling on 50 \qblink{} questions.
+  \label{tab:coverage}}
+  
+\end{table*}

@@ -1,0 +1,16 @@
+\begin{table}[t!]
+    \centering
+    \small
+    \begin{tabular}{lp{4cm}}
+      \textbf{Layer}   & \textbf{Description} \\ \toprule
+        All \abr{rnn} & 1 layer Bi-\abr{gru}, 300 hidden dimension \\
+        All \abr{ffn} & 600 dimension, ReLU activation \\
+        \abr{mlp} & 2 layers with 600, 300 dimenstions, ReLU activation \\
+        Attention & 600 dimension Bilinear  \\
+        Self-Attention & 600 dimension Linear \\
+        Layers & $L=3$ \\
+        \bottomrule
+    \end{tabular}
+    \caption{Parameters in \name{}'s \abr{gnn}.}
+    \label{tab:para}
+\end{table}

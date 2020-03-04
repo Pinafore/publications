@@ -1,0 +1,163 @@
+\RequirePackage{pdf14}
+
+
+\documentclass[sigconf]{acmart}
+%\usepackage{latexsym}
+\usepackage{url}
+%\usepackage{times}
+\usepackage{graphicx}
+%\usepackage{bm,bbm}
+\usepackage{amsmath}
+%\usepackage{enumitem}
+\usepackage{multirow}
+\usepackage{subcaption}
+%\usepackage{mdwlist}
+
+
+
+
+
+
+%\setlength\titlebox{5cm}
+% You can expand the titlebox if you need extra space
+% to show all the authors. Please do not make the titlebox
+% smaller than 5cm (the original size); we will check this
+% in the camera-ready version and ask you to change it back.
+
+
+\AtBeginDocument{%
+  \providecommand\BibTeX{{%
+    \normalfont B\kern-0.5em{\scshape i\kern-0.25em b}\kern-0.8em\TeX}}}
+
+
+\newif\ifcomment\commentfalse
+\input{style/preamble}
+
+%\newcommand{\czcomment}[1]{ \textcolor{orange}{[chen:  #1]}}
+%\newcommand{\jbgcomment}[1]{\textcolor{blue}{[ JBG: #1]  }}
+\definecolor{midnightgreen}{rgb}{0.0, 0.29, 0.33}
+\newcommand{\cx}[1]{\textcolor{midnightgreen}{\bf\small [#1 --cx]}}
+
+
+\newcommand{\name}{\abr{delft}}
+\newcommand{\longname}{Detecting Entity Links From Text}
+\newcommand{\bertet}{\abr{bert-e}{\small ntity}}
+\newcommand{\bertsent}{\abr{bert-s}{\small ent}}
+\newcommand{\memnn}{\abr{bert-m}{\small em}\abr{nn}}
+\newcommand{\kgqa}{\abr{kgqa}}
+\newcommand{\quest}{\abr{quest}}
+
+
+
+\newcommand{\gru}{\abr{b}{\small i}\abr{gru}}
+\newcommand{\sigmoid}{Sigmoid}
+
+\newcommand{\ffn}[1]{\mbox{\abr{ffn}}\left(#1\right)}
+\newcommand{\rnn}[1]{\mbox{\abr{rnn}}\left(#1\right)}
+\newcommand{\mlp}[1]{\mbox{\abr{mlp}}\left(#1\right)}
+\newcommand{\softmax}[1]{\mbox{softmax}\left(#1\right)}
+\newcommand{\avg}[2]{\mbox{Avg}_{#2}\left(#1\right)}
+
+\newcommand{\question}[1]{\texttt{#1}}
+\newcommand{\edge}[1]{``#1''}
+\newcommand{\candidate}[1]{\underline{#1}}
+
+\newcommand{\leftnode}{Question Entity Node}
+\newcommand{\rightnode}{Candidate Entity Node}
+\newcommand{\tweennode}{Evidence Edge}
+\newcommand{\kg}{\abr{kg}}
+\newcommand{\dbpedia}{\abr{db}{\small pedia}}
+
+\newcolumntype{g}{>{\columncolor{lightgray}}r}
+
+
+\setcopyright{acmcopyright}
+
+
+
+
+% \fancyhead{}
+
+\begin{document}
+\title{Complex Factoid Question Answering with a Free-Text Knowledge Graph}
+
+
+\author{Chen Zhao}
+\affiliation{%
+  Computer Science, \abr{umiacs} \\
+  \institution{University of Maryland, College Park}
+}
+\email{chenz@cs.umd.edu}
+
+\author{Chenyan Xiong}
+\affiliation{%
+  \institution{Microsoft AI \& Research}
+}
+\email{cxiong@microsoft.com}
+
+\author{Xin Qian}
+\affiliation{%
+  iSchool \\
+  \institution{University of Maryland, College Park}
+}
+\email{xinq@terpmail.umd.edu}
+
+\author{Jordan Boyd-Graber$^{\dagger}$}
+\affiliation{%
+  \thanks{$^{\dagger}$Now at Google Research Z\"urich}
+    Computer Science, iSchool, \abr{umiacs}, \abr{lsc} \\
+  \institution{University of Maryland, College Park}
+}
+\email{jbg@umiacs.umd.edu}
+
+\date{}
+\input{2020_www_delft/sections/00-abstract}	
+\keywords{Free-Text Knowledge Graph, Factoid Question Answering, Graph Neural Network}
+
+\copyrightyear{2020}
+\acmYear{2020} 
+%\setcopyright{iw3c2w3}
+\acmConference[WWW '20]{Proceedings of The Web Conference 2020}{April 20--24, 2020}{Taipei, Taiwan} 
+\acmBooktitle{Proceedings of The Web Conference 2020 (WWW '20), April 20--24, 2020, Taipei, Taiwan}
+\acmPrice{}
+\acmDOI{10.1145/3366423.3380197}
+\acmISBN{978-1-4503-7023-3/20/04}
+
+
+
+\maketitle
+
+
+\input{2020_www_delft/sections/10-intro}	
+\input{2020_www_delft/sections/20-justification}
+
+\input{2020_www_delft/sections/30-evidence}
+
+\input{2020_www_delft/sections/50-model}
+
+
+\input{2020_www_delft/sections/70-experiment}
+\input{2020_www_delft/sections/71-evaluation}
+\input{2020_www_delft/sections/60-related}
+
+\input{2020_www_delft/sections/80-conclusions}
+
+\section*{Acknowledgements}
+
+This work was supported by NSF Grants IIS-1748663 (Zhao) and
+IIS-1822494 (Boyd-Graber).  Any opinions, findings, conclusions, or
+recommendations expressed here are those of the authors and do not
+necessarily reflect the view of the sponsor.
+
+% include your own bib file like this:
+
+%\newpage
+
+\bibliographystyle{style/ACM-Reference-Format}
+\normalsize
+\newpage
+%\balance
+
+\bibliography{bib/journal-full,bib/chen,bib/jbg}
+
+\end{document}

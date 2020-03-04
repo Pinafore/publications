@@ -1,0 +1,41 @@
+\subsection{Case Study}
+
+To gain more insights into \name{} model's behavior, we further sample
+some examples from \qblink{}.  Table~\ref{tab:example} shows two
+positive examples ($1$ and $2$) and two negative examples ($3$ and
+$4$).  \name{} succeeds on these cases: with direct evidence
+sentences, \name{} finds the correct answer with high confidence
+(Example 1) or with multiple pieces of evidence, \name{} could
+aggregate different pieces together, and make more accurate
+predictions (Example 2).  However some common sources of error
+include: too few informative entities in the question (Example 3) or
+evidence that overlaps too much between two \rightnode{}s.
+
+
+%\paragraph{Direct Mapping}
+%In example 1, direct evidence sentences are available, 
+%\name{} finds the correct answer with high confidence. 
+%\paragraph{Evidence Aggregation}
+%Example 2 shows a more complicated question.  Since 
+%the correct answer \candidate{Tom Brady} links to all essential question entities, \name{} 
+%aggregates multiple piece of evidence from different question entities, 
+%and \name{} makes the correct prediction. 
+%Without the graph structure, \memnn{}  makes the wrong prediction \candidate{Stephon Gilmore}
+% (Also a player from New England Patriots team).
+%\paragraph{No Informative Entities}
+%In example 3, \name{} makes a wrong prediction because there are no informative entities in the question. 
+%The entity linker links can not infer ``western Germany'' 
+%from \question{western regions}. Instead it links to entity
+%``Xiyu''~\footnote{\url{https://en.wikipedia.org/wiki/Western_Regions}} 
+%and leads to the wrong prediction ``Yumen Pass''.
+%\paragraph{Wrong Reasoning}
+%In example 4, even with the crucial evidence sentences, 
+%%\name{} can not distinguish between 
+%candidates \candidate{Odysseus} and \candidate{Penelope}.
+%Since most evidence  applies to both candidates
+%(e.g., their son \question{Telemachus}).
+
+
+
+
+

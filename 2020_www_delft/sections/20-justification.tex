@@ -1,0 +1,59 @@
+\section{Task Definition}
+\label{sec:justification}
+
+The problem we consider is general \textit{factoid question
+  answering}~\cite[inter alia]{iyyer2014neural, berant2013semantic, bordes2015large, 
+  cai2013large}, in which the
+system answers natural language questions using facts, i.e., entities
+or attributes from knowledge graphs.
+%
+Factoid \abr{qa} is both widely studied in academia and a practical
+tool used by commercial search engines and conversational assistants.
+However, there is a discrepancy between the widely studied factoid
+\abr{qa} academic benchmarks and  real applications:
+the benchmarks are often designed for the existing relations in
+knowledge graphs~\cite{berant2013semantic,bordes2015large}, while in reality,
+minimal \abr{kg} coverage preculdes broader deployment.
+
+For example, WebQuestions~\cite{berant2013semantic} are
+written by crowdworkers targeting a triple in Freebase; \abr{l}{\small
+  c}-quad~\cite{dubey2019lc} targets Wikidata and \dbpedia{}: the
+questions are guaranteed to be covered by the \abr{kg} relations.
+%
+However, although the entities in your favorite
+\abr{kg} are rich, the recall of closed-form relations is often
+limited.
+%
+For example, in Figure~\ref{fig:graph}, the answer \underline{Delft}
+is an entity in Wikipedia and Freebase, but the relation ``painting
+the view of'' appears in neither DBpedia nor Freebase and is unlikely
+to be covered in other knowledge graphs.
+%
+The relationships between complicated, multi-faceted entities defy
+trite categorization in closed-form tuples; depending on a knowledge
+graph to provide all the possible relationships limits the potential
+of \abr{kgqa} systems.
+
+We focus on a more realistic setting: open domain factoid
+question answering, whose questions are designed to test \emph{human}
+knowledge and include ineffable links between concepts~\cite{jennings-06}.
+%
+The datasets in our evaluation are solvable by humans using knowledge
+about real world entities; \name{} should also be able to find the
+answer entity without relying on explicit closed form relations.
+
+Figure~\ref{fig:graph} shows an example question. 
+The question has multiple \leftnode{}s (left side of graph), 
+and links the question entities to \rightnode{}s (right). 
+Intuitively, to find the answer, the system needs to first extract
+multiple clues from different pieces of question.
+%
+Our proposed \name{} constructs a high coverage Free-Text Knowledge
+Graph by harvesting natural language sentences in the corpus as graph
+edges and grounds each question into its related subgraph
+(Section~\ref{sec:evidence}).
+%
+Then, to model over the fruitful but noisy graph, it uses a \abr{gnn}
+to distinguish useful evidence from noise and then aggregates them to
+make the prediction (Section~\ref{sec:model}).
+
