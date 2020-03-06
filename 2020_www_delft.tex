@@ -5,16 +5,39 @@
 %\usepackage{latexsym}
 \usepackage{url}
 %\usepackage{times}
-\usepackage{graphicx}
 %\usepackage{bm,bbm}
 \usepackage{amsmath}
 %\usepackage{enumitem}
 \usepackage{multirow}
 \usepackage{subcaption}
 %\usepackage{mdwlist}
+\usepackage{array}
+\usepackage{colortbl}
+\usepackage{xcolor}
 
-
-
+\usepackage{framed}
+\usepackage{mdwlist}
+\usepackage{latexsym}
+\usepackage{colortbl}
+\usepackage{xcolor}
+\usepackage{nicefrac}
+\usepackage{booktabs}
+\usepackage{amsfonts}
+\usepackage[T1]{fontenc}
+\usepackage{bold-extra}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{bm}
+\usepackage{graphicx}
+\usepackage{mathtools}
+\usepackage{microtype}
+\usepackage{multirow}
+\usepackage{multicol}
+% Don't use hyperref or url, as it can screw up AAAI / ICML formatting
+%\usepackage{url}
+\usepackage{latexsym,comment}
+\usepackage[normalem]{ulem}
+\usepackage{hyphenat}
 
 
 
@@ -28,16 +51,55 @@
 \AtBeginDocument{%
   \providecommand\BibTeX{{%
     \normalfont B\kern-0.5em{\scshape i\kern-0.25em b}\kern-0.8em\TeX}}}
+\makeatother
 
 
 \newif\ifcomment\commentfalse
-\input{style/preamble}
+%\input{style/preamble}
 
 %\newcommand{\czcomment}[1]{ \textcolor{orange}{[chen:  #1]}}
 %\newcommand{\jbgcomment}[1]{\textcolor{blue}{[ JBG: #1]  }}
 %\definecolor{midnightgreen}{rgb}{0.0, 0.29, 0.33}
 %\newcommand{\cx}[1]{\textcolor{midnightgreen}{\bf\small [#1 --cx]}}
+\renewenvironment{quote}
+               {\list{}{\rightmargin\leftmargin}%
+                \item\relax\small\ignorespaces}
+               {\unskip\unskip\endlist}
 
+\newcommand{\e}[2]{\mathbb{E}_{#1}\left[ #2 \right] }
+\newcommand{\h}[2]{\mathbb{H}_{#1}\left[ #2 \right] }
+\newcommand{\ind}[1]{\mathds{1}\left[ #1 \right] }
+\newcommand{\ex}[1]{\mbox{exp}\left\{ #1\right\} }
+\newcommand{\D}[2]{\frac{\partial #1}{\partial #2}}
+\newcommand{\elbo}{\mathcal{L}}
+\newcommand{\camelabr}[2]{{\small #1}{\textsc{#2}}}
+\newcommand{\abrcamel}[2]{{\textsc #1}{\small{#2}}}
+\newcommand{\feat}[1]{{\small \texttt{#1}}}
+\newcommand{\act}[1]{{\small \texttt{#1}}}
+\newcommand{\ngram}[0]{$n$-gram}
+\newcommand{\topic}[1]{\underline{#1}}
+\newcommand{\gem}[1]{\mbox{\textsc{gem}}}
+\newcommand{\grammar}[1]{{\color{red} #1}}
+\newcommand{\explain}[2]{\underbrace{#2}_{\mbox{\footnotesize{#1}}}}
+\newcommand{\dir}[1]{\mbox{Dir}(#1)}
+\newcommand{\bet}[1]{\mbox{Beta}(#1)}
+\newcommand{\py}[1]{\mbox{\textsc{py}}(#1)}
+\newcommand{\td}[2]{\mbox{\textsc{TreeDist}}_{#1} \left( #2 \right)}
+\newcommand{\yield}[1]{\mbox{\textsc{Yield}} \left( #1 \right)}
+\newcommand{\mult}[1]{\mbox{Mult}( #1)}
+\newcommand{\wn}{\textsc{WordNet}}
+\newcommand{\twentynews}{\textsc{20news}}
+\newcommand{\g}{\, | \,}
+\newcommand{\Gam}[1]{\Gamma \left( \textstyle #1 \right)}
+\newcommand{\LG}[1]{\log \Gamma \left( \textstyle #1 \right)}
+\newcommand{\Pois}[1]{\mbox{Poisson}(#1)}
+\newcommand{\pcfg}[3]{#1_{#2 \rightarrow #3}}
+\newcommand{\grule}[2]{#1 \rightarrow #2}
+\newcommand{\kl}[2]{D_{\mbox{\textsc{KL}}} \left( #1 \,||\, #2 \right)}
+
+\newcommand{\digambig}[1]{\Psi \left( #1 \right) }
+\newcommand{\digam}[1]{\Psi \left( \textstyle #1 \right) }
+\newcommand{\ddigam}[1]{\Psi' \left( \textstyle #1 \right) }
 
 \newcommand{\name}{\abr{delft}}
 \newcommand{\longname}{Detecting Entity Links From Text}
@@ -47,6 +109,26 @@
 \newcommand{\kgqa}{\abr{kgqa}}
 \newcommand{\quest}{\abr{quest}}
 
+\newcommand{\abr}[1]{\textsc{#1}}
+\newcommand{\qb}[0]{Quizbowl}
+\newcommand{\qa}[0]{\abr{qa}}
+\newcommand{\triviaqa}{\camelabr{Trivia}{qa}}
+\newcommand{\searchqa}{\camelabr{Search}{qa}}
+\newcommand{\qblink}{\abrcamel{qb}{Link}}
+\newcommand{\qanta}{\textsc{qanta}}
+\newcommand{\muse}{\textsc{muse}}
+\newcommand{\squad}{\textsc{sq}{\small u}\textsc{ad}}
+\newcommand{\fever}{\abr{fever}}
+\newcommand{\quac}{\textsc{q}{\small u}\textsc{ac}}
+\newcommand{\elmo}{\textsc{elm}{\small o}}
+\newcommand{\fone}{$F_1$}
+\newcommand{\jeopardy}{\textit{Jeopardy!}}
+
+\newcommand{\glove}{\abr{gl}{\small o}\abr{ve}}
+\newcommand{\openie}{\abr{o}{\small pen}\abr{ie}}
+\newcommand{\bert}{\abr{bert}}
+\newcommand{\drqa}{\abr{d}{\small r}\abr{qa}}
+\newcommand{\docqa}{\abr{d}{\small oc}\abr{qa}}
 
 
 \newcommand{\gru}{\abr{b}{\small i}\abr{gru}}
@@ -68,17 +150,27 @@
 \newcommand{\kg}{\abr{kg}}
 \newcommand{\dbpedia}{\abr{db}{\small pedia}}
 
+
+
 \newcolumntype{g}{>{\columncolor{lightgray}}r}
 
+\begin{document}
 
 \setcopyright{acmcopyright}
 
 
+\copyrightyear{2020}
+\acmYear{2020} 
+%\setcopyright{iw3c2w3}
+\acmConference[WWW '20]{Proceedings of The Web Conference 2020}{April 20--24, 2020}{Taipei, Taiwan} 
+\acmBooktitle{Proceedings of The Web Conference 2020 (WWW '20), April 20--24, 2020, Taipei, Taiwan}
+\acmPrice{}
+\acmDOI{10.1145/3366423.3380197}
+\acmISBN{978-1-4503-7023-3/20/04}
 
 
 % \fancyhead{}
 
-\begin{document}
 \title{Complex Factoid Question Answering with a Free-Text Knowledge Graph}
 
 
@@ -110,22 +202,16 @@
 }
 \email{jbg@umiacs.umd.edu}
 
-\date{}
-\input{2020_www_delft/sections/00-abstract}	
+
+\input{2020_www_delft/sections/00-abstract} 
 \keywords{Free-Text Knowledge Graph, Factoid Question Answering, Graph Neural Network}
 
-\copyrightyear{2020}
-\acmYear{2020} 
-%\setcopyright{iw3c2w3}
-\acmConference[WWW '20]{Proceedings of The Web Conference 2020}{April 20--24, 2020}{Taipei, Taiwan} 
-\acmBooktitle{Proceedings of The Web Conference 2020 (WWW '20), April 20--24, 2020, Taipei, Taiwan}
-\acmPrice{}
-\acmDOI{10.1145/3366423.3380197}
-\acmISBN{978-1-4503-7023-3/20/04}
-
-
-
 \maketitle
+
+
+
+
+
 
 
 \input{2020_www_delft/sections/10-intro}	
