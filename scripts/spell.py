@@ -1,43 +1,24 @@
 from typing import Text
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
+import os
 import subprocess
+import multiprocessing
 import tempfile
 import argparse
-=======
->>>>>>> ee3ca40182d868a072aab21519a7675d213b9dea
 import glob
-import subprocess
-import tempfile
-import argparse
 import re
-<<<<<<< HEAD
-=======
->>>>>>> 8d95281fddc4325378a9dcdc7d2cdac6cfcf95b2
->>>>>>> ee3ca40182d868a072aab21519a7675d213b9dea
-
-
-
-SPELL_FILE = '/tmp/spellcheck_tmp.tex'
 
 
 def write_disk(text: Text):
-    with open(SPELL_FILE, 'w') as f:
+    with tempfile.NamedTemporaryFile('w', prefix='spellcheck', delete=False) as f:
         f.write(text)
+        filename = f.name
+    return filename
 
 
 def hunspell_text(text: Text):
-    write_disk(text)
-<<<<<<< HEAD
-    cmd = subprocess.run(f'hunspell -p scripts/hunspell_dictionary.dic -d en_US -a -t {SPELL_FILE}', shell=True, capture_output=True)
-=======
-<<<<<<< HEAD
-    cmd = subprocess.run(f'hunspell -d en_US -a -t {SPELL_FILE}', shell=True, capture_output=True)
-=======
-    cmd = subprocess.run(f'hunspell -p scripts/hunspell_dictionary.dic -d en_US -a -t {SPELL_FILE}', shell=True, capture_output=True)
->>>>>>> 8d95281fddc4325378a9dcdc7d2cdac6cfcf95b2
->>>>>>> ee3ca40182d868a072aab21519a7675d213b9dea
+    tmp_tex_file = write_disk(text)
+    cmd = subprocess.run(f'hunspell -p scripts/hunspell_dictionary.dic -d en_US -a -t {tmp_tex_file}', shell=True, capture_output=True)
+    os.remove(tmp_tex_file)
     return cmd.stdout.decode('utf8').strip().split('\n')[1:]
 
 
@@ -56,30 +37,21 @@ def parse_error(hun_out: Text):
 
 
 def check_file(filename):
+    lines_to_print = []
     with open(filename) as f:
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
-        for idx, line in enumerate(f, start=1):
-=======
->>>>>>> ee3ca40182d868a072aab21519a7675d213b9dea
         spell_disabled = False
         for idx, line in enumerate(f, start=1):
             if 'spell-disable' in line:
                 spell_disabled = True
             if 'spell-enable' in line:
                 spell_disabled = False
-            
+
             if 'spell-line-disable' in line:
                 continue
-            
+
             if spell_disabled:
                 continue
 
-<<<<<<< HEAD
-=======
->>>>>>> 8d95281fddc4325378a9dcdc7d2cdac6cfcf95b2
->>>>>>> ee3ca40182d868a072aab21519a7675d213b9dea
             text = line.strip()
             out = hunspell_text(text)
             errors = []
@@ -90,31 +62,17 @@ def check_file(filename):
             if len(errors) > 0:
                 for e in errors:
                     word, offset, suggests = parse_error(e)
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
-=======
->>>>>>> ee3ca40182d868a072aab21519a7675d213b9dea
                     # Probably not a typo, just something with a number
                     if re.search('[0-9]', word):
                         continue
 
-<<<<<<< HEAD
-=======
->>>>>>> 8d95281fddc4325378a9dcdc7d2cdac6cfcf95b2
->>>>>>> ee3ca40182d868a072aab21519a7675d213b9dea
                     if len(suggests) > 0:
                         suggested_line = f' - {suggests}'
                     else:
                         suggested_line = ''
-                    print(f'{filename}:{idx}:{offset}: (Typo) {word}{suggested_line}')
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
-                print()
-=======
->>>>>>> 8d95281fddc4325378a9dcdc7d2cdac6cfcf95b2
->>>>>>> ee3ca40182d868a072aab21519a7675d213b9dea
+
+                    lines_to_print.append(f'{filename}:{idx}:{offset}: (Typo) {word}{suggested_line}')
+    return lines_to_print
 
 
 def main():
@@ -123,21 +81,15 @@ def main():
     args = parser.parse_args()
 
     for filename in args.files:
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
-        check_file(filename)
-=======
->>>>>>> ee3ca40182d868a072aab21519a7675d213b9dea
         if '*' in filename:
-            for expanded_filename in glob.glob(filename):
-                check_file(expanded_filename)
+            all_files = glob.glob(filename)
+            pool = multiprocessing.Pool()
+            for file_lines in pool.imap_unordered(check_file, all_files):
+                for line in file_lines:
+                    print(line)
         else:
-            check_file(filename)
-<<<<<<< HEAD
-=======
->>>>>>> 8d95281fddc4325378a9dcdc7d2cdac6cfcf95b2
->>>>>>> ee3ca40182d868a072aab21519a7675d213b9dea
+            for line in check_file(filename):
+                print(line)
 
 
 if __name__ == '__main__':

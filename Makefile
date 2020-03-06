@@ -24,7 +24,7 @@ scripts/hunspell_dictionary.dic: scripts/dictionary.txt
 	sort $< | uniq >> $@
 
 %.spell: %.pdf scripts/hunspell_dictionary.dic
-	python scripts/spell.py --files $(<:.pdf=)/*.tex $(<:.pdf=)/sections/*.tex
+	python3 scripts/spell.py --files $(<:.pdf=)/*.tex $(<:.pdf=)/sections/*.tex
 
 %.paper.pdf: %.pdf %.bbl
 	pdflatex $*
@@ -67,10 +67,10 @@ scripts/hunspell_dictionary.dic: scripts/dictionary.txt
 	mv 2020_acl_biasqa_page_6.pdf 2020_acl_biasqa.appendix.pdf
 	mv 2020_acl_biasqa_page_0.pdf 2020_acl_biasqa.submission.pdf
 
-2020_lrec_sense.appendix.pdf: 2020_aaai_sense.paper.pdf
-	python3 scripts/split_pdf.py 2020_aaai_sense.paper.pdf 9
-	mv 2020_aaai_sense_page_9.pdf 2020_aaai_sense.appendix.pdf
-	mv 2020_aaai_sense_page_0.pdf 2020_aaai_sense.submission.pdf
+2020_lrec_sense.appendix.pdf: 2020_lrec_sense.paper.pdf
+	python3 scripts/split_pdf.py 2020_lrec_sense.paper.pdf 9
+	mv 2020_lrec_sense_page_9.pdf 2020_lrec_sense.appendix.pdf
+	mv 2020_lrec_sense_page_0.pdf 2020_lrec_sense.submission.pdf
 
 2020_acl_trivia_tournament.appendix.pdf: 2020_acl_trivia_tournament.paper.pdf
 	python3 scripts/split_pdf.py 2020_acl_trivia_tournament.paper.pdf 11
@@ -83,4 +83,4 @@ scripts/hunspell_dictionary.dic: scripts/dictionary.txt
 	mv 2020_acl_diplomacy_page_0.pdf 2020_acl_diplomacy.submission.pdf
 
 
-acl: 2020_acl_clime.paper.pdf 2020_acl_diplomacy.paper.pdf 2020_acl_refine_clwe.paper.pdf 2020_acl_trivia_tournament.appendix.pdf
+acl: 2020_acl_clime.paper.pdf 2020_acl_diplomacy.paper.pdf 2020_acl_refine_clwe.paper.pdf 2020_acl_trivia_tournament.appendix.pdf 
