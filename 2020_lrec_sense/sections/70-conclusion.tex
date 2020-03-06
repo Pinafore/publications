@@ -1,0 +1,20 @@
+\section{Conclusion}
+
+The goal of multi-sense word embeddings is not just to win word sense
+evaluation leaderboards. Rather, they should also \emph{describe}
+language: given millions of tokens of a language, what are the
+patterns in the language that can help a lexicographer or linguist in
+day-to-day tasks like building dictionaries or understanding semantic
+drift.  Our differentiable Gumbel Attention Sense Induction (\gasi{})
+offers comparable word similarities with multisense representations
+while also learning more distinguishable, interpretable senses.  
+
+However, simply asking whether word senses look good is only a first
+step.
+A sense induction model designed for human use should be closely
+integrated into that task.
+While we use a Word2Vec-based objective function in
+Section~\ref{sec:model}, ideally we should use a human-driven,
+task-specific metric~\citep{feng-19} to guide the selection of senses
+that are distinguishable, interpretable, {\bf and useful}.
+ 

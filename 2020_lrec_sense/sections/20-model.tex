@@ -1,0 +1,245 @@
+
+\begin{figure}[t]
+  \includegraphics[width=0.95\linewidth]{\figfile{gasi_network_distribution_color}}
+  \caption{Network structure with an example of our \gasi{} model which
+    learns a set of global context embeddings $\bmat{C}$ and a set of
+    sense embeddings $\bmat{S}$.}\label{fig:gasi_net}
+\end{figure}
+
+\section{Attentional Sense Induction}
+\label{sec:model}
+
+Before we explore human interpretability of sense induction, we first
+describe our simple models to disentangle word senses.  Our two models
+are built on Word2Vec~\citep{mikolov2013a,mikolov2013b}, which we review in \secref{sec:skip-gram}.  Both
+models use a straightforward attention mechanism to select which sense
+is used in a token's context, which we contrast to alternatives for
+sense selection (\secref{sec:attention-muse}).
+Building on these foundations, we introduce our model, \gasi{},
+and along the way introduce a soft-attention stepping-stone (\sasi{}).
+
+
+\subsection{Foundations: Skip-Gram and Gumbel}
+\label{sec:skip-gram}
+
+Word2Vec
+jointly learns word embeddings~$\bmat{W} \in \mathbb{R}^{|V|\times d}$
+and context embeddings~$\bmat{C} \in \mathbb{R}^{|V|\times d}$. More specifically, given a
+ vocabulary~$V$ and  embedding dimension~$d$, it
+maximizes the likelihood of the context words~$c_{j}^i$ that
+surround a given center word~$w_i$ in a context window~$\tilde{c}_i$,
+\begin{equation}
+ J(\bmat{W}, \bmat{C}) \propto \sum_{w_i \in V}\sum_{c_{j} ^i\in \tilde{c}_i} \log P(c_{j}^i \g w_i; \bmat{W}, \bmat{C}),
+\label{eq:obj_sg}
+\end{equation}
+where $P(c_{j}^i\g w_i)$ is over the vocabulary,
+ \begin{equation}
+ 	P(c_{j}^i \g w_i; \bmat{W}, \bmat{C}) = \frac{ \exp \left({\bvec{c}_j^i} ^{\top} \bvec{w}_i\right)}{\sum_{c \in V}  \exp \left(\bvec{c}^{\top}\bvec{w}_i\right)}.
+ \label{eq:sg_softmax}
+ \end{equation}
+In practice, $\log P(c_{j}^i \g w_i)$ is approximated by
+negative sampling.  We extend it to learn
+representations for individual word senses.
+
+\subsection{Gumbel Softmax}
+\label{sec:gs}
+
+As we introduce word senses, our model will need to select
+\emph{which} sense is relevant for a context.  The Gumbel
+softmax~\citep{jang2016categorical,maddison2016concrete} approximates
+the sampling of discrete random variables; we use it to select the
+sense.  Given a discrete random variable $X$ with
+$P(X=k) \propto \alpha_k$, $\alpha_k \in (0, \infty)$, the
+Gumbel-max~\citep{gumbel1954statistical}
+refactors the sampling of $X$ into
+\begin{eqnarray}
+X = \argmax_k (\log \alpha_k + g_k),
+\end{eqnarray}
+where the Gumbel noise $g_k = -\log(-\log(u_k))$ and $u_k$ are i.i.d.
+ from Uniform(0, 1).
+The Gumbel softmax approximates sampling $
+\onehot(\argmax_k (\log \alpha_k + g_k))$ by
+ \begin{equation}
+y_k = \softmax((\log \alpha_k  + g_k)/\tau).
+ \end{equation}
+Unlike soft selection of senses, the Gumbel softmax can make harder
+selections, which will be more interpretable to humans.
+
+
+
+
+
+
+
+\subsection{Why Attention?  Musing on Alternatives}
+\label{sec:attention-muse}
+
+For fine-grained sense inventories, it makes sense to have graded
+assignment of tokens to senses~\cite{erk-09,jurgens-15}.  However, for
+coarse senses---except for humor~\cite{miller-17}---words
+typically are associated with a \emph{single sense}, often a single
+sense per discourse~\cite{gale-92}.  A good model should respect this.
+Previous models either use non-differentiable objectives or---in the
+case of the current state of the art,
+\muse{}~\cite{Muse}---reinforcement learning to select word senses.
+By using Gumbel softmax, our model both approximates discrete sense
+selection and is differentiable.
+
+As we argue in the next section, applications with a human in the loop
+are best assisted by discrete senses; the Gumbel softmax, which we
+develop for our task here, helps us discover these discrete senses.
+
+\subsection{Attentional Sense Induction}
+\label{sec:sasi}
+
+
+\paragraph{Embeddings} 
+
+We learn a context embedding matrix~$\bmat{C} \in
+\mathbb{R}^{|V|\times d}$ and a sense embedding tensor~$\bmat{S} \in
+\mathbb{R}^{|V|\times K \times d }$. Unlike previous
+work~\citep{neelakantan2015efficient,Muse}, no extra embeddings are
+kept for sense induction.
+
+\paragraph{Number of Senses}
+
+For simplicity and consistency with previous work, our model has
+$K$ fixed senses. Ideally, if we set a large number of $K$, with a perfect
+pruning strategy, we can estimate the number of senses per type by removing
+duplicated senses.
+
+However, this is challenging~\cite{mccarthy-16}; 
+instead we use a simple pruning strategy.
+We estimate a pruning threshold $\lambda$ by averaging 
+the estimated duplicate sense and true neighbor distances,
+\begin{equation}
+\lambda = \frac{1}{2}(\mean(D_{dup}) + \mean(D_{nn})),
+\label{eq:dup}
+\end{equation}
+where $D_{dup}$ are the cosine distances for duplicated sense pairs and $D_{nn}$ is
+that of true neighbors (different types). We sample 100 words and 
+if two senses are top-5 nearest neighbors of each other, we consider them duplicates.
+
+After pruning duplicated senses with $\lambda$, we can retrain a new
+model with estimated number of senses for each type by masking the
+sense attentions.\appendixmention{\footnote{More details and analysis
+    about pruning are in Appendix~\ref{subsec:pruning}}} Results in
+Table~\ref{tab:human} and~\ref{tab:wsim} validate our pruning
+strategy.
+
+\paragraph{Sense Attention in Objective Function}
+
+Assuming a center word~$w_i$ has senses $\{s_1^i, s_2^i, \dots,s_K^i
+\}$, the original Skip-Gram likelihood becomes a marginal
+distribution over all senses of $w_i$ with sense induction
+probability $P(s_k^i \g w_{i})$; we focus on the disambiguation
+given local context $\tilde{c}_i$ and estimate $P(s_k^i \g w_{i})  \approx P(s_k^i \g w_{i}, \tilde{c}_i)$;
+and thus,
+\begin{equation}
+  P(c_j^i  \g w_i) \approx \sum_{k=1}^{K} P(c_j^i  \g s_k^i) \explain{attention}{P(s_k^i \g w_{i}, \tilde{c}_i)},
+\label{eq:dis}
+\end{equation}
+
+Replacing $P(c_j^i \g w_i)$ in Equation~\ref{eq:obj_sg} with
+Equation~\ref{eq:dis} gives our objective function $J(\bmat{S},
+\bmat{C}) \propto$
+\begin{equation}
+ \sum_{w_i \in V}\sum_{c_j^i \in \tilde{c}_i} \log
+\sum_{k=1}^{K} P(c_j^i  \g s_k^i)P(s_k^i \g w_{i}, \tilde{c}_i).
+\label{eq:jatt}
+\end{equation}
+
+\paragraph{Modeling Sense Attention}
+
+We can model the \emph{contextual sense induction distribution} with
+soft attention. We call the resulting model soft-attention sense
+induction (\sasi{}). Although it is a stepping stone to our final
+model, we compare against it in our experiments as it isolates the
+contributions of hard attention.  In \sasi{}, the sense attention is
+conditioned on the entire local context $\tilde{c}_i$ with softmax:
+\begin{equation}
+P(s_k^i \g w_{i}, \tilde{c}_i) = \frac{\exp \left(\bar{\boldsymbol{c}}_i^{\top}\boldsymbol{s}_k^i\right)}{\sum_{k=1}^{K}\exp \left(\bar{\boldsymbol{c}}_i^{\top}\boldsymbol{s}_k^i \right)},
+\label{eq:sasi}
+\end{equation}
+where $\bar{\bvec{c}}_i$ is the mean of the context vectors in
+$\tilde{c}_i$.  \appendixmention{A derivation of how this affects negative sampling is
+in Appendix~\ref{sec:deriv-dess}.}
+
+\subsection{Scaled Gumbel Softmax for Sense Disambiguation}
+\label{sec:sgs}
+
+
+
+To learn \emph{distinguishable sense
+  representations}, we implement \emph{hard} attention in our full
+model, Gumbel Attention for Sense Induction (\gasi{}).
+While hard attention is conceptually attractive, it can increase
+computational difficulty: discrete choices are not differentiable and
+thus incompatible with modern deep learning frameworks.
+To preserve differentiability (and to avoid equally complex
+reinforcement learning), we apply the Gumbel softmax
+reparameterization trick to our sense attention function
+(Equation~\ref{eq:sasi}).
+ 
+ 
+\paragraph{Vanilla Gumbel}
+
+The discrete sense sampling from Equation~\ref{eq:sasi} can be
+refactored 
+\begin{equation}
+\bvec{z^i} = \onehot(\argmax_k (\bar{\boldsymbol{c}_i}^{\top}\boldsymbol{s}_k^i + g_k)),
+\label{eq:oh}
+\end{equation}
+and the hard attention approximated 
+\begin{equation}
+y_k^i = \softmax ((\bar{\boldsymbol{c}_i}^{\top}\boldsymbol{s}_k^i  + g_k)/\tau).
+\label{eq:gs}
+\end{equation}
+
+\paragraph{Scaled Gumbel}
+
+
+Gumbel softmax learns a flat distribution over senses even with low
+temperatures: the dot product $\bar{\bvec{c}}_i^\top \bvec{s}_k^i$ is
+too small\footnote{This is from float32 precision and saturation of
+  $\log(\sigma(\cdot))$\appendixmention{; detailed further in Figure~\ref{fig:dot} in
+  Appendix}.} compared to the Gumbel noise $g_k$.  Thus we use a
+scaling factor $\beta$ to encourage sparser
+distributions,\footnote{Normalizing $\bar{\bvec{c}}_i^\top
+  \bvec{s}_k^i$ or directly using $\log P(s_k^i \g w_i, \tilde{c}_i)$
+  results in a similar outcome.}
+\begin{equation}
+\gamma_k^i = \softmax ((\bar{\boldsymbol{c}_i}^{\top}\boldsymbol{s}_{k}^i  + \beta g_k)/\tau),
+\label{eq:scale}
+\end{equation}
+and tune it as a
+hyperparameter.
+We append \gasi{-$\beta$} to the name of models with a scaling
+factor.
+This is critical for learning \emph{distinguishable senses}
+(Figure~\ref{fig:tsne}, Table~\ref{tab:human}, and
+Table~\ref{tab:wsim}). Our \textbf{final objective function} for
+\gasi{-$\beta$} is
+
+\begin{equation}
+J(\bmat{S}, \bmat{C}) \propto \sum_{w_i \in V}\sum_{w_{c}\in c_i}
+\sum_{k=1}^{K} \gamma_k^i \log P(w_{c} \g s_k^i).
+\label{eq:gasi}
+\end{equation}
+
+
+
+\begin{figure*}[t]
+	\centering
+	\includegraphics[width=0.75\linewidth]{\figfile{gasi_muse_tsne_2}}
+	\caption{t-\abr{sne} projections of nearest neighbors for ``bond''
+		by \emph{hard-attention} models: 
+		\abr{muse} (\abr{rl}-based) and our 
+		\gasi{-$\beta$}.
+                                Trained on same dataset and vocabulary,
+		both models learn three vectors per word (bond$\_i$ is
+		$i$\textsuperscript{th} sense vector). \gasi{} (right)
+		learns three distinct senses of ``bond'' while \abr{muse}
+		(left) learns overlapping senses.}
+	\label{fig:tsne}
+\end{figure*}

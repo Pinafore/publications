@@ -1,0 +1,101 @@
+ 
+\section{Related Work: Representation, Evaluation}
+\label{sec:related}
+
+\newcite{schutze1998automatic} introduces context-group discrimination
+for senses and uses the centroid of context vectors as a sense
+representation. Other work induces senses by context
+clustering~\citep{purandare2004word} or probabilistic mixture
+models~\citep{brody2009bayesian}. \newcite{Reisinger2010} first
+introduce multiple sense-specific vectors for each word, inspiring
+other multi-prototype sense embedding models. Generally, to address
+polysemy in word embeddings, previous work trains on annotated
+sense corpora~\citep{sensEmbed,gomez-perez-19} or external sense
+inventories~\citep{remb13,chen2014unified,jauhar2015ontologically,taoSense,wu2015sense,pilehvar2016,sw2v};
+\newcite{autoE17}
+extend word embeddings to lexical resources without training; others
+induce senses via multilingual parallel
+corpora~\citep{guo2014learning,vsuster2016bilingual,ettinger2016retrofitting}.
+
+We contrast our \gasi{} to \emph{unsupervised} monolingual
+multi-prototype models along two dimensions: \emph{sense induction
+methodology} and
+\emph{differentiability}.  Our focus is unsupervised induction because for interpretability to be
+useful, we assume that sense inventories and disambiguations are
+either unavailable or imperfect.
+
+On the dimension of \emph{sense induction methodology}, \newcite{huang2012improving}
+and \newcite{neelakantan2015efficient} induce senses by context
+clustering; \newcite{tian2014probabilistic} model a corpus-level sense
+distribution; \newcite{li2015multi} model the sense assignment as a
+Chinese Restaurant Process;
+\newcite{qiu2016context} induce senses by minimizing an energy
+function on a context-depend network; \newcite{bartunov2016breaking}
+model the sense assignment as a steak-breaking process; \newcite{mswe17}
+model the sense embeddings as a weighted combination of topic vectors
+with pre-computed weights by topic models; \newcite{fastPG18} model word representations as Gaussian Mixture
+embeddings where each Gaussian component captures different
+senses; \newcite{Muse} compute sense distribution by a separate set
+of sense induction vectors. The proposed \gasi{} marginalizes the
+likelihood of contexts over senses and induces senses by local context
+vectors; the most similar sense selection module is a bilingual
+model~\citep{vsuster2016bilingual} except that it does not introduce
+lower bound for negative sampling but uses weighted embeddings, 
+which results in mixed senses.
+
+On the dimension of \emph{differentiability}, most sense selection
+models are \emph{non-differentiable} and discretely select senses,
+with two exceptions: \newcite{vsuster2016bilingual} use weighted
+vectors over senses;
+\newcite{Muse} implement hard attention with \abr{rl} to mitigate the non-differentiability.
+In contrast, \gasi{} keeps full differentiability by
+reparameterization and approximates discrete sense sampling with the
+scaled Gumbel softmax.
+
+However, the elephants in the room are \abr{bert} and \elmo{}.
+While there are specific applications where humans might be better
+served by multisense embeddings, computers seem to be consistently
+better served by contextual representations.
+A natural extension is to use the aggregate
+representations of word senses from these models.
+Particularly for
+\elmo{}, one could cluster individual mentions~\cite{chang-19}, but
+this is unsatisfying at first blush: it creates clusters 
+more specific than senses.
+\abr{bert} is even more
+difficult: the transformer is a dense, rich representation, but
+only a small subset describes the meaning of individual words.
+Probing techniques~\cite{perone2018evaluation} could help focus on
+semantic aspects that help \emph{humans} understand word usage.
+
+ 
+\subsection{Granularity}
+
+Despite the confluence of goals, there has been a disappointing lack
+of cross-fertilization between the traditional knowledge-based lexical
+semantics community and the representation-learning community.
+Following the trends of sense learning models, we---from the
+perspective of those used to VerbNet or WordNet---use far too few
+senses per word.
+While there is disagreement about sense inventory, ``hard'' and
+``line''~\cite{leacock-98} definitely have more than three senses.
+Expanding to granular senses presents both challenges and
+opportunities for future work.
+
+While moving to a richer sense inventory is valuable future work, it
+makes human annotation more difficult~\cite{erk-13}---while we can
+expect humans to agree on which of three senses are used, we cannot for
+larger sense inventories.
+In topic models, \citet{chang-09b} develop topic log odds (in addition
+to the more widely used model precision) to account for graded
+assignment to topics.
+Richer user models would need to capture these more difficult
+decisions.
+
+However, moving to more granular senses requires richer modeling.
+Bayesian nonparametrics~\citep{orbanz-10} can determine the
+number of clusters that best explain the data.
+Combining online stick breaking distributions~\cite{wang-11} with
+\gasi{}'s objective function could remove unneeded complexity for
+word types with few senses and consider the richer sense inventory for
+other words.

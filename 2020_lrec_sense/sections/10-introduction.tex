@@ -1,0 +1,40 @@
+
+        
+
+        
+\section{Context, Sense, and Representation}
+
+Computers need to represent the meaning of words in context.
+\abr{bert}~\cite{devlin-18} and \elmo{}~\cite{peters-18} have
+dramatically changed how natural language processing represents text.
+Rather than one-size-fits-all word vectors that ignore the nuance of
+how words are used in context, these new representations have 
+topped the leaderboards for question answering, inference, and
+classification.
+Contextual representations have supplanted 
+multisense embeddings~\cite{CamachoCollados-18}.
+While these methods learn a vector for \emph{each sense}, they do not
+encode meanings in downstream tasks as well as contextual
+representations~\cite{peters-18}.
+
+However, computers are not the only consumer of text representations.
+Humans also use word representations to understand diachronic drift,
+investigate a language's sense inventory, or to cluster and explore
+documents.  Thus, a primary role for multisense word
+embeddings is \emph{human} understanding of word meanings.  Unfortunately, multisense models have only been evaluated on
+\emph{computer}-centric dimensions and have ignored the question of
+\emph{sense interpretability}.  
+
+We first develop measures for how well models encode and explain a
+word's meaning to a human (\secref{sec:intp}).
+Existing multisense models do not necessarily fare best on this
+evaluation; our simpler model (Gumbel Attention for Sense Induction:
+\gasi{}, \secref{sec:model}) that focuses on
+discrete sense selection can better capture human-interpretable
+representations of senses; comparing against
+traditional evaluations (\secref{sec:wordsim}), \gasi{}
+has better contextual word similarity and 
+competitive non-contextual word similarity.
+Finally, we discuss the connections between representation
+learning and how modern contextual representations could 
+better capture interpretable senses (\secref{sec:related}).

@@ -1,0 +1,261 @@
+
+
+
+
+\section{Derivation Desiderata}
+\label{sec:deriv-dess}
+
+Like the Skip-Gram objective (Equation~\ref{eq:sg_softmax}), we model
+the likelihood of a context word given the center
+sense~$P(c_j^i \g s_k^i)$ using softmax,
+\begin{equation}
+P(c_j^i \g s_k^i) = \frac{\exp \left({\bvec{c}_j^i} ^\top \bvec{s}_k^i\right)}{\sum_{j=1}^{|V|}\exp \left(\bvec{c}_j ^\top \bvec{s}_k^i\right)},
+\end{equation}
+where the bold symbol $\bvec{s}_k^i$ is the vector representation of sense
+$s_k^j$ from $\bmat{S}$, and $\bvec{c}_j$ is the context
+embedding of word $c_j$ from $\bmat{C}$.
+
+ 
+Computing the softmax over the vocabulary is time-consuming. We want
+to adopt negative sampling to approximate $\log P(c_{j}^i \g s_k^i)$,
+which does not exist explicitly in our objective function
+(Equation~\ref{eq:jatt}).\footnote{Deriving the negative sampling
+  requires the logarithm of a softmax~\citep{goldberg2014negative}. }
+
+However, given the concavity of the logarithm function, we can apply
+Jensen's inequality,
+\begin{align}
+  \log & \left[ \sum_{k=1}^{K} P(c_{j}^i \g s_k^i) P(s_k^i \g w_{i}, \tilde{c}_i) \right] \ge \\
+  & \sum_{k=1}^{K} P(s_k^i \g w_{i}, \tilde{c}_i) \log  P(c_{j}^i  \g
+s_k^i),  \notag
+\label{eq:jensen}
+\end{align}
+and create a lower bound of the objective.  Maximizing this lower
+bound gives us a \emph{tractable objective}, $J(\bmat{S}, \bmat{C}) \propto$
+\begin{equation}
+\sum_{w_i \in V}\sum_{c_{j}^i \in \tilde{c}_i} \sum_{k=1}^{K}
+P(s_k^i \g w_{i}, \tilde{c}_i) \log P(c_{j}^i  \g s_k^i),
+\label{eq:att}
+\end{equation}
+where $\log P(c_{j}^i \g s_k^i)$ is estimated by negative
+sampling~\cite{mikolov2013b},
+\begin{equation*}
+\text{log }\sigma({\bvec{c}_j^i}^{\top} \bvec{s}_k^i)  + \sum_{j=1}^{n}\mathbb{E}_{c_j\sim P_n(c)}[\text{log }\sigma(-\bvec{c}_j^{\top}\bvec{s}_k^j))]
+\label{eq:neg}
+\end{equation*}
+
+
+\section{Training Details}
+\label{apdx:train}
+
+During training, we fix the window size to five and the dimensionality
+of the embedding space to 300 for comparison to previous work. We
+initialize both sense and context embeddings randomly within
+U(-0.5/dim, 0.5/dim) as in Word2Vec. We set the initial learning rate
+to 0.01; it is decreased linearly until training concludes after 5
+epochs. The batch size is 512, and we use five negative samples per
+center word-context pair as suggested by~\newcite{mikolov2013a}. The
+subsample threshold is 1e-4. We train our model on the GeForce GTX
+1080 Ti, and our implementation (using PyTorch 3.0) takes $\sim6$
+hours to train one epoch on the April 2010 Wikipedia
+snapshot~\cite{wiki} with 100k vocabulary. For comparison, our
+implementation of Skip-Gram on the same framework takes $\sim2$ hours
+each epoch.
+
+
+\begin{figure}[t]
+		\centering
+           \includegraphics[width=1.0\linewidth]{\figfile{gumbel_std}}
+           
+           \caption{We approximate hard attention with a
+               Gumbel softmax on the context-sense dot product
+               $\bar{\bvec{c}}_i^\top\bvec{s}_k^i$
+               (Equation~\ref{eq:gs}), whose mean and std plotted here
+               as a function of iteration. The shadowed area shows
+               that it has a smaller scale than the Gumbel noise
+               $g_k$, such that $g_k$, rather than the embeddings,
+               dominates the sense attention.}\label{fig:dot}
+\end{figure}
+
+\begin{figure}[t]
+	\centering
+	\includegraphics[width=1.0\linewidth]{\figfile{num_senses}}
+	
+	\caption{Histogram of number of senses left after
+          post-training pruning for two models: \abr{gasi}-0.4
+          initialized with three senses and \abr{gasi}-0.4 initialized
+          with five senses. We rank the number of senses of words by
+          their frequency from high to low. }
+	\label{fig:ns}
+	
+\end{figure}
+
+\begin{figure*}[t]
+	\centering
+	\includegraphics[width=1.0\linewidth]{\figfile{bond_sgs}}
+	
+	\caption{As the scale factor $\beta$ increases, the sense
+		selection distribution for ``bond'' given examples from
+		SemCor 3.0 for synset ``bond.n.02'' becomes flatter,
+		indicating less disambiguated sense vectors.}
+	\label{fig:bond}
+\end{figure*}
+
+
+\begin{table*}[t]
+	\small
+	\centering
+	\begin{tabular}{cccccccc}
+		\toprule
+		Dataset &  \abr{mssg-30k}&  \abr{mssg-6k} &\abr{muse}\_Boltzmann &\sasi &\gasi & \gasi{-$\beta$} & PFT-GM \\
+		\midrule
+		\midrule
+		SimLex-999 & 31.80 &28.65& 39.61&31.56&40.14&\textbf{41.68}&40.19 \\
+		WS-353&65.69& 67.42 & 68.41&58.31&68.49 &\textbf{69.36}&68.6 \\
+		MEN-3k& 65.99 & 67.10 & 74.06 &65.07&73.13&72.32&\textbf{77.40} \\
+		MC-30& 67.79& 76.02&81.80&70.81&82.47 &\textbf{85.27}&74.63 \\
+		RG-65& 73.90 & 64.97&\textbf{81.11}&74.38&77.19&79.77&79.75 \\
+		YP-130& 40.69 & 42.68&43.56&48.28&49.82&56.34&\textbf{59.39} \\
+		MT-287& 65.47& 64.04&67.22&64.54&67.37&66.13&\textbf{69.66} \\
+		MT-771& 61.26& 58.83&64.00&55.00&66.65&66.70&\textbf{68.91} \\
+		RW-2k& 42.87& 39.24&\textbf{48.46}&45.03&47.22&47.69&45.69 \\
+		\bottomrule
+	\end{tabular}
+\caption{Spearman's correlation $100\rho$ on non-contextual
+		word similarity (MaxSim). \gasi{-$\beta$}
+		outperforms the other models on three datasets and is
+		competitive on others. \abr{pft-gm} is trained with two components/senses while other models learn three.}
+	\label{tab:wsim2-full} 
+	
+\end{table*}
+
+
+\section{Number of Senses}
+\label{apdx:sense}
+
+
+
+\begin{table}[t]
+	\centering
+	\begin{tabular}{cc}
+		\toprule
+		Model  & Accuracy(\%)\\
+		\midrule
+		\multicolumn{2}{l}{\textit{unsupervised multi-prototype models}}\smallskip\\
+		\abr{mssg-30k}  &54.00  \\
+		\abr{muse}\_Boltzmann & 52.14 \\
+		\gasi-$\beta$  & \textbf{55.27}\\
+		\midrule
+		\multicolumn{2}{l}{\textit{semi-supervised with lexical resources}}\smallskip\\
+		DeConf & \textbf{58.55}\\
+		\abr{sw2v} & 54.56 \\
+		\bottomrule
+	\end{tabular}
+	\caption{Sense selection on Word in Context (\wic{}) dataset.}
+	\label{tab:wic} 
+\end{table}
+
+
+
+For simplicity and consistency with most of previous work, we present
+our model with a fixed number of senses~$K$.
+
+
+
+
+\subsection{Post-training Pruning and Retraining}
+\label{subsec:pruning}
+For words that do not have multiple senses or have most senses appear
+very low-frequently in corpus, our model (as well as many previous
+models) learns duplicate senses.  Ideally, if we set a large number of $K$, with a perfect
+\emph{pruning} strategy, we can estimate the number of senses per type by removing
+duplicated senses and retrain a new model with the estimated number of senses instead 
+of a fixed number $K$.
+
+ However, this is challenging~\cite{mccarthy-16}; 
+instead we use a simple pruning strategy and remove duplicated senses with a threshold
+$\lambda$. Specifically, for each word $w_i$, if the cosine distance
+between any of its sense embeddings ($\bvec{s}_{m}^i, \bvec{s}_{n}^i$)
+is smaller than $\lambda$, we consider them to be duplicates. After
+discovering all duplicate pairs, we start pruning with the sense
+$s_k^i$ that has the most duplication and keep pruning with the same
+strategy until no more duplicates remain.
+
+
+\paragraph{Model-specific pruning}
+
+We estimate a model-specific threshold $\lambda$ from the learned
+embeddings instead of deciding it arbitrary. We first sample 100 words
+from the negative sampling distribution over the vocabulary. Then, we
+retrieve the top-5 nearest neighbors (from all senses of all words) to
+each sense of each sampled word. If one of a word's own senses appears
+as a nearest neighbor, we append the distance between them to a
+\emph{sense duplication list} $D_{dup}$. For other nearest neighbors,
+we append their distances to the \emph{word neighbor list}
+$D_{nn}$. After populating the two lists, we want to choose a
+threshold that would prune away all of the sense duplicates while
+differentiating sense duplication with other distinct neighbor
+words. Thus, we compute
+\begin{equation}
+\lambda = \frac{1}{2}(\mean(D_{dup}) + \mean(D_{nn})).
+\end{equation}
+
+
+\subsection{Number of Senses vs. Word Frequency}
+
+A common heuristic is that more frequent words have more
+senses. Figure~\ref{fig:ns} shows a histogram of the number of senses
+left for words ranked by their frequency, and the results agree with
+the assumption. Generally, the model learns more sense for high
+frequent words, except for the most frequent ones. The most frequent
+words are usually considered stopwords, such as ``the'', ``a'' and
+``our', which have only one common meaning. Moreover, we compare our
+model initialized with three senses (\gasi-0.4, $K=3$) against the one
+that has five (\gasi-0.4, $K=5$). Initializing with a larger number of
+senses, the model is able to uncover more senses for most words.
+
+
+
+\subsection{Duplicated Senses and Human-Model Agreement}
+
+
+\begin{figure}[t]
+	\centering
+	\includegraphics[width=1.0\linewidth]{\figfile{user_dist}}
+	\caption{Human agree more with each other when the senses are more distinct (less word overlaps and smaller cosine similarities)}
+	\label{fig:dist_user}
+	
+\end{figure}
+
+
+We measure distinctness both by counting shared nearest neighbors and
+the average cosine similarities of GloVe
+embeddings.\footnote{Different models learn different representations;
+  we use GloVe for a uniform basis of comparison.}  Specifically,
+\abr{muse} learns duplicate senses for most words, preventing users
+from choosing appropriate senses and preventing human-model
+agreement. \gasi{-$\beta$} learns some duplicated senses and some
+distinguishable senses. \abr{mssg} appears to learn the fewest
+duplicate senses, but they are not distinguishable enough for
+humans. Users disagree with each other (0.33 agreement) even when the
+number of overlaps is very small
+(Figure~\ref{fig:dist_user}). Table~\ref{tab:mssg_ea} shows an
+intuitive example. If we use rater agreement to measure how
+distinguishable the learned senses are to humans, \gasi{-$\beta$}
+learns the most distinguishable senses.
+
+The model is more likely to agree with humans when humans agree with
+each other (Figure~\ref{fig:acc_user}), i.e., human-model consistency
+correlates with rater agreement
+(Figure~\ref{fig:acc_user}). \abr{mssg} disagrees with humans more
+even when raters agree with each other, indicating worse sense
+selection ability.
+
+
+
+\begin{figure}[t]
+		\includegraphics[width=0.8\linewidth]{\figfile{acc_user_agreement}}
+		
+		\caption{Higher inter-rater agreement correlates with higher human-model consistency. }
+		\label{fig:acc_user}
+\end{figure}

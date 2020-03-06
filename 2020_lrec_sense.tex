@@ -1,0 +1,104 @@
+\documentclass[table, 10pt, a4paper]{article} \usepackage{style/lrec}  \usepackage{tocloft}
+\usepackage{titlesec}
+\usepackage{xstring}
+\usepackage{hyperref}
+
+\renewcommand\cftsecaftersnum{.} 
+\renewcommand\thesection{\arabic{section}}
+\renewcommand\thesubsection{\thesection.\arabic{subsection}}
+\titleformat{\section}
+            {\centering\large\bfseries}{\thesection.}{0.5em}{}
+            
+\titleformat{\subsection}
+  {\SmallTitleFont\bf\raggedright\bfseries}{\thesubsection.}{0.5em}{}
+
+ \pdfinfo{
+/Title (Which Representations Explain Senses Best to Humans)
+/Guo et al.
+}
+\newcommand{\citep}{\cite}
+\newcommand{\citet}[1]{\newcite{#1}}
+
+\usepackage{xcolor}
+
+\newcommand{\latexfile}[1]{\input{2020_lrec_sense/sections/#1}}
+\newcommand{\figfile}[1]{2020_lrec_sense/figures/#1}
+\newcommand{\autofig}[1]{2020_lrec_sense/auto_fig/#1}
+
+\newcommand{\appendixmention}[1]{#1}
+\newcommand{\gasi}{\abr{gasi}}
+\newcommand{\wic}{\abr{w}{\small i}\abr{c}}
+\newcommand{\sasi}{\abr{sasi}}
+\newcommand{\stgs}{\abr{st-gasi}}
+
+\newif\ifcomment\commentfalse
+\input{style/preamble}
+\usepackage{cleveref}
+
+\DeclareMathOperator{\softmax}{softmax}
+\DeclareMathOperator{\onehot}{one\_hot}
+\DeclareMathOperator{\mean}{mean}
+
+\newcommand{\secref}[1]{Section~\ref{#1}}
+
+
+
+
+
+	\title{Which Evaluations Uncover Sense Representations that Actually Make Sense?}
+
+        \name{Fenfei Guo, Jordan Boyd-Graber, Mohit Iyyer, Leah Findlater}
+
+\address{University of Maryland, University of Maryland, University of Massachussetts, University of Washington \\
+         fenfeigo@cs.umd.edu, jbg@umiacs.umd.edu, miyyer@cs.umass.edu, leahkf@uw.edu\\
+}
+
+	\latexfile{00-abstract}
+
+\begin{document}
+\maketitleabstract
+
+	\latexfile{10-introduction}
+	\latexfile{20-model}
+	\latexfile{training}
+	\latexfile{30-interpretability}
+	\latexfile{40-eval}        
+	\latexfile{50-discussion}
+	\latexfile{60-related}
+	\latexfile{70-conclusion}
+
+
+        \section*{Acknowledgement}
+
+        We thank the anonymous reviewers for their insightful and
+        constructive comments. We thank Martha Palmer, Kevin Seppi,
+        and the rest of the ``closing the loop'' team for useful
+        discussions during the development of this resesarch.  This
+        work was supported by \abr{nsf} Grant \abr{iis}-1409287.  Any
+        opinions, findings, conclusions, or recommendations expressed
+        here are those of the authors and do not necessarily reflect
+        the view of the sponsor.
+
+
+    
+\newpage
+        
+\section{Bibliographical References}\label{reference}
+
+\bibliographystyle{style/lrec}
+\bibliography{bib/journal-full,bib/jbg,bib/fenfei,bib/miyyer,bib/fs}
+
+\appendixmention{
+\clearpage
+
+\section*{Appendix}
+
+Equation and
+figure numbers continue from main submission.
+
+\setcounter{section}{0}
+\renewcommand{\thesection}{\Alph{section}} 
+\latexfile{appendix}
+}
+
+\end{document}

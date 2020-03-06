@@ -1,0 +1,191 @@
+
+\section{Word Similarity Evaluation}
+\label{sec:wordsim}
+
+\gasi{} and \gasi{-$\beta$} are interpretable, but how do they fare on
+standard word similarity tasks?
+
+\paragraph{Contextual Word Similarity}
+Tailored for sense embedding evaluation, Stanford Contextual Word
+Similarities~\citep[\abr{scws}]{huang2012improving} has 2003 word
+pairs tied to context sentences.
+These tasks assign a pair of word types (e.g., ``green'' and ``buck'') a
+similarity/relatedness score.
+Moreover, both words in the pair have an associated context.
+These contexts disambiguate homonymous and polysemous
+word types and thus captures sense-specific similarity.
+Thus, we use this dataset to tune our hyperparameters, comparing
+Spearman's rank correlation $\rho$ between
+embedding similarity and the gold similarity judgments: higher
+scores imply the model captures semantic similarities consistent with
+the trusted similarity scores.
+
+To compute the word similarity with senses we use two
+metrics~\cite{Reisinger2010} that take context and sense
+disambiguation into account:
+\textbf{MaxSimC} computes the cosine similarity $\cos(s_1^*, s_2^*)$
+between the two most probable senses $s_1^*$ and $s_2^*$ that
+maximizes $P(s_k^i \g w_i, \tilde{c}_i)$.
+\textbf{AvgSimC} weights average similarity over the combinations of
+all senses $\sum_{i=1}^{K}\sum_{i=j}^{K} P(s_{i}^1 \g w_1,
+\tilde{c}_1) P(s_{j}^2\g w_2,\tilde{c}_2)\cos(s_i^1 s_j^2)$.
+
+\smallskip
+We compare variants of our model with existing sense embedding
+models (Table~\ref{tab:wsim}), including two previous \abr{sota}s: 
+the clustering-based Multi-Sense Skip-Gram
+model~\cite[\abr{mssg}]{neelakantan2015efficient} on AvgSimC 
+and the \abr{rl}-based Modularizing Unsupervised Sense
+Embeddings~\cite[\abr{muse}]{Muse} on MaxSimC.
+\gasi{} better captures similarity than \sasi{},
+corroborating that hard attention aids word sense selection.
+\gasi{}
+without scaling has the best MaxSimC; however, it learns a
+flat sense distribution (Figure~\ref{fig:tsne}).
+\gasi{-$\beta$} has
+the best AvgSimC and a competitive MaxSimC.
+While \abr{muse} has a
+higher MaxSimC than \gasi{-$\beta$}, it fails to distinguish senses as
+well (Figure~\ref{fig:tsne}, Section~\ref{sec:intp}).
+
+We also evaluate the retrained model with pruning mask on this dataset.
+\gasi-$\beta$-pruned has the same AvgSimC as \gasi-$\beta$ and higher
+local similarity correlation (Table~\ref{tab:wsim}, bottom), validating our
+pruning strategy (Section~\ref{sec:sasi}).
+
+
+\begin{table}[t]
+	\small
+	\centering
+	\begin{tabular}{ccc}
+		\toprule
+		Model  & MaxSimC & AvgSimC\\
+		\midrule
+		\midrule
+		\newcite{huang2012improving}-50d & 26.1 & 65.7 \\
+		\abr{mssg-6k}  &57.3 & 69.3 \\
+		\abr{mssg-30k}  &59.3 & 69.2 \\
+		\newcite{tian2014probabilistic} & 63.6 & 65.4 \\
+		\newcite{li2015multi}& 66.6 &66.8 \\
+		\newcite{qiu2016context} &64.9 & 66.1 \\
+		\newcite{bartunov2016breaking} & 53.8 & 61.2\\
+		\abr{muse}\_Boltzmann & 67.9 & 68.7 \\
+		\midrule
+		\sasi & 55.1 & 67.8 \\
+		\gasi{} (w/o scaling) & \textbf{68.2}& 68.3\\
+		\gasi-$\beta$  & 66.4& \textbf{69.5}\\
+		\midrule
+		\gasi-$\beta$-pruned  & 67.0& \textbf{69.5}\\
+		\bottomrule
+	\end{tabular}
+     
+	\caption{Spearman's correlation $100\rho$ on \abr{scws} (trained on 1B token, 300d vectors except for Huang et al.).  \gasi{} and \gasi-$\beta$ both can disambiguate the sense and correlate with human ratings. Retraining the model with pruned senses further improves local similarity correlation.}
+	
+	 
+	\label{tab:wsim} 
+\end{table}
+
+ 
+\paragraph{Word Sense Selection in Context} 
+
+\abr{scws} evaluates models' sense selection indirectly. We
+further compare \gasi{-$\beta$} with previous \abr{sota},
+\abr{mssg-30k} and \abr{muse}, on the Word in Context
+dataset~\citep[\wic{}]{pilehvar2018wic} which requires the model to
+identify whether a word has the same sense in two contexts.
+To reduce the variance in
+training and to focus on evaluating the sense selection module, we use
+an evaluation suited for unsupervised models: if the model selects
+different sense vectors given contexts, we mark that the word has different
+senses.\footnote{For monosemous or out of vocab words, we choose randomly.}
+For \abr{muse}, \abr{mssg} and \gasi{-$\beta$}, 
+we use each model's sense selection module; for DeConf~\citep{pilehvar2016} and \abr{sw2v}~\citep{sw2v}, we follow \citet{pilehvar2018wic} and \citet{makesense} by
+selecting the closest sense vectors to the context vector.
+DeConf results
+are comparable to supervised results (59.4$\pm$ 0.7).
+\gasi{-$\beta$} has the best result (55.3) apart from DeConf itself
+(58.55)\appendixmention{(full results in Table~\ref{tab:wic} in
+  appendix)}, which uses the same sense
+inventory~\citep[WordNet]{wordnet2} as \wic{}.
+
+
+
+ 
+\paragraph{Non-Contextual Word Similarity}
+
+While contextual word similarity is best suited for our model and
+goals, other datasets without contexts (i.e., only word
+pairs and a rating) are both larger and ubiquitous for word vector
+evaluations.
+To evaluate the semantics captured by each sense-specific embeddings, we compare the models on non-contextual word similarity
+datasets.\footnote{RG-65~\citep{rubenstein1965contextual};
+SimLex-999~\citep{hill2015simlex};
+WS-353~\citep{finkelstein2002placing};
+MEN-3k~\citep{bruni2014multimodal};
+MC-30~\citep{miller1991contextual}; YP-130~\citep{yang2006verb};
+MTurk-287~\citep{radinsky2011word}; MTurk-771~\citep{halawi2012large};
+RW-2k~\citep{luong2013better}}
+Like \newcite{Muse} and \newcite{fastPG18}, we compute the word
+similarity based on senses by \textbf{MaxSim}~\citep{Reisinger2010},
+which maximizes the cosine similarity over the combination of all
+sense pairs and does not require local contexts,
+\begin{equation}
+\text{MaxSim}(w_1, w_2) = \max_{0\le i \le K, 0\le j \le K}  \cos(s_i^1, s_j^2).
+\label{eq:maxsim}
+\end{equation}
+ 
+\gasi{-$\beta$} has better correlation on three datasets, is
+competitive on the rest (Table~\ref{tab:wsim2}), and remains
+competitive without scaling.
+\gasi{} is better than \abr{muse}, the
+other hard-attention multi-prototype model, on six datasets and worse
+on three. Our model can reproduce word similarities as well or better
+than existing models through our sense selection.\footnote{Given how good \abr{pdf-gm} is, it could do better on contextual word similarity even though it ignores senses.  Average and MaxSim are equivalent for this model; it ties \gasi{-$\beta$}.}
+
+
+\begin{table}[t]
+  \small
+	\centering
+	\begin{tabular}{cccccccc}
+		\toprule
+		Dataset & \abr{muse} &\sasi &\gasi & \gasi{-$\beta$} & PFT-GM \\
+		\midrule
+		\midrule
+		SimLex-999 & 39.61&31.56&40.14&\textbf{41.68}&40.19 \\
+		WS-353& 68.41&58.31&68.49 &\textbf{69.36}&68.6 \\
+		MEN-3k& 74.06 &65.07&73.13&72.32&\textbf{77.40} \\
+		MC-30& 81.80&70.81&82.47 &\textbf{85.27}&74.63 \\
+		RG-65& \textbf{81.11}&74.38&77.19&79.77&79.75 \\
+		YP-130& 43.56&48.28&49.82&56.34&\textbf{59.39} \\
+		MT-287& 67.22&64.54&67.37&66.13&\textbf{69.66} \\
+		MT-771& 64.00&55.00&66.65&66.70&\textbf{68.91} \\
+		RW-2k& \textbf{48.46}&45.03&47.22&47.69&45.69 \\
+		\bottomrule
+	\end{tabular}
+     
+	\caption{Spearman's correlation on non-contextual word
+          similarity (MaxSim). \gasi{-$\beta$} has higher correlation
+          on three datasets and is competitive on the
+          others. \appendixmention{\abr{pft-gm} is trained with two
+            components/senses while other models learn three.  A full
+            version including \abr{mssg} is in appendix.}}
+	\label{tab:wsim2} 
+	
+\end{table}
+
+
+\subsection{Word Similarity vs. Interpretability}
+
+Word similarity tasks (Section~\ref{sec:wordsim}) and human
+evaluations (Section~\ref{sec:intp}) are inconsistent.
+\gasi{}, \gasi{-$\beta$} and \abr{muse} are
+all competitive in word similarity (Table~\ref{tab:wsim} and
+Table~\ref{tab:wsim2}), but only \gasi{-$\beta$} also does well in the
+human evaluations (Table~\ref{tab:human}). Both \gasi{} without
+scaling and \abr{muse} fail to learn distinguishable senses and cannot
+disambiguate senses.
+High word similarities do not necessarily indicate ``good'' sense
+embeddings quality; our human evaluation---\emph{contextual word sense
+  selection}---is complementary.
+
+

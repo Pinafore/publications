@@ -1,0 +1,18 @@
+\section{Data and Training}
+\label{sec:setup}
+
+
+For fair comparisons, we try to remain consistent with previous
+work~\citep{huang2012improving,neelakantan2015efficient,Muse} in all
+aspects of training. In particular, we train \gasi{} on the same April
+2010 Wikipedia snapshot~\citep{wiki} with 1B tokens and the same
+vocabulary released by \newcite{neelakantan2015efficient}; set the
+number of senses $K=3$ and dimension $d=300$ for each word unless
+otherwise specified. \appendixmention{More details are in the
+  Appendix.} Following \newcite{maddison2016concrete}, we fix the
+temperature $\tau = 0.5$, and tune the scaling factor $\beta=0.4$
+using grid search within $\{0.1\dots 0.9\}$ on \textbf{AvgSimC} for
+contextual word similarity (Section~\ref{sec:wordsim}); this tuning
+preceded all interpretability experiments. If not reprinted, numbers
+for competing models are either computed with pre-trained embeddings
+released by authors or trained on released code.

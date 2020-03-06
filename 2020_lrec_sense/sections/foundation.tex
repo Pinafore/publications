@@ -1,0 +1,44 @@
+
+\section{Foundations: Skip-Gram and Gumbel Softmax}
+\label{sec:skip-gram}
+
+Our model extends Skip-Gram
+Word2Vec~\citep{mikolov2013a,mikolov2013b}, which
+jointly learns word embeddings~$\bmat{W} \in \mathbb{R}^{|V|\times d}$
+and context embeddings~$\bmat{C} \in \mathbb{R}^{|V|\times d}$. More specifically, given a
+ vocabulary~$V$ and  embedding dimension~$d$, it
+maximizes the likelihood of the context words~$c_{j}^i$ that
+surround a given center word~$w_i$ in a context window~$\tilde{c}_i$,
+\begin{equation}
+ J(\bmat{W}, \bmat{C}) \propto \sum_{w_i \in V}\sum_{c_{j} ^i\in \tilde{c}_i} \log P(c_{j}^i \g w_i; \bmat{W}, \bmat{C}),
+\label{eq:obj_sg}
+\end{equation}
+where $P(c_{j}^i\g w_i)$ is estimated by a softmax over all possible
+context words, i.e, the vocabulary,
+ \begin{equation}
+ 	P(c_{j}^i \g w_i; \bmat{W}, \bmat{C}) = \frac{ \exp \left({\bvec{c}_j^i} ^{\top} \bvec{w}_i\right)}{\sum_{c \in V}  \exp \left(\bvec{c}^{\top}\bvec{w}_i\right)}.
+ \label{eq:sg_softmax}
+ \end{equation}
+In practice, $\log P(c_{j}^i \g w_i)$ is approximated by
+negative sampling to reduce computational cost.
+
+\subsection{Gumbel Softmax}
+\label{sec:gs}
+
+The Gumbel softmax~\citep{jang2016categorical,maddison2016concrete}
+approximates the sampling of discrete random variables.  Given a
+discrete random variable $X$ with $P(X=k) \propto \alpha_k$, $\alpha_k
+\in (0, \infty)$, the
+Gumbel-max~\citep{gumbel1954statistical,maddison2014sampling} refactors
+the sampling of $X$ into
+\begin{eqnarray}
+X = \argmax_k (\log \alpha_k + g_k),
+\end{eqnarray}
+where the Gumbel noise $g_k = -\log(-\log(u_k))$ and $u_k$ are i.i.d
+samples drawn from Uniform(0, 1).
+
+The Gumbel softmax approximates sampling $
+\onehot(\argmax_k (\log \alpha_k + g_k))$ by
+ \begin{equation}
+y_k = \softmax((\log \alpha_k  + g_k)/\tau).
+ \end{equation}
