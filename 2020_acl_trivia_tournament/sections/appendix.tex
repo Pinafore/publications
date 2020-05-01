@@ -51,7 +51,7 @@ and \textit{the \xlnet{}-123 answer span} by italics, \textbf{combining} \underl
     The essence is there are three readings, starting with \underline{a Commission proposal}, where the Parliament must vote by \textbf{\underline{a \textit{majority}} of all \abr{mep}s} (not just those present) to block or suggest changes
 \end{quote}
 \textbf{\underline{a majority} of all \abr{mep}s} is as good an answer as \textit{\underline{majority}},
-yet its Exact Match score is $0$.  Note that the problem is not merely one of picking a soft metric;
+yet its Exact Match score is $0$.  The problem is not merely one of picking a soft metric;
 even its Token-F1 score is merely  $0.4$, effectively penalizing a system for giving a more complete
 answer.  The limitations of Token-F1 become even clearer in light of the following significant span difference:
 \begin{quote}
@@ -106,10 +106,10 @@ We also observed $5$ cases of genuinely bad questions.  Consider
     catalog that the network acquired some years back
 \end{quote}
 
-This is simply an annotation error---the correct answer to the question is not available
+This is an annotation error---the correct answer to the question is not available
 from the paragraph and would have to be (the American Broadcast Company's) Programming Library.
 While we have to live with annotation errors as part of reality, it is not clear that we 
-ought to simply accept them for \emph{official evaluations}---any human taking a closer look
+ought to accept them for \emph{official evaluations}---any human taking a closer look
 at the paragraph, as part of an adjudication process, would concede that the question is
 problematic.
 
