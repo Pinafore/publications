@@ -7,14 +7,14 @@ Asking ``good questions'' requires sophisticated pragmatic reasoning~\cite{hawki
 \abr{qa} datasets, however, are often collected from the wild or written by untrained
 crowdworkers.
 Crowdworkers lack experience in 
-crafting questions and may introduce idiosyncrasies that shortcut machine learning~\citep{geva-19}.  
+crafting questions and may introduce idiosyncracies that shortcut machine learning~\citep{geva-19}.  
 Similarly, data collected from the wild
 such as Natural Questions~\citep{kwiatkowski-19} or AmazonQA~\cite{gupta-19} by design have vast variations in quality.
 In the previous section, we focused on how datasets as a whole should be structured.
 Now, we focus on how specific \emph{questions} should be structured to make the dataset as valuable as possible.
 
 
-\subsection{Avoiding ambiguity and assumptions}
+\subsection{Avoiding Ambiguity and Assumptions}
 \label{sec:ambiguity}
 
 Ambiguity in questions not only frustrates answerers who resolve the ambiguity `incorrectly'.
@@ -33,7 +33,7 @@ While this sometimes reflects real world complexities such as actual
 under-specified or ill-formed search
 queries~\citep{faruqui-18,kwiatkowski-19}, ignoring this ambiguity is
 problematic.
-As a concrete example, Natural Questions~\cite{kwiatkowski-19} answers ``what year did the us hockey team win the Olympics'' with \underline{1960} and \underline{1980}, ignoring the \abr{us} women's team, which won in 1998 and 2018, and further assuming the query is about \emph{ice} rather than \emph{field} hockey (also an Olympic event).
+As a concrete example, Natural Questions~\cite{kwiatkowski-19} answers ``what year did the us hockey team win the olympics'' with \underline{1960} and \underline{1980}, ignoring the \abr{us} women's team, which won in 1998 and 2018, and further assuming the query is about \emph{ice} rather than \emph{field} hockey (also an Olympic event).
 Natural Questions associates a page about the United States men's national ice hockey team, arbitrarily removing the ambiguity \textit{post hoc}.
 However, this does not resolve the ambiguity, which persists in the original question: information retrieval arbitrarily provides one of many interpretations.
 True to their name, Natural Questions are often under-specified when users ask a question online.
@@ -156,7 +156,7 @@ runs'' have not been found yet.  We are not aware of any change on
 this front---if anything, we seem to have become more insensitive as a
 community to just how limited our current evaluations are.
 
-\subsection{Focus on the bubble}
+\subsection{Focus on the Bubble}
 
 While every question should be perfect, time and resources are limited.  
 Thus, authors and editors of tournaments ``focus on the bubble'', where the ``bubble'' are the questions most likely to discriminate between top teams at the tournament.

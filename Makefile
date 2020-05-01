@@ -2,14 +2,23 @@ TEX = $(wildcard */sections/*.tex *.tex */*.tex */tables/*.tex)
 BIB = $(wildcard bib/*.bib)
 FIG = $(wildcard */figures.*)
 
+.PRECIOUS: %/auto_fig/res.txt
+
 clean:
 	rm -f *.aux *.dvi *.log *.bbl *.pdf *~ *.out *.blg *.nav *.toc *.snm *.fdb_latexmk *.fls *.synctex.gz
 	rm -f */*.aux */*.dvi */*.log */*.bbl */*.pdf */*~ */*.out */*.blg */*/*~
 	rm -fR */auto_fig
 	rm -fR *.tgz
 
+
+clean_proposal:
+	rm -f *.aux *.dvi *.log *.bbl *.pdf *~ *.out *.blg *.nav *.toc *.snm *.fdb_latexmk *.fls *.synctex.gz
+	rm -f pedro_proposal/*.aux pedro_proposal/*.dvi pedro_proposal/*.log pedro_proposal/*.bbl pedro_proposal/*.pdf pedro_proposal/*~ pedro_proposal/*.out pedro_proposal/*.blg pedro_proposal/*/*~
+	rm -fR pedro_proposal/auto_fig
+
+
 # TODO: make it so that this actually runs if the figure file (R or python) or data are updated.  Perhaps requires messing with the script.
-%/auto_fig/res.txt:
+%/auto_fig/res.txt: %/figures.py
 	mkdir -p $(@:/res.txt=)
 	./scripts/rscript_if_ne.sh $(@:/auto_fig/res.txt=) > $@
 
@@ -73,8 +82,8 @@ scripts/hunspell_dictionary.dic: scripts/dictionary.txt
 	mv 2020_lrec_sense_page_0.pdf 2020_lrec_sense.submission.pdf
 
 2020_acl_trivia_tournament.appendix.pdf: 2020_acl_trivia_tournament.paper.pdf
-	python3 scripts/split_pdf.py 2020_acl_trivia_tournament.paper.pdf 11
-	mv 2020_acl_trivia_tournament_page_11.pdf 2020_acl_trivia_tournament.appendix.pdf
+	python3 scripts/split_pdf.py 2020_acl_trivia_tournament.paper.pdf 12
+	mv 2020_acl_trivia_tournament_page_12.pdf 2020_acl_trivia_tournament.appendix.pdf
 	mv 2020_acl_trivia_tournament_page_0.pdf 2020_acl_trivia_tournament.submission.pdf
 
 2020_acl_diplomacy.appendix.pdf: 2020_acl_diplomacy.paper.pdf

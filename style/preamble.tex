@@ -58,25 +58,25 @@
 \newcommand*{\missingcitation}{{\Huge \colorbox{red}{?citation?}}}
 \makeatletter
 \def\@setref#1#2#3{%
-   \ifx#1\relax
+  \ifx#1\relax
     \protect\G@refundefinedtrue
     \nfss@text{\reset@font\missingreference}%
     \@latex@warning{Reference `#3' on page \thepage \space
-              undefined}%
-   \else
+      undefined}%
+  \else
     \expandafter#2#1\null
-   \fi}
+  \fi}
 \def\@citex[#1]#2{\leavevmode
-   \let\@citea\@empty
-   \@cite{\@for\@citeb:=#2\do
-     {\@citea\def\@citea{,\penalty\@m\ }%
+  \let\@citea\@empty
+  \@cite{\@for\@citeb:=#2\do
+    {\@citea\def\@citea{,\penalty\@m\ }%
       \edef\@citeb{\expandafter\@firstofone\@citeb\@empty}%
       \if@filesw\immediate\write\@auxout{\string\citation{\@citeb}}\fi
       \@ifundefined{b@\@citeb}{\hbox{\reset@font\missingcitation}%
         \G@refundefinedtrue
         \@latex@warning
-          {Citation `\@citeb' on page \thepage \space undefined}}%
-        {\@cite@ofmt{\csname b@\@citeb\endcsname}}}}{#1}}
+        {Citation `\@citeb' on page \thepage \space undefined}}%
+      {\@cite@ofmt{\csname b@\@citeb\endcsname}}}}{#1}}
 \makeatother
 
 \newcommand{\feat}[1]{{\small \texttt{#1}}}
@@ -111,9 +111,9 @@
 
 
 \renewenvironment{quote}
-               {\list{}{\rightmargin\leftmargin}%
-                \item\relax\small\ignorespaces}
-               {\unskip\unskip\endlist}
+{\list{}{\rightmargin\leftmargin}%
+  \item\relax\small\ignorespaces}
+{\unskip\unskip\endlist}
 
 \DeclareMathOperator*{\argmax}{arg\,max}
 \DeclareMathOperator*{\argmin}{arg\,min}
@@ -121,8 +121,8 @@
 \newcommand{\bvec}[1]{\boldsymbol{#1}}
 
 %\newcommand{\email}[1]{ {\small \href{mailto://#1}{\texttt{#1} }  }}
-\newcommand{\emaillink}[1]{ {\small \href{mailto://#1}{\texttt{#1}}}}
-\newcommand{\smallemaillink}[2]{ {\small \href{mailto://#2}{\texttt{#1}}}}
+\newcommand{\emaillink}[1]{{\small \href{mailto://#1}{\texttt{#1}}}}
+\newcommand{\smallemaillink}[2]{{\small \href{mailto://#2}{\texttt{#1}}}}
 
 % JBG: Consider renaming from \ch to \zh because of conflict when adding Cyrillic
 \newcommand{\ch}[1]{\begin{CJK*}{UTF8}{gbsn}#1\end{CJK*}}
@@ -140,9 +140,9 @@
 \newcommand{\todo}[1]{\textcolor{red}{{\bf TODO: #1}}}
 
 \ifcomment
-\newcommand{\pinaforecomment}[3]{\colorbox{#1}{\parbox{.8\linewidth}{#2: #3}}}
+  \newcommand{\pinaforecomment}[3]{\colorbox{#1}{\parbox{.8\linewidth}{#2: #3}}}
 \else
-\newcommand{\pinaforecomment}[3]{}
+  \newcommand{\pinaforecomment}[3]{}
 \fi
 
 \newcommand{\jbgcomment}[1]{\pinaforecomment{red}{JBG}{#1}}
@@ -178,7 +178,9 @@
 \newcommand{\yfcomment}[1]{\pinaforecomment{brown}{YF}{#1}}
 \newcommand{\ewcomment}[1]{\pinaforecomment{lightblue}{Eric}{#1}}
 \newcommand{\pgcomment}[1]{\pinaforecomment{cyan}{Pranav}{#1}}
+\newcommand{\dpcomment}[1]{\pinaforecomment{cyan}{Denis}{#1}}
 \newcommand{\bencomment}[1]{\pinaforecomment{lightblue}{Ben}{#1}}
+\newcommand{\myuancomment}[1]{\pinaforecomment{violet}{Michelle}{#1}}
 
 \newcommand{\smalltt}[1]{ {\tt \small #1 }}
 \newcommand{\smallurl}[1]{ \begin{tiny}\url{#1}\end{tiny}}
@@ -198,6 +200,9 @@
 \newcommand{\qa}[0]{\abr{qa}}
 \newcommand{\triviaqa}{\camelabr{Trivia}{qa}}
 \newcommand{\searchqa}{\camelabr{Search}{qa}}
+\newcommand{\wikiqa}{\camelabr{Wiki}{qa}}
+\newcommand{\newsqa}{\camelabr{News}{qa}}
+\newcommand{\trecqa}{\camelabr{Trec}{qa}}
 \newcommand{\qblink}{\abrcamel{qb}{Link}}
 \newcommand{\qanta}{\textsc{qanta}}
 \newcommand{\muse}{\textsc{muse}}

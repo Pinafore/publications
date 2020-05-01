@@ -107,9 +107,7 @@ coreference or pragmatic constraints by rewriting underspecified question string
 
 However, with more complicated systems and evaluations, a return to the yearly evaluations of \abr{trecqa} may be the best option.
 This improves not only the quality of evaluation (we can have real-time human judging) but also lets the test set reflect the build it/break it cycle~\cite{ruef-16}, as attempted by the 2019 iteration of \abr{fever}~\cite{thorne-19}.
-Moreover, another lesson the \abr{qa} community could learn from
-trivia games is to turn it into a spectacle: exciting games with a
-telegenic host.
+Moreover, another lesson the \abr{qa} community could learn from trivia games is to turn it into a spectacle: exciting games with a telegenic host.
 This has a benefit to the public, who see how \abr{qa} systems fail on difficult questions and to \abr{qa} researchers, who have a spoonful of fun sugar to inspect their systems' output and their competitors'.
 
 In between full automation and expensive humans in the loop are automatic metrics that mimic the flexibility of human raters, inspired by machine translation evaluations~\cite{papineni-02,specia-10} or summarization~\cite{lin-04}. 

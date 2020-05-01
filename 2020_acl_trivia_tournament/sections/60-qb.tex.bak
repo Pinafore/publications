@@ -9,9 +9,9 @@ However, given the community's emphasis on fair evaluation, computer \abr{qa} ca
 
 We have shown example of \qb{} questions, but we have not explained how the format works; see \newcite{DBLP:journals/corr/abs-1904-04792} for more.
 You might be scared off by how long the questions are.
-However, in real \qb{} trivia tournaments, they are not finished because the questions are \emph{interruptible}.
+However, in real \qb{} trivia tournaments, they are not finished because the questions are \emph{interruptable}.
 
-\paragraph{Interruptible}
+\paragraph{Interruptable}
 
 A moderator reads a question.
 Once someone knows the answer, they use a signaling device to ``\emph{buzz in}''.
@@ -59,7 +59,7 @@ Finally, a \emph{packetizer} ensures the overall set is diverse, has uniform dif
 Trivia questions are fake: the asker already knows the answer.  
 But they're no more fake than a course's final exam, which---like leaderboards---are designed to test knowledge.
 
-Experts know when questions are ambiguous (Section~\ref{sec:ambiguity}); while ``what play has a character whose father is dead'' could be \textit{Hamlet}, \textit{Antigone}, or \textit{Proof}, a good writer's knowledge avoids the ambiguity.
+Experts know when questions are ambigiuous (Section~\ref{sec:ambiguity}); while ``what play has a character whose father is dead'' could be \textit{Hamlet}, \textit{Antigone}, or \textit{Proof}, a good writer's knowledge avoids the ambiguity.
 When authors omit these cues, the question is derided as a ``hose''~\cite{2013-eltinge}, which robs the tournament of fun (Section~\ref{sec:fun}).
 
 One of the benefits of contrived formats is a focus on specific phenomena. 
@@ -97,7 +97,7 @@ While this improves the dataset's discrimination, it can hurt
 popularity because you cannot copy/paste code from other \abr{qa}
 tasks.
 The complicated pyramidal structure complicates\footnote{But not
-  necessarily preclude, as the Illinois High School
+  necesarilly preculde, as the Illinois High School
   Scholastic Bowl Coaches Association shows:
 \begin{quote}
     This is the smallest counting number which is the radius of a sphere whose volume is an integer multiple of $\pi$. It is also the number of distinct real solutions to the equation $x^7-19x^5=0$. This number also gives the ratio between the volumes of a cylinder and a cone with the same heights and radii. Give this number equal to the log base four of sixty-four.

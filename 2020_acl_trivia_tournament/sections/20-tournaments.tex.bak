@@ -24,7 +24,7 @@ Such tournaments are designed to effectively find a winner, which matches the sc
 Our goal is {\bf not to encourage the \abr{qa} community to adopt to quirks and gimmicks of trivia games}.
 Instead, it's to encourage experiments and datasets that {\bf consistently and efficiently find the systems that best answer questions}.
 
-\subsection{Are we having fun?}
+\subsection{Are we Having Fun?}
 \label{sec:fun}
 
 Many authors use crowdworkers to establish human accuracy~\cite{rajpurkar-16,choi-18}.
@@ -64,7 +64,7 @@ Imagine someone who loves answering the questions your task poses: would they ha
 This is the foundation of Gamification~\cite{ahn-06}, which can create quality data from users motivated by fun rather than pay.
 Even if you pay crowdworkers, unfun questions may undermine your dataset goals.
 
-\subsection{Am I measuring what I care about?}
+\subsection{Am I Measuring what I Care About?}
 \label{subsection:measuring-what-you-care-about}
 
 
@@ -76,7 +76,7 @@ metrics---systems tend to be compared by their `\squad{} score' or their `\abr{n
 is to say about their relative capabilities.  Like \abr{qa} leaderboards, trivia tournaments need to decide
 on a single winner, but they explicitly recognize that there are more interesting comparisons.
 
-A tournament may recognize different background/resources---high school, small school, undergraduates~\cite{naqt-eligibility}.  Similarly, more practical leaderboards would reflect training time
+A tournament may recognize differnt background/resources---high school, small school, undergraduates~\cite{naqt-eligibility}.  Similarly, more practical leaderboards would reflect training time
 or resource requirements~\citep[see][]{dodge-19} including `constrained' or `unconstrained'
 training~\citep{bojar-2014}.
 Tournaments also give specific awards (e.g., highest score without incorrect
@@ -86,7 +86,7 @@ to the overall \fone{} as a fully correct answer, obscuring whether a system
 is more precise or an effective abstainer.  If the task
 recognizes both abilities as important, reporting a single score risks implicitly prioritizing one balance of the two.
 
-\subsection{Do my questions separate the best?}
+\subsection{Do my Questions Separate the Best?}
 \label{sec:discriminative}
 
 Assume that you have picked a metric (or a set of metrics) that captures what you care about.
@@ -105,7 +105,7 @@ Unfortunately, existing datasets have many easy questions.
 \newcite{sugawara-20} find that ablations like shuffling word order~\cite{feng-18}, shuffling sentences, or only offering the most similar sentence do not impair systems.
 Newer datasets such as \abr{drop}~\cite{dua-19} and HellaSwag~\cite{zellers-19} are harder for \emph{today}'s systems; because Goldilocks is a moving target, we propose annual evaluations in Section~\ref{sec:call}.
 
-\subsection{Why so few Goldilocks questions?}
+\subsection{Why so few Goldilocks Questions?}
 
 This is a common problem in trivia tournaments, particularly pub quizzes~\cite{diamond-09}, where challenging questions can scare off patrons.
 Many quiz masters prefer popularity with players and thus write easier questions.
@@ -121,17 +121,13 @@ As we write this in 2020, humans and computers sometimes struggle on the same qu
     \label{fig:error-and-difficulty}
 \end{figure}
 
-Figure~\ref{fig:error-and-difficulty} shows two datasets of the same size with the same annotation error.
+Figure~\ref{fig:error-and-difficulty} shows two datsets of the same size with the same annotation error.
 However, they have different difficulty \emph{distributions} and \emph{correlation} of annotation error and difficulty.
 The dataset that has more discriminative questions and consistent annotator error has fewer questions that do not discriminate the winner of the leaderboard.
 We call this the effective dataset proportion~$\rho$ (higher is better).
 Figure~\ref{fig:how-big} shows the test set size required to reliably discriminate systems for different $\rho$, based on a simulation (Appendix~\ref{sec:synthetic-discriminative}).
 
-At this point, you may despair about how big a dataset you
-need.\footnote{Using a more sophisticated simulation approach, the
-  \abr{trec} 2002 \abr{qa} test set~\cite{voorhees-03} could not
-  discriminate systems with less than a seven absolute score point
-  difference.}
+At this point, you may despair about how big a dataset you need.\footnote{Using a more sophisticated simulation approach, the TREC 2002 QA test set~\cite{voorhees-03} could not discriminate systems with less than a seven absolute score point difference.}
 The same terror besets trivia tournament organizers.
 Instead of writing more questions, they use pyramidality (Section~\ref{sec:pyramidality}) to make every question count.
 

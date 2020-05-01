@@ -1,0 +1,134 @@
+
+
+\section*{Appendix}
+
+Figure, footnote, and table numbers continue from main article.
+
+\section{An Abridged History of Modern Trivia}
+\label{sec:history}
+
+In the United  States, modern trivia exploded  immediately after World
+War    II    via    countless    game    shows    including    College
+Bowl~\cite{Baber-15}, the precursor to \qb{}.
+The craze spread to the United Kingdom in a bootlegged version of \qb{} called \textit{University Challenge} (now liscensed by \abr{itv}) and pub quizzes~\cite{taylor_mcnulty_meek}.
+
+The initial explosion, however, was not without controversy.
+A string of cheating scandals, most notably the Van Doren~\cite{freedman-97} scandal (the subject of the film \textit{Quiz Show}), and the 1977 entry of \qb{} into intercollegiate competition forced trivia to ``grow up''.
+Professional organizations and more ``grownup'' game shows like \jeopardy{} (the ``all responses in the form of a question'' gimmick grew out of how some game shows gave contestants the answers) helped created formalized structures for trivia.
+
+As the generation that grew up with formalized trivia reached adulthood, they sought to make the outcomes of trivia competitions more rigorous, eschewing the randomness that makes for good television.
+Organizations like National Academic Quiz Tournaments and the Academic Competition Federation created routes for the best players to help direct how trivia competitions would be run.
+In 2019, these organizations have institutionalized the best practices of ``good trivia'' described here.
+
+\section{Simulating the Test Set Needed}
+\label{sec:synthetic-discriminative}
+
+We simulate a head-to-head trivia competition where System~A and System~B have an accuracy $a$ (probability of getting a question right) separated by some difference: $a_A - a_B \equiv \Delta$.
+We then simulate this on a test set of size $N$---scaled by the
+effective dataset proportion $\rho$---via draws from two Binomial
+distributions with success probabilities of $a_{A}$ and $a_{B}$:
+\begin{align}
+    R_a \sim & \mbox{Binomial}(\rho N, a_A \notag \\
+    R_b \sim & \mbox{Binomial}(\rho N, a_B)
+    \label{eq:two-systems}
+\end{align}
+and see the minimum test set questions (using an experiment size of 5000) needed to detect the better system 95\% of the time (i.e., the minimum $N$ such that $R_a > R_b$ from Equation~\ref{eq:two-systems} in $0.95$ of the experiments).
+Our emphasis, however is $\rho$: the smaller the percentage of discriminative questions (either because of difficulty or because of annotation error), the larger your test set must be.\footnote{Disclaimer: This should be only one of many considerations in deciding on the size of your test set.  Other factors may include balancing for demographic properties, covering linguistic variation, or capturing task-specific phenomena.}
+
+\section{Qualitative Analysis Examples}
+\label{sec:qualitative-analysis}
+
+We provide some concrete examples for the classes into which we classified the
+\xlnet{}-123 wins over \xlnet{}.  We indicate \underline{gold answer spans} (provided by the
+human annotators) by underlining (there may be, \textbf{the \xlnet{} answer span} by bold face,
+and \textit{the \xlnet{}-123 answer span} by italics, \textbf{combining} \underline{\textit{\textbf{for} tokens shared}} \textit{between spans} as is appropriate.
+
+\subsection{Insignificant and significant span differences}
+\begin{quote}
+    {\bf QUESTION:}
+    What type of vote must the Parliament have to either block or suggest changes to the Commission's proposals? \\
+    {\bf CONTEXT:} 
+    [\dots] The essence is there are three readings, starting with \underline{a Commission proposal}, where the Parliament must vote by \textbf{\underline{a \textit{majority}} of all MEPs} (not just those present) to block or suggest changes, [\dots]
+\end{quote}
+\textbf{\underline{a majority} of all MEPs} is as good an answer as \textit{\underline{majority}},
+yet its Exact Match score is $0$.  Note that the problem is not merely one of picking a soft metric;
+even its Token-F1 score is merely  $0.4$, effectively penalizing a system for giving a more complete
+answer.  The limitations of Token-F1 become even clearer in light of the following significant span difference:
+\begin{quote}
+    {\bf QUESTION:} What measure of a computational problem broadly
+    defines the inherent difficulty of the solution?  \\
+   {\bf CONTEXT:}
+    A problem is regarded as inherently difficult
+    \underline{\textit{if its solution requires \textbf{significant
+          resources}}}, whatever the algorithm used.
+\end{quote}
+
+We agree with the automatic eval that a system answering
+\underline{\textbf{significant resources}} to this question should not
+be given full (and possibly no) credit as it fails to mention relevant
+context.
+Nevertheless, the Token-F1 of this answer is $0.57$, i.e., larger than
+for the insignificant span difference just discussed.
+
+\subsection{Missing Gold Answers}
+
+We also observed $7$ (out of $100$) cases of missing gold answers.  As an example, consider
+\begin{quote}
+    {\bf QUESTION:}
+    What would someone who is civilly disobedient do in court?
+ \\
+    {\bf CONTEXT:} 
+    Steven Barkan writes that if defendants \textit{\underline{plead not guilty}}, ``they must decide whether their primary goal will be to win an acquittal and avoid imprisonment or a fine, or to use the proceedings as a forum to \uline{inform the jury and the public of the political circumstances} surrounding the case and their reasons for breaking the law via civil disobedience.'' [\dots] \\
+    In countries such as the United States whose laws guarantee the right to a jury trial but do not excuse lawbreaking for political purposes, some civil disobedients seek \textbf{jury nullification}.
+\end{quote}
+
+While annotators did mark two distinct spans as gold answers, they
+ignored \textbf{jury nullification} which is a fine answer to the
+question and should be rewarded.
+Reasonable people can disagree whether this is a missing answer or if
+it is excluded by a subtlety in the question's phrasing.
+This is precisely the point---relying on a pre-collected answer
+strings without a process for adjudicating disagreements in official
+comparisons does not do justice to the complexity of question
+answering.
+
+\subsection{Bad Questions}
+
+We also observed $5$ cases of genuinely bad questions.  Consider
+\begin{quote}
+    {\bf QUESTION:}
+    What library contains the Selmur Productions catalogue?
+ \\
+   {\bf CONTEXT:}
+    Also part of \textbf{the library} is the aforementioned
+    \underline{\textit{Selznick}} library, the Cinerama
+    Productions/Palomar theatrical library and the Selmur Productions
+    catalog that the network acquired some years back
+\end{quote}
+
+This is simply an annotation error---the correct answer to the question is not available
+from the paragraph and would have to be (the American Broadcast Company's) Programming Library.
+While we have to live with annotation errors as part of reality, it is not clear that we 
+ought to simply accept them for \emph{official evaluations}---any human taking a closer look
+at the paragraph, as part of an adjudication process, would concede that the question is
+problematic.
+
+Other cases of `annotation' error are more subtle, involving
+meaning-changing typos, for example:
+
+\begin{quote}
+    {\bf QUESTION:}
+    Which French kind [sic] issued this declaration?
+ \\
+   {\bf CONTEXT:}
+   They retained the religious provisions of the Edict of Nantes until
+   the rule of \textit{\uline{Louis XIV}}, who progressively increased
+   persecution of them until he issued the Edict of Fontainebleau
+   (1685), which abolished all legal recognition of
+   \textbf{Protestantism} in France
+\end{quote}
+
+While one could debate whether or not systems ought to be able to do
+`charitable' reinterpretations of the question text, this is part of
+the point---cases like these warrant discussion and should not be
+silently glossed over when `computing the score'.

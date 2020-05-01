@@ -1,29 +1,33 @@
-\documentclass[table,times]{article}
+\documentclass[table,11pt,a4]{article}
 
-\usepackage{style/acl2019}
+\usepackage{style/acl2020}
 
 
 \newif\ifcomment\commentfalse
 \input{style/preamble}
 \usepackage{hyperref}
+\usepackage{times}
 
 \aclfinalcopy
-\def\aclpaperid{???}
+\def\aclpaperid{28}
 
 \newcommand{\latexfile}[1]{\input{2020_acl_trivia_tournament/sections/#1}}
 \newcommand{\figfile}[1]{2020_acl_trivia_tournament/figures/#1}
 \newcommand{\autofig}[1]{2020_acl_trivia_tournament/auto_fig/#1}
 
 \title{What Question Answering can Learn from Trivia Nerds}
-\author{\hspace{4.4cm}Jordan \\ 
+\author{ Jordan Boyd-Graber\textsuperscript{\includegraphics[scale=0.02]{2020_acl_trivia_tournament/figures/redshell}, $\dagger$} \\
 iSchool, \abr{cs}, \abr{umiacs}, \abr{lsc} \\
-University of Maryland \\
-\texttt{jbg@umiacs.umd.edu} \And 
-\hspace{-5.2cm} Boyd-Graber \\
-Google Research \\
-Z\"urich \\
-\texttt{jbg@google.com}}
+\includegraphics[scale=0.03]{2020_acl_trivia_tournament/figures/redshell} University of Maryland \\ 
+\texttt{jbg@umiacs.umd.edu} \And
+ Benjamin B\"orschinger$^\dagger$ \\
+\\
+$\dagger$ Google Research Z\"urich\\
+\hphantom{\dots\dots\dots\dots}\texttt{\{jbg, bboerschinger\}@google.com}\hphantom{\dots\dots}}
 
+
+\newcommand{\sota}{\abr{sota}}
+\newcommand{\xlnet}{\abr{xln}{\small et}}
 
 \begin{document}
 
@@ -36,12 +40,33 @@ Z\"urich \\
 \latexfile{60-qb}
 \latexfile{90-call}
 
+\footnotesize
 \paragraph{Acknowledgements}
 
-Many thanks to Ben B\"orschinger, Massimiliano Ciaramita, Jon Clark, Christian Buck, Emily Pitler, and Michael Collins for insightful discussions that helped frame these ideas.  Thanks to Kevin Kwok for permission to use Protobowl information.
+This work was supported by Google's Visiting Researcher program.
+Boyd-Graber is also supported by \abr{nsf} Grant \abr{iis}-1822494.
+Any opinions, findings,
+conclusions, or recommendations expressed here are those of the
+authors and do not necessarily reflect the view of the sponsor.
+Thanks to Christian Buck for creating the \abr{nq} playtesting environment that spurred the initial idea for this paper.
+Thanks to Jon Clark and Michael Collins for the exciting e-mail thread that forced the authors to articulate their positions for the first time.
+Thanks to Kevin Kwok for permission to use Protobowl screenshot and information.
+Hearty thanks to all those who read and provided feedback on drafts: 
+Matt Gardner,
+Roger Craig,
+Massimiliano Ciaramita, 
+Jon May,
+Zachary Lipton,
+and Divyansh Kaushik.
+And finally, thanks to the trivia community for providing a convivial home for pedants and know-it-alls; may more people listen to you.
 
+\bibliography{bib/journal-full,bib/jbg,bib/pedro}
 \bibliographystyle{style/acl_natbib}
-\bibliography{bib/journal-full,bib/jbg}
+
+\clearpage
+\setcounter{section}{0}
+\renewcommand{\thesection}{\Alph{section}} 
+\latexfile{appendix}
 
 
 \end{document}

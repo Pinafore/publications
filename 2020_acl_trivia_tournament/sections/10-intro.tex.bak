@@ -32,9 +32,8 @@ The trivia community does not understand the real world information seeking need
 However, they have well-tested protocols to declare that someone is better at answering questions than another.
 This collection of tradecraft and principles can nonetheless help the \abr{qa} community.
 
-Beyond these general concepts that \abr{qa} can learn from,
-Section~\ref{sec:qb} reviews how the ``gold standard'' of trivia
-formats, \qb{} can improve traditional \abr{qa}.
+Beyond these general concepts that \abr{qa} can learn from, 
+Section~\ref{sec:qb} reviews how the ``gold standard'' of trivia formats, Quizbowl, can improve traditional \abr{qa}.
 We then briefly discuss how research that uses fun, fair, and good
 trivia questions can benefit from the expertise, pedantry, and passion
 of the trivia community (Section~\ref{sec:call}).
