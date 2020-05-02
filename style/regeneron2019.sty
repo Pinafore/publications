@@ -1,0 +1,192 @@
+% This is the LaTex style file Matthew used for Regeneron based off of ACL 2019 which is based off of ACL 2018 and NAACL 2019.
+% Addressing bibtex issues mentioned in https://github.com/acl-org/acl-pub/issues/2
+% Other major modifications include
+% changing the color of the line numbers to a light gray; changing font size of abstract to be 10pt; changing caption font size to be 10pt.
+% -- M Mitchell and Stephanie Lukin
+
+% 2017: modified to support DOI links in bibliography.  Now uses
+% natbib package rather than defining citation commands in this file.
+% Use with acl_natbib.bst bib style.  -- Dan Gildea
+
+% This is the LaTeX style for ACL 2016. It contains Margaret Mitchell's
+% line number adaptations (ported by Hai Zhao and Yannick Versley).
+
+% It is nearly identical to the style files for ACL 2015,
+% ACL 2014, EACL 2006, ACL2005, ACL 2002, ACL 2001, ACL 2000,
+% EACL 95 and EACL 99. 
+%
+% Changes made include: adapt layout to A4 and centimeters, widen abstract
+
+% This is the LaTeX style file for ACL 2000.  It is nearly identical to the
+% style files for EACL 95 and EACL 99.  Minor changes include editing the
+% instructions to reflect use of \documentclass rather than \documentstyle
+% and removing the white space before the title on the first page
+% -- John Chen, June 29, 2000
+
+% This is the LaTeX style file for EACL-95.  It is identical to the
+% style file for ANLP '94 except that the margins are adjusted for A4
+% paper.  -- abney 13 Dec 94
+
+% The ANLP '94 style file is a slightly modified
+% version of the style used for AAAI and IJCAI, using some changes
+% prepared by Fernando Pereira and others and some minor changes 
+% by Paul Jacobs.
+
+% Papers prepared using the aclsub.sty file and acl.bst bibtex style
+% should be easily converted to final format using this style.  
+% (1) Submission information (\wordcount, \subject, and \makeidpage)
+% should be removed.
+% (2) \summary should be removed.  The summary material should come
+% after \maketitle and should be in the ``abstract'' environment
+% (between \begin{abstract} and \end{abstract}).
+% (3) Check all citations.  This style should handle citations correctly
+% and also allows multiple citations separated by semicolons.
+% (4) Check figures and examples.  Because the final format is double-
+% column, some adjustments may have to be made to fit text in the column
+% or to choose full-width (\figure*} figures.
+
+% Place this in a file called aclap.sty in the TeX search path.  
+% (Placing it in the same directory as the paper should also work.)
+
+% Prepared by Peter F. Patel-Schneider, liberally using the ideas of
+% other style hackers, including Barbara Beeton.
+% This style is NOT guaranteed to work.  It is provided in the hope
+% that it will make the preparation of papers easier.
+%
+% There are undoubtably bugs in this style.  If you make bug fixes,
+% improvements, etc.  please let me know.  My e-mail address is:
+%       pfps@research.att.com
+
+% Papers are to be prepared using the ``acl_natbib'' bibliography style,
+% as follows:
+%       \documentclass[11pt]{article}
+%       \usepackage{acl2000}
+%       \title{Title}
+%       \author{Author 1 \and Author 2 \\ Address line \\ Address line \And
+%               Author 3 \\ Address line \\ Address line}
+%       \begin{document}
+%       ...
+%       \bibliography{bibliography-file}
+%       \bibliographystyle{acl_natbib}
+%       \end{document}
+
+% Author information can be set in various styles:
+% For several authors from the same institution:
+% \author{Author 1 \and ... \and Author n \\
+%         Address line \\ ... \\ Address line}
+% if the names do not fit well on one line use
+%         Author 1 \\ {\bf Author 2} \\ ... \\ {\bf Author n} \\
+% For authors from different institutions:
+% \author{Author 1 \\ Address line \\  ... \\ Address line
+%         \And  ... \And
+%         Author n \\ Address line \\ ... \\ Address line}
+% To start a seperate ``row'' of authors use \AND, as in
+% \author{Author 1 \\ Address line \\  ... \\ Address line
+%         \AND
+%         Author 2 \\ Address line \\ ... \\ Address line \And
+%         Author 3 \\ Address line \\ ... \\ Address line}
+
+% If the title and author information does not fit in the area allocated,
+% place \setlength\titlebox{<new height>} right after
+% \usepackage{acl2015}
+% where <new height> can be something larger than 5cm
+
+% include hyperref, unless user specifies nohyperref option like this:
+% \usepackage[nohyperref]{naaclhlt2018}
+\newif\ifacl@hyperref
+\DeclareOption{hyperref}{\acl@hyperreftrue}
+\DeclareOption{nohyperref}{\acl@hyperreffalse}
+\ExecuteOptions{hyperref} % default is to use hyperref
+\ProcessOptions\relax
+\ifacl@hyperref
+  \RequirePackage{hyperref}
+  \usepackage{xcolor}		% make links dark blue
+  \definecolor{darkblue}{rgb}{0, 0, 0.5}
+  \hypersetup{colorlinks=true,citecolor=darkblue, linkcolor=darkblue, urlcolor=darkblue}
+\else
+  % This definition is used if the hyperref package is not loaded.
+  % It provides a backup, no-op definiton of \href.
+  % This is necessary because \href command is used in the acl_natbib.bst file.
+  \def\href#1#2{{#2}}
+  % We still need to load xcolor in this case because the lighter line numbers require it. (SC/KG/WL) 
+  \usepackage{xcolor}
+\fi
+
+% A4 modified by Eneko; again modified by Alexander for 5cm titlebox
+%\setlength{\paperwidth}{21cm}   % A4
+%\setlength{\paperheight}{29.7cm}% A4
+%\setlength\topmargin{1cm}    
+%\setlength\oddsidemargin{1cm}   
+%\setlength\textheight{24.7cm} 
+%\setlength\textwidth{16.0cm}
+%\setlength\columnsep{0.6cm}  
+%\newlength\titlebox 
+%\setlength\titlebox{5cm}
+%\setlength\headheight{5pt}   
+%\setlength\headsep{0pt}
+%\thispagestyle{empty}        
+%\pagestyle{empty}
+
+
+% Resizing figure and table captions - SL
+\newcommand{\figcapfont}{\rm}
+\newcommand{\tabcapfont}{\rm}
+\renewcommand{\fnum@figure}{\figcapfont Figure \thefigure}
+\renewcommand{\fnum@table}{\tabcapfont Table \thetable}
+\renewcommand{\figcapfont}{\@setsize\normalsize{12pt}\xpt\@xpt}
+\renewcommand{\tabcapfont}{\@setsize\normalsize{12pt}\xpt\@xpt}	
+% Support for interacting with the caption, subfigure, and subcaption packages - SL
+\usepackage{caption}
+\DeclareCaptionFont{10pt}{\fontsize{10pt}{12pt}\selectfont}
+\captionsetup{font=10pt}
+
+\RequirePackage{natbib}
+% for citation commands in the .tex, authors can use:
+% \citep, \citet, and \citeyearpar for compatibility with natbib, or
+% \cite, \newcite, and \shortcite for compatibility with older ACL .sty files
+\renewcommand\cite{\citep}	% to get "(Author Year)" with natbib    
+\newcommand\shortcite{\citeyearpar}% to get "(Year)" with natbib    
+\newcommand\newcite{\citet}	% to get "Author (Year)" with natbib    
+
+% DK/IV: Workaround for annoying hyperref pagewrap bug 
+\RequirePackage{etoolbox}
+% \patchcmd\@combinedblfloats{\box\@outputbox}{\unvbox\@outputbox}{}{\errmessage{\noexpand patch failed}}
+
+% bibliography
+
+\def\@up#1{\raise.2ex\hbox{#1}}
+
+% Don't put a label in the bibliography at all.  Just use the unlabeled format
+% instead.
+\def\thebibliography#1{\vskip\parskip%
+\vskip\baselineskip%
+\def\baselinestretch{1}%
+\ifx\@currsize\normalsize\@normalsize\else\@currsize\fi%
+\vskip-\parskip%
+\vskip-\baselineskip%
+\section*{References\@mkboth
+ {References}{References}}\list
+ {}{\setlength{\labelwidth}{0pt}\setlength{\leftmargin}{\parindent}
+ \setlength{\itemindent}{-\parindent}}
+ \def\newblock{\hskip .11em plus .33em minus -.07em}
+ \sloppy\clubpenalty4000\widowpenalty4000
+ \sfcode`\.=1000\relax}
+\let\endthebibliography=\endlist
+
+
+% Allow for a bibliography of sources of attested examples
+\def\thesourcebibliography#1{\vskip\parskip%
+\vskip\baselineskip%
+\def\baselinestretch{1}%
+\ifx\@currsize\normalsize\@normalsize\else\@currsize\fi%
+\vskip-\parskip%
+\vskip-\baselineskip%
+\section*{Sources of Attested Examples\@mkboth
+ {Sources of Attested Examples}{Sources of Attested Examples}}\list
+ {}{\setlength{\labelwidth}{0pt}\setlength{\leftmargin}{\parindent}
+ \setlength{\itemindent}{-\parindent}}
+ \def\newblock{\hskip .11em plus .33em minus -.07em}
+ \sloppy\clubpenalty4000\widowpenalty4000
+ \sfcode`\.=1000\relax}
+\let\endthesourcebibliography=\endlist
+
