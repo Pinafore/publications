@@ -1,0 +1,43 @@
+\section{Limitation of Projection-Based \abr{clwe}}
+\label{sec:clwe}
+
+This section reviews projection-based \abr{clwe}.
+We then discuss how \abr{bli} evaluation obscures the limitation of
+projection-based methods.
+
+Let $\vect{X}\in\mathbb{R}^{d\cross n}$ be a pre-trained $d$-dimensional word
+embedding matrix for a source language, where each column
+$\vect{x}_i\in\mathbb{R}^d$ is the vector for word $i$ from the source language
+with vocabulary size $n$, and let $\vect{Z}\in\mathbb{R}^{d\cross m}$ be a
+pre-trained word embedding matrix for a target language with vocabulary size $m$.
+Projection-based \abr{clwe} maps $\vect{X}$ and $\vect{Z}$ to a shared
+space.
+We focus on supervised methods that learn the projection from a training
+dictionary~$\mathcal{D}$ with translation pairs~$(i, j)$.
+
+\citet{mikolov-13b} first propose projection-based \abr{clwe}.
+They learn a linear projection $\vect{W}\in\mathbb{R}^{d\cross d}$ from
+$\vect{X}$ to $\vect{Z}$ by minimizing distances between translation pairs in
+a training dictionary:
+\begin{equation}
+\min_{\vect{W}} \sum_{(i,j) \in \mathcal{D}} \| \vect{W} \vect{x}_i - \vect{z}_j \|_2^2.
+\end{equation}
+Recent work improves this method with different optimization
+objectives~\citep{dinu-15,joulin-18},
+orthogonal constraints on $\vect{W}$~\citep{xing-15,artetxe-16,smith-17},
+pre-processing~\citep{zhang-19},
+and subword features~\citep{chaudhary-18,czarnowska-19,zhang-20}.
+
+Projection-based methods \emph{underfit}---a linear projection has limited
+expressiveness and cannot perfectly align all training pairs.
+Unfortunately, this weakness is not transparent when using \abr{bli} as the
+standard evaluation for \abr{clwe}, because \abr{bli} test sets omit training
+dictionary words.
+However, when the training dictionary covers words that help downstream
+tasks, underfitting limits generalization to other tasks.
+Some \abr{bli} benchmarks use frequent words for training and infrequent words
+for testing~\citep{mikolov-13b,conneau-18}.
+This mismatch often appears in real-world data, because frequent
+words are easier to find in digital dicitonaries~\citep{czarnowska-19}.
+Therefore, training dictionary words are often more important in downstream
+tasks than test words.

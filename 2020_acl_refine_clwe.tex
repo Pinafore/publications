@@ -1,0 +1,98 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[hyperref]{style/acl2020}
+\usepackage{times}
+\usepackage{latexsym}
+\renewcommand{\UrlFont}{\ttfamily\small}
+
+\usepackage{microtype}
+
+\aclfinalcopy \def\aclpaperid{260} 
+
+\usepackage{url}
+\usepackage[utf8]{inputenc}
+
+\usepackage{graphicx}
+\usepackage{amsfonts}
+\usepackage{mdwlist}
+\usepackage{multirow}
+\usepackage{algorithm}
+\usepackage[noend]{algpseudocode}
+\usepackage{bm}
+\usepackage{physics}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{amsmath}
+\usepackage{mathtools}
+
+
+\newif\ifcomment\commenttrue
+\input{style/preamble}
+\normalem
+
+\ifcomment
+\newcommand{\mzcomment}[1]{ \colorbox{lightblue}{   \parbox{.8\linewidth}{ MZ: #1}  }}
+\else
+\newcommand{\mzcomment}[1]{}
+\fi
+
+\newcommand{\vect}[1]{\bm{\mathbf{#1}}}
+
+\newcommand{\latexfile}[1]{\input{2020_acl_refine_clwe/sections/#1}}
+\newcommand{\figfile}[1]{2020_acl_refine_clwe/figures/#1}
+\newcommand{\autofig}[1]{2020_acl_refine_clwe/auto_fig/#1}
+
+\newcommand{\flag}[1]{{\setlength{\fboxsep}{0pt}\fbox{\includegraphics[height=0.16cm,width=0.24cm]{\figfile{flags/#1.pdf}}}}}
+
+\setlength\titlebox{6cm}
+
+\title{Why Overfitting Isn't Always Bad: \\
+Retrofitting Cross-Lingual Word Embeddings to Dictionaries}
+
+\author{Mozhi Zhang\thanks{$^\star$Equal contribution} \\
+  \textsc{cs} and \textsc{umiacs} \\
+  University of Maryland \\
+  \emaillink{mozhi@cs.umd.edu} \\\And
+  Yoshinari Fujinuma\footnotemark[1] \\
+  Computer Science \\
+  University of Colorado \\
+  \emaillink{fujinumay@gmail.com} \\\AND
+  Michael J. Paul \\
+  Information Science \\
+  University of Colorado \\
+  \emaillink{mpaul@colorado.edu} \\\And
+  Jordan Boyd-Graber \\
+  \abr{umd} \textsc{cs}, iSchool, \textsc{umiacs}, and \textsc{lsc}  \\
+  and Google Research Z\"urich \\
+  \emaillink{jbg@boydgraber.org} \\}
+
+\date{}
+
+\begin{document}
+\maketitle
+\begin{abstract}
+  \latexfile{00-abstract}
+\end{abstract}
+
+\latexfile{10-intro}
+\latexfile{20-clwe}
+\latexfile{30-retrofit}
+\latexfile{40-experiment}
+\latexfile{50-related_work}
+\latexfile{60-conclusion}
+
+\section*{Acknowledgement}
+
+This research is supported by NSF grant IIS-1564275 and by ODNI, IARPA, via the
+BETTER Program contract \#2019-19051600005.
+The views and conclusions contained herein are those of the authors and should
+not be interpreted as necessarily representing the official policies, either
+expressed or implied, of ODNI, IARPA, or the U.S. Government. The U.S.
+Government is authorized to reproduce and distribute reprints for governmental
+purposes notwithstanding any copyright annotation therein.
+
+\clearpage
+
+\bibliography{bib/journal-full,bib/yoshinari,bib/mozhi,bib/jbg}
+\bibliographystyle{style/acl_natbib}
+
+\end{document}

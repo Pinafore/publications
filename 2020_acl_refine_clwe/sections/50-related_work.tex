@@ -1,0 +1,25 @@
+\section{Related Work}
+
+Previous work proposes variants of retrofitting broadly called \emph{semantic
+specialization} methods.
+Our pilot experiments found similar trends when replacing retrofitting with
+Counter-fitting~\citep{mrksic-16} and Attract-Repel~\citep{mrksic-17}, so we
+focus on retrofitting. 
+
+Recent work applies semantic specialization to \abr{clwe} by using multilingual
+ontologies~\citep{mrksic-17}, transferring a monolingual ontology across
+languages~\citep{ponti-19}, and asking bilingual speakers to annotate
+task-specific keywords~\citep{yuan-19b}.
+We instead re-use the training dictionary of the \abr{clwe}.
+
+Synthetic dictionaries are previously used to iteratively refine a linear
+projection~\citep{artetxe-17,conneau-18}.
+These methods still underfit because of the linear constraint.
+We instead retrofit to the synthetic dictionary to fit the training dictionary
+better while keeping some generalization power of projection-based \abr{clwe}.
+
+Recent work investigates cross-lingual contextualized embeddings as an
+alternative to
+\abr{clwe}~\citep{eisenschlos-19,lample-19,huang-19,wu-19,conneau-20}.
+Our method may be applicable, as recent work also applies projections to
+contextualized embeddings~\citep{aldarmaki-19,schuster-19,wang-20,wu-20}.

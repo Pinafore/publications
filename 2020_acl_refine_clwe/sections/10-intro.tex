@@ -1,0 +1,72 @@
+\section{Introduction}
+
+Cross-lingual word embeddings~(\abr{clwe}) map words across languages to
+a shared vector space.
+Recent supervised \abr{clwe} methods follow a projection-based
+pipeline~\citep{mikolov-13b}.
+Using a training dictionary, a linear projection maps
+pre-trained monolingual embeddings to a multilingual space.
+While \abr{clwe} enable many multilingual
+tasks~\citep{klementiev-12,guo-15,zhang-16,ni-17},
+most recent work only evaluates \abr{clwe} on bilingual lexicon
+induction~(\abr{bli}).
+Specifically, a set of test words are translated with a retrieval heuristic
+(e.g., nearest neighbor search) and compared against gold translations.
+\abr{bli} accuracy is easy to compute and captures the desired property of
+\abr{clwe} that translation pairs should be close.
+However, \abr{bli} accuracy does not always correlate with accuracy on
+downstream tasks such as cross-lingual document
+classification and dependency parsing~\citep{ammar-16,fujinuma-19,glavas-19}.
+
+\begin{figure}[t!]
+\centering
+\includegraphics[width=\linewidth]{\figfile{overview}}
+\caption{\label{fig:arch}
+  To fully exploit the training dictionary, we retrofit projection-based
+  \abr{clwe} to the training dictionary as a post-processing step (pink
+  parts).
+  To preserve correctly aligned translations in the original \abr{clwe}, we
+  optionally retrofit to a synthetic dictionary induced from the original
+  \abr{clwe} (orange parts).
+}
+\end{figure}
+
+Let's think about why that might be.
+\abr{bli} accuracy is only computed on \emph{test} words.
+Consequently, \abr{bli} hides linear projection's inability to
+align all training translation pairs at once; i.e., projection-based
+\abr{clwe} \emph{underfit} the training dictionary.
+Underfitting does not hurt \abr{bli} test accuracy,
+because test words are excluded from the training dictionary in \abr{bli}
+benchmarks.
+However, words from the training dictionary may be nonetheless predictive in
+downstream tasks; e.g., if ``good'' is in the training dictionary, knowing its translation is useful for
+multilingual sentiment analysis.
+
+In contrast, \emph{overfitting} the training dictionary hurts \abr{bli} but can
+improve downstream models.
+We show this by adding a simple post-processing step to
+projection-based pipelines (Figure~\ref{fig:arch}).
+After training supervised \abr{clwe} with a projection, we \emph{retrofit}~\citep{faruqui-15} the \abr{clwe} to the same
+training dictionary.
+This step pulls training translation pairs closer and overfits:
+the updated embeddings have perfect \abr{bli} training accuracy, but \abr{bli}
+\emph{test} accuracy drops.
+Empirically, retrofitting improves accuracy in two downstream tasks other than
+\abr{bli}, confirming the importance of fully exploiting the training
+dictionary.
+
+Unfortunately, retrofitting to the training dictionary may inadvertently push
+some translation pairs further away.
+To balance between fitting the training dictionary and generalizing on other
+words, we explore retrofitting to both the training dictionary and a
+\emph{synthetic dictionary} induced from the \abr{clwe}.
+Adding the synthetic dictionary keeps some correctly aligned translations in
+the original \abr{clwe} and can further improve downstream models
+by striking a balance between training and test \abr{bli} accuracy.
+
+In summary, our contributions are two-fold.
+First, we explain \emph{why} \abr{bli} does not reflect downstream task
+accuracy.
+Second, we introduce two post-processing methods to improve downstream models
+by fitting the training dictionary better.

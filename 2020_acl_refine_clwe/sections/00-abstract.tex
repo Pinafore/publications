@@ -1,0 +1,17 @@
+
+Cross-lingual word embeddings~(\abr{clwe}) are often evaluated on bilingual
+lexicon induction~(\abr{bli}).
+Recent \abr{clwe} methods use linear projections, which underfit the training
+dictionary, to generalize on \abr{bli}.
+However, underfitting can hinder generalization to other downstream tasks that 
+rely on words from the training dictionary.
+We address this limitation by \emph{retrofitting} \abr{clwe} to the training
+dictionary, which pulls training translation pairs closer in the
+embedding space and overfits the training dictionary.
+This simple post-processing step often improves accuracy on two downstream
+tasks, despite lowering \abr{bli} test accuracy.
+We also retrofit to both the training dictionary and a
+synthetic dictionary induced from \abr{clwe}, which sometimes generalizes
+even better on downstream tasks.
+Our results confirm the importance of fully exploiting the training dictionary
+in downstream tasks and explains why \abr{bli} is a flawed CLWE evaluation.

@@ -1,0 +1,142 @@
+\begin{figure*}
+  \centering
+  \begin{subfigure}{.49\linewidth}
+    \centering
+    \includegraphics[width=\linewidth]{\autofig{cldc-proc}}
+    \caption*{Document classification with \abr{proc}}
+  \end{subfigure}
+  \begin{subfigure}{.49\linewidth}
+    \centering
+    \includegraphics[width=\linewidth]{\autofig{cldp-proc}}
+    \caption*{Dependency parsing with \abr{proc}}
+  \end{subfigure}
+  \begin{subfigure}{.49\linewidth}
+    \centering
+    \includegraphics[width=\linewidth]{\autofig{cldc-cca}}
+    \caption*{Document classification with \abr{cca}}
+  \end{subfigure}
+  \begin{subfigure}{.49\linewidth}
+    \centering
+    \includegraphics[width=\linewidth]{\autofig{cldp-cca}}
+    \caption*{Dependency parsing with \abr{cca}}
+  \end{subfigure}
+  \begin{subfigure}{.49\linewidth}
+    \centering
+    \includegraphics[width=\linewidth]{\autofig{cldc-rcsls}}
+    \caption*{Document classification with \abr{rcsls}}
+  \end{subfigure}
+  \begin{subfigure}{.49\linewidth}
+    \centering
+    \includegraphics[width=\linewidth]{\autofig{cldp-rcsls}}
+    \caption*{Dependency parsing with \abr{rcsls}}
+  \end{subfigure}
+  \caption{For each \abr{clwe}, we
+  report accuracy for document classification (left) and unlabeled attachment
+  score (\abr{uas}) for dependency parsing (right).
+  Compared to the original embeddings (gray), retrofitting to the training
+  dictionary (pink) improves average downstream task scores, confirming that
+  fully exploiting the training dictionary helps downstream tasks.
+  Adding a synthetic dictionary (orange) further improves test accuracy in some
+  languages.}
+  \label{fig:downstream}
+\end{figure*}
+
+\section{Experiments}
+
+We retrofit three projection-based \abr{clwe} to their training dictionaries
+and synthetic dictionaries.\footnote{Code at \smallurl{https://go.umd.edu/retro_clwe}.}
+We evaluate on \abr{bli} and two downstream tasks.
+While retrofitting decreases test \abr{bli} accuracy, it often improves downstream
+models.
+
+\subsection{Embeddings and Dictionaries}
+
+We align English embeddings with six target languages: German~(\abr{de}),
+Spanish~(\abr{es}), French~(\abr{fr}), Italian~(\abr{it}), Japanese~(\abr{ja}),
+and Chinese~(\abr{zh}).
+We use 300-dimensional fastText vectors trained on Wikipedia and Common
+Crawl~\citep{grave-18}. 
+We lowercase all words, only keep the 200K most frequent words, and apply five
+rounds of Iterative Normalization~\citep{zhang-19}.
+
+We use dictionaries from \abr{muse}~\citep{conneau-18}, a popular \abr{bli}
+benchmark, with standard splits: train on 5K source word translations and test
+on 1.5K words for \abr{bli}.
+For each language, we train three projection-based \abr{clwe}:
+canonical correlation analysis~\citep[\abr{cca}]{faruqui-14}, Procrustes
+analysis~\citep[\abr{proc}]{conneau-18}, and Relaxed \abr{csls}
+loss~\citep[\abr{rcsls}]{joulin-18}.
+We retrofit these \abr{clwe} to the training dictionary (pink in figures) and
+to both the training and the synthetic dictionary (orange in figures).
+
+In \abr{muse}, words from the training dictionary have higher
+frequencies than words from the test
+set.\footnote{\url{https://github.com/facebookresearch/MUSE/issues/24}}
+For example, the most frequent word in the English-French test
+dictionary is ``torpedo'', while the training dictionary has
+translations for frequent words such as ``the'' and ``good''.  As
+discussed in \S\ref{sec:clwe}, more frequent words are likely to
+be more salient in downstream tasks, so underfitting these more
+frequent training pairs hurts generalization to downstream
+tasks.\footnote{A pilot study confirms that retrofitting to infrequent
+  word pairs is less effective.}
+
+\subsection{Intrinsic Evaluation: \abr{bli}}
+
+We first compare \abr{bli} accuracy on both training and test
+dictionaries~(Figure~\ref{fig:bli}).
+We use \abr{csls} to translate words with default parameters.
+The original projection-based \abr{clwe} have the highest test accuracy but
+underfit the training dictionary.
+Retrofitting to the training dictionary perfectly fits the training
+dictionary but drops test accuracy.
+Retrofitting to the combined dictionary splits the difference: higher test
+accuracy but lower train accuracy.
+These three modes offer a continuum between \abr{bli} test and
+training accuracy.
+
+\subsection{Extrinsic Evaluation: Downstream Tasks}
+
+We compare \abr{clwe} on two downstream tasks: document classification and
+dependency parsing.
+We fix the embeddng layer of the model to \abr{clwe} and use the zero-shot
+setting, where a model is trained in English and evaluated in the target
+language.
+
+\paragraph{Document Classification}
+Our first downstream task is document-level classification.
+We use MLDoc, a multilingual classification benchmark~\citep{schwenk-18} using the standard split with 1K training and 4K test documents.
+Following \citet{glavas-19}, we use a convolutional neural network~\cite{kim-14}.
+We apply $0.5$ dropout to the final layer, run Adam~\citep{kingma-15} with default parameters for ten epochs, and
+report the average accuracy of ten runs.
+
+\paragraph{Dependency Parsing}
+We also test on dependency parsing, a structured prediction task. 
+We use Universal Dependencies~\citep[v2.4]{ud2.4} with the standard split.
+We use the biaffine parser~\citep{Dozat2017biaffine} in 
+AllenNLP~\citep{Gardner2017AllenNLP} with the same hyperparameters as
+\citet{ahmad-19}.
+To focus on the influence of \abr{clwe}, we remove part-of-speech features~\citep{ammar-16}.
+We report the average unlabeled attachment score (\abr{uas}) of five runs.
+
+\paragraph{Results}
+Although training dictionary retrofitting lowers \abr{bli} test
+accuracy, it improves both downstream tasks' test accuracy (Figure~\ref{fig:downstream}).
+This confirms that over-optimizing the test \abr{bli} accuracy can hurt
+downstream tasks because training dictionary words are also important.
+The synthetic dictionary further improves downstream models,
+showing that generalization to downstream tasks must balance
+between \abr{bli} training and test accuracy.
+
+\paragraph{Qualitative Analysis}
+As a qualitative example, coordinations improve after
+retrofitting to the training dictionary.
+For example, in the German sentence ``Das Lokal ist sauber, hat einen
+gem\"utlichen `Raucherraum' und wird gut besucht'', the bar (``Das Lokal'') has
+three properties: it is clean, has a smoking room, and is popular.
+However, without retrofitting, the final property ``besucht'' is
+connected to ``hat'' instead of ``sauber''; i.e., the final clause
+stands on its own.
+After retrofitting to the English-German training dictionary, ``besucht'' is
+moved closer to its English translation ``visited'' and is correctly parsed as
+a property of the bar.

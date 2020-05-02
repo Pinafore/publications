@@ -1,0 +1,23 @@
+\section{Conclusion and Discussion}
+
+Popular \abr{clwe} methods are optimized for \abr{bli} test accuracy.
+They underfit the training dictionary, which hurts downstream models.
+We use retrofitting to fully exploit the training dictionary.
+This post-processing step improves downstream task accuracy despite lowering
+\abr{bli} test accuracy.
+We then add a synthetic dictionary to balance \abr{bli} test and training
+accuracy, which further helps downstream models on average.
+
+\abr{bli} test accuracy does not always correlate with downstream task
+accuracy because words from the training dictionary are ignored.
+An obvious fix is adding training words to the \abr{bli} test set.
+However, it is unclear how to balance between training and test words.
+\abr{bli} accuracy assumes that all test words are equally important,
+but the importance of a word depends on the downstream task; e.g., ``the'' is
+irrelevant in document classification but important in dependency parsing.
+Therefore, future work should focus on downstream tasks instead of \abr{bli}.
+
+We focus on retrofitting due to its simplicity.
+There are other ways to fit the dictionary better; e.g., using a non-linear
+projection such as a neural network.
+We leave the exploration of non-linear projections to future work.

@@ -1,0 +1,90 @@
+\begin{figure*}[t]
+  \centering
+  \begin{subfigure}{\linewidth}
+    \centering
+    \includegraphics[width=\linewidth]{\autofig{bli-proc}}
+    \caption*{\abr{bli} accuracy for \abr{proc}}
+  \end{subfigure}
+  \begin{subfigure}{\linewidth}
+    \centering
+    \includegraphics[width=\linewidth]{\autofig{bli-cca}}
+    \caption*{\abr{bli} accuracy for \abr{cca}}
+  \end{subfigure}
+  \begin{subfigure}{\linewidth}
+    \centering
+    \includegraphics[width=\linewidth]{\autofig{bli-rcsls}}
+    \caption*{\abr{bli} accuracy for \abr{rcsls}}
+  \end{subfigure}
+  \caption{Train and test accuracy (P@1) for \abr{bli} on \abr{muse};
+  Projection-based \abr{clwe} underfit the training dictionary (gray),
+  but retrofitting to the training dictionary overfits (pink).
+  Adding a synthetic dictionary balances between training and test accuracy
+  (orange).}
+  \label{fig:bli}
+\end{figure*}
+
+\section{Retrofitting to Dictionaries}
+
+To fully exploit the training dictionary, we explore a simple post-processing
+step that \emph{overfits} the dictionary: we first train projection-based
+\abr{clwe} and then \emph{retrofit} to the training
+dictionary~(pink parts in Figure~\ref{fig:arch}).
+Retrofitting was originally introduced for refining monolingual word embeddings
+with synonym constraints from a lexical ontology~\citep{faruqui-15}.
+For \abr{clwe}, we retrofit using the training dictionary $\mathcal{D}$ as the
+ontology.
+
+Intuitively, retrofitting pulls translation pairs closer while minimizing
+deviation from the original \abr{clwe}.
+Let $\vect{X}'$ and $\vect{Z}'$ be \abr{clwe} trained by a projection-based
+method,
+where $\vect{X}'=\vect{W}\vect{X}$ are the projected source embeddings and
+$\vect{Z}'=\vect{Z}$ are the target embeddings.
+We learn new \abr{clwe} $\hat{\vect{X}}$ and $\hat{\vect{Z}}$ by minimizing
+\begin{equation}
+  L = L_a + L_b,
+\end{equation}
+where $L_a$ is the squared distance between the updated \abr{clwe} from the
+original \abr{clwe}:
+\begin{equation}
+  L_a = \alpha \|\hat{\vect{X}}-\vect{X}'\|^2 + \alpha \|\hat{\vect{Z}} - \vect{Z}'\|^2,
+\end{equation}
+and $L_b$ is the total squared distance between translations in the dictionary:
+\begin{equation}
+  L_b = \sum_{(i,j)\in\mathcal{D}} \beta_{ij} \|\hat{\vect{x}}_i - \hat{\vect{z}}_j\|^2.
+\end{equation}
+We use the same $\alpha$ and $\beta$ as \citet{faruqui-15} to balance the two objectives.
+
+Retrofitting tends to overfit.
+If $\alpha$ is zero, minimizing $L_b$ collapses each training pair
+to the same vector.
+Thus, all training pairs are perfectly aligned.
+In practice, we use a non-zero $\alpha$ for regularization, but the updated
+\abr{clwe} still have perfect training \abr{bli}
+accuracy~(Figure~\ref{fig:bli}).
+If the training dictionary covers predictive words, we expect retrofitting to
+improve downstream task accuracy.
+
+\subsection{Retrofitting to Synthetic Dictionary}
+
+While retrofitting brings pairs in the training dictionary closer,
+the updates may also separate translation pairs outside of the dictionary
+because retrofitting ignores words outside the training dictionary.
+This can hurt both \abr{bli} test accuracy and downstream task accuracy.
+In contrast, projection-based methods underfit but can discover translation
+pairs outside the training dictionary.
+To keep the original \abr{clwe}'s correct translations, we
+retrofit to both the training dictionary and a \emph{synthetic dictionary}
+induced from \abr{clwe}~(orange, Figure~\ref{fig:arch}).
+
+Early work induces dictionaries from \abr{clwe} through
+nearest-neighbor search~\citep{mikolov-13b}.  We instead use
+cross-domain similarity local scaling~\citep[\abr{csls}]{conneau-18},
+a translation heuristic more robust to hubs~\citep{dinu-15} (a word is the
+nearest neighbor of many words).
+    We build a synthetic dictionary $\mathcal{D'}$ with word pairs that are
+\emph{mutual} \abr{csls} nearest neighbors.
+We then retrofit the \abr{clwe} to a combined dictionary
+$\mathcal{D}\cup\mathcal{D}'$.
+The synthetic dictionary keeps closely aligned word pairs in the original
+\abr{clwe}, which sometimes improves downstream models.
