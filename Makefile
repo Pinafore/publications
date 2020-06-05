@@ -82,8 +82,8 @@ scripts/hunspell_dictionary.dic: scripts/dictionary.txt
 	mv 2020_lrec_sense_page_0.pdf 2020_lrec_sense.submission.pdf
 
 2020_acl_trivia_tournament.appendix.pdf: 2020_acl_trivia_tournament.paper.pdf
-	python3 scripts/split_pdf.py 2020_acl_trivia_tournament.paper.pdf 11
-	mv 2020_acl_trivia_tournament_page_11.pdf 2020_acl_trivia_tournament.appendix.pdf
+	python3 scripts/split_pdf.py 2020_acl_trivia_tournament.paper.pdf 12
+	mv 2020_acl_trivia_tournament_page_12.pdf 2020_acl_trivia_tournament.appendix.pdf
 	mv 2020_acl_trivia_tournament_page_0.pdf 2020_acl_trivia_tournament.submission.pdf
 
 2020_acl_diplomacy.appendix.pdf: 2020_acl_diplomacy.paper.pdf
