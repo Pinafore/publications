@@ -1,0 +1,18 @@
+\section{Conclusion}
+
+Transformers are powerful models that have revolutionized \abr{nlp}.
+Nevertheless,
+like other deep models, their accuracy and stability require fine-tuning on
+large amounts of data.
+\al{} should level the playing field by directing
+limited annotations most effectively so that labels complement, rather than
+duplicate, unsupervised data.  Luckily, transformers have generalized knowledge
+about language that can help acquire data for fine-tuning.  Like \badge{}, we project
+data into an embedding space and then select the most
+representative points. Our method is unique because it
+only relies on self-supervision to conduct sampling.
+Using the pre-trained loss guides the \al{} process to sample diverse and
+uncertain examples in the cold-start setting.
+  Future work may focus on finding representations that encode the most
+  important information for \al{}.
+

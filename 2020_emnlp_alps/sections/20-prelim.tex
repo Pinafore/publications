@@ -1,0 +1,82 @@
+\section{Preliminaries}
+\label{sec:prelim}
+We formally introduce the setup, notation, and terminology that
+will be used throughout the paper.
+
+\paragraph{Pre-trained Encoder}
+Pre-training uses the language modeling loss
+to train encoder parameters for generalized representations.
+We call the model input $x=(w_i)_{i=1}^l$ a
+``sentence'', which is a sequence of tokens $w$ from a vocabulary $\mathcal{V}$ with
+ sequence length $l$.
+Given weights $W$, the encoder $h$ maps $x$ to a
+$d$-dimensonal hidden
+representation $h(x; W)$.
+We use \bert~\citep{devlin-2019} as our data
+encoder, so $h$ is pre-trained with two tasks: masked language modeling (\mlm{}) and next sentence
+prediction.
+The embedding $h(x;W)$ is computed as the final
+hidden state of the \texttt{[CLS]} token in $x$. We
+also refer to $h(x;W)$ as the \bert{} embedding.
+
+\begin{algorithm}[!t]
+    \caption{\abr{al} for Sentence Classification}
+\label{alg:active}
+\begin{algorithmic}[1]
+    \Require Inital model $f(x; \theta_0)$
+    with pre-trained encoder $h(x; W_0)$, unlabeled data pool
+    $\mathcal{U}$, number of queries per iteration $k$, number of
+    iterations $T$, sampling
+    algorithm $\mathcal{A}$
+    \State $\mathcal{D} = \{\}$
+    \For {iterations $t=1,\dots,T$}
+        \If{$\mathcal{A}$ is cold-start for iteration $t$}
+        \State $M_t(x) = f(x; \theta_0)$
+        \Else
+        \State $M_t(x) = f(x; \theta_{t-1})$
+        \EndIf
+        \State $\mathcal{Q}_t \gets$~Apply $\mathcal{A}$ on model $M_t(x)$, data
+        $\mathcal{U}$
+        \State $\mathcal{D}_t \gets$~Label queries $\mathcal{Q}_t$
+        \State $\mathcal{D} = \mathcal{D} \cup \mathcal{D}_t$
+        \State $\mathcal{U} = \mathcal{U} \setminus \mathcal{D}_t$
+        \State $\theta_t \gets$~Fine-tune $f(x; \theta_0)$
+        on $\mathcal{D}$
+    \EndFor
+    \State \Return $f(x; \theta_T)$
+\end{algorithmic}
+\end{algorithm}
+
+\paragraph{Fine-tuned Model}
+We fine-tune \bert{} on the downstream task by training the pre-trained model and the attached sequence
+classification head.
+Suppose that $f$ represents the model with the classification head, has
+parameters $\theta = (W,V)$, and
+maps input $x$
+to a $C$-dimensional vector with confidence scores for each label.
+Specifically, $f(x; \theta)
+= \sigma(V \cdot h(x; W))$ where $\sigma$ is a softmax function.
+
+Let~$D$ be the labeled data for our classification task where the labels belong to set $\mathcal{Y} = \left\{1,...,C\right\}$.
+During fine-tuning, we take a base classifier~$f$ with weights~$W_0$ from a
+pre-trained encoder~$h$ and fine-tune~$f$ on $D$ for new parameters
+$\theta_t$.
+Then, the predicted classification label is $\hat{y} = \arg\max_{y \in
+\mathcal{Y}} f(x; \theta_t)_{y}$.
+
+\paragraph{\al{} for Sentence Classification}
+Assume that there is a large unlabeled dataset~$U = \left\{(x_{i}) \right\}_{i=1}^n$ of~$n$ sentences.
+The goal of \al{} is to sample a subset~$D \subset U$ efficiently
+so that fine-tuning the classifier~$f$ on subset~$D$ improves test accuracy.
+On each iteration~$t$, the learner uses strategy~$\mathcal{A}$ to  acquire $k$ sentences
+from dataset~$U$ and queries
+for their labels (Algorithm~\ref{alg:active}).
+Strategy~$\mathcal{A}$ usually depends on an acquisition model
+$M_t$~\citep{lowell-2019}.
+If the strategy depends on model warm-starting, then the acquisition model~$M_t$ is $f$ with parameters $\theta_{t-1}$ from the
+previous iteration.  Otherwise, we assume that $M_t$ is the
+pre-trained model with parameters $\theta_0$.
+After~$T$ rounds, we acquire labels for~$Tk$
+sentences.  We provide more concrete details about \abr{al} simulation in
+Section~\ref{sec:experiments}.
+

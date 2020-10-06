@@ -1,16 +1,50 @@
+@inproceedings{prettenhofer-2010,
+    Author={Peter Prettenhofer, Benno Stein},
+    Title={Cross-Language Text Classification
+using Structural Correspondence Learning},
+    Year={2010},
+    Booktitle=acl,
+    url={https://www.aclweb.org/anthology/P10-1114}
+
+}
+
+@inproceedings{salazar-2020,
+    Author={Julian Salazar and Davis Liang and Toan Q. Nguyen and Katrin Kirchhoff},
+    Title={Masked Language Model Scoring},
+    Year={2020},
+    Booktitle=acl,
+    doi={10.18653/v1/2020.acl-main.240}
+}
 
 
-@inproceedings{ammar-2016,
-               title={Massively Multilingual Word Embeddings},
-               author={Ammar, Waleed and Mulcaire, George and Tsvetkov, Yulia and Lample, Guillaume and Dyer, Chris and Smith, Noah A.},
-               year={2016},
+@inproceedings{yuan-2020-alps,
+    Author={Michelle Yuan and Hsuan-Tien Lin and Jordan Boyd-Graber},
+    Title={Cold-start Active Learning through Self-Supervised Language Modeling},
+    Year={2020},
+    booktitle=emnlp
+}
+
+@inproceedings{yuan-2020-clime,
+    Author={Michelle Yuan and Mozhi Zhang and Benjamin Van Durme and Leah Findlater and Jordan Boyd-Graber},
+    Title={Interactive Refinement of Cross-Lingual Word Embeddings},
+    Year={2020},
+    booktitle=emnlp
+}
+
+@article{ammar-2016,
+         Author = {Waleed Ammar and George Mulcaire and Yulia Tsvetkov and Guillaume Lample and Chris Dyer and Noah A. Smith},
+         Title = {Massively Multilingual Word Embeddings},
+         Year = {2016},
+         journal={arXiv preprint arXiv:1602.01925},
+         eprint={arXiv:1602.01925}
 }
 
 @inproceedings{andrade-2015,
                title={Cross-lingual Text Classification Using Topic-Dependent Word Probabilities},
                author={Andrade, Daniel and Sadamasa, Kunihiko and Tamura, Akihiro and Tsuchida, Masaaki},
                booktitle=acl,
-               year={2015}
+               year={2015},
+               url={https://www.aclweb.org/anthology/N15-1170.pdf}
 }
 
 @inproceedings{arora-2012-anchor,
@@ -23,8 +57,10 @@
 @inproceedings{arora-2012-nmf,
                title={Computing a nonnegative matrix factorization--provably},
                author={Arora, Sanjeev and Ge, Rong and Kannan, Ravindran and Moitra, Ankur},
-               booktitle={Proceedings of the forty-fourth annual ACM symposium on Theory of computing},
-               year={2012},
+               booktitle={{SIAM} Journal of Computing},
+               year={2016},
+               volume={54},
+               number={4},
 }
 
 @inproceedings{arora-2013,
@@ -38,7 +74,23 @@
                title={A robust self-learning method for fully unsupervised cross-lingual mappings of word embeddings},
                author={Artetxe, Mikel and Labaka, Gorka and Agirre, Eneko},
                booktitle=acl,
-               year={2018}
+               year={2018},
+               doi={10.18653/v1/P18-1073}
+}
+
+@techreport{arthur-2006,
+            title={k-means++: {T}he advantages of careful seeding},
+            author={Arthur, David and Vassilvitskii, Sergei},
+            year={2006},
+            institution={Stanford}
+}
+
+@article{ash-2019,
+         Author = {Jordan T. Ash and Ryan P. Adams},
+         Title = {On Warm-Starting Neural Network Training},
+         Year = {2019},
+         journal = {arXiv preprint arXiv:1910.08475},
+         eprint={arXiv:1910.08475}
 }
 
 @inproceedings{ash-2020,
@@ -48,11 +100,36 @@
                booktitle=iclr
 }
 
+@inproceedings{aytekin-2018,
+               title={Clustering and unsupervised anomaly detection with {L2} normalized deep auto-encoder representations},
+               author={Aytekin, Caglar and Ni, Xingyang and Cricri, Francesco and Aksu, Emre},
+               booktitle=ijcnn,
+               year={2018},
+}
+
+@inproceedings{beltagy-2019,
+               title={Sci{BERT}: {A} pretrained language model for scientific text},
+               author={Beltagy, Iz and Lo, Kyle and Cohan, Arman},
+               booktitle=emnlp,
+               year={2019},
+               url={https://www.aclweb.org/anthology/D19-1371.pdf}
+}
+
 @article{bengio-2013,
          title={Representation learning: {A} review and new perspectives},
          author={Bengio, Yoshua and Courville, Aaron and Vincent, Pascal},
          journal=pami,
          year={2013},
+         volume={35},
+         number={8},
+         pages={1798--1828}
+}
+
+@inproceedings{beyer-1999,
+               title={When is ``nearest neighbor'' meaningful?},
+               author={Beyer, Kevin and Goldstein, Jonathan and Ramakrishnan, Raghu and Shaft, Uri},
+               booktitle={International {C}onference on {D}atabase {T}heory},
+               year={1999},
 }
 
 @book{bird-2009,
@@ -67,6 +144,8 @@
          author={Blei, David M. and Ng, Andrew Y. and Jordan, Michael I.},
          journal=jmlr,
          year={2003},
+         volume={3},
+         pages={993--1022}
 }
 
 @article{bojanowski-2017,
@@ -74,11 +153,13 @@
          author={Bojanowski, Piotr and Grave, Edouard and Joulin, Armand and Mikolov, Tomas},
          journal=tacl,
          year={2017},
+         volume={5},
+         pages={135--146}
 }
 
 @inproceedings{boyd-graber-2009,
                title={Multilingual topic models for unaligned text},
-               author={Boyd-Graber, Jordan and Blei, David M},
+               author={Boyd-Graber, Jordan and Blei, David M.},
                booktitle=uai,
                year={2009},
 }
@@ -90,33 +171,53 @@
                year={2010},
 }
 
-@article{boyd-graber-2017,
-         title={Applications of topic models},
-         author={Boyd-Graber, Jordan and Hu, Yuening and Mimno, David},
-         journal={Foundations and Trends{\textregistered} in Information Retrieval},
-         year={2017},
-         publisher={Now Publishers, Inc.}
+@book{boyd-graber-2017,
+      title={Applications of Topic Models},
+      author={Boyd-Graber, Jordan and Hu, Yuening and Mimno, David},
+      journal={Foundations and Trends{\textregistered} in Information Retrieval},
+      year={2017},
+      publisher={NOW Publishers},
+      number = {2--3},
+      volume = {11},
 }
 
 @inproceedings{brown-2016,
                title={Designing for transient use: A human-in-the-loop translation platform for refugees},
-               author={Brown, Deana and Grinter, Rebecca E},
+               author={Brown, Deana and Grinter, Rebecca E.},
                booktitle=chi,
                year={2016},
 }
 
-@inproceedings{canziani-2016,
-               title={An Analysis of Deep Neural Network Models for Practical Applications},
-               author={Alfredo Canziani and Adam Paszke and Eugenio Culurciello},
-               year={2016},
-               journal={arXiv preprint arXiv:1605.07678}
+@article{canziani-2016,
+         Author = {Alfredo Canziani and Adam Paszke and Eugenio Culurciello},
+         Title = {An Analysis of Deep Neural Network Models for Practical Applications},
+         Year = {2016},
+         journal={arXiv preprint arXiv:1605.07678},
+         eprint={arXiv:1910.08475}
+}
+
+@book{castells-1996,
+      title={The information age},
+      author={Castells, Manuel},
+      year={1996},
+      publisher={Oxford Blackwell Publishers}
 }
 
 @inproceedings{chang-2009,
                title={Reading Tea Leaves: {H}ow Humans Interpret Topic Models},
-               author={Chang, Jonathan and Gerrish, Sean and Wang, Chong and Boyd-Graber, Jordan L and Blei, David M},
+               author={Chang, Jonathan and Gerrish, Sean and Wang, Chong and Boyd-Graber, Jordan and Blei, David M.},
                booktitle=nips,
                year={2009},
+}
+
+@article{chen-2018,
+         title={Adversarial deep averaging networks for cross-lingual sentiment classification},
+         author={Chen, Xilun and Sun, Yu and Athiwaratkun, Ben and Cardie, Claire and Weinberger, Kilian},
+         journal=tacl,
+         year={2018},
+         volume={6},
+         pages={557--570},
+         doi={10.1162/tacl_a_00039}
 }
 
 @article{choo-2013,
@@ -124,7 +225,10 @@
          author={Choo, Jaegul and Lee, Changhyun and Reddy, Chandan K and Park, Haesun},
          journal={IEEE transactions on visualization and computer graphics},
          year={2013},
-         publisher={{IEEE}}
+         publisher={{IEEE}},
+         volume={19},
+         number={12},
+         pages={1992--2001}
 }
 
 @article{constant-2009,
@@ -132,56 +236,142 @@
          author={Constant, Noah and Davis, Christopher and Potts, Christopher and Schwarz, Florian},
          journal={Sprache und Datenverarbeitung},
          year={2009},
-         publisher={Institut f{\"u}r Kommunikationsforschung und Phonetik der Universit{\"a}t Bonn}
+         publisher={Institut f{\"u}r Kommunikationsforschung und Phonetik der Universit{\"a}t Bonn},
+         number={1--2},
+         volume={33},
+         pages={5--21}
+}
+
+@book{daniels-1996,
+      title={The world's writing systems},
+      author={Daniels, Peter T. and Bright, William},
+      year={1996},
+      publisher={Oxford University Press}
+}
+
+@inproceedings{dasgupta-2005,
+               title={Analysis of a greedy active learning strategy},
+               author={Dasgupta, Sanjoy},
+               booktitle=nips,
+               year={2005}
+}
+
+@article{dasgupta-2011,
+         title={Two faces of active learning},
+         author={Dasgupta, Sanjoy},
+         journal={Theoretical computer science},
+         volume={412},
+         number={19},
+         year={2011},
+         pages={1767--1781}
+}
+
+@inproceedings{davison-2019,
+               title={Commonsense knowledge mining from pretrained models},
+               author={Davison, Joe and Feldman, Joshua and Rush, Alexander M.},
+               booktitle=emnlp,
+               year={2019},
+               doi={10.18653/v1/D19-1109}
+}
+
+@article{dernoncourt-2017,
+         title={Pub{M}ed 200k {RCT}: a Dataset for Sequential Sentence Classification in Medical Abstracts},
+         author={Dernoncourt, Franck and Lee, Ji Young},
+         journal=ijcnlp,
+         year={2017},
+         volume={2},
+         pages={308--313},
+         url={https://www.aclweb.org/anthology/I17-2052}
 }
 
 @inproceedings{devlin-2019,
                title={{BERT}: {P}re-training of Deep Bidirectional Transformers for Language Understanding},
                author={Jacob Devlin and Ming-Wei Chang and Kenton Lee and Kristina Toutanova},
                year={2019},
-               booktitle=naacl
+               booktitle=naacl,
+               doi={10.18653/v1/N19-1423}
 }
 
-@inproceedings{dodge-2020,
-               title={Fine-Tuning Pretrained Language Models: {W}eight Initializations, Data Orders, and Early Stopping},
-               author={Jesse Dodge and Gabriel Ilharco and Roy Schwartz and Ali Farhadi and Hannaneh Hajishirzi and Noah Smith},
-               year={2020},
-               booktitle=acl
+@article{dodge-2020,
+         Author = {Jesse Dodge and Gabriel Ilharco and Roy Schwartz and Ali Farhadi and Hannaneh Hajishirzi and Noah Smith},
+         Title = {Fine-Tuning Pretrained Language Models: Weight Initializations, Data Orders, and Early Stopping},
+         Year = {2020},
+         journal={arXiv preprint arXiv:2002.06305},
+         eprint={arXiv:2002.06305}
 }
 
-@article{erhan-2009,
-         title={Visualizing higher-layer features of a deep network},
-         author={Erhan, Dumitru and Bengio, Yoshua and Courville, Aaron and Vincent, Pascal},
-         journal={University of Montreal},
-         year={2009}
+@inproceedings{duong-2018,
+               title={Active learning for deep semantic parsing},
+               author={Duong, Long and Afshar, Hadi and Estival, Dominique and Pink, Glen and Cohen, Philip R and Johnson, Mark},
+               booktitle=acl,
+               year={2018},
+               doi={10.18653/v1/P18-2008}
+}
+
+@techreport{erhan-2009,
+            title={Visualizing higher-layer features of a deep network},
+            author={Erhan, Dumitru and Bengio, Yoshua and Courville, Aaron and Vincent, Pascal},
+            institution={University of Montreal},
+            year={2009}
+}
+
+@book{ethnologue,
+      title={Ethnologue:Languages of the World},
+      author={Eberhard, David M. and Simons, Gary F. and Fennig, Charles D. },
+      publisher={SIL International},
+      year=2020
+}
+
+@article{ettinger-2020,
+         title={What {BERT} is not: Lessons from a new suite of psycholinguistic diagnostics for language models},
+         author={Ettinger, Allyson},
+         journal=tacl,
+         year={2020},
+         publisher={MIT Press},
+         volume={8},
+         pages={34--48},
+         doi={10.1162/tacl_a_00298}
 }
 
 @article{fan-2008,
          title={{LIBLINEAR}: {A} library for large linear classification},
          author={Fan, Rong-En and Chang, Kai-Wei and Hsieh, Cho-Jui and Wang, Xiang-Rui and Lin, Chih-Jen},
          journal=jmlr,
-         year={2008}
+         year={2008},
+         volume=9,
+         pages={1871--1874}
 }
 
 @inproceedings{fang-2017,
                title={Learning how to Active Learn: A Deep Reinforcement Learning Approach},
                author={Fang, Meng and Li, Yuan and Cohn, Trevor},
                booktitle=emnlp,
-               year={2017}
+               year={2017},
+               doi={10.18653/v1/D17-1063}
 }
 
 @inproceedings{faruqui-2014,
                title={Improving vector space word representations using multilingual correlation},
                author={Faruqui, Manaal and Dyer, Chris},
                booktitle=eacl,
-               year={2014}
+               year={2014},
+               doi={10.3115/v1/E14-1049}
 }
 
 @inproceedings{faruqui-2015,
                title={Retrofitting Word Vectors to Semantic Lexicons},
-               author={Faruqui, Manaal and Dodge, Jesse and Jauhar, Sujay Kumar and Dyer, Chris and Hovy, Eduard and Smith, Noah A},
+               author={Faruqui, Manaal and Dodge, Jesse and Jauhar, Sujay Kumar and Dyer, Chris and Hovy, Eduard and Smith, Noah A.},
                booktitle=naacl,
-               year={2015}
+               year={2015},
+               doi={10.3115/v1/N15-1184}
+}
+
+@inproceedings{felt-2015,
+               title={Early Gains Matter: {A} Case for Preferring Generative over DiscriminativeCrowdsourcing Models},
+               author={Paul Felt and Eric Ringger and Kevin Seppi and Kevin Black and Robbie Haertel},
+               booktitle=acl,
+               year={2015},
+               doi={10.3115/v1/N15-1089}
 }
 
 @inproceedings{feng-2018,
@@ -189,20 +379,37 @@
                Author = {Shi Feng and Eric Wallace and Alvin Grissom II and Pedro Rodriguez and Mohit Iyyer and Jordan Boyd-Graber},
                Booktitle = emnlp,
                Year = {2018},
+               doi={10.18653/v1/D18-1407}
 }
 
 @inproceedings{gao-2019,
                title={Consistency-Based Semi-Supervised Active Learning: {T}owards Minimizing Labeling Cost},
                author={Mingfei Gao and Zizhao Zhang and Guo Yu and Sercan O. Arik and Larry S. Davis and Tomas Pfister},
                year={2019},
-               journal={arXiv preprint arXiv:1910.07153}
+               booktitle=eccv
+}
+
+@misc{gdpr,
+      author="{European Parliament and Council of the European Union}",
+      title={General data protection regulation},
+      year={2016},
+      url={https://gdpr-info.eu/}
 }
 
 @inproceedings{glavavs-2018,
                title = {Explicit retrofitting of distributional word vectors},
                author = {Glava{\v{s}}, Goran and Vuli{\'c}, Ivan},
                booktitle = acl,
-               year={2018}
+               year={2018},
+               doi={10.18653/v1/P18-1004}
+}
+
+@article{goldberg-2019,
+         Author = {Yoav Goldberg},
+         Title = {Assessing {BERT}'s Syntactic Abilities},
+         Year = {2019},
+         journal={arXiv preprint arXiv:1901.05287},
+         eprint={arXiv:1901.05287}
 }
 
 @misc{graff-1994,
@@ -214,11 +421,32 @@
       Year = {1994}
 }
 
+@article{griffiths-2019,
+         title={Doing more with less: meta-reasoning and meta-learning in humans and machines},
+         author={Griffiths, Thomas L. and Callaway, Frederick and Chang, Michael B. and Grant, Erin and Krueger, Paul M. and Lieder, Falk},
+         journal={Current Opinion in Behavioral Sciences},
+         year={2019},
+         volume={29},
+         pages={24--30}
+}
+
+@article{guo-2017,
+         title={On calibration of modern neural networks},
+         author={Guo, Chuan and Geoff Pleiss and Yu Sun and Kilian Q. Weinberger},
+         journal=jmlr,
+         year={2017},
+         volume={70},
+         pages={1321--1330}
+}
+
 @article{gutierrez-2016,
          title={Detecting cross-cultural differences using a multilingual topic model},
-         author={Guti{\'e}rrez, E Dario and Shutova, Ekaterina and Lichtenstein, Patricia and de Melo, Gerard and Gilardi, Luca},
+         author={Guti{\'e}rrez, E. Dario and Shutova, Ekaterina and Lichtenstein, Patricia and de Melo, Gerard and Gilardi, Luca},
          journal=tacl,
-         year={2016}
+         year={2016},
+         volume={4},
+         pages={47--60},
+         doi={10.1162/tacl_a_00082}
 }
 
 @inproceedings{hao-2018,
@@ -226,6 +454,7 @@
                Author = {Shudong Hao and Michael J. Paul and Jordan Boyd-Graber},
                Title = {Lessons from the Bible on Modern Topics: {M}ultilingual Topic Model Evaluation on Low-Resource Languages},
                Year = {2018},
+               doi={10.18653/v1/N18-1099}
 }
 
 @article{harris-1954,
@@ -233,6 +462,31 @@
          author={Harris, Zellig S},
          journal={Word},
          year={1954},
+         volume={10},
+         number={2--3},
+         pages={146--162}
+}
+
+@inproceedings{hendrycks-2020,
+               title={Pretrained Transformers Improve Out-of-Distribution Robustness},
+               author={Hendrycks, Dan and Liu, Xiaoyuan and Wallace, Eric and Dziedzic, Adam and Krishnan, Rishabh and Song, Dawn},
+               booktitle=acl,
+               year={2020},
+               doi={10.18653/v1/2020.acl-main.244}
+}
+
+@inproceedings{hsu-2015,
+               title={Active learning by learning},
+               author={Hsu, Wei-Ning and Lin, Hsuan-Tien},
+               booktitle=aaai,
+               year={2015},
+}
+
+@inproceedings{hu-2010,
+               title={Off to a good start: {U}sing clustering to select the initial training set in active learning},
+               author={Hu, Rong and Mac Namee, Brian and Delany, Sarah Jane},
+               booktitle={Florida Artificial Intelligence Research Society Conference},
+               year={2010}
 }
 
 @inproceedings{hu-2012,
@@ -240,6 +494,7 @@
                author={Hu, Yuening and Boyd-Graber, Jordan},
                booktitle=acl,
                year={2012},
+               url={https://www.aclweb.org/anthology/P12-2054}
 }
 
 @article{hu-2014-itm,
@@ -247,6 +502,9 @@
          author={Hu, Yuening and Boyd-Graber, Jordan and Satinoff, Brianna and Smith, Alison},
          journal=mlj,
          year={2014},
+         volume={95},
+         number={3},
+         pages={423--469}
 }
 
 @inproceedings{hu-2014-ptlda,
@@ -254,13 +512,22 @@
                booktitle = acl,
                author = {Yuening Hu and Ke Zhai and Vlad Eidelman and Jordan Boyd-Graber},
                year = {2014},
+               url={https://www.aclweb.org/anthology/P14-1110.pdf}
+}
+
+@inproceedings{huang-2010,
+               title={Active learning by querying informative and representative examples},
+               author={Huang, Sheng-Jun and Jin, Rong and Zhou, Zhi-Hua},
+               booktitle=nips,
+               year={2010}
 }
 
 @inproceedings{iyyer-2015,
                title={Deep unordered composition rivals syntactic methods for text classification},
                author={Iyyer, Mohit and Manjunatha, Varun and Boyd-Graber, Jordan and Daum{\'e} III, Hal},
                booktitle=acl,
-               year={2015}
+               year={2015},
+               doi={10.3115/v1/P15-1162}
 }
 
 @inproceedings{jagarlamudi-2010,
@@ -270,39 +537,43 @@
                year={2010},
 }
 
-@article{joulin-2017,
-         title={Bag of Tricks for Efficient Text Classification},
-         author={Joulin, Armand and Grave, Edouard and Mikolov, Piotr Bojanowski Tomas},
-         journal=eacl,
-         year={2017}
+@inproceedings{joulin-2017,
+               title={Bag of Tricks for Efficient Text Classification},
+               author={Joulin, Armand and Grave, Edouard and Mikolov, Tomas and Bojanowski, Piotr},
+               booktitle=eacl,
+               year={2017},
+               url={https://www.aclweb.org/anthology/E17-2068}
 }
 
 @inproceedings{joulin-2018,
                title={Loss in translation: {L}earning bilingual word mapping with a retrieval criterion},
                author={Joulin, Armand and Bojanowski, Piotr and Mikolov, Tomas and J{\'e}gou, Herv{\'e} and Grave, Edouard},
                booktitle=emnlp,
-               year={2018}
+               year={2018},
+               doi={10.18653/v1/D18-1330}
 }
 
 @inproceedings{kim-2014,
                title={Convolutional neural networks for sentence classification},
                author={Kim, Yoon},
                booktitle=emnlp,
-               year={2014}
+               year={2014},
+               doi={10.3115/v1/D14-1181}
 }
 
 @inproceedings{kirsch-2019,
-               title={Batchbald: {E}fficient and diverse batch acquisition for deep bayesian active learning},
+               title={{BatchBALD}: {E}fficient and diverse batch acquisition for deep {B}ayesian active learning},
                author={Kirsch, Andreas and van Amersfoort, Joost and Gal, Yarin},
                year={2019},
                booktitle=nips
 }
 
-@article{klementiev-2012,
-         title={Inducing crosslingual distributed representations of words},
-         author={Klementiev, Alexandre and Titov, Ivan and Bhattarai, Binod},
-         journal=coling,
-         year={2012}
+@inproceedings{klementiev-2012,
+               title={Inducing crosslingual distributed representations of words},
+               author={Klementiev, Alexandre and Titov, Ivan and Bhattarai, Binod},
+               booktitle=coling,
+               year={2012},
+               url={https://www.aclweb.org/anthology/C12-1089}
 }
 
 @inproceedings{lample-2018,
@@ -314,24 +585,31 @@
 
 @article{landauer-1998,
          title={An introduction to latent semantic analysis},
-         author={Thomas K Landauer and Peter W Foltz and Darrell Laham},
+         author={Thomas K. Landauer and Peter W. Foltz and Darrell Laham},
          journal={Discourse processes},
          year={1998},
-         publisher={Taylor \& Francis}
+         publisher={Taylor \& Francis},
+         volume={25},
+         number={2--3},
+         pages={259--284}
 }
 
 @inproceedings{lau-2014,
                title={Machine reading tea leaves: {A}utomatically evaluating topic coherence and topic model quality},
                author={Lau, Jey Han and Newman, David and Baldwin, Timothy},
                booktitle=eacl,
-               year={2014}
+               year={2014},
+               doi={10.3115/v1/E14-1056}
 }
 
 @article{lecun-1998,
          title={Gradient-based learning applied to document recognition},
-         author={LeCun, Yann and Bottou, L{\'e}on and Bengio, Yoshua and Haffner, Patrick and others},
+         author={LeCun, Yann and Bottou, L{\'e}on and Bengio, Yoshua and Haffner, Patrick},
          journal={Proceedings of the IEEE},
          year={1998},
+         volume={86},
+         number={11},
+         pages={2278--2324}
 }
 
 @article{lee-2017,
@@ -339,63 +617,113 @@
          author={Tak Yeon Lee and Alison Smith and Kevin Seppi and Niklas Elmqvist and Jordan Boyd-Graber and Leah Findlater},
          journal={International Journal of Human-Computer Studies},
          year={2017},
-         publisher={Elsevier}
+         publisher={Elsevier},
+         volume={105},
+         pages={28--42}
 }
 
 @inproceedings{lewis-1994,
                title={A sequential algorithm for training text classifiers},
-               author={Lewis, David D and Gale, William A},
+               author={Lewis, David D. and Gale, William A.},
                booktitle=sigir,
                year={1994},
 }
 
 @article{lewis-2004,
          title={RCV1: A new benchmark collection for text categorization research},
-         author={Lewis, David D and Yang, Yiming and Rose, Tony G and Li, Fan},
+         author={Lewis, David D. and Yang, Yiming and Rose, Tony G. and Li, Fan},
          journal=jmlr,
-         year={2004}
+         year={2004},
+         volume={5},
+         pages={361--397}
 }
 
 @inproceedings{li-2012,
                title={Active learning for imbalanced sentiment classification},
                author={Li, Shoushan and Ju, Shengfeng and Zhou, Guodong and Li, Xiaojun},
                year={2012},
-               booktitle=emnlp
+               booktitle=emnlp,
+               url={https://www.aclweb.org/anthology/D12-1013.pdf}
 }
 
 @article{li-2016,
-         title={Understanding neural networks through representation erasure},
-         author={Li, Jiwei and Monroe, Will and Jurafsky, Dan},
-         journal={arXiv preprint arXiv:1612.08220},
-         year={2016}
+         Author = {Jiwei Li and Will Monroe and Dan Jurafsky},
+         Title = {Understanding Neural Networks through Representation Erasure},
+         Year = {2016},
+         journal = {arXiv preprint arXiv:1612.08220},
+         eprint={arXiv:1612.08220}
 }
 
 @inproceedings{lin-2015,
                title={An Empirical Study on Sentiment Classification of Chinese Review using Word Embedding},
                author={Lin, Yiou and Lei, Hang and Wu, Jia and Li, Xiaoyu},
                booktitle={Proceedings of the 29th Pacific Asia Conference on Language, Information and Computation: Posters},
-               year={2015}
+               year={2015},
+               url={https://www.aclweb.org/anthology/Y15-2030}
+}
+
+@inproceedings{liu-2018,
+               title={Learning to actively learn neural machine translation},
+               author={Liu, Ming and Buntine, Wray and Haffari, Gholamreza},
+               booktitle=conll,
+               year={2018},
+               doi={10.18653/v1/K18-1033}
+}
+
+@article{liu-2019,
+         Author = {Yinhan Liu and Myle Ott and Naman Goyal and Jingfei Du and Mandar Joshi and Danqi Chen and Omer Levy and Mike Lewis and Luke Zettlemoyer and Veselin Stoyanov},
+         Title = {{RoBERTa}: {A} Robustly Optimized BERT Pretraining Approach},
+         Year = {2019},
+         journal = {arXiv preprint arXiv:1907.11692},
+         eprint={arXiv:1907.11692}
+}
+
+@inproceedings{loshchilov-2019,
+               title={Decoupled weight decay regularization},
+               author={Loshchilov, Ilya and Hutter, Frank},
+               booktitle=iclr,
+               year={2019}
 }
 
 @inproceedings{lowell-2019,
                title={Practical Obstacles to Deploying Active Learning},
                author={Lowell, David and Lipton, Zachary C.},
                year={2019},
-               booktitle=emnlp
+               booktitle=emnlp,
+               doi={10.18653/v1/D19-1003}
 }
 
 @inproceedings{lund-2017,
                title={Tandem anchoring: {A} multiword anchor approach for interactive topic modeling},
                author={Lund, Jeffrey and Cook, Connor and Seppi, Kevin and Boyd-Graber, Jordan},
                booktitle=acl,
-               year={2017}
+               year={2017},
+               doi={10.18653/v1/P17-1083}
+}
+
+@inproceedings{maas-2011,
+               author    = {Maas, Andrew L.  and  Daly, Raymond E.  and  Pham, Peter T.  and  Huang, Dan  and  Ng, Andrew Y.  and  Potts, Christopher},
+               title     = {Learning Word Vectors for Sentiment Analysis},
+               booktitle = acl,
+               year      = {2011},
+               url={https://www.aclweb.org/anthology/P11-1015}
+}
+
+@article{maaten-2008,
+         title={Visualizing data using t-{SNE}},
+         author={Maaten, Laurens van der and Hinton, Geoffrey},
+         journal=jmlr,
+         year={2008},
+         volume={9},
+         pages={2579--2605}
 }
 
 @inproceedings{manning-2014,
                title={The {S}tanford {CoreNLP} natural language processing toolkit},
                author={Manning, Christopher and Surdeanu, Mihai and Bauer, John and Finkel, Jenny and Bethard, Steven and McClosky, David},
                booktitle=acl,
-               year={2014}
+               year={2014},
+               doi={10.3115/v1/P14-5010}
 }
 
 @inproceedings{mauro-2012,
@@ -407,7 +735,7 @@
 
 @inproceedings{mcauliffe-2008,
                title={Supervised topic models},
-               author={Mcauliffe, Jon D and Blei, David M},
+               author={Mcauliffe, Jon D. and Blei, David M.},
                booktitle=nips,
                year={2008}
 }
@@ -426,18 +754,27 @@
                booktitle=icml
 }
 
+@inproceedings{mikolov-2013,
+               title={Distributed representations of words and phrases and their compositionality},
+               author={Mikolov, Tomas and Sutskever, Ilya and Chen, Kai and Corrado, Greg S. and Dean, Jeff},
+               booktitle=nips,
+               year={2013}
+}
+
 @inproceedings{mimno-2009,
                title={Polylingual topic models},
-               author={Mimno, David and Wallach, Hanna M and Naradowsky, Jason and Smith, David A and McCallum, Andrew},
+               author={Mimno, David and Wallach, Hanna M. and Naradowsky, Jason and Smith, David A. and McCallum, Andrew},
                booktitle=emnlp,
                year={2009},
+               url={https://www.aclweb.org/anthology/D09-1092}
 }
 
 @inproceedings{mogadala-2016,
                title={Bilingual word embeddings from parallel and non-parallel corpora for cross-language text classification},
                author={Mogadala, Aditya and Rettinger, Achim},
                booktitle=naacl,
-               year={2016}
+               year={2016},
+               doi={10.18653/v1/N16-1083}
 }
 
 @article{morrow-2011,
@@ -451,7 +788,8 @@
                title={Counter-fitting Word Vectors to Linguistic Constraints},
                author={Mrk{\v{s}}ic, Nikola and OS{\'e}aghdha, Diarmuid and Thomson, Blaise and Ga{\v{s}}ic, Milica and Rojas-Barahona, Lina and Su, Pei-Hao and Vandyke, David and Wen, Tsung-Hsien and Young, Steve},
                booktitle=naacl,
-               year={2016}
+               year={2016},
+               url={https://www.aclweb.org/anthology/N16-1018.pdf}
 }
 
 @article{mrksic-2017,
@@ -459,20 +797,25 @@
          author={Mrk{\v{s}}i{\'c}, Nikola and Vuli{\'c}, Ivan and S{\'e}aghdha, Diarmuid {\'O} and Leviant, Ira and Reichart, Roi and Ga{\v{s}}i{\'c}, Milica and Korhonen, Anna and Young, Steve},
          journal=tacl,
          year={2017},
+         volume={5},
+         pages={309--324},
+         doi={10.1162/tacl_a_00063}
 }
 
 @inproceedings{nguyen-2014,
                title={Anchors regularized: {A}dding robustness and extensibility to scalable topic-modeling algorithms},
                author={Nguyen, Thang and Hu, Yuening and Boyd-Graber, Jordan},
                booktitle=acl,
-               year={2014}
+               year={2014},
+               url={https://www.aclweb.org/anthology/P14-1034.pdf}
 }
 
 @inproceedings{nguyen-2015,
                title={Is your anchor going up or down? Fast and accurate supervised topic models},
                author={Nguyen, Thang and Boyd-Graber, Jordan and Lund, Jeffrey and Seppi, Kevin and Ringger, Eric},
                booktitle=naacl,
-               year={2015}
+               year={2015},
+               doi={10.3115/v1/N15-1076}
 }
 
 @inproceedings{ni-2011,
@@ -482,11 +825,36 @@
                year={2011},
 }
 
+@inproceedings{peters-2018,
+               author={Peters, Matthew E. and  Neumann, Mark and Iyyer, Mohit and Gardner, Matt and Clark, Christopher and Lee, Kenton and Zettlemoyer, Luke},
+               title={Deep contextualized word representations},
+               booktitle=naacl,
+               year={2018},
+               doi={10.18653/v1/N18-1202}
+}
+
+@inproceedings{petroni-2019,
+               title={Language Models as Knowledge Bases?},
+               author={Petroni, Fabio and Rockt{\"a}schel, Tim and Riedel, Sebastian and Lewis, Patrick and Bakhtin, Anton and Wu, Yuxiang and Miller, Alexander},
+               booktitle=emnlp,
+               year={2019},
+               url={https://www.aclweb.org/anthology/D19-1250.pdf}
+}
+
+@inproceedings{rai-2010,
+               title={Domain adaptation meets active learning},
+               author={Rai, Piyush and Saha, Avishek and Daum{\'e} III, Hal and Venkatasubramanian, Suresh},
+               booktitle=naacl,
+               year={2010},
+               url={https://www.aclweb.org/anthology/W10-0104}
+}
+
 @inproceedings{ramage-2009,
                title={Labeled LDA: {A} supervised topic model for credit attribution in multi-labeled corpora},
-               author={Ramage, Daniel and Hall, David and Nallapati, Ramesh and Manning, Christopher D},
+               author={Ramage, Daniel and Hall, David and Nallapati, Ramesh and Manning, Christopher D.},
                booktitle=emnlp,
                year={2009},
+               url={https://www.aclweb.org/anthology/D09-1026}
 }
 
 @inproceedings{rastogi-2015,
@@ -494,6 +862,44 @@
                author={Rastogi, Pushpendre and Van Durme, Benjamin and Arora, Raman},
                booktitle=naacl,
                year={2015},
+               doi={10.3115/v1/N15-1058}
+}
+
+@phdthesis{renner-2020,
+           author={Alison Renner},
+           title={Designing for the Human in the Loop: {T}ransparency and Control in Interactive Machine Learning},
+           school={University of {M}aryland},
+           year=2020
+}
+
+@inproceedings{ribeiro-2016,
+               title={"Why should I trust you?" Explaining the predictions of any classifier},
+               author={Ribeiro, Marco Tulio and Singh, Sameer and Guestrin, Carlos},
+               booktitle=kdd,
+               year={2016}
+}
+
+@inproceedings{ribeiro-2018,
+               title={Anchors: {H}igh-Precision Model-Agnostic Explanations.},
+               author={Ribeiro, Marco Tulio and Singh, Sameer and Guestrin, Carlos},
+               booktitle=aaai,
+               year={2018}
+}
+
+@article{rousseeuw-1987,
+         title={Silhouettes: A graphical aid to the interpretation and validation of cluster analysis},
+         author={Rousseeuw, Peter J.},
+         journal={Journal of Computational and Applied Mathematics},
+         year={1987},
+         volume={20},
+         pages={53--65}
+}
+
+@inproceedings{scheffer-2001,
+               title={Active hidden markov models for information extraction},
+               author={Scheffer, Tobias and Decomain, Christian and Wrobel, Stefan},
+               booktitle={International Symposium on Intelligent Data Analysis},
+               year={2001},
 }
 
 @inproceedings{schwenk-2018,
@@ -503,11 +909,25 @@
                year={2018}
 }
 
+@inproceedings{sculley-2015,
+               title={Hidden technical debt in machine learning systems},
+               author={Sculley, David and Holt, Gary and Golovin, Daniel and Davydov, Eugene and Phillips, Todd and Ebner, Dietmar and Chaudhary, Vinay and Young, Michael and Crespo, Jean-Francois and Dennison, Dan},
+               booktitle=nips,
+               year={2015}
+}
+
 @inproceedings{sener-2018,
                title={Active Learning for Convolutional Neural Networks: {A} Core-Set Approach},
                author={Ozan Sener and Silvio Savarese},
                year={2018},
                booktitle=iclr
+}
+
+@inproceedings{settles-2008,
+               title={Multiple-instance active learning},
+               author={Settles, Burr and Craven, Mark and Ray, Soumya},
+               booktitle=nips,
+               year={2008}
 }
 
 @techreport{settles-2009,
@@ -521,7 +941,8 @@
                title={Closing the Loop: Fast, Interactive Semi-Supervised Annotation  With Queries on Features and Instances},
                author={Settles, Burr},
                booktitle=emnlp,
-               year={2011}
+               year={2011},
+               url={https://www.aclweb.org/anthology/D11-1136}
 }
 
 @article{shannon-1948,
@@ -529,14 +950,15 @@
          author={Shannon, Claude Elwood},
          journal={Bell system technical journal},
          year={1948},
-         publisher={Wiley Online Library}
+         volume={27}
 }
 
 @inproceedings{shen-2004,
                title={Multi-criteria-based active learning for named entity recognition},
                author={Shen, Dan and Zhang, Jie and Su, Jian and Zhou, Guodong and Tan, Chew-Lim},
                year={2004},
-               booktitle=acl
+               booktitle=acl,
+               url={https://www.aclweb.org/anthology/P04-1075.pdf}
 }
 
 @inproceedings{shen-2018,
@@ -551,34 +973,45 @@
                author={Shi, Lei and Mihalcea, Rada and Tian, Mingjun},
                booktitle=emnlp,
                year={2010},
+               url={https://www.aclweb.org/anthology/D10-1103}
 }
 
 @inproceedings{shi-2016,
                title={Detecting Common Discussion Topics Across Culture From News Reader Comments},
                author={Shi, Bei and Lam, Wai and Bing, Lidong and Xu, Yinqing},
                booktitle=acl,
-               year={2016}
+               year={2016},
+               doi={10.18653/v1/P16-1064}
 }
 
 @inproceedings{siddhant-2018,
                title={Deep Bayesian Active Learning for Natural Language Processing: {R}esults of a Large-Scale Empirical Study},
                author={Aditya Siddhant and Zachary C. Lipton},
                year={2018},
-               journal={arXiv preprint arXiv:1808.05697}
+               booktitle=emnlp,
+               doi={10.18653/v1/D18-1318}
 }
 
 @article{simonyan-2013,
-         title={Deep inside convolutional networks: Visualising image classification models and saliency maps},
-         author={Simonyan, Karen and Vedaldi, Andrea and Zisserman, Andrew},
-         journal={arXiv preprint arXiv:1312.6034},
-         year={2013}
+         Author = {Karen Simonyan and Andrea Vedaldi and Andrew Zisserman},
+         Title = {Deep Inside Convolutional Networks: {V}isualising Image Classification Models and Saliency Maps},
+         Year = {2013},
+         journal={arXiv preprint arXiv:1312.6034}
 }
 
-@article{singla-2019,
-         title={Understanding Impacts of High-Order Loss Approximations and Features in Deep Learning Interpretation},
-         author={Singla, Sahil and Wallace, Eric and Feng, Shi and Feizi, Soheil},
-         journal=icml,
-         year={2019}
+@inproceedings{singla-2019,
+               title={Understanding Impacts of High-Order Loss Approximations and Features in Deep Learning Interpretation},
+               author={Singla, Sahil and Wallace, Eric and Feng, Shi and Feizi, Soheil},
+               booktitle=icml,
+               year={2019}
+}
+
+@inproceedings{socher-2013,
+               title={Recursive deep models for semantic compositionality over a sentiment treebank},
+               author={Socher, Richard and Perelygin, Alex and Wu, Jean and Chuang, Jason and Manning, Christopher D. and Ng, Andrew Y. and Potts, Christopher},
+               booktitle=emnlp,
+               year={2013},
+               url={https://www.aclweb.org/anthology/D13-1170}
 }
 
 @inproceedings{strassel-2016,
@@ -596,17 +1029,63 @@
 }
 
 @inproceedings{strubell-2019,
-               title={Energy and Policy Considerations for Deep Learning in NLP},
+               title={Energy and Policy Considerations for Deep Learning in {NLP}},
                author={Emma Strubell and Ananya Ganesh and Andrew McCallum},
                year={2019},
-               booktitle=acl
+               booktitle=acl,
+               doi={10.18653/v1/P19-1355}
+}
+
+@inproceedings{su-2020,
+               title={Active adversarial domain adaptation},
+               author={Su, Jong-Chyi and Tsai, Yi-Hsuan and Sohn, Kihyuk and Liu, Buyu and Maji, Subhransu and Chandraker, Manmohan},
+               booktitle={{Winter Conference on Applications of Computer Vision}},
+               year={2020}
+}
+
+@article{swartout-1983,
+         title={XPLAIN: A system for creating and explaining expert consulting programs},
+         author={Swartout, William R.},
+         journal=ai,
+         year={1983},
+         volume={21},
+         number={3},
+         pages={285--325}
 }
 
 @inproceedings{szegedy-2016,
-               title={Rethinking the Inception Architecture for Computer Vision},
+               title={Rethinking the {I}nception Architecture for Computer Vision},
                author={Christian Szegedy and Vincent Vanhoucke and Sergey Ioffe and Jonathon Shlens and Zbigniew Wojna},
                year={2016},
-               journal=cvpr
+               booktitle=cvpr
+}
+
+@article{taatgen-2013,
+         title={The nature and transfer of cognitive skills.},
+         author={Taatgen, Niels A.},
+         journal={Psychological review},
+         year={2013},
+         volume={120},
+         number={3},
+         pages={439}
+}
+
+@inproceedings{tenney-2019,
+               title={What do you learn from context? {P}robing for sentence structure in contextualized word representations},
+               author={Tenney, Ian and Xia, Patrick and Chen, Berlin and Wang, Alex and Poliak, Adam and McCoy, R. Thomas and Kim, Najoung and Van Durme, Benjamin and Bowman, Samuel R. and Das, Dipanjan and others},
+               booktitle=iclr,
+               year={2019}
+}
+
+@article{tomasev-2013,
+         title={The role of hubness in clustering high-dimensional data},
+         author={Tomasev, Nenad and Radovanovic, Milos and Mladenic, Dunja and Ivanovic, Mirjana},
+         journal={IEEE {T}ransactions on {K}nowledge and {D}ata {E}ngineering},
+         year={2013},
+         publisher={{IEEE}},
+         volume={26},
+         number={3},
+         pages={739--751}
 }
 
 @inproceedings{tong-2001,
@@ -616,6 +1095,48 @@
                booktitle=jmlr
 }
 
+@inproceedings{vauquois-1968,
+               title={A survey of formal grammars and algorithms for recognition and transformation in mechanical translation.},
+               author={Vauquois, Bernard},
+               booktitle={{IFIP} {C}ongress-68},
+               year={1968}
+}
+
+@article{voorhees-2020,
+         Author = {Ellen Voorhees and Tasmeer Alam and Steven Bedrick and Dina Demner-Fushman and William R. Hersh and Kyle Lo and Kirk Roberts and Ian Soboroff and Lucy Lu Wang},
+         Title = {{TREC-COVID}: Constructing a Pandemic Information Retrieval Test Collection},
+         Year = {2020},
+         journal = {arXiv preprint arXiv:2005.04474},
+         eprint={arXiv:2005.04474}
+}
+
+@article{wallace-2019,
+         title={Trick me if you can: Human-in-the-loop generation of adversarial examples for question answering},
+         author={Wallace, Eric and Rodriguez, Pedro and Feng, Shi and Yamada, Ikuya and Boyd-Graber, Jordan},
+         journal=tacl,
+         year={2019},
+         pages={387--401},
+         volume={7},
+         doi={10.1162/tacl_a_00279}
+}
+
+@inproceedings{wang-2014,
+               title={A new active labeling method for deep learning},
+               author={Wang, Dan and Shang, Yi},
+               booktitle=ijcnn,
+               year={2014},
+}
+
+@article{wang-2015,
+         title={Querying discriminative and representative samples for batch mode active learning},
+         author={Wang, Zheng and Ye, Jieping},
+         journal={{ACM Transactions on Knowledge Discovery from Data (TKDD)}},
+         year={2015},
+         volume={9},
+         number={3},
+         pages={1--23}
+}
+
 @inproceedings{wang-2019,
                title={{GLUE}: {A} Multi-Task Benchmark and Analysis Platform for Natural Language Understanding},
                author={Alex Wang and Amanpreet Singh and Julian Michael and Felix Hill and Omer Levy and Samuel R. Bowman},
@@ -623,11 +1144,19 @@
                journal=iclr
 }
 
+@book{wolf-2011,
+      title={Facility location: concepts, models, algorithms and case studies},
+      author={Gert W. Wolf},
+      year={2011},
+      publisher={Taylor and Francis}
+}
+
 @inproceedings{wu-2008,
                title={Cross language text categorization using a bilingual lexicon},
                author={Wu, Ke and Wang, Xiaolin and Lu, Bao-Liang},
                booktitle=ijcnlp,
-               year={2008}
+               year={2008},
+               url={https://www.aclweb.org/anthology/I08-1022}
 }
 
 @inproceedings{xiao-2013,
@@ -637,23 +1166,46 @@
                year={2013}
 }
 
+@inproceedings{xu-2003,
+               title={Representative sampling for text classification using support vector machines},
+               author={Xu, Zhao and Yu, Kai and Tresp, Volker and Xu, Xiaowei and Wang, Jizhi},
+               booktitle=ecir,
+               year={2003},
+}
+
 @inproceedings{xu-2017,
                title={Cross-lingual Distillation for Text Classification},
                author={Xu, Ruochen and Yang, Yiming},
                booktitle=acl,
-               year={2017}
+               year={2017},
+               doi={10.18653/v1/P17-1130}
+}
+
+@inproceedings{xwang-2014,
+               title={Active transfer learning under model shift},
+               author={Wang, Xuezhi and Huang, Tzu-Kuo and Schneider, Jeff},
+               booktitle=iclr,
+               year={2014}
 }
 
 @inproceedings{yang-2016,
                title={Hierarchical attention networks for document classification},
                author={Yang, Zichao and Yang, Diyi and Dyer, Chris and He, Xiaodong and Smola, Alex and Hovy, Eduard},
                booktitle=naacl,
-               year={2016}
+               year={2016},
+               doi={10.18653/v1/N16-1174}
+}
+
+@inproceedings{yang-2019,
+               title={{XLNet}: Generalized Autoregressive Pretraining for Language Understanding},
+               author={Zhilin Yang and Zihang Dai and Yiming Yang and Jaime Carbonell and Ruslan Salakhutdinov and Quoc V. Le},
+               year={2019},
+               booktitle=nips
 }
 
 @inproceedings{yuan-2018,
                title={Multilingual Anchoring: Interactive Topic Modeling and Alignment Across Languages},
-               author={Yuan, Michelle and Van Durme, Benjamin and Ying, Jordan L},
+               author={Yuan, Michelle and Van Durme, Benjamin and Boyd-Graber, Jordan},
                booktitle=nips,
                year={2018}
 }
@@ -665,9 +1217,16 @@
                year={2017}
 }
 
+@inproceedings{zalan-2011,
+               title={Active learning with clustering},
+               author={Bod\'o, Zal\'an and Zsolt Minier and Lehel Csat\'o},
+               booktitle={Active Learning and Experimental Design Workshop in Conjunction with AISTATS 2010},
+               year={2011}
+}
+
 @inproceedings{zeiler-2014,
                title={Visualizing and understanding convolutional networks},
-               author={Zeiler, Matthew D and Fergus, Rob},
+               author={Zeiler, Matthew D. and Fergus, Rob},
                booktitle=eccv,
                year={2014},
 }
@@ -679,23 +1238,33 @@
                year={2015}
 }
 
+@inproceedings{zhang-2017,
+               title={Active discriminative text representation learning},
+               author={Zhang, Ye and Lease, Matthew and Wallace, Byron C.},
+               booktitle=aaai,
+               year={2017}
+}
+
 @inproceedings{zhao-2006,
                title={{BiTAM}: {B}ilingual topic admixture models for word alignment},
-               author={Zhao, Bing and Xing, Eric P},
+               author={Zhao, Bing and Xing, Eric P.},
                booktitle=coling,
-               year = {2006}
+               year = {2006},
+               url={https://www.aclweb.org/anthology/P06-2124}
 }
 
 @inproceedings{zhu-2007,
                title={Active learning for word sense disambiguation with methods for addressing the class imbalance problem},
                author={Zhu, Jingbo and Hovy, Eduard},
                booktitle=emnlp,
-               year={2007}
+               year={2007},
+               url={https://www.aclweb.org/anthology/D07-1082}
 }
 
 @inproceedings{zhu-2008,
                title={Active learning with sampling by uncertainty and density for word sense disambiguation and text classification},
-               author={Zhu, Jingbo and Wang, Huizhen and Yao, Tianshun and Tsou, Benjamin K},
+               author={Zhu, Jingbo and Wang, Huizhen and Yao, Tianshun and Tsou, Benjamin K.},
                booktitle=coling,
-               year={2008}
+               year={2008},
+               url={https://www.aclweb.org/anthology/C08-1143}
 }

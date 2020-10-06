@@ -1,0 +1,124 @@
+\begin{table*}[t]
+    \centering
+    \begin{tabular}{llrrrr}
+    \toprule
+    Dataset & Domain & Train & Dev & Test & \# Labels \\
+    \midrule
+     \agnews & News articles & 110{,}000 & 10{,}000 & 7{,}600 & 4\\
+    \abr{imdb} & Sentiment reviews & 17{,}500 & 7{,}500 & 25{,}000 & 2\\
+    \pubmed{} 20k \abr{rct} & Medical abstracts & 180{,}040 & 30{,}212 & 30{,}135 & 5\\
+    \sst & Sentiment reviews & 60{,}615 & 6{,}736 & 873 & 2 \\
+    \bottomrule
+    \end{tabular}
+    \caption{Sentence classification datasets used in experiments.}
+    \label{tab:data}
+\end{table*}
+
+\begin{figure*}[t]
+\centering
+\includegraphics[width=\textwidth]{\autofig{seqcls.pdf}}
+\caption{Test accuracy of simulated \al{} over ten iterations with 100 sentences
+queried per iteration. The dashed line is the test accuracy when the model is
+fine-tuned on the entire dataset. Overall, models trained with data sampled from
+\alps{} have the highest test accuracy, especially for the earlier iterations.}
+\label{fig:seqcls}
+\end{figure*}
+
+\section{Active Sentence Classification}
+\label{sec:experiments}
+
+We evaluate \alps{} on sentence classification for three different domains:
+sentiment reviews, news articles, and medical abstracts (Table~\ref{tab:data}).  To simulate \al{},
+we sample a batch of 100 sentences from the training dataset, query labels for this
+batch, and then move the
+batch from the unlabeled pool to the labeled dataset (Algorithm~\ref{alg:active}).
+The initial encoder $h(x; \theta_0)$,
+is an already pre-trained, \bert-based model (Section~\ref{ssec:setup}).
+In a given
+iteration, we fine-tune the
+base classifier $f(x; \theta_0)$ on the
+labeled dataset and evaluate the fine-tuned model with classification micro-\fone{} score
+on the test set.
+We do not fine-tune the model $f(x;\theta_{t-1})$ from the previous
+iteration to avoid
+issues with warm-starting~\citep{ash-2019}.
+We repeat
+for ten
+iterations, collecting a total of 1{,}000 sentences.
+
+\subsection{Baselines}
+\label{sec:baselines}
+We compare \alps{} against warm-start methods (Entropy, \badge{}, \abr{ft}-\bert{}-\abr{km}) and
+cold-start methods (Random, \bert{}-\abr{km}).  For \abr{ft}-\bert{}-\abr{km},
+we use \bert{}-\abr{km} to sample data in the first iteration.  For
+other warm-start methods, data is randomly sampled in the first iteration.
+
+\paragraph{Entropy} Sample $k$ sentences with highest predictive
+entropy measured by $\sum_{i=1}^{C} (f(x; \theta)_i) \ln (f(x; \theta
+)_i)^{-1}$~\citep{lewis-1994,wang-2014}.
+
+\paragraph{\badge} Sample $k$ sentences based on diversity in loss gradient
+(Section~\ref{ssec:badge}).
+
+\paragraph{\bert{}-{\abr{km}}} Cluster pre-trained, $l_2$-normalized \bert{} embeddings with \km{} and sample the
+nearest neighbors of the $k$ cluster centers.  The algorithm is the same as
+\alps{} except that \bert{} embeddings are used.
+
+\paragraph{\abr{ft}-\bert{}-\abr{km}}  This is the same algorithm as
+\bert{}-\abr{km} except the \bert{} embeddings $h(x; W_{t-1})$ from the
+previously fine-tuned model are used.
+
+
+
+\subsection{Setup}
+\label{ssec:setup}
+
+For each sampling algorithm and dataset, we run the \al{} simulation five
+times with different random seeds.  We set the maximum sequence length to 128.  We fine-tune on a
+batch size of thirty-two for three epochs.
+We use AdamW~\citep{loshchilov-2019} with learning rate of 2e-5,
+$\beta_1 = 0.9$, $ \beta_2 = 0.999$, and  a
+linear decay of learning rate.
+
+For \abr{imdb}~\citep{maas-2011}, \abr{sst-$2$}~\citep{socher-2013}, and \agnews~\citep{zhang-2015}, the data encoder is the uncased \bert{}-Base model with 110M
+parameters.\footnote{\url{https://huggingface.co/transformers/}}
+For \pubmed~\citep{dernoncourt-2017}, the data encoder is \scibert, a \bert{} model pre-trained on scientific
+texts~\citep{beltagy-2019}.  All experiments are run on GeForce GTX 1080 GPU and
+2.6 GHz AMD Opteron 4180 CPU processor; runtimes in Table~\ref{tab:time}.
+
+
+
+
+\subsection{Results}
+
+The model fine-tuned with data sampled by \alps{} has
+higher test accuracy than the baselines (Figure~\ref{fig:seqcls}).
+For \agnews{}, \abr{imdb}, and \sst{},
+this is true in earlier iterations.  We often see the
+most gains in the beginning for
+crowdsourcing~\citep{felt-2015}.  Interestingly,
+clustering the fine-tuned \bert{} embeddings is not always better than
+clustering the pre-trained \bert{} embeddings for \abr{al}.
+The fine-tuned \bert{} embeddings may require training on more data for more
+informative
+representations.
+
+For \pubmed, test accuracy greatly varies between the strategies.
+The dataset belongs to a specialized domain and is class-imbalanced, so na\"ive
+methods show poor accuracy.  Entropy
+sampling has the lowest accuracy because the classification entropy is
+uninformative in early iterations.
+The models
+fine-tuned on data sampled by \alps{} and \badge{} have about the same accuracy.
+Both methods strive to optimize for uncertainty and diversity, which
+alleviates problems with class imbalance.
+
+Our experiments cover the first ten iterations because we focus on the
+cold-start setting.  As sampling iterations increase, test accuracy across the
+different methods converges.  Both \alps{} and \badge{} already approach the
+model trained on the full training dataset across all tasks
+(Figure~\ref{fig:seqcls}).  Once the cold-start issue subsides,
+uncertainty-based methods can be employed to further query the most
+confusing examples for the model to learn.
+
+

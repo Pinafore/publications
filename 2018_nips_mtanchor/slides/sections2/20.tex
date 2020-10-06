@@ -17,11 +17,11 @@ An \textbf{anchor word} is a word that appears with \emph{high} probability in o
 \bar{Q}_{i,j} = p(w_2 = j \g w_1 = i)
 \end{equation*}
 \begin{figure}
-\includegraphics[width=0.3\textwidth]{combination.pdf} 
+\includegraphics[width=0.3\textwidth]{combination.pdf}
 \onslide<2>
 \begin{align*}
 \bar{Q}_{\text{liner}} &\approx C_1 \bar{Q}_{\text{carburetor}} + C_2 \bar{Q}_{\text{concealer}} + C_3 \bar{Q}_{\text{album}} \\
-&= 0.4 * \begin{bmatrix} 0.3 \\ \cdots \\ 0.1 \end{bmatrix} + 0.2 * \begin{bmatrix} 0.1 \\ \cdots \\ 0.2 \end{bmatrix} + 0.4 * \begin{bmatrix} 0.1 \\ \cdots \\ 0.4 \end{bmatrix} 
+&= 0.4 * \begin{bmatrix} 0.3 \\ \cdots \\ 0.1 \end{bmatrix} + 0.2 * \begin{bmatrix} 0.1 \\ \cdots \\ 0.2 \end{bmatrix} + 0.4 * \begin{bmatrix} 0.1 \\ \cdots \\ 0.4 \end{bmatrix}
 \end{align*}
 \end{figure}
 \end{frame}
@@ -38,7 +38,7 @@ An \textbf{anchor word} is a word that appears with \emph{high} probability in o
 
 \begin{frame}{Anchoring}
 \begin{enumerate}
-\item<1-> Construct co-occurrence matrix from documents with vocabulary of size $V$: 
+\item<1-> Construct co-occurrence matrix from documents with vocabulary of size $V$:
 \[
 \bar{Q}_{i,j} = p(w_2 = j \g w_1 = i).
 \]
@@ -55,8 +55,8 @@ A_{i,k} &= p(w=i \g z=k) \propto p(z=k \g w=i) p(w=i)\\
 \end{frame}
 
 \begin{frame}{Finding Anchor Words}
-\begin{itemize} 
-\item So far, we assume that anchor words are given. 
+\begin{itemize}
+\item So far, we assume that anchor words are given.
 \item How do we find anchor words from documents?
 \end{itemize}
 \end{frame}
@@ -82,10 +82,10 @@ Topics \\
 cosmetics makeup eyeliner lipstick foundation primer eyeshadow \\
 \end{tabular}
 \end{table}
-\onslide<2> 
-\vspace{1cm} 
+\onslide<2>
+\vspace{1cm}
 \begin{center}
-\textbf{\textcolor{color5}{Duplicate topics.}} 
+\textbf{\textcolor{color5}{Duplicate topics.}}
 \end{center}
 \end{frame}
 
@@ -96,23 +96,24 @@ cosmetics makeup eyeliner lipstick foundation primer eyeshadow \\
 Topics \\
 \midrule
 \textcolor<2>{color5}{music band art history literature books earth} \\
-\textcolor<2>{color10}{bts taehyung idol kpop jin jungkook jimin} \\
+\textcolor<2>{color10}{beethoven mozart bach chopin classical schumann
+debussy} \\
 \end{tabular}
 \end{table}
-\onslide<2> 
-\vspace{1cm} 
+\onslide<2>
+\vspace{1cm}
 \begin{center}
 \textbf{\textcolor{color5}{Ambiguous topics.}} \\
-\textbf{\textcolor{color10}{Overly-specific topics.}}    
+\textbf{\textcolor{color10}{Overly-specific topics.}}
 \end{center}
 \end{frame}
 
 \begin{frame}{Interactive Anchoring}
 \begin{itemize}
 \item Incorporating interactivity in topic modeling has shown to improve quality of model~\citep{hu-2014-itm}.
-\item Anchoring algorithm offers speed for interactive work, but single anchors are unintuitive to users. 
-\item \textbf{Ankura} is an interactive topic modeling system that allows users to choose multiple anchors for each topic~\citep{lund-2017}. 
-\item After receiving human feedback, \textbf{Ankura} only takes a few seconds to update topic model. 
+\item Anchoring algorithm offers speed for interactive work, but single anchors are unintuitive to users.
+\item \textbf{Ankura} is an interactive topic modeling system that allows users to choose multiple anchors for each topic~\citep{lund-2017}.
+\item After receiving human feedback, \textbf{Ankura} only takes a few seconds to update topic model.
 \pause
 \vspace{1cm}
 \end{itemize}

@@ -1,0 +1,21 @@
+\begin{figure*}[t]
+\centering
+    \begin{subfigure}{0.47\linewidth}
+	\includegraphics[width=\linewidth]{\figfile{embedKM.pdf}}
+    \caption{\bert~embeddings with \km~centers}
+    \label{fig:embedkm}
+    \end{subfigure}
+    \begin{subfigure}{0.47\linewidth}
+	\includegraphics[width=\linewidth]{\figfile{mlmKM.pdf}}
+    \caption{Surprisal embeddings with \km~centers}
+    \label{fig:mlmkm}
+    \end{subfigure}
+    \caption{\abr{t-sne} plots of \bert~embeddings
+        and surprisal embeddings for each sequence in the \abr{imdb} training
+        dataset.  The enlarged points are the centers determined by \km{} (left)
+        and \kmpp{} (right). The points are colored according to their classification labels.
+In both sets of embeddings, we cannot clearly separate the points from their
+labels, but the distinction between clusters in surprisal embeddings seems more obvious.
+}
+\label{fig:embed}
+\end{figure*}

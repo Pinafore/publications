@@ -1,0 +1,112 @@
+
+\documentclass[11pt,a4paper]{article}
+\usepackage[hyperref]{style/emnlp2020}
+\usepackage{times}
+\usepackage{latexsym}
+\renewcommand{\UrlFont}{\ttfamily\small}
+
+\usepackage{algorithm}
+\usepackage[noend]{algpseudocode}
+\usepackage{varwidth}
+\usepackage{multirow}
+\usepackage{tabularx}
+\usepackage{subcaption}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{bbm}
+\usepackage{bm}
+
+
+
+\usepackage{microtype}
+
+\aclfinalcopy 
+
+\newcommand\BibTeX{B\textsc{ib}\TeX}
+
+\title{Cold-start Active Learning through Self-supervised Language Modeling}
+\author{Michelle Yuan\thanks{$^{\star}$Work done while visiting
+        National Taiwan University.}\\
+    University of Maryland\\
+    \texttt{myuan@cs.umd.edu} \\\And
+    Hsuan-Tien Lin \\
+    National Taiwan University \\
+\texttt{htlin@csie.ntu.edu.tw} \\\And
+    Jordan Boyd-Graber \\
+    University of Maryland\\
+\texttt{jbg@umiacs.umd.edu} \\}
+
+\date{}
+
+\newif\ifcomment\commenttrue
+\usepackage{amsfonts}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{bm}
+\usepackage{booktabs}
+\usepackage[normalem]{ulem}
+\newcommand{\abr}[1]{\textsc{#1}}
+\normalem
+\usepackage{graphicx}
+\usepackage{multirow}
+\usepackage{multicol}
+\usepackage[T1]{fontenc}
+
+\newcommand*{\missingreference}{{\Huge \colorbox{red}{?reference?}}}
+\newcommand*{\missingcitation}{{\Huge \colorbox{red}{?citation?}}}
+\newcommand{\g}{\, | \,}
+\newcommand{\e}[2]{\mathbb{E}_{#1}\left[ #2 \right] }
+\newcommand{\h}[2]{\mathbb{H}_{#1}\left[ #2 \right] }
+\newcommand{\D}[2]{\frac{\partial #1}{\partial #2}}
+{JBG}{#1}}
+\newcommand{\nlp}[0]{\abr{nlp}}
+\newcommand{\fone}{$F_1$}
+\newcommand{\bert}{\abr{bert}}
+
+\newcommand{\latexfile}[1]{\input{2020_emnlp_alps/sections/#1}}
+\newcommand{\figfile}[1]{2020_emnlp_alps/figures/#1}
+\newcommand{\autofig}[1]{2020_emnlp_alps/auto_fig/#1}
+\newcommand{\alps}{\abr{alps}}
+\newcommand{\coreset}{\abr{coreset}}
+\newcommand{\badge}{\abr{badge}}
+\newcommand{\km}{$k$-\abr{means}}
+\newcommand{\kmpp}{\km++}
+\newcommand{\mlm}{\abr{mlm}}
+\newcommand{\al}{\abr{al}}
+\newcommand{\norm}[1]{\left\lVert#1\right\rVert}
+\newcommand{\scibert}{\abr{sci}\bert}
+\newcommand{\hl}[1]{\colorbox{yellow}{#1}}
+\newcommand{\hz}{\vphantom{\parbox[c]{0.1cm}{\rule{0.1cm}{0.4cm}}}}
+\setlength\fboxsep{0pt}
+\newcommand{\given}{\, | \,}
+\newcommand{\sst}{\abr{sst-$2$}}
+\newcommand{\agnews}{\abr{ag}~\abr{news}}
+\newcommand{\pubmed}{\abr{pubmed}}
+
+\newtheorem{theorem}{Proposition}
+
+
+\begin{document}
+\maketitle
+\begin{abstract}
+\latexfile{00-abstract}
+\end{abstract}
+\latexfile{10-intro}
+\latexfile{20-prelim}
+\latexfile{30-dichotomy}
+\latexfile{40-alps}
+\latexfile{50-experiments}
+\latexfile{60-analysis}
+\latexfile{70-related}
+\latexfile{80-conclusion}
+\latexfile{90-acknowledgments}
+
+
+\bibliography{bib/journal-full,bib/jbg,bib/michelle}
+\bibliographystyle{style/acl_natbib}
+
+\latexfile{appendix}
+
+\end{document}
+
+

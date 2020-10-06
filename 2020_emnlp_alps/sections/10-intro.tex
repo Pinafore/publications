@@ -1,0 +1,76 @@
+\section{Introduction}
+
+Labeling data is a fundamental bottleneck in machine learning, especially for
+\abr{nlp}, due to annotation cost and time.  The goal of active learning
+(\al{}) is to recognize the most relevant examples and then query labels from an oracle.
+For instance, policymakers and physicians
+want to quickly fine-tune a text classifier to understand emerging
+medical conditions~\citep{voorhees-2020}. Finding labeled data for medical text
+is challenging because of privacy issues or shortage in expertise~\citep{dernoncourt-2017}.
+Using \al{}, they can query labels for a small subset of the most relevant documents
+and immediately train a robust model.
+
+Modern transformer models dominate the leaderboards for several
+\abr{nlp} tasks~\citep{devlin-2019,yang-2019}.
+Yet the price of adopting transformer-based models is to use
+more data.
+If these models are not fine-tuned on enough examples,
+their accuracy drastically varies across different hyperparameter
+configurations~\citep{dodge-2020}.  Moreover, computational resources are a
+major drawback as training one model can cost thousands of dollars in cloud
+computing and hundreds of pounds in carbon emissions~\citep{strubell-2019}.
+These problems motivate further work in \abr{al} to conserve resources.
+
+Another issue is that traditional \al{} algorithms,
+like uncertainty sampling~\citep{lewis-1994}, falter on deep models.
+These strategies use model confidence scores, but
+ neural networks are poorly calibrated~\citep{guo-2017}. High confidence
+ scores do not imply high correctness likelihood, so the sampled examples are
+ not the most uncertain ones~\citep{zhang-2017}.  Plus, these
+strategies sample one document on
+each iteration. The single-document sampling requires training the model after
+each query and
+increases the overall
+expense.
+
+These limitations of modern \abr{nlp} models
+illustrate a twofold effect: they show a greater need for \al{} \textit{and} make
+\al{} more difficult to deploy.
+Ideally, \al{} could be most useful during low-resource
+situations. In reality, it is impractical to use because the \al{} strategy depends
+on warm-starting the model with information about the task~\citep{ash-2019}.
+Thus, a fitting
+solution to \abr{al} for deep classifiers is a \emph{cold-start} approach, one
+that does not rely on classification loss or confidence scores.
+
+To develop a cold-start \abr{al} strategy, we should extract knowledge from pre-trained models like
+\bert{}~\citep{devlin-2019}.
+The model encodes syntactic properties~\citep{tenney-2019},
+acts as a database for
+general world
+knowledge~\citep{petroni-2019,davison-2019}, and can detect out-of-distribution
+examples~\citep{hendrycks-2020}.
+Given the knowledge already encoded in pre-trained models, the annotation for
+a new task should focus on the information missing from pre-training.
+If a sentence contains many words that perplex the language model, then
+it is possibly unusual or not well-represented in the
+pre-training data.
+Thus, the self-supervised objective serves as a surrogate for classification uncertainty.
+
+We develop \alps{} (Active Learning by Processing Surprisal), an \al{} strategy
+for \bert-based models.\footnote{\url{https://github.com/forest-snow/alps}}
+While many \al{}
+methods randomly choose an initial sample, \alps{}
+selects the first batch of data using the masked language modeling loss.
+As the highest and most extensive peaks
+in Europe are found in the Alps,
+the \alps{} algorithm finds examples in the data that are both surprising and substantial.
+To the best of our knowledge, \alps{} is the first \al{} algorithm that only
+relies on a self-supervised loss function. We evaluate our approach on four text
+classification datasets spanning across three different domains.
+\alps{}
+outperforms  \al{} baselines in accuracy and algorithmic efficiency.
+The success of \alps{} highlights the importance of self-supervision
+for cold-start \al.
+
+

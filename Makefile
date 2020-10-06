@@ -2,20 +2,26 @@ TEX = $(wildcard */sections/*.tex *.tex */*.tex */tables/*.tex)
 BIB = $(wildcard bib/*.bib)
 FIG = $(wildcard */figures.*)
 
-.PRECIOUS: %/auto_fig/res.txt
-
 clean:
 	rm -f *.aux *.dvi *.log *.bbl *.pdf *~ *.out *.blg *.nav *.toc *.snm *.fdb_latexmk *.fls *.synctex.gz
 	rm -f */*.aux */*.dvi */*.log */*.bbl */*.pdf */*~ */*.out */*.blg */*/*~
 	rm -fR */auto_fig
 	rm -fR *.tgz
 
+.PRECIOUS: %/auto_fig/res.txt
 
 clean_proposal:
 	rm -f *.aux *.dvi *.log *.bbl *.pdf *~ *.out *.blg *.nav *.toc *.snm *.fdb_latexmk *.fls *.synctex.gz
 	rm -f pedro_proposal/*.aux pedro_proposal/*.dvi pedro_proposal/*.log pedro_proposal/*.bbl pedro_proposal/*.pdf pedro_proposal/*~ pedro_proposal/*.out pedro_proposal/*.blg pedro_proposal/*/*~
 	rm -fR pedro_proposal/auto_fig
+	mkdir -pp pedro_proposal/auto_fig
 
+scripts/hunspell_dictionary.dic: scripts/dictionary.txt
+	wc -l $< > $@
+	sort $< | uniq >> $@
+
+%.spell: %.pdf scripts/hunspell_dictionary.dic
+	python3 scripts/spell.py --files $(<:.pdf=)/*.tex $(<:.pdf=)/sections/*.tex
 
 # TODO: make it so that this actually runs if the figure file (R or python) or data are updated.  Perhaps requires messing with the script.
 %/auto_fig/res.txt: %/figures.py
@@ -28,13 +34,6 @@ clean_proposal:
 %.bbl: %.pdf $(BIB)
 	bibtex $*
 
-scripts/hunspell_dictionary.dic: scripts/dictionary.txt
-	wc -l $< > $@
-	sort $< | uniq >> $@
-
-%.spell: %.pdf scripts/hunspell_dictionary.dic
-	python3 scripts/spell.py --files $(<:.pdf=)/*.tex $(<:.pdf=)/sections/*.tex
-
 %.paper.pdf: %.pdf %.bbl
 	pdflatex $*
 	pdflatex -halt-on-error $*
@@ -42,7 +41,6 @@ scripts/hunspell_dictionary.dic: scripts/dictionary.txt
 	cp $@ ~/public_html/temp || true
 	./scripts/style-check.rb $(<:.pdf=)/*.tex $(<:.pdf=)/sections/*.tex
 
-# cd $(<:.paper.pdf=)/supporting && pdflatex summary
 %.nsf.pdf: %.paper.pdf
 	cd $(<:.paper.pdf=)/supporting && pdflatex jbg_bio
 	cd $(<:.paper.pdf=)/supporting && pdflatex collaborators
@@ -66,30 +64,20 @@ scripts/hunspell_dictionary.dic: scripts/dictionary.txt
 %.arxiv.tgz: %.bbl
 	tar cvfz $@ Makefile $< style/*.sty style/*.bst style/*.cls $(<:.bbl=.tex) style/*.tex $(<:.bbl=)/figures/* $(<:.bbl=)/auto_fig/* $(<:.bbl=)/sections/*.tex
 
-2020_acl_metaanswer.appendix.pdf: 2020_acl_metaanswer.paper.pdf
-	python3 scripts/split_pdf.py 2020_acl_metaanswer.paper.pdf 10
-	mv 2020_acl_metaanswer_page_10.pdf 2020_acl_metaanswer.appendix.pdf
-	mv 2020_acl_metaanswer_page_0.pdf 2020_acl_metaanswer.submission.pdf
+2020_emnlp_metaanswer.appendix.pdf: 2020_emnlp_metaanswer.paper.pdf
+	python3 scripts/split_pdf.py 2020_emnlp_metaanswer.paper.pdf 10
+	mv 2020_emnlp_metaanswer_page_10.pdf 2020_emnlp_metaanswer.appendix.pdf
+	mv 2020_emnlp_metaanswer_page_0.pdf 2020_emnlp_metaanswer.submission.pdf
 
-2020_acl_biasqa.appendix.pdf: 2020_acl_biasqa.paper.pdf
-	python3 scripts/split_pdf.py 2020_acl_biasqa.paper.pdf 6
-	mv 2020_acl_biasqa_page_6.pdf 2020_acl_biasqa.appendix.pdf
-	mv 2020_acl_biasqa_page_0.pdf 2020_acl_biasqa.submission.pdf
+2020_emnlp_qa_fairness.appendix.pdf: 2020_emnlp_qa_fairness.paper.pdf
+	python3 scripts/split_pdf.py 2020_emnlp_qa_fairness.paper.pdf 6
+	mv 2020_emnlp_qa_fairness_page_6.pdf 2020_emnlp_qa_fairness.appendix.pdf
+	mv 2020_emnlp_qa_fairness_page_0.pdf 2020_emnlp_qa_fairness.submission.pdf
 
-2020_lrec_sense.appendix.pdf: 2020_lrec_sense.paper.pdf
-	python3 scripts/split_pdf.py 2020_lrec_sense.paper.pdf 9
-	mv 2020_lrec_sense_page_9.pdf 2020_lrec_sense.appendix.pdf
-	mv 2020_lrec_sense_page_0.pdf 2020_lrec_sense.submission.pdf
-
-2020_acl_trivia_tournament.appendix.pdf: 2020_acl_trivia_tournament.paper.pdf
-	python3 scripts/split_pdf.py 2020_acl_trivia_tournament.paper.pdf 12
-	mv 2020_acl_trivia_tournament_page_12.pdf 2020_acl_trivia_tournament.appendix.pdf
-	mv 2020_acl_trivia_tournament_page_0.pdf 2020_acl_trivia_tournament.submission.pdf
-
-2020_acl_diplomacy.appendix.pdf: 2020_acl_diplomacy.paper.pdf
-	python3 scripts/split_pdf.py 2020_acl_diplomacy.paper.pdf 10
-	mv 2020_acl_diplomacy_page_10.pdf 2020_acl_diplomacy.appendix.pdf
-	mv 2020_acl_diplomacy_page_0.pdf 2020_acl_diplomacy.submission.pdf
+2020_emnlp_simint.appendix.pdf: 2020_emnlp_simint.paper.pdf
+	python3 scripts/split_pdf.py 2020_emnlp_simint.paper.pdf 5
+	mv 2020_emnlp_simint_page_5.pdf 2020_emnlp_simint.appendix.pdf
+	mv 2020_emnlp_simint_page_0.pdf 2020_emnlp_simint.submission.pdf
 
 
 acl: 2020_acl_clime.paper.pdf 2020_acl_diplomacy.paper.pdf 2020_acl_refine_clwe.paper.pdf 2020_acl_trivia_tournament.appendix.pdf 

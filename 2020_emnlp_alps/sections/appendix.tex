@@ -1,0 +1,137 @@
+\clearpage
+\appendix
+\section{Appendices}
+\label{sec:appendix}
+
+\begin{table*}[h]
+    \centering
+    \begin{tabular}{l rr rr}
+    \toprule
+    & \multicolumn{2}{c}{IMDB} &
+    \multicolumn{2}{c}{SST-2} \\
+    \cmidrule(lr){2-3} \cmidrule(lr){4-5}
+    & $k=100$ & $k=200$ & $k=100$ & $k=200$\\
+    \midrule
+        \alps & $0.60 \pm 0.03$& \bm{$0.69 \pm 0.04$} & \bm{$0.57 \pm
+        0.06$} & \bm{$0.64 \pm 0.04$}  \\
+        \alps-tokens-0.1 & \bm{$0.61 \pm 0.05$} & $0.63 \pm 0.11$ &
+        $0.56 \pm 0.07$ & $0.63 \pm 0.04$ \\
+        \alps-tokens-0.2 & $0.55 \pm 0.07$ & $0.65 \pm 0.05$ & \bm{$0.57 \pm
+        0.05$} & $0.63 \pm
+        0.05$ \\
+        \alps-tokens-1.0 & $0.59 \pm 0.05$ & $0.65 \pm 0.07$ & $0.56 \pm
+        0.05$ & $0.62 \pm 0.05$\\
+        \alps-masked & $0.59 \pm 0.03$ & $0.63 \pm 0.09$ & $0.56 \pm
+        0.03$ & $0.60 \pm
+        0.02$\\
+    \bottomrule
+    \end{tabular}
+    \caption{Comparison of validation accuracy between the variants of \alps~to sample data for
+        \abr{imdb} and SST-2  in the first two iterations. \alps-tokens-$p$ varies the percentage
+    $p$ of
+    tokens evaluated with \mlm{} loss when computing surprisal embeddings.  \alps-masked
+    passes in the input with masks as originally done in pre-training.
+    Overall, we observe that \alps{} has higher mean and smaller variance in
+    accuracy.}
+    \label{tab:mask_acc}
+\end{table*}
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=\linewidth]{\autofig{km_kp_seqcls.pdf}}
+    \caption{Comparing validation accuracy between using \km{} and \kmpp{}
+    to select centroids in the surprisal embeddings.  Using \km{}
+reaches higher accuracy.}
+    \label{fig:km_kp}
+\end{figure}
+
+\begin{figure}[t]
+\centering
+    \begin{subfigure}{\linewidth}
+        \centering
+    \includegraphics[width=0.8\linewidth]{\figfile{mlmKP.pdf}}
+    \caption{Surprisal embeddings with \kmpp~centers}
+    \label{fig:mlmkp}
+    \end{subfigure}
+    \begin{subfigure}{\linewidth}
+        \centering
+    \includegraphics[width=0.8\linewidth]{\figfile{mlmKM.pdf}}
+    \caption{Surprisal embeddings with \km~centers}
+    \label{fig:mlmkm}
+    \end{subfigure}
+    \caption{\abr{t-sne} plots of
+        surprisal embeddings for \abr{imdb} training data.  The centers are either picked by \kmpp{} (right) or \km{} (left).
+     There is less overlap between the centers with \km{}
+    compared to \kmpp{}.  So, using \km{} is better for exploiting
+    diversity in the surprisal embedding space.
+}
+\label{fig:embedkmpp}
+\end{figure}
+
+\subsection{Token Masking}
+\label{ssec:mask}
+In our preliminary experiments on the validation set, we notice improvement in
+accuracy after passing in
+the original input with no masks (Table~\ref{tab:mask_acc}).  The purpose of the \texttt{[MASK]} token during
+pre-training is to train the token embeddings to learn context so that it can
+predict the token labels.  Since we are not training the token embeddings to
+learn context, masking the tokens does not help much for \al{}.
+We use \al{} for fine-tuning, so the input should be in the same format for
+\al{} and fine-tuning.  Otherwise, there is a mismatch between the two stages.
+
+
+\subsection{Token Sampling for Evaluation}
+\label{ssec:sample}
+When \bert~evaluates MLM loss, it only focuses on the masked tokens,
+which are from a 15\% random subsample of tokens in the sentence.  We experiment
+with varying this subsample percentage on the validation set
+(Table~\ref{tab:mask_acc}).  We try sampling 10\%, 15\%, 20\%, and 100\%.
+Overall, we notice that mean accuracy are roughly the same, but variance in
+accuracy across different runs is slightly higher for percentages other than
+15\%.
+
+After the
+second \al{} iteration, we notice that accuracy mean and variance between the
+different token sampling percentages converge.  So, the token sampling
+percentage makes more of a difference in early stages of \al.
+\citet{devlin-2019} show that the difference in accuracy between various mask strategies is
+minimal for fine-tuning \bert.  We believe this can also be applied to what we
+have observed for \alps.
+
+
+
+\subsection{\km{} vs. \kmpp{}}
+\label{ssec:km}
+The state-of-the-art baseline \badge{} applies \kmpp{} on gradient
+embeddings to select points to query.  Initially, we also use \kmpp{} on the
+surprisal embeddings but validation accuracy is only slightly higher
+than random sampling.  Since \kmpp{} is originally an algorithm for robust
+initialization of \km{}, we instead apply \km{} on the surprisal embeddings.  As
+a result, we see more significant increase in accuracy over baselines,
+especially for PubMed (Figure~\ref{fig:km_kp}).  Additionally, the t-\abr{sne} plots
+show that \km{} selects centers that are further apart compared to the
+ones chosen by \kmpp{} (Figure~\ref{fig:embedkmpp}).  This shows that \km{} can help sample a more diverse
+batch of data.
+
+\latexfile{samples.tex}
+
+\subsection{Sample Sentences}
+
+
+Section~\ref{sec:analysis} quantitatively analyzes diversity of
+\alps{}.  Here, we take a closer look at the kind of sentences that are sampled
+by \alps{}.
+Table~\ref{tab:samples} compares sentences that are chosen by \alps{} and random
+sampling
+in the first \abr{al} iteration.  The tokens highlighted are the ones
+evaluated with surprisal loss.
+Random sampling can fall prey to data idiosyncracies. For example, AG News has
+sixty-two articles about the German golfer Bernhard Langer, and random sampling
+picks multiple articles about him on one of five runs.
+For PubMed, many sentences labeled as ``methods'' are simple sentences
+with a short, independent clause.  While random sampling chooses many
+sentences of this form, \alps~seems to avoid this problem.
+Since the surprisal embedding encodes the fluctuation in information
+content across the sentence, \alps{} is less likely to repeatedly choose
+sentences with similar patterns in surprisal.  This may possibly diversify
+syntactic structure in a sampled batch.

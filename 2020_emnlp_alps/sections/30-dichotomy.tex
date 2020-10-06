@@ -1,0 +1,104 @@
+\section{The Uncertainty--Diversity Dichotomy}
+\label{sec:dichotomy}
+This section provides background on prior work in \al{}. First, we discuss two
+general \abr{al} strategies: uncertainty sampling and
+diversity sampling.  Then, we explain the dichotomy between the two concepts
+and introduce \badge{}~\citep{ash-2020}, a \abr{sota} method that attempts to resolve this
+issue.  Finally, we focus on the limitations of \badge{} and other \al{}
+strategies to give motivation for
+our work.
+
+\citet{dasgupta-2011} describes uncertainty and diversity as the ``two
+faces of \abr{al}''.
+While uncertainty sampling efficiently searches the hypothesis space by finding
+difficult examples to label, diversity sampling exploits heterogeneity
+in the feature space~\citep{xu-2003,hu-2010,zalan-2011}.
+Uncertainty sampling requires
+model warm-starting because it depends on model predictions, whereas
+diversity sampling can be a cold-start approach.
+A successful \al{} strategy should integrate both aspects, but
+its exact implementation is an open research question.
+For example, a na\"ive idea is to use a fixed combination of strategies to
+sample points. Nevertheless, \citet{hsu-2015} experimentally show that this
+approach hampers accuracy.
+\badge{} optimizes for both uncertainty and diversity by using
+confidence scores and clustering.
+This strategy
+beats uncertainty-based algorithms~\citep{wang-2014}, sampling through bandit
+learning~\citep{hsu-2015}, and
+\coreset~\citep{sener-2018}, a diversity-based method for convolutional neural
+networks.
+
+\subsection{\badge}
+\label{ssec:badge}
+The goal of \badge{} is to sample a diverse and uncertain batch of points for
+training neural networks.
+The algorithm transforms data into representations that encode
+model confidence and then clusters these transformed points.
+First, an unlabeled point~$x$ passes through the trained model to
+obtain its predicted label $\hat{y}$. Next, a \textbf{gradient embedding} $g_x$ is
+computed for $x$ such that it embodies the gradient of the cross-entropy loss
+on
+$(f(x; \theta), \hat{y})$
+with respect to the parameters of the model's last layer.
+The gradient embedding is
+\begin{equation}
+\label{eq:badge}
+(g_x)_i =  (f(x; \theta)_i- \mathbbm{1} (\hat{y} = i))h(x; W).
+\end{equation}
+The $i$-th block of~$g_x$ is the hidden representation~$h(x; W)$ scaled by
+the difference between model confidence score $f(x; \theta)_i$ and an
+indicator function
+$\mathbbm{1}$ that indicates whether the predictive label~$\hat{y}$ is label~$i$.
+Finally,
+\badge{} chooses a batch to sample by applying \kmpp{}~\citep{arthur-2006} on
+the gradient embeddings.
+These embeddings consist of model confidence scores and hidden
+representations, so they encode information about both uncertainty and
+the data distribution.
+By applying \kmpp{} on the gradient embeddings, the
+ chosen examples differ in feature representation and predictive uncertainty.
+
+
+\subsection{Limitations}
+\badge{} combines uncertainty and diversity sampling to profit from advantages
+of both methods but also brings the downsides of both:
+reliance on warm-starting and computational inefficiency.
+
+
+\subsubsection{Model Uncertainty and Inference}
+\label{ssec:uncertainty}
+
+\citet{dodge-2020} observe that training is highly unstable when fine-tuning
+pre-trained language models on small datasets.
+Accuracy significantly varies across different random initializations.
+The model has not fine-tuned on
+enough examples, so model confidence is an
+unreliable measure for uncertainty.
+While \badge{} improves over
+uncertainty-based methods, it still relies on confidence scores $f(x; \theta)_i$ when
+computing the gradient embeddings (Equation~\ref{eq:badge}).
+Also, it uses
+labels inferred by the model to compensate for lack of supervision
+in \al{}, but this inference is inaccurate for ill-trained models.
+Thus, warm-start methods may suffer from problems with model uncertainty or
+inference.
+
+\subsubsection{Algorithmic Efficiency}
+Many diversity-based methods involve distance comparison between embedding
+representations, but this computation can be expensive, especially in
+high-dimensional space.
+For instance, \coreset{} is a
+farthest-first traversal in the embedding space where it chooses the farthest point
+from the set of points already chosen on each iteration~\citep{sener-2018}.
+The embeddings may appropriately represent the data, but issues, like the ``curse of
+dimensionality''~\citep{beyer-1999} and the ``hubness
+problem''~\citep{tomasev-2013}, persist.  As the dimensionality increase, the
+distance between any two points converges to the same value.
+Moreover, the gradient embeddings in \badge{} have dimensionality of $Cd$ for a
+$C$-way classification task with data dimensionality of $d$
+(Equation~\ref{eq:badge}).
+These issues make distance comparison between gradient embeddings less meaningful and
+raises costs to compute those distances.
+
+

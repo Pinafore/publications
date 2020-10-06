@@ -9,7 +9,11 @@
 
 \usepackage[T1]{fontenc}
 \usepackage{lmodern}
-\usepackage[size=custom,height=91.44, width=121.92,scale=1.0]{beamerposter}
+%\usepackage[size=custom,height=91.44, width=121.92,scale=1.0]{beamerposter}
+
+\usepackage[scale=1.0]{beamerposter}
+\setlength{\paperwidth}{48in}
+\setlength{\paperheight}{36in}
 \usetheme{gemini}
 \usecolortheme{mit}
 \usepackage{graphicx}
@@ -87,6 +91,11 @@
 \begin{document}
 
 \begin{frame}[t]
+
+\begin{tikzpicture}[remember picture,overlay]
+\draw [line width=1cm,black] (current page.south east) rectangle (current page.north west);
+\end{tikzpicture}
+
 \begin{columns}[t]
 \edgecolumn
 
@@ -154,13 +163,13 @@ This decomposition (Eq.~\ref{eq:q}) resembles the topic distribution of ``liner'
 \separatorcolumn
 
 
-\begin{column}{1.25\colwidth}
+\begin{column}{1.5\colwidth}
 
   \begin{block}{Bridging Languages: How Do You Say Anchor in Chinese?}
   	
   	\begin{columns}[t, totalwidth=\linewidth]
 	
-	\begin{column}{0.27\textwidth}
+	\begin{column}{0.32\textwidth}
 	\header{Monolingual Anchoring}
 	
     
@@ -193,7 +202,7 @@ The goal is to maximize total span of anchor words so that each row in $\bar{Q}$
     
 \end{column}
 
-\begin{column}{0.67\textwidth}
+\begin{column}{0.62\textwidth}
 \header{Multilingual Anchoring}
 
 The challenge for multilingual topic modeling is to align topics cross-lingually even when words from different languages do not co-occur in the same documents.
@@ -232,14 +241,14 @@ Then, it finds anchor words such that they are linked and can simultaneously exp
 \separatorcolumn
 
 
-\begin{column}{\colwidth}
+\begin{column}{0.75\colwidth}
 	
 	\begin{block}{MTAnchor: Interactive Topic Modeling}
 		
 		\header{User Interface}
 		\begin{figure}
 			\centering
-			\includegraphics[width=0.8\linewidth]{ui_final}
+			\includegraphics[width=0.9\linewidth]{ui_final}
 		\end{figure}
 	
 		\vspace{2cm}
@@ -248,11 +257,11 @@ Then, it finds anchor words such that they are linked and can simultaneously exp
 %		We invited twenty users through Mechanical Turk to participate in the user study.  Each participant was given a maximum of thirty minutes to interact with MTAnchor.  The graphs below show the changes in classification accuracy (using topics as features) over time.
 		\begin{figure}
 			\centering
-			\includegraphics[width=0.6\linewidth]{user_exp} 
+			\includegraphics[width=0.8\linewidth]{user_exp} 
 		\end{figure}
 		\begin{figure}
 			\centering
-			\includegraphics[width=0.6\linewidth]{usertest}
+			\includegraphics[width=0.8\linewidth]{usertest}
 		\end{figure}
 		
 	\end{block}
@@ -262,9 +271,9 @@ Then, it finds anchor words such that they are linked and can simultaneously exp
 	
 	\begin{itemize}
 	\item Code: \url{https://github.com/forest-snow/mtanchor_demo/}
-	\item Author: 
-	\url{http://www.cs.umd.edu/~myuan/}
-	\item This work was supported in part by the JHU Human Language Technology Center of Excellence (HLTCOE) and Raytheon BBN Technologies, by DARPA award HR0011-15-C-0113.
+%	\item Author: 
+%	\url{http://www.cs.umd.edu/~myuan/}
+	\item This work was supported in part by the JHU Human Language Technology Center of Excellence (HLTCOE) and Raytheon BBN Technologies, by DARPA award HR0011-15-C-0113
 	\end{itemize}
 	
 	  \end{alertblock}
@@ -280,7 +289,7 @@ Then, it finds anchor words such that they are linked and can simultaneously exp
 \header{Speed and Classification Accuracy}
     \begin{figure}
     	\centering
-    	\includegraphics[width=0.8\linewidth]{methods_wiki}
+    	\includegraphics[width=0.9\linewidth]{methods_wiki}
     \end{figure}
 
 	
@@ -289,8 +298,8 @@ Then, it finds anchor words such that they are linked and can simultaneously exp
 	\centering
 	\scriptsize
 	\begin{tabular}{llllll} \\
-		& & \multicolumn{4}{c}{Topic coherence} \\
-		\cmidrule(r){3-6}
+%		& & \multicolumn{4}{c}{Topic coherence} \\
+%		\cmidrule(r){3-6}
 		Dataset & Method & \abr{en-i} & \makecell{\abr{zh-i}\\\abr{si-i}} & \abr{en-e} & \makecell{\abr{zh-e}\\\abr{si-e}} \\
 		\midrule 
 		Wikipedia & \makecell{Multilingual\\anchoring} & 0.14 & 0.18 & 0.08 & 0.13  \\

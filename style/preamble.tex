@@ -47,6 +47,7 @@
 \usepackage{microtype}
 \usepackage{multirow}
 \usepackage{multicol}
+\usepackage{todonotes}
 % Don't use hyperref or url, as it can screw up AAAI / ICML formatting
 %\usepackage{url}
 \usepackage{latexsym,comment}
@@ -58,25 +59,25 @@
 \newcommand*{\missingcitation}{{\Huge \colorbox{red}{?citation?}}}
 \makeatletter
 \def\@setref#1#2#3{%
-  \ifx#1\relax
-    \protect\G@refundefinedtrue
-    \nfss@text{\reset@font\missingreference}%
-    \@latex@warning{Reference `#3' on page \thepage \space
-      undefined}%
-  \else
-    \expandafter#2#1\null
-  \fi}
+    \ifx#1\relax
+        \protect\G@refundefinedtrue
+        \nfss@text{\reset@font\missingreference}%
+        \@latex@warning{Reference `#3' on page \thepage \space
+            undefined}%
+    \else
+        \expandafter#2#1\null
+    \fi}
 \def\@citex[#1]#2{\leavevmode
-  \let\@citea\@empty
-  \@cite{\@for\@citeb:=#2\do
-    {\@citea\def\@citea{,\penalty\@m\ }%
-      \edef\@citeb{\expandafter\@firstofone\@citeb\@empty}%
-      \if@filesw\immediate\write\@auxout{\string\citation{\@citeb}}\fi
-      \@ifundefined{b@\@citeb}{\hbox{\reset@font\missingcitation}%
-        \G@refundefinedtrue
-        \@latex@warning
-        {Citation `\@citeb' on page \thepage \space undefined}}%
-      {\@cite@ofmt{\csname b@\@citeb\endcsname}}}}{#1}}
+    \let\@citea\@empty
+    \@cite{\@for\@citeb:=#2\do
+        {\@citea\def\@citea{,\penalty\@m\ }%
+            \edef\@citeb{\expandafter\@firstofone\@citeb\@empty}%
+            \if@filesw\immediate\write\@auxout{\string\citation{\@citeb}}\fi
+            \@ifundefined{b@\@citeb}{\hbox{\reset@font\missingcitation}%
+                \G@refundefinedtrue
+                \@latex@warning
+                {Citation `\@citeb' on page \thepage \space undefined}}%
+            {\@cite@ofmt{\csname b@\@citeb\endcsname}}}}{#1}}
 \makeatother
 
 \newcommand{\feat}[1]{{\small \texttt{#1}}}
@@ -112,7 +113,7 @@
 
 \renewenvironment{quote}
 {\list{}{\rightmargin\leftmargin}%
-  \item\relax\small\ignorespaces}
+    \item\relax\small\ignorespaces}
 {\unskip\unskip\endlist}
 
 \DeclareMathOperator*{\argmax}{arg\,max}
@@ -137,12 +138,10 @@
 \newcommand{\hidetext}[1]{}
 \newcommand{\ignore}[1]{}
 
-\newcommand{\todo}[1]{\textcolor{red}{{\bf TODO: #1}}}
-
 \ifcomment
-  \newcommand{\pinaforecomment}[3]{\colorbox{#1}{\parbox{.8\linewidth}{#2: #3}}}
+    \newcommand{\pinaforecomment}[3]{\colorbox{#1}{\parbox{.8\linewidth}{#2: #3}}}
 \else
-  \newcommand{\pinaforecomment}[3]{}
+    \newcommand{\pinaforecomment}[3]{}
 \fi
 
 \newcommand{\jbgcomment}[1]{\pinaforecomment{red}{JBG}{#1}}
@@ -155,6 +154,8 @@
 \newcommand{\tncomment}[1]{\pinaforecomment{blue}{TN}{#1}}
 \newcommand{\mnicomment}[1]{\pinaforecomment{green}{Mohit}{#1}}
 \newcommand{\prcomment}[1]{\pinaforecomment{lightblue}{Pedro}{#1}}
+\newcommand{\prtodo}[1]{\todo[backgroundcolor=lightblue,linecolor=lightblue,author=Pedro]{#1}}
+\newcommand{\prtodoi}[1]{\todo[inline,backgroundcolor=lightblue,linecolor=lightblue,author=Pedro]{#1}}
 \newcommand{\fscomment}[1]{\pinaforecomment{orange}{Shi}{#1}}
 \newcommand{\vmcomment}[1]{\pinaforecomment{yellow}{Varun}{#1}}
 \newcommand{\rscomment}[1]{\pinaforecomment{yellow}{Richard}{#1}}
@@ -180,7 +181,8 @@
 \newcommand{\pgcomment}[1]{\pinaforecomment{cyan}{Pranav}{#1}}
 \newcommand{\dpcomment}[1]{\pinaforecomment{cyan}{Denis}{#1}}
 \newcommand{\bencomment}[1]{\pinaforecomment{lightblue}{Ben}{#1}}
-\newcommand{\myuancomment}[1]{\pinaforecomment{violet}{Michelle}{#1}}
+\newcommand{\mycomment}[1]{\pinaforecomment{pink}{Michelle}{#1}}
+\newcommand{\nrcomment}[1]{\pinaforecomment{red}{Naveen}{#1}}
 
 \newcommand{\smalltt}[1]{ {\tt \small #1 }}
 \newcommand{\smallurl}[1]{ \begin{tiny}\url{#1}\end{tiny}}
@@ -196,8 +198,10 @@
 
 % Datasets / Models
 
-\newcommand{\qb}[0]{Quizbowl}
+\newcommand{\qb}[0]{\abr{qb}}
 \newcommand{\qa}[0]{\abr{qa}}
+\newcommand{\nlp}[0]{\abr{nlp}}
+\newcommand{\ml}[0]{\abr{ml}}
 \newcommand{\triviaqa}{\camelabr{Trivia}{qa}}
 \newcommand{\searchqa}{\camelabr{Search}{qa}}
 \newcommand{\wikiqa}{\camelabr{Wiki}{qa}}
@@ -207,6 +211,7 @@
 \newcommand{\qanta}{\textsc{qanta}}
 \newcommand{\muse}{\textsc{muse}}
 \newcommand{\squad}{\textsc{sq}{\small u}\textsc{ad}}
+\newcommand{\nq}[0]{\abr{nq}}
 \newcommand{\conll}{\textsc{c}{\small o}\textsc{nll}}
 \newcommand{\hotpot}{\abr{h}{\small otpot}\abr{qa}}
 \newcommand{\fever}{\abr{fever}}
@@ -220,4 +225,3 @@
 \newcommand{\bert}{\abr{bert}}
 \newcommand{\drqa}{\abr{d}{\small r}\abr{qa}}
 \newcommand{\docqa}{\abr{d}{\small oc}\abr{qa}}
-

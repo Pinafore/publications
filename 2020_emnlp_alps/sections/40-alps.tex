@@ -1,0 +1,165 @@
+\begin{figure}[t]
+\centering
+\includegraphics[width=\linewidth]{\figfile{alps.pdf}}
+\caption{To form surprisal embedding $s_x$ for sentence $x$, we pass in unmasked $x$
+    through the \bert~\mlm{} head and compute cross-entropy loss for a random
+15\% subsample of tokens
+against the target labels.  The unsampled tokens have entries of zero in $s_x$.
+\alps{} clusters these surprisal embeddings to sample sentences for \al{}.}
+\label{fig:mlm}
+\end{figure}
+
+\section{A Self-supervised Active Learner}
+Cold-start \al{} is challenging because of the shortage in labeled data.
+Prior work, like \badge{}, often depend on model uncertainty or inference,
+but these measures can be unreliable if the model has not trained on enough
+data (Section~\ref{ssec:uncertainty}).
+To overcome the lack of supervision, what if we apply
+self-supervision to \al{}?  For \abr{nlp}, the language modeling task is
+self-supervised because the label for each token is the token itself.  If the task
+has immensely improved transfer learning, then it may reduce
+generalization error in \al{} too.
+
+For our approach, we adopt the uncertainty-diversity \badge{} framework for
+clustering embeddings that encode information about uncertainty.
+However, rather than relying on the classification loss gradient, we use the
+\mlm{} loss to bootstrap uncertainty estimates.  Thus, we
+combine uncertainty and diversity sampling for cold-start \al{}.
+
+
+\subsection{Masked Language Modeling}
+
+To pre-train \bert{} with \mlm{}, input tokens
+are randomly masked, and the model needs to predict the token labels of
+the masked tokens.  \bert{} is bidirectional, so it uses context from the left
+and right of the masked token to make predictions.
+\bert{} also uses next sentence prediction for pre-training, but this
+task shows minimal effect for fine-tuning~\citep{liu-2019}.  So, we
+focus on applying \mlm{} to \al{}.  The \mlm{} head can
+capture syntactic phenomena~\citep{goldberg-2019} and performs well on psycholinguistic
+tests~\citep{ettinger-2020}.
+
+\begin{algorithm}[!t]
+\caption{Single iteration of \alps}
+\label{alg:alps}
+\begin{algorithmic}[1]
+    \Require Pre-trained encoder $h(x; W_0)$, unlabeled data pool
+    $\mathcal{U}$, number of queries $k$
+    \For {sentences $x \in \mathcal{U}$}
+        \State Compute $s_x$ with \mlm~head of $h(x; W_0)$
+    \EndFor
+    \State $\mathcal{M} = \{s_x \mid x \in \mathcal{U}\}$
+    \State $\mathcal{C} \gets$ \km~cluster centers of $\mathcal{M}$
+    \State $\mathcal{Q} = \{\arg\min_{x \in \mathcal{U}} \norm{c-s_x}  | c \in \mathcal{C}  \}$
+    \State \Return $\mathcal{Q}$
+\end{algorithmic}
+\end{algorithm}
+
+\subsection{\alps}
+
+
+\paragraph{Surprisal Embeddings}
+Inspired by how \badge{} forms gradient embeddings from the
+classification loss, we create \textbf{surprisal embeddings} from language
+modeling.  For sentence $x$, we compute surprisal embedding $s_x$ by evaluating
+$x$ with the \mlm{} objective.
+To evaluate \mlm{} loss, \bert{} randomly masks 15\% of the tokens in $x$ and
+computes cross-entropy loss for the
+masked tokens against their true token labels.
+When computing surprisal embeddings, we
+make one crucial change: \textit{none of the tokens are masked when the input is
+passed into \bert}.  However, we still randomly choose 15\% of the tokens in the
+input to evaluate with cross-entropy against their target token labels.  The
+unchosen tokens are assigned a loss of zero as they are not evaluated (Figure~\ref{fig:mlm}).
+
+These decisions for not masking input (Appendix~\ref{ssec:mask}) and
+evaluating only 15\% of tokens (Appendix~\ref{ssec:sample}) are made because of
+experiments on the validation set.
+Proposition~\ref{theorem:surprisal} provides insight on the information
+encoded in surprisal
+embeddings.
+Finally, the surprisal embedding is $l_2$-normalized as
+normalization improves
+clustering~\citep{aytekin-2018}.
+If the input sentences have a fixed length of $l$, then the surprisal embeddings
+have dimensionality of $l$.  The length $l$ is usually less than the hidden
+size of \bert{} embeddings.
+
+
+\begin{theorem}
+\label{theorem:surprisal}
+For an unnormalized surprisal embedding $s_x$,
+each nonzero entry $(s_x)_i$ estimates $I(w_i)$, the surprisal of its
+corresponding token within the context of sentence $x$.
+\end{theorem}
+
+
+\begin{proof}
+Extending notation from Section~\ref{sec:prelim}, assume that $m$ is the \mlm{} head, with parameters $\phi = (W,
+Z)$, which maps
+input $x$ to a $l \times |\mathcal{V}|$ matrix $m(x;\phi)$. The $i$th row
+$m(x;\phi)_i$
+contains prediction scores for $w_i$, the $i$th token in $x$.  Suppose that
+$w_i$ is the $j$th token in vocabulary $\mathcal{V}$.
+Then, $m(x;\phi)_{i,j}$ is the
+likelihood of predicting $w_i$ correctly.
+
+Now, assume that context is the entire input $x$ and define the language model
+probability $p_{m}$ as,
+\begin{equation}
+    p_{m}(w_i \given{} x) = m(x; \phi)_{i,j}.
+\label{eq:estimate}
+\end{equation}
+\citet{salazar-2020} have a similar definition as Equation~\ref{eq:estimate}
+but instead have defined it in terms of the masked input.  We argue that
+their definition can be extended to the unmasked input $x$. During
+\bert{} pre-training, the \mlm{} objective is evaluated on the
+\texttt{[MASK]} token for 80\% of the time, random token for 10\% of the
+time, and the original token for 10\% of the time. This helps maintain
+consistency across pre-training and fine-tuning because \texttt{[MASK]} never appears in
+fine-tuning~\citep{devlin-2019}.  Thus, we assume that $m$ estimates occurrence of tokens within a maskless
+context as well.
+
+Next, the information-theoretic surprisal~\citep{shannon-1948} is defined as $I(w) = -\log p
+(w \given{} c)$, the negative log likelihood of word $w$ given context $c$.
+If $w_i$ is sampled and evaluated, then the $i$th entry
+of the unnormalized surprisal embedding is,
+\begin{align*}
+    (s_x)_i &= - \log m(x; \phi)_{i,j} = - \log p_m(w_i \given x) \\
+            &= I(w_i).
+\end{align*}
+\end{proof}
+
+Proposition~\ref{theorem:surprisal} shows that the surprisal embeddings comprise
+of estimates for token-context surprisal. Intuitively, these values can help
+with \al{} because they highlight the information missing from the pre-trained
+model.
+For instance, consider the sentences: ``this is my favorite television show''
+and ``they feel ambivalent about catholic psychedelic synth folk music''.
+Tokens from the latter have higher surprisal than those from the former.  If this is a
+sentiment classification task, the second sentence is more confusing for
+the classifier to learn.  The surprisal embeddings indicate
+sentences challenging for the pre-trained model to understand and
+difficult for the fine-tuned model to label.
+
+The most surprising sentences contain many rare tokens.
+If we only train our model on the most surprising sentences, then it may
+not generalize well across different examples.
+Plus, we may sample several atypical
+sentences that are similar to each other, which is often an issue for
+uncertainty-based methods~\citep{kirsch-2019}.  Therefore, we incorporate clustering in \alps{} to
+maintain diversity.
+
+\paragraph{\km~Clustering}
+After computing surprisal embeddings for each sentence in the unlabeled pool, we
+use \km{} to cluster the surprisal embeddings.  Then, for each
+cluster center, we select the
+sentence that has the nearest surprisal embedding to it.  The final set of sentences
+are the queries to be labeled by an oracle (Algorithm~\ref{alg:alps}).  Although
+\badge{} uses \kmpp{} to cluster, experiments show that \km{} works better for
+surprisal embeddings (Appendix~\ref{ssec:km}).
+
+
+
+
+

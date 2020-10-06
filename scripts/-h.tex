@@ -1,0 +1,30 @@
+
+\documentclass{article}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Put these commands before you \begin{document}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newif\ifcomment\commenttrue
+%\newif\ifcomment\commentfalse
+\input{style/preamble}
+
+\newcommand{\latexfile}[1]{\input{-h/sections/#1}}
+\newcommand{\figfile}[1]{-h/figures/#1}
+\newcommand{\autofig}[1]{-h/auto_fig/#1}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\begin{document}
+
+\latexfile{00-abstract}
+\latexfile{10-intro}
+
+This paper~\cite{Nguyen:Boyd-Graber:Lund:Seppi:Ringger-2015} should be cited more.
+
+\bibliographystyle{plain}
+\bibliography{bib/journal-full,bib/jbg}
+
+\end{document}
+
+

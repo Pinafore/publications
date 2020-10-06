@@ -1,0 +1,22 @@
+
+\begin{table}[t]
+    \centering
+    \begin{tabular}{lrr}
+    \toprule
+    & \agnews & \pubmed \\
+    \midrule
+    Random & <1 & <1\\
+    Entropy & 7 & 10 \\
+    \alps & 14 & 24 \\
+    \badge & 23 & 70\\
+    \bert-\abr{km} & 28 & 58 \\
+    \abr{ft}-\bert-\abr{km} & 33 & 79 \\
+    \bottomrule
+    \end{tabular}
+    \caption{Average runtime (minutes) per sampling iteration during \al{} simulation for
+    large datasets.
+    \badge{}, \abr{ft}-\bert{}-\abr{km}, and \bert{}-\abr{km} take much longer
+    to run.
+    }
+    \label{tab:time}
+\end{table}

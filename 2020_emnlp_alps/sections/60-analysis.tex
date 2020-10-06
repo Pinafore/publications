@@ -1,0 +1,158 @@
+
+\latexfile{time.tex}
+\begin{figure}[t]
+    \centering
+    \includegraphics[width=\linewidth]{\autofig{analysis.pdf}}
+    \caption{Plot of diversity against uncertainty estimates from \al{}
+        simulations for \agnews{} and \pubmed.
+        Each point represents a sampled batch
+    of sentences from the \al{} experiments.
+The shape indicates the strategy used to sample
+the sentences.  The color indicates the sample iteration.  The lightest color
+corresponds to the first iteration and the darkest color
+represents the tenth iteration.  While uncertainty estimates are similar across
+different batches, \alps{} shows a consistent increase in diversity without drops in
+uncertainty.}
+    \label{fig:analysis}
+\end{figure}
+\latexfile{tsne.tex}
+
+\section{Analyzing \alps}
+\label{sec:analysis}
+
+
+\paragraph{Sampling Efficiency}
+Given that the gradient embeddings are computed, \badge{} has a time complexity of
+$\mathcal{O}(Cknd)$ for a $C$-way classification task, $k$ queries, $n$ points in the
+unlabeled pool, and $d$-dimensional \bert~embeddings.  Given that the surprisal
+embeddings are computed, \alps{} has a time
+complexity of $\mathcal{O}(tknl)$ where $t$ is the fixed number of iterations
+for \km{} and $l$ is the maximum sequence length.  In our experiments, $k = 100$,
+$d=768$, $t=10$, and $l=128$.  In practice, $t$ will not change much, but~$n$
+and~$C$
+could be much higher.
+For large dataset \pubmed, the average runtime per iteration is 24 minutes for
+\alps{} and 70 minutes for \badge{} (Table~\ref{tab:time}).  So, \alps{} can match \badge's accuracy more quickly.
+
+
+\paragraph{Diversity and Uncertainty}
+
+We estimate diversity and uncertainty for data sampled across different
+strategies.
+For
+diversity, we look at the overlap between tokens in the
+sampled sentences and tokens from the rest of the data pool.
+A diverse
+batch of sentences should share many of the same tokens with the data
+pool.
+In other words, the sampled sentences can represent the data pool because of
+the substantial
+overlap between their tokens.
+In our simulations,
+the entire data pool is the training dataset (Section~\ref{sec:experiments}).
+So, we compute the Jaccard similarity between $\mathcal{V}_D$, set of
+tokens from the sampled sentences $\mathcal{D}$, and $\mathcal{V}_{D'}$, set of
+tokens from the unsampled sentences $\mathcal{U} \setminus \mathcal{D}$,
+\begin{equation}
+    G_d(\mathcal{D}) = J(\mathcal{V}_D, \mathcal{V}_{D'}) =
+\frac{|\mathcal{V}_D \cap \mathcal{V}_{D'}|}{|\mathcal{V}_D \cup
+\mathcal{V}_{D'}|}.
+\end{equation}
+If $G_d$ is high, this indicates high diversity because the sampled
+and unsampled sentences have many tokens in common.
+If $G_d$ is low, this indicates poor diversity and representation.
+
+To measure uncertainty, we use $f(x,\theta_{*})$, the classifier
+trained on the full training dataset.   In our experiments, classifier
+$f(x,\theta_{*})$ has high accuracy (Figure~\ref{fig:seqcls}) and inference is stable
+after training on many examples.  Thus, we can use the logits from the
+classifier to understand its uncertainty toward a particular sentence. First, we
+compute predictive entropy of sentence $x$ when evaluated by model $f(x,\theta_{*})$.  Then, we
+take the average of predictive entropy over all sentences in a sampled batch
+$\mathcal{D}$.
+We use the average predictive entropy to esimate uncertainty of the sampled
+sentences,
+\begin{equation}
+    G_u(\mathcal{D}) = \frac{1}{|\mathcal{D}|} \sum_{x \in \mathcal{D}} \sum_{i=1}^{C}
+    (f(x; \theta_{*})_i) \ln (f(x; \theta_{*})_i)^{-1}.
+\end{equation}
+We compute $G_d$ and $G_u$ for batches sampled in the \al{}
+experiments of \agnews{} and \pubmed.  Diversity is plotted against uncertainty for
+batches sampled across different iterations and \al{} strategies
+(Figure~\ref{fig:analysis}).  For \agnews{}, $G_d$ and $G_u$ are
+relatively low for \alps{} in the first iteration.  As iterations
+increase, samples from \alps{} increase in diversity and decrease minimally in
+uncertainty.
+Samples from other methods have a larger drop in uncertainty as iterations
+increase.
+For \pubmed, \alps{} again increases in sample diversity without
+drops in uncertainty.  In the last iteration, \alps{} has the highest diversity
+among all the algorithms.
+
+
+
+
+
+
+
+\paragraph{Surprisal Clusters}
+
+Prior work use \km{} to cluster feature representations as a cold-start
+\al{} approach~\citep{zhu-2008,zalan-2011}.
+Rather than clustering \bert{} embeddings, \alps{} clusters
+surprisal embeddings.
+We compare the clusters between surprisal embeddings and \bert{} embeddings to
+understand the structure of the surprisal clusters.
+First, we use t-\abr{sne}~\citep{maaten-2008} to plot the embeddings for each sentence
+in the
+\abr{imdb} training set (Figure~\ref{fig:embed}).
+The labels are not well-separated for both embedding sets, but
+the surprisal embeddings seem easier to cluster.
+To quantitively measure
+cluster quality, we use the Silhouette Coefficient for which larger values indicate
+desirable clustering~\citep{rousseeuw-1987}. The surprisal clusters have
+a coefficient of 0.38, whereas the \bert{} clusters have a coefficient of only 0.04.
+
+These results, along with the classification experiments, show that
+na\"ively clustering \bert{} embeddings is not suited for \al{}.
+Possibly, more complicated clustering algorithms can capture the
+intrinsic structure of the \bert{} embeddings.  However, this would increase
+the algorithmic complexity and runtime.
+Alternatively, one can map the feature representations to a space where simple
+clustering algorithms work well.  During this transformation,
+important information
+for \al{} must be preserved and extracted.
+Our approach uses the \mlm{} head, which has already been trained on
+extensive corpora, to map the \bert{} embeddings into the surprisal
+embedding space.  As a result, simple \km{} can efficiently choose representative
+sentences.
+
+
+
+
+
+\paragraph{Single-iteration Sampling}
+\latexfile{single.tex}
+
+In Section~\ref{sec:experiments}, we sample data iteratively
+(Algorithm~\ref{alg:active}) to fairly compare the
+different \al{} algorithms.  However, \alps~does not require
+updating
+the classifier because it only depends on the pre-trained encoder.  Rather than
+sampling data in small batches and re-training the model, \alps~can sample a
+batch of $k$ sentences in one iteration (Algorithm~\ref{alg:alps}).
+Between using \alps{} iteratively and deploying the algorithm for a single iteration, the
+difference is insignificant (Table~\ref{tab:single}). Plus, sampling 1{,}000
+sentences only takes about 97 minutes for \pubmed{} and 7 minutes for \abr{imdb}.
+
+With this flexibility in sampling,
+\alps{} can accommodate different budget
+constraints.  For example, re-training the classifier
+may be costly, so users want a sampling algorithm that can query $k$ sentences all at
+once.  In other cases, annotators are not always available, so the
+number of obtainable annotations is unpredictable.
+Then, users would prefer an \al{} strategy that can query a variable number of
+sentences for any iteration.  These cases illustrate practical
+needs for a cold-start algorithm like \alps{}.
+
+

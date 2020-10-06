@@ -1,0 +1,30 @@
+\section{Related Work}
+Active learning has shown success in tasks,
+such as named entity recognition~\citep{shen-2004}, word sense
+disambiguation~\citep{zhu-2007}, and sentiment analysis~\citep{li-2012}.
+\citet{wang-2014} are the first to adapt prior \al{} work to deep learning.
+However, popular heuristics~\citep{settles-2009} for querying individual
+points do not work as well in a batch setting.
+Since then, more research has been conducted on batch \al{} for deep learning.
+\citet{zhang-2017} propose the first work on \al{} for neural text
+classification.  They assume that the classifier is a convolutional neural
+network and use expected gradient length~\citep{settles-2008} to choose
+sentences that contain words with the most label-discriminative embeddings.
+Besides text classification, \al{} has been applied to neural models for semantic
+parsing~\citep{duong-2018}, named entity recognition~\citep{shen-2018}, and
+machine translation~\citep{liu-2018}.
+
+
+\alps~makes use of \bert, a model that excels at transfer learning.  Other
+works also combine \al{} and transfer learning to select training data that
+reduce generalization error.  \citet{rai-2010} measures
+domain divergence from the source domain to select the most informative texts in the target domain.
+\citet{xwang-2014} use \al{} to query points for a target task through matching conditional
+distributions.  Additionally, combining word-level and document-level
+annotations can improve knowledge transfer~\citep{settles-2011,yuan-2020-clime}.
+
+In addition to uncertainty and diversity sampling, other areas of deep \al{} focus on
+Bayesian approaches~\citep{siddhant-2018,kirsch-2019} and reinforcement
+learning~\citep{fang-2017}.  An interesting research direction can
+integrate one of these approaches with \alps{}.
+
