@@ -1,0 +1,98 @@
+\section{Interactive Neighborhood Reshaping}
+\label{sec:ui}
+
+\begin{figure*}
+\centering
+\includegraphics[width=.8\linewidth]{\figfile{ui-fr.pdf}}
+\caption{\label{fig:ui} The \name{} interface displays a keyword on top while
+    its nearest neighbors in the two languages appear in the two columns below.
+    A user can accept or reject each neighbor, and add new neighbors by typing
+    them in the ``add word'' textboxes.  They may also click on any word to read
+    its context in the training set.}
+\end{figure*}
+
+This section introduces the interface designed to solicit human feedback on
+neighborhoods of \abr{clwe} and our keyword selection criterion.
+Suppose that we have two languages with vocabulary
+$\mathcal{V}_1$ and~$\mathcal{V}_2$.  Let $\vect{E}$ be a pre-trained \abr{clwe} matrix, where $\vect{E}_w$ is the vector representation of
+word type $w$ in the joint vocabulary $\mathcal{V} = \mathcal{V}_1 \cup
+\mathcal{V}_2$.
+Our goal is to help a bilingual novice (i.e., not a machine learning expert) improve the \abr{clwe} $\vect{E}$ for a downstream task
+through inspection of neighboring words.
+
+\subsection{Keyword Selection}
+\label{ssec:rank}
+
+With limited annotation time, users cannot vet the entire vocabulary.
+Instead, we need to find a small salient subset of \emph{keywords} $\mathcal{K}
+\subseteq \mathcal{V}$ whose embeddings, if vetted, would most improve a
+downstream task.
+For example, if the downstream task is sentiment analysis, our keywords set
+should include sentiment words such as ``good'' and ``bad''.
+Prior work in active learning solicits keywords using information
+gain~\citep{raghavan-06,druck-09,settles-11-fixed}, but this cannot be applied
+to continuous embeddings.
+\citet{li-16} suggest that the contribution of one dimension of a word
+embedding to the loss function can be approximated by the absolute value of its
+partial derivative, and therefore they use partial derivatives to visualize the
+behavior of neural models.
+However, rather than understanding the importance of individual dimensions, we
+want to compute the salience of an \emph{entire word vector}.
+Therefore, we extend their idea by defining the salience of a word embedding as
+the \emph{magnitude} of the loss function's gradient.
+This score summarizes salience of all dimensions from a word embedding.
+Formally, let $\vect{x} = \langle x_1, x_2, \cdots,
+x_n \rangle$ be a document of $n$ words with label $y$; let $L$ be the training
+loss function of the downstream model.
+We measure the example-level salience of word $x_i$ in document
+$\vect{x}$ as
+\begin{equation}   S_{\vect{x}}(x_i) = \norm{\nabla_{\vect{E}_{x_i}} L(\vect{x}, y)}_2.
+\label{eq:salience1}
+\end{equation}
+
+Equation~\ref{eq:salience1} measures the local contribution of a token in one
+document, but we are interested in the global importance of a word type across
+many documents.
+To compute the global salience score of a word type~$w$, we add example-level salience
+scores of all token occurrences of a word type $w$ in a large labeled dataset $\vect{X}$ and
+multiply by the inverse document frequency~(\abr{idf}) of $w$:
+\begin{equation}
+S(w) = \abr{idf}(w, \vect{X}) \cdot \sum_{\vect{x} \in
+\vect{X}: w \in \vect{x}} S_{\vect{x}}(w).
+\label{eq:salience2}
+\end{equation}
+The \abr{idf} term is necessary because it discounts \emph{stop words} with
+high document frequency (e.g., ``the'' and ``of'').
+These words are often irrelevant to the downstream task and thus have low example-level salience, but they have high total salience because they appear in many examples.
+
+Based on Equation~\ref{eq:salience2}, we choose the top-$s$ most salient words as the keyword set $\mathcal{K}$.
+The hyperparameter $s$ is the number of keywords displayed to the user, which controls the
+length of a \name{} session.  We limit $s$ to fifty in experiments.
+
+\subsection{User Interaction}
+\label{ssec:interaction}
+For each keyword $k$, we want to collect a positive set $\mathcal{P}_k$ with
+semantically similar words, and a negative set $\mathcal{N}_k$ with unrelated
+words.
+To specialize embeddings for a classification task, we ask the user to
+consider semantic similarity as \emph{inducing a similar label}.
+For example, if the task is English--French sentiment analysis, then ``good'' should be considered similar to ``excellent'' and ``g\'enial''
+but dissimilar to ``bad'' and ``d\'ecevant''.
+On the interface, the keyword $k$ is displayed on the top, and its nearest neighbors in the
+two languages are arranged in two columns (Figure~\ref{fig:ui}).
+The neighbors are the words~$w$ with embeddings $\vect{E}_w$ closest to
+$\vect{E}_k$ in cosine similarity.
+The number of displayed nearest neighbors can be adjusted
+as a hyperparameter, which also controls the session length.
+For each nearest neighbor, the user can either: (1) press on the green
+checkmark to add a positive neighbor to $\mathcal{P}_k$, (2) press on the red
+``X'' mark to add a negative neighbor to $\mathcal{N}_k$, or (3) leave an
+uncertain neighbor alone.
+The ``add word'' textbox lets the user add words that are not in the
+current neighbor list.
+The added word can then be marked as positive or negative.
+Section~\ref{sec:update} explains how \name{} refines the embeddings with the feedback sets
+$\mathcal{P}$ and $\mathcal{N}$.
+The interface also provides a word concordance---a brief overview of the contexts
+where a word appears---to disambiguate and clarify words.
+Users can click on any word to find example sentences.

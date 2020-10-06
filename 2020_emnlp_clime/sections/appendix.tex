@@ -1,0 +1,60 @@
+\clearpage
+
+\appendix
+\section{Appendices}
+
+\subsection{Statistical Significance}
+\label{ssec:stats}
+
+\begin{table}[h]
+    \centering
+    \begin{tabular}{llrrr}
+    \toprule
+    Comparison & Model  & $p$ & $t$ & $df$ \\
+    \midrule
+    \multirow[t]{3}{4em}{\name{} vs.  \textbf{Base}}  &  \abr{si(cca)} & <0.01  & 7.64 & 24 \\
+                                                & \abr{si(rcsls)} &
+        <0.01 & 3.62  & 24  \\
+                                                & \abr{il(rcsls)} & <0.01 & 5.16
+                                                & 9 \\ \midrule
+        \multirow[t]{3}{4em}{\name{} vs. \textbf{Active}}  & \abr{si(cca)} &
+        0.07 & 2.00 & 24 \\
+                                                & \abr{si(rcsls)} & <0.01 & -7.09 & 24 \\
+                                                & \abr{il(rcsls)} &
+       <0.01 & 3.96 & 9 \\ \midrule
+        \multirow[t]{3}{4em}{\textbf{A+C} vs. \textbf{Active}}  & \abr{si(cca)}
+                                                          & <0.01  & 4.297 & 24 \\
+                                                & \abr{si(rcsls)} &
+        <0.01 & 3.40 & 24 \\
+                                                & \abr{il(rcsls)} &
+        <0.01 & 13.97 & 9 \\
+    \bottomrule
+    \end{tabular}
+    \caption{Results of single-sample $t$-tests between \name{} and
+    \textbf{Base}, \name{} and \textbf{Active}, and \textbf{A+C} and
+    \textbf{Active}, showing the $p$-value, the $t$ statistic, and the
+    degree of freedoms $df$.
+    \name{} is significantly better
+    than \textbf{Base}, and \textbf{A+C} is significantly
+    better than \textbf{Active} across different languages and embedding models.
+    The only combination with results that are not significantly
+    different is \name{} and \textbf{Active} for Sinhalese
+    (\abr{cca}).
+    }
+    \label{tab:t}
+\end{table}
+
+We run single-sample $t$-tests with $.05$ significance level to see whether
+adding word-level annotations with $\name{}$ can significally improve
+classification accuracy.
+We compare \name{} against \textbf{Base}, \name{} against \textbf{Active}, and
+\textbf{A+C} against \textbf{Active}.  We use the user study results from the
+Sinhalese models (both \abr{cca} and \abr{rcsls}) and the Ilocano model.
+Table~\ref{tab:t} shows that
+\name{} is not
+significantly different from \textbf{Active} for the Sinhalese \abr{cca}
+embeddings but does significantly improve accuracy for the Ilocano model.
+Overall, \name{} is significantly
+different from \textbf{Base} and \textbf{A+C} is significiantly different from
+\textbf{Active} across the experiments for all models.
+

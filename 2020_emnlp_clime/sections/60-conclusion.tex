@@ -1,0 +1,25 @@
+\section{Conclusion and Future Work}
+
+\name{} is an interactive system that enhances \abr{clwe} for a
+ task by asking a bilingual speaker for word-level similarity
+annotations.
+We test \name{} on cross-lingual information triage in international health emergencies for four
+low-resource languages.
+Bilingual users can quickly improve a model with the help of \name{} at a
+faster rate than an active learning baseline.
+Combining active learning with \name{} further improves the system.
+
+\name{} has a modular design with three components: keyword ranking, user
+interface, and embedding refinement.
+The keyword ranking and the embedding refinement modules build upon existing
+methods for interpreting neural networks~\citep{li-16} and fine-tuning word
+embeddings~\citep{mrksic-17}.
+Therefore, future advances in these areas may also improve \name{}.
+Another line of future work is to investigate alternative user interfaces.
+For example, we could ask bilingual users to \emph{rank} nearest
+neighbors~\citep{sakaguchi-18} or provide scalar grades~\citep{hill-15} instead
+of accepting/rejecting individual neighbors.
+
+We also explore a simple combination of active learning and
+\name{}. Simultaneously applying both methods is better than using either alone.
+In the future, we plan to train a policy that dynamically combines the two interactions with reinforcement learning~\citep{fang-17}.

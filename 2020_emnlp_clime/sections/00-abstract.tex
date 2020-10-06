@@ -1,0 +1,11 @@
+
+Cross-lingual word embeddings transfer knowledge between languages: models trained on high-resource languages can predict in low-resource languages.
+We introduce \name{}, an interactive system to
+quickly refine cross-lingual word embeddings for a given classification problem.
+First, \name{} ranks words by their salience to the downstream task.
+Then, users mark similarity between keywords and their nearest neighbors in the embedding space.
+Finally, \name{} updates the embeddings using the annotations.
+We evaluate \name{} on
+identifying health-related text in four low-resource languages: Ilocano, Sinhalese, Tigrinya, and Uyghur.
+Embeddings refined by \name{} capture more \emph{nuanced} word semantics and have higher test accuracy than the original embeddings.
+\name{} often improves accuracy faster than an active learning baseline and can be easily combined with active learning to improve results.

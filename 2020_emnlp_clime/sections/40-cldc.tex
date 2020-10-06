@@ -1,0 +1,341 @@
+\section{Cross-Lingual Classification Experiments}
+\label{sec:experiment}
+
+\begin{table}[t]
+    \centering
+    \begin{tabular}{p{0.1\textwidth}p{0.3\textwidth}}
+	\toprule
+	\textbf{Ilocano} &
+	... Nagtalinaed dagiti pito a balod ti Bureau of Jail Management and
+	Penology (BJMP) ditoy ciudad ti Laoag iti isolation room gapo iti tuko ...\\
+	\midrule
+	\textbf{English} &
+	... Seven inmates from the Bureau of Jail Management and Penology (BJMP),
+	Laoag City, have been transferred to the isolation room due to chicken
+	pox ...\\
+	\bottomrule
+  \end{tabular}
+  \caption{Excerpt of a positive Ilocano test example (top) and its
+  English translation (bottom) that describes a medical emergency.}
+  \label{tab:example}
+\end{table}
+
+\begin{figure*}[t]
+    \centering
+    \includegraphics[width=0.8\textwidth]{\autofig{acc.pdf}}
+    \caption{Test accuracy of four methods on four target languages and two
+    \abr{clwe} methods.
+    \textbf{Base} uses the original \abr{clwe} and the original training
+    set.
+    \textbf{Active} uses the original \abr{clwe} and a training set
+    augmented by active learning.
+    We select and label fifty \emph{target language} documents by
+    uncertainty sampling and combine them with the source
+    language training set.
+    \textbf{\name{}} uses the \abr{clwe} refined by \name{} and the
+    original training set.
+    \textbf{A+C} uses the \abr{clwe} refined by \name{} and a training
+    set augmented by active learning.
+    We control the number of user interactions so that \textbf{Active}, \textbf{\name{}}, and \textbf{A+C}
+    require the similar interaction time~(Section~\ref{ssec:methods}).
+    The Sinhalese and Ilocano results are averaged over multiple users, while
+    we only have one user for other languages.
+    Each subcaption indicates the target language, embedding alignment,
+    number of users, and average time per user.
+    \textbf{\name{}} has higher accuracy than \textbf{Active} on four of the
+    five embeddings, and the combined \textbf{A+C} model has the highest.}
+  \label{fig:acc}
+\end{figure*}
+
+\begin{figure}[t]
+    \centering
+	\includegraphics[width=\linewidth]{\autofig{acc_nquery.pdf}}
+    \caption{For Uyghur (pink) and Tigrinya (purple), we compare test accuracy between
+    sets of \abr{clwe} that differ in the number of keywords used to refine them.
+    The leftmost point corresponds to the \textbf{Base} model in Figure~\ref{fig:acc},
+    while the rightmost point corresponds to the \textbf{\name{}} model.
+    Test accuracy generally improves with more feedback at the beginning but
+    slightly drops after reaching an optimal number of keywords.}
+    \label{fig:query_acc}
+\end{figure}
+
+\begin{figure*}[t]
+    \centering
+    \begin{subfigure}{\linewidth}
+        \centering
+        \begin{subfigure}{0.43\linewidth}
+            \centering
+            \includegraphics[width=\linewidth,frame]{\figfile{plague_nn_1_si.png}}
+        \end{subfigure}
+        {\LARGE$\xrightarrow{\name}$}
+        \begin{subfigure}{0.43\linewidth}
+            \centering
+            \includegraphics[width=\linewidth,frame]{\figfile{plague_nn_2_si.png}}
+        \end{subfigure}
+        \caption{Neighborhood of ``plague''}
+        \label{fig:plague}
+    \end{subfigure}
+    \begin{subfigure}{\linewidth}
+        \centering
+        \begin{subfigure}{0.43\linewidth}
+            \centering
+            \includegraphics[width=\linewidth,frame]{\figfile{ill_nn_1_si.png}}
+        \end{subfigure}
+        {\LARGE$\xrightarrow{\name}$}
+        \begin{subfigure}{0.43\linewidth}
+            \centering
+            \includegraphics[width=\linewidth,frame]{\figfile{ill_nn_2_si.png}}
+        \end{subfigure}
+        \caption{Neighborhood of ``ill''}
+        \label{fig:ill}
+    \end{subfigure}
+    \caption{\abr{t-sne} visualization of embeddings before (left) and after
+    (right) \name{} updates.
+    From one Sinhalese user study, we inspect two keywords, ``ill'' and
+    ``plague'', and their five closest neighbors in English (blue) and
+    Sinhalese (green).
+    The Sinhalese words are labeled with English translations.
+    Shape denotes the type of feedback: ``+'' for positive neighbors and ``x''
+    for negative neighbors.}
+    \label{fig:nn_analysis}
+\end{figure*}
+
+\begin{figure}[t]
+    \centering
+    \includegraphics[width=0.8\linewidth]{\autofig{multi.pdf}}
+    \caption{Progress of five Sinhalese users over three \name{} sessions.
+    Largest increase in test accuracy occurs after first session.
+    The leftmost point is the \textbf{Base} model from Figure~\ref{fig:acc}.
+    Average accuracy for first session is not the same as Figure~\ref{fig:acc}
+    because only a subset of users are asked to complete three sessions.}
+    \label{fig:multi_acc}
+\end{figure}
+
+We evaluate \name{} on cross-lingual
+document-classification~\citep{klementiev-12}, where we build a text
+classifier for a low-resource target language using labeled data in a
+high-resource source language through \abr{clwe}.
+Our task identifies whether a document describes a medical
+emergency, useful for planning disaster relief~\citep{strassel-16}.
+The source language is English and the four low-resource
+target languages are Ilocano, Sinhalese, Tigrinya, and Uyghur.
+
+Our experiments confirm that a bilingual user can quickly improve the test
+accuracy of cross-lingual models through \name{}.
+Alternatively, we can ask an annotator to improve the model
+by labeling more training documents in the target language.
+Therefore, we compare \name{} to an active learning baseline that queries the
+user for document labels; \name{} often improves accuracy faster.
+Then, we combine \name{} and active learning to show an even faster
+improvement of test accuracy.
+
+Comparing active learning to \name{} may seem unfair at first glance.
+In theory, document labeling only requires target language knowledge, while
+\name{} learns from a bilingual user.
+In practice, researchers who speak a high-resource language provide instructions to the annotator and answer their
+questions, so bilingual knowledge is usually required in document labeling for
+low-resource languages.
+Moreover, \name{} is complementary to active learning, as combining them gives
+the highest accuracy across languages.
+
+We also experiment with refining the same set of keywords with multiple
+rounds of user interaction.
+The repeated sessions slightly improve test accuracy on average.
+Finally, we compare with \abr{xlm-r}~\citep{conneau-20}, a state-of-the-art
+multilingual transformer.
+Despite using fewer resources, \name{} has competitive results.
+
+\subsection{Experiment Setup}
+
+\paragraph{Labeled Data.}
+We train models on 572 English documents and test on 48 Ilocano documents, 58
+Sinhalese documents, 158 Tigrinya documents, and 94 Uyghur documents.
+The documents are extracted from \abr{lorelei} language
+packs~\citep{strassel-16}, a multilingual collection of documents of emergencies with a public health component.\footnote{Download from \url{https://www.ldc.upenn.edu}}
+To simplify the task, we consider a binary classification problem of detecting
+whether the documents are
+associated with medical needs.
+Table~\ref{tab:example} shows an example document.
+To balance the label distribution, we sample an equal number of negative
+examples.
+
+\paragraph{Word Embeddings.}
+To transfer knowledge between languages, we build \abr{clwe} between English
+and each target language.
+We experiment with two methods to pre-train \abr{clwe}: (1) train monolingual
+embeddings with word2vec~\citep{mikolov-13-fixed} and align with
+\abr{cca}~\citep{faruqui-15,ammar-16}, (2) train monolingual embeddings with
+fastText~\citep{bojanowski-17} and align with \abr{rcsls}~\cite{joulin-18}.
+The English embeddings are trained on Wikipedia and the target language embeddings
+are trained on unlabeled documents from the \abr{lorelei} language packs.
+For alignment, we use the small English dictionary in each pack.
+Low-resource language speakers are hard to find, so we do not
+try all combinations of languages and \abr{clwe}:
+we use \abr{cca} embeddings for Tigrinya and Uyghur, \abr{rcsls}
+embeddings for Ilocano.
+Since Sinhalese speakers are easier to find, we experiment with both \abr{clwe}
+for Sinhalese.
+
+\paragraph{Text Classifier.}
+Our classifier is a convolutional neural network~\citep{kim-14}.
+Each document is represented as the concatenation of word embeddings and passed
+through a convolutional layer, followed by max-pooling and a final softmax
+layer.
+To preserve cross-lingual alignments, we freeze embeddings during training.
+This simple model is effective in low-resource cross-lingual
+settings~\citep{chen-18,schwenk-18}.
+We minimize cross-entropy on the training set by running Adam~\citep{kingma-15}
+with default hyperparameters for thirty epochs.  All experiments use GeForce GTX 1080
+\abr{gpu} and 2.6 GHz \abr{amd} Opteron 4180 processor.
+
+\paragraph{User Study.}
+We use Upwork to hire participants who are fluent in both English and the
+target language.\footnote{\url{https://upwork.com/}}
+Low-resource language speakers are hard to find, so we have a different number of
+users for each language.
+We hire ten Ilocano users and twenty-five
+Sinhalese users.
+For additional case studies, we hire one Tigrinya user and one Uyghur user.
+Each user annotates the fifty most salient keywords, which takes less than an hour (Figure~\ref{fig:acc}).
+For each keyword, we show five nearest neighbors for each language.
+Each user provides about nine constraints for each keyword.
+
+\subsection{Comparisons}
+\label{ssec:methods}
+
+After receiving feedback, we update the embeddings (Section~\ref{sec:update}).
+We evaluate the new embeddings by retraining a classifier.
+For each set of embeddings, we train ten models with different random seeds and
+report average test accuracy.
+
+We compare a classifier trained on the updated embeddings
+(\textbf{\name{}} in Figure~\ref{fig:acc}) against two baselines.
+The first baseline is a classifier trained on original embeddings
+(\textbf{Base} in Figure~\ref{fig:acc}).
+If we have access to a bilingual speaker, an alternative to using \name{} is to
+annotate more training documents in the target language.
+Therefore, we also compare \name{} to uncertainty
+sampling~\citep{lewis-1994}, an active learning method that asks a user to
+label documents (\textbf{Active} in Figure~\ref{fig:acc}).
+We choose a set of fifty documents where model outputs have the
+highest entropy from a set of unlabeled \emph{target language} documents
+and ask an annotator to label them as additional training documents.
+We then retrain a model on both the English training set and the fifty target
+language documents, using the original embeddings.
+For each model, a human annotator labels fifty
+documents within forty to fifty minutes.
+This can either be slower or take approximately the same time as an average
+\name{} session (Figure~\ref{fig:acc}).
+Thus, any improvements in accuracy using \name{} are even more impressive
+given that \textbf{Active} is no faster than \name{}.
+
+Finally, we explore combining active learning and \name{}
+(\textbf{A+C} in Figure~\ref{fig:acc}).
+Document-level and word-level interactions are complementary, so
+using both may lead to higher accuracy.
+To keep the results comparable, we allocate half of the user interaction time
+to active learning, and the other half to \name{}.
+Specifically, we use active learning to expand the training set with twenty-five
+target language documents and refine the embeddings by running \name{} on
+only twenty-five keywords.  Then, we retrain a model using both the augmented
+training set and the refined embeddings.
+
+\subsection{Results and Analysis}
+\label{ssec:analysis}
+
+\paragraph{Effectiveness of \name{}.}
+
+Figure~\ref{fig:acc} compares the four methods described in the previous
+section.
+\name{} is effective in this low-resource setting.
+On all four target languages, the classifier trained on embeddings refined
+by \name{} has higher accuracy than the classifier that trains on the original
+embeddings: \name{} reshapes embeddings in a way that helps classification.
+\name{} also has higher accuracy than active learning for most users.
+The combined method has the highest accuracy: active learning and \name{} are
+complementary.
+Single-sample $t$-tests confirm that \textbf{\name{}} is significantly
+better than \textbf{Base} and \textbf{A+C} is significantly better than
+\textbf{Active} (Appendix~\ref{ssec:stats}).
+
+\paragraph{Keyword Detection.}
+We inspect the list of the fifty most salient keywords~(Section~\ref{ssec:rank}).
+Most keywords have obvious connections to our classification task of detecting
+medical emergencies, such as ``ambulance'', ``hospitals'', and ``disease''.
+However, the list also contains some words that are unrelated
+to a medical emergency, including ``over'' and ``given''.
+These words may be biases or artifacts from training data~\citep{feng-18-fixed}.
+
+\paragraph{Number of Keywords.}
+To evaluate how feedback quantity changes accuracy, we vary the number of
+keywords and compare test accuracy on Tigrinya and Uyghur datasets
+(Figure~\ref{fig:query_acc}).
+For each keyword~$s$ from one to fifty, we update the original embeddings using
+only the feedback on the top-$s$ keywords and evaluate each set of
+embeddings with test accuracy.
+For both languages, test accuracy generally increases with more annotation at
+the beginning of the session.
+Interestingly, test accuracy plateaus and slightly drops after reaching an
+optimal number of keywords, which is around twenty for Tigrinya and about
+forty for Uyghur.
+One explanation is that the later keywords are less salient, which causes the
+feedback to become less relevant.
+These redundant constraints hamper optimization and slightly hurt test accuracy.
+
+\paragraph{Qualitative Analysis.}
+To understand how \name{} updates the embeddings, we visualize changes in the
+neighborhoods of keywords with t-\abr{sne}~\citep{maaten-08}.
+All embeddings from before and after the user updates are projected into the
+same space for fair distance comparison.
+We inspect the user updates to the Sinhalese \abr{cca}
+embeddings~(Figure~\ref{fig:nn_analysis}).
+We confirm that positive neighbors are pulled closer and negative neighbors
+are pushed further away.
+The user marks ``epidemic'' and ``outbreak'' as similar to the keyword
+``plague'', and these words are closer after updates~(Figure~\ref{fig:plague}).
+For the keyword ``ill'', the user marks ``helpless'' as a negative neighbor,
+because ``helpless'' can signal other types of situations and is more ambiguous
+for detecting a medical emergency.
+After the update, ``helpless'' is pushed away and disappears from the nearest
+neighbors of ``ill'' (Figure~\ref{fig:ill}).
+However, a few positive neighbors have inadvertently moved away,
+such as the Sinhalese translation for ``ill''.
+The update algorithm tries to satisfy constraints for multiple keywords, so
+soft constraints may be overlooked.
+This motivates repeated \name{} sessions where the user can continue
+fixing errors.
+
+\subsection{Repeating User Sessions}
+
+We investigate the effects of having a user complete multiple \name{} sessions.
+After the user finishes a session, we fit the embeddings to their feedback,
+produce a new vocabulary ranking, and update the interface for the next session.
+We experiment on the Sinhalese dataset with \abr{cca} embeddings and ask five
+users to complete three sessions of fifty keywords.
+Average test accuracy increases with more sessions, but the improvement is
+marginal after the first session (Figure~\ref{fig:multi_acc}).
+By the end of the three sessions, one user reaches 65.2\% accuracy, a
+significant improvement from the 55.2\% baseline.
+
+\subsection{Comparing with Contextual Embeddings}
+Contextualized embeddings based on multilingual transformers reach
+state-of-the-art in many tasks,
+so we compare \name{} with these models.
+Most existing models~\citep{wu-19,lample-19}
+do not cover our low-resource languages.
+The only exception is \abr{xlm-r}~\citep{conneau-20}, which covers Uyghur and
+Sinhalese.
+To compare with \name{}, we fine-tune \abr{xlm-r} for three epochs with AdamW~\citep{loshchilov-2019}, batch size of sixteen, and learning
+rate of 2e-5.  We compute average accuracy over ten runs with different random seeds.
+
+For Uyghur, \abr{xlm-r} has lower accuracy than our \textbf{A+C} approach ($71.7\%$ vs. $73.2\%$).
+This is impressive given that \abr{xlm-r} uses much more resources:
+270 million parameters, 2.5TB of multilingual Common Crawl data, and 500 GPUs.
+In contrast, the \textbf{A+C} model has 120K parameters and is built in less
+than two hours with a single GPU (including human interaction and model
+training).
+
+For Sinhalese, \abr{xlm-r} has higher accuracy than our \textbf{A+C} approach ($69.3\%$ vs. $63.7\%$).
+Common Crawl has much more Sinhalese words than Uyghur words.
+This aligns with our intuition: \name{} is more useful in low-resource settings, whereas multilingual transformers are more appropriate for languages with more data.
+Future work can extend the interactive component of \name{} to multilingual transformers.

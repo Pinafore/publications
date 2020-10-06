@@ -1,0 +1,64 @@
+\section{Introduction}
+\label{sec:intro}
+
+\begin{figure}
+    \centering
+    \includegraphics[width=\linewidth]{\figfile{map_fr.pdf}}
+    \caption{A hypothetical topographic map of an English--French embedding space
+    tailored for sentiment analysis. Dots are English words, and squares are
+    French words. Positive sentiment words are grouped in a clime (red),     while negative sentiment words     are grouped in another clime (blue). These climes help sentiment analysis.}
+    \label{fig:map}
+\end{figure}
+
+
+Modern text classification requires large
+labeled datasets and pre-trained word
+embeddings~\citep{kim-14,iyyer-15-fixed,joulin-17}.
+However, scarcity of both labeled and unlabeled data holds back applications in low-resource languages.
+Cross-lingual word embeddings~\citep[\abr{clwe}]{mikolov-13b} can bridge the
+gap by mapping words from different languages to a shared vector space.
+Using \abr{clwe} features, models trained in a resource-rich language
+(e.g., English) can predict labels for other languages.
+
+The success of \abr{clwe} relies on the domain and quality of training
+data~\citep{sogaard-18}.
+While these methods have impressive word translation accuracy,
+they are not tailored for downstream tasks such as text
+classification~\citep{glavas-19,zhang-20}.
+We develop \textbf{CL}assifying \textbf{I}nteractively with
+\textbf{M}ultilingual \textbf{E}mbeddings (\name{}), that efficiently
+specializes \abr{clwe} with \emph{human interaction}.\footnote{\url{https://github.com/forest-snow/clime-ui}}~Given a pre-trained \abr{clwe}, a bilingual speaker in the loop reviews the nearest-neighbor words.
+\name{} capitalizes on the intuition that neighboring words in an ideal
+embedding space should have similar semantic attributes.
+
+In an analogy to geographic \emph{climes}---zones with distinctive
+meteorological features---we call areas in the embedding space where words share
+similar semantic features climes.
+Our goal is to convert neighborhoods in the embedding space into
+\emph{classification climes} with words that induce similar labels for a given
+classification task.
+For example, in the embedding for English--French sentiment
+analysis, positive sentiment words such as ``excellent'', ``exceptional'', and
+their French translations are together, while ``disappointing'', ``lackluster'', and their translations cluster together elsewhere~(Figure~\ref{fig:map}).
+Curating words in the embedding space and refining climes should help downstream classifiers.
+
+First, \name{} uses loss gradients in downstream tasks to find keywords with high salience (Section~\ref{ssec:rank}).
+Focusing on these keywords allows the user to most efficiently refine \abr{clwe} by marking their similarity or dissimilarity (Section~\ref{ssec:interaction}).
+After collecting annotations, \name{} pulls similar words closer and pushes dissimilar words apart
+(Section~\ref{sec:update}), establishing desired climes (Figure~\ref{fig:map}).
+
+Quickly deploying cross-lingual \abr{nlp} systems is particularly important in
+global public health emergencies, so we evaluate \name{} on a cross-lingual
+document classification task for four low-resource languages: Ilocano,
+Sinhalese, Tigrinya, and Uyghur (Section~\ref{sec:experiment}).
+\name{} is effective in this low-resource setting because a bilingual speaker can significantly increase test accuracy on identifying health-related documents in
+less than an hour.
+
+\name{} is related to active learning~\citep{settles-09}, which also improves
+a classifier through user interaction.
+Therefore, we compare \name{} with an active learning baseline that asks a
+user to label target language documents.
+Under the same annotation time constraint, \name{} often has higher accuracy.
+Furthermore, the two methods are complementary.
+Combining active learning with \name{} increases accuracy even more,
+and the user-adapted model is competitive with a large, resource-hungry multilingual transformer~\citep{conneau-20}.

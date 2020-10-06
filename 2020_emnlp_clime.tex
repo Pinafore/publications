@@ -1,0 +1,95 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[hyperref]{style/emnlp2020}
+\usepackage{times}
+\usepackage{latexsym}
+\usepackage{multirow}
+\renewcommand{\UrlFont}{\ttfamily\small}
+
+\usepackage{microtype}
+
+\aclfinalcopy \def\aclpaperid{585} 
+\newif\ifcomment\commentfalse
+
+\usepackage{amsfonts}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{bm}
+\usepackage{booktabs}
+\usepackage[normalem]{ulem}
+\newcommand{\abr}[1]{\textsc{#1}}
+\normalem
+\usepackage[T1]{fontenc}
+\usepackage{graphicx}
+\usepackage{multirow}
+\usepackage{multicol}
+\newcommand*{\missingreference}{{\Huge \colorbox{red}{?reference?}}}
+\newcommand*{\missingcitation}{{\Huge \colorbox{red}{?citation?}}}
+
+\newcommand{\nlp}[0]{\abr{nlp}}
+\newcommand{\latexfile}[1]{\input{2020_emnlp_clime/sections/#1}}
+\newcommand{\figfile}[1]{2020_emnlp_clime/figures/#1}
+\newcommand{\autofig}[1]{2020_emnlp_clime/auto_fig/#1}
+\newcommand{\datafile}[1]{\input{2020_emnlp_clime/data/#1}}
+
+\definecolor{lightblue}{HTML}{3cc7ea}
+
+\newcommand{\name}[0]{\abr{clime}} \newcommand{\vect}[1]{\bm{\mathbf{#1}}}
+\newcommand{\norm}[1]{\left\lVert#1\right\rVert}
+
+\ifcomment
+\newcommand{\mzcomment}[1]{ \colorbox{lightblue}{   \parbox{.8\linewidth}{ MZ: #1}  }}
+\else
+\newcommand{\mzcomment}[1]{}
+\fi
+
+\usepackage{array}
+\newcolumntype{L}[1]{>{\raggedright\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+\usepackage{subcaption}
+\usepackage[export]{adjustbox}
+
+\title{Interactive Refinement of Cross-Lingual Word Embeddings}
+
+\author{
+    Michelle Yuan\thanks{$^{\star}$ indicates equal contribution} \\
+    University of Maryland \\
+    {\tt myuan@cs.umd.edu} \\\And
+    Mozhi Zhang\footnotemark[1] \\
+    University of Maryland\\
+    {\tt mozhi@cs.umd.edu} \\\And
+    Benjamin Van Durme \\
+    Johns Hopkins University \\
+    {\tt vandurme@jhu.edu} \\\AND
+    Leah Findlater \\
+    University of Washington\\
+    {\tt leahkf@uw.edu} \\\And
+    Jordan Boyd-Graber \\
+    University of Maryland \\
+    {\tt jbg@umiacs.umd.edu} \\
+}
+
+
+\begin{document}
+
+\maketitle
+\begin{abstract}
+    \latexfile{00-abstract}
+\end{abstract}
+
+\latexfile{10-intro}
+\latexfile{20-ui}
+\latexfile{30-update}
+\latexfile{40-cldc}
+\latexfile{50-related}
+\latexfile{60-conclusion}
+\latexfile{70-acknowledgments}
+
+\bibliography{bib/journal-full,bib/jbg,bib/michelle,bib/mozhi}
+\bibliographystyle{style/acl_natbib}
+
+\latexfile{appendix}
+\end{document}
+
+

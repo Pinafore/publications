@@ -1,0 +1,72 @@
+\section{Related Work}
+\label{sec:related}
+
+
+\paragraph{Cross-Lingual Word Embeddings.}
+\citet{ruder-19} summarize previous \abr{clwe} methods.
+These methods learn from \emph{existing} resources such as dictionaries,
+parallel text, and monolingual corpora.
+Therefore, the availability
+and quality of training data primarily determines
+the success of these methods~\citep{sogaard-18}. To improve the suitability of \abr{clwe} methods in low-resource settings,
+recent work focuses on learning without cross-lingual
+supervision~\citep{artetxe-18b,hoshen-18}
+and normalizing monolingual embeddings before alignment~\citep{zhang-19}.
+In contrast, we design a human-in-the-loop system to efficiently improve
+\abr{clwe}.
+Moreover, previous \abr{clwe} methods are heavily tuned for the intrinsic
+evaluation task of dictionary induction, sometimes to the detriment of
+downstream tasks~\citep{glavas-19,zhang-20b}.
+Our method is tailored for downstream tasks such as text classification.
+
+\paragraph{Cross-Lingual Document Classification.}
+Prior approaches transfer knowledge with cross-lingual resources, such as
+bilingual dictionaries~\citep{wu-08,shi-10}, parallel text~\citep{xu-17}, labeled data
+from related languages~\citep{zhang-20}, structural
+correspondences~\citep{prettenhofer-2010}, multilingual topic
+models~\citep{ni-2011,andrade-15}, machine translation~\citep{wan-09-fixed,zhou-16}, and
+\abr{clwe}~\citep{klementiev-12}.
+Our method instead brings a bilingual speaker in the loop to \emph{actively}
+provide cross-lingual knowledge, which is more reliable in low-resource
+settings.
+Concurrent to our work, \citet{karamanolakis-20} also show that keyword translation is very useful for cross-lingual document classification.
+
+\paragraph{Human-in-the-Loop Multilingual Systems.}
+\name{} is inspired by human-in-the-loop systems that bridge language gaps.
+\citet{brown-2016} build an interactive translation platform to help refugee
+resettlement.
+\citet{yuan-18} interactively align topic models across languages.
+
+\paragraph{Active Learning.}
+A common solution to data scarcity is active learning, the framework in which
+the learner iteratively queries an oracle (often a human) to receive
+annotations on unlabeled data.
+\citet{settles-09} summarizes popular active learning methods.
+Most active learning methods solicit labels for training examples/documents,
+while \name{} asks for word-level annotation.
+Previous active learning methods that use feature-level
+annotation~\citep{raghavan-06,zaidan-07,druck-09,settles-11-fixed} are not applicable to
+neural networks and \abr{clwe}.
+Closely related to our work, \citet{yuan-2020-alps} propose an active learning strategy that selects examples based on language modeling pre-training.
+
+\paragraph{Neural Network Interpretation.}
+Our keyword detection algorithm expands upon prior
+work in interpreting neural networks.
+\citet{li-16} uses the gradient of the objective function to linearly
+approximate salience of one dimension, which helps interpret and visualize
+word compositionality in neural networks.
+Their ideas are inspired by visual salience in computer vision~\citep{simonyan-2013,zeiler-14}.
+We further extend the idea to compute the global salience of an entire word vector
+across a labeled dataset.
+
+\paragraph{Specializing Word Embeddings.}
+Our update equations modify prior work on specializing word
+embeddings that are designed to improve word embeddings with a large
+lexical knowledge base.
+\citet{faruqui-15} \emph{retrofit} word embeddings to synonym constraints.
+\citet{mrksic-16} expand the method by also fitting antonym relations.
+\citet{mrksic-17} includes both monolingual and cross-lingual constraints to
+improve \abr{clwe}.
+\citet{glavas-18} use a neural network to learn an specialization
+function that generalize to words with no lexical constraints.
+Closest to our work, \citet{zhang-20b} retrofit \abr{clwe} to dictionaries and observe improvement in downstream tasks.

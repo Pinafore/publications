@@ -1,0 +1,59 @@
+\section{Fitting Word Embeddings to Feedback}
+\label{sec:update}
+
+After receiving user annotations, \name{} updates the
+embeddings to reflect their feedback.
+The algorithm reshapes the neighborhood so that words near a keyword share similar semantic attributes.
+Together, these embeddings form desired task-specific
+connections between words across languages.  Our update equations are inspired by \abr{attract-repel}~\citep{mrksic-17}, which fine-tunes word embeddings with
+synonym and antonym constraints.
+The objective in \abr{attract-repel} pulls synonyms
+closer to and pushes antonyms further away from their nearest
+neighbors.
+This objective is useful for large lexical resources like
+BabelNet~\citep{navigli-10} with hundreds of thousands linguistic constraints,
+but our pilot experiment suggests that the method is not suitable for smaller
+constraint sets.
+Since \name{} is designed for low-resource languages, we optimize an
+objective that reshapes the neighborhood more drastically than
+\abr{attract-repel}.
+
+\subsection{Feedback Cost}
+
+For each keyword $k\in\mathcal{K}$, we collect a positive set $\mathcal{P}_k$
+and a negative set $\mathcal{N}_k$ (Section~\ref{ssec:interaction}).
+To refine embeddings $\vect{E}$ with human feedback, we increase the similarity
+between $k$ and each positive word $p\in\mathcal{P}_k$, and decrease the similarity between $k$ and
+each negative word $n\in\mathcal{N}_k$.
+Formally, we update the embeddings $\vect{E}$ to minimize the following:
+\begin{equation}
+    C_f(\vect{E}) =
+	\sum_{k \in \mathcal{K}} \left(\sum_{n \in \mathcal{N}_k} \vect{E}_k^\top \vect{E}_n - \sum_{p \in \mathcal{P}_k} \vect{E}_k^\top \vect{E}_p\right),
+    \label{eq:feedback}
+\end{equation}
+where $\vect{E}_k^\top \vect{E}_n$ measures the similarity between the keyword $k$ and a negative word $n$, and $\vect{E}_k^\top \vect{E}_p$ measures the similarity between the keyword $k$ and a positive word $p$.  Minimizing $C_f$ is equivalent to maximizing similarities of positive pairs while minimizing similarities of negative pairs.
+
+\subsection{Topology-Preserving Regularization}
+
+Prior embedding post-processing methods emphasize regularization to maintain
+the topology---or properties that should be preserved under transformations---of
+the embedding space~\citep{mrksic-16,mrksic-17,glavas-18}.
+If the original \abr{clwe} brings certain translations together, those
+translated words should remain close after updating the embeddings.
+The topology also encodes important semantic information that should not be
+discarded.
+Therefore, we also include the following regularization term:
+\begin{equation}
+  R(\vect{E}) =  \sum_{w \in \mathcal{V}} \norm{\hat{\vect{E}}_w - \vect{E}_w}_2^2. \label{eq:reg}
+\end{equation}
+Minimizing $R(\vect{E})$ prevents~$\vect{E}$ from drifting too far away from the original embeddings $\hat{\vect{E}}$.
+
+The final cost function combines the feedback cost (Equation~\ref{eq:feedback}) and the regularizer (Equation~\ref{eq:reg}):
+\begin{equation}
+    C(\vect{E}) = C_f(\vect{E}) + \lambda R(\vect{E}), \label{eq:cost}
+\end{equation}
+where the hyperparameter $\lambda$ controls the strength of the regularizer.
+The updated embeddings enforce constraints from user feedback while
+preserving other structures from the original embeddings.
+After tuning in a pilot user study, we set $\lambda$ to one.
+We use the Adam optimizer~\citep{kingma-15} with default hyperparameters.
