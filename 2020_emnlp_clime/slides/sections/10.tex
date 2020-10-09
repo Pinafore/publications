@@ -1,0 +1,39 @@
+\begin{frame}{\nlp{} for Low-resource Languages}
+\begin{itemize}
+\item Scarcity of both labeled and unlabeled data holds back applications in
+    low-resource languages
+\item Cross-lingual word embeddings (\abr{clwe}) can bridge the gap by mapping
+    words from different languages to a shared vector space
+\end{itemize}
+\pause
+\textbf{How can we quickly refine CLWE for low-resource NLP?}
+\end{frame}
+
+
+\begin{frame}{Refining \abr{clwe}}
+\begin{center}
+\begin{figure}
+\begin{overprint}
+    \onslide<1>\centerline{\includegraphics[width=0.8\textwidth]{\figfile{map_fr_bad.pdf}}}
+    \onslide<2>\centerline{\includegraphics[width=0.8\textwidth]{\figfile{map_fr_good.pdf}}}
+    \onslide<3->\centerline{\includegraphics[width=0.8\textwidth]{\figfile{map_fr.pdf}}}
+\end{overprint}
+\end{figure}
+\onslide<3>
+    \textbf{Classification clime:} Areas in embedding space where words induce similar
+    labels for a task
+\end{center}
+\end{frame}
+
+
+\begin{frame}{\name{}}
+    CLassifying Interactively with Multilingual Embeddings
+    \begin{enumerate}
+        \item<2-> Select keywords with \textit{gradient-based
+            salience}~\citep{li-16}
+        \item<3-> Collect user feedback
+        \item<4-> Refine embeddings on user feedback through
+            \textit{retrofitting}~\citep{mrksic-17}
+    \end{enumerate}
+\end{frame}
+

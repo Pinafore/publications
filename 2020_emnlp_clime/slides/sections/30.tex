@@ -1,0 +1,37 @@
+\begin{frame}{Retrofitting \abr{clwe}}
+\begin{enumerate}
+\item<1-> \textbf{Feedback cost:} Pull positive neighbors $p$ closer and
+negative neighbors $n$ away
+\begin{equation*}
+	C_f(\vect{E}) =
+	\sum_{k \in \mathcal{K}} \left(\sum_{n \in \mathcal{N}_k} \vect{E}_k^\top \vect{E}_n - \sum_{p
+	\in \mathcal{P}_k} \vect{E}_k^\top \vect{E}_p\right).
+\end{equation*}
+\item<2-> \textbf{Regularization:} Updated embeddings should not be too far away
+from original embeddings
+\begin{equation*}
+	R(\vect{E}) =  \sum_{w \in \mathcal{V}} \norm{\hat{\vect{E}}_w -
+	\vect{E}_w}_2^2.
+\end{equation*}
+\item<3-> \textbf{Total loss function:}
+\begin{equation*}
+	C(\vect{E}) = C_f(\vect{E}) + \lambda R(\vect{E}).
+\end{equation*}
+\end{enumerate}
+\end{frame}
+
+
+\begin{frame}{Retrofitting \abr{clwe}}
+\begin{figure}
+\begin{overprint}
+\onslide<1>\centerline{\includegraphics[width=0.6\textwidth]{\figfile{retrofitting1.pdf}}}
+\onslide<2>\centerline{\includegraphics[width=0.6\textwidth]{\figfile{retrofitting2.pdf}}}
+\onslide<3>\centerline{\includegraphics[width=0.6\textwidth]{\figfile{retrofitting3.pdf}}}
+\end{overprint}
+\end{figure}
+\end{frame}
+
+
+
+
+

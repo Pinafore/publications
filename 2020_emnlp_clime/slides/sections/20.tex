@@ -1,0 +1,76 @@
+\begin{frame}{Keyword Selection}
+    \begin{enumerate}
+        \item<1-> \textbf{Local salience} of word $x_i$ in $x$:
+            \begin{equation*}   S_{\vect{x}}(x_i) = \norm{\nabla_{\vect{E}_{x_i}} L(\vect{x}, y)}_2.
+            \end{equation*}
+        \item<2-> \textbf{Global salience} of word $w$:
+            \begin{equation*}
+            S(w) = \abr{idf}(w, \vect{X}) \cdot \sum_{\vect{x} \in
+            \vect{X}: w \in \vect{x}} S_{\vect{x}}(w).
+            \end{equation*}
+        \item<3-> Select keywords that have highest global salience
+    \end{enumerate}
+\end{frame}
+
+
+\begin{frame}{Keyword Selection}
+    Example sentences \\
+    \begin{itemize}
+        \item[] \texttt{A disappointing dinner...meatballs were undercooked.}
+            (negative)
+        \item[] \texttt{I was frustrated with the customer service. Very
+            disappointing.}
+            (negative)
+        \item[] \texttt{An exceptional film.} (positive)
+        \item[] \texttt{I disliked waiting in line, but the ride was exceptional.} (positive)
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Keyword Selection}
+    Compute local salience \\
+    \begin{itemize}
+        \color{salience1}
+    \item[] \texttt{A \textcolor{salience4}{disappointing}
+        \textcolor{salience3}{dinner}...\textcolor{salience2}{meatballs} were
+            \textcolor{salience3}{undercooked}}. \textcolor{black}{(negative)}
+    \item[] \texttt{\textcolor{salience2}{I} was
+        \textcolor{salience4}{frustrated} with the customer
+            \textcolor{salience3}{service}. \textcolor{salience4}{Very}
+            \textcolor{salience4}{disappointing}}.
+            \textcolor{black}{(negative)}
+        \item[] \texttt{An \textcolor{salience4}{exceptional}
+            \textcolor{salience3}{film}}. \textcolor{black}{(positive)}
+        \item[] \texttt{\textcolor{salience2}{I} \textcolor{salience4}{disliked}
+            \textcolor{salience3}{waiting} in \textcolor{salience2}{line}, but the
+            \textcolor{salience2}{ride} was \textcolor{salience4}{exceptional}}. \textcolor{black}{(positive)}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Keyword Selection}
+    Find words with highest global salience
+    \begin{itemize}
+        \color{white}
+    \item[] \texttt{A \textcolor{salience4}{disappointing} dinner...meatballs were undercooked.}
+            (negative)
+        \item[] \texttt{I was frustrated with the customer service. Very
+            disappointing.}
+            (negative)
+        \item[] \texttt{An \textcolor{salience4}{exceptional} film.} (positive)
+        \item[] \texttt{I disliked waiting in line, but the ride was exceptional.} (positive)
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Keyword Selection}
+    Areas to focus on in embedding space
+    \begin{figure}
+        \centering
+        \includegraphics[width=0.8\textwidth]{\figfile{map_fr_keywords.pdf}}
+    \end{figure}
+\end{frame}
+
+\begin{frame}{User Interface}
+    \begin{figure}
+        \centering
+        \includegraphics[width=0.8\textwidth]{\figfile{ui-fr.pdf}}
+    \end{figure}
+\end{frame}

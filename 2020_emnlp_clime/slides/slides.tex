@@ -1,0 +1,107 @@
+\documentclass[t]{beamer}
+%\usepackage[orientation=portrait,size=custom,width=8,height=4,scale=0.3,debug]{beamerposter}
+
+\RequirePackage{natbib}
+\setcitestyle{authoryear,round,citesep={;},aysep={,},yysep={;}}
+
+\mode<presentation>
+{
+  \usetheme{default}
+  \usecolortheme{default}
+  \usefonttheme{professionalfonts}
+  \setbeamertemplate{navigation symbols}{}
+  \setbeamertemplate{caption}[numbered]
+}
+
+\usepackage[english]{babel}
+\usepackage[utf8]{inputenc}
+
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amsthm}
+\usepackage{bibentry}
+\usepackage{graphicx}
+\usepackage{bm}
+\usepackage{booktabs}
+\usepackage{tikz}
+\usepackage{xcolor}
+\usepackage{multirow}
+\usepackage[normalem]{ulem}
+\usepackage{pifont}
+\usepackage{array}
+\usepackage{multimedia}
+\usepackage{makecell}
+\usepackage{xspace}
+\usepackage{pdfpages}
+
+
+\renewcommand{\ULthickness}{1.2pt}
+%\graphicspath{{../figures/}}
+\newcommand{\latexfile}[1]{\input{sections/#1}}
+\newcommand{\figfile}[1]{../figures/#1}
+\newcommand{\autofig}[1]{../auto_fig/#1}
+\newcommand{\datafile}[1]{\input{../data/#1}}
+
+\DeclareMathOperator*{\argmin}{\arg\!\min}
+\DeclareMathOperator*{\argmax}{\arg\!\max}
+
+\newcommand{\name}[0]{\abr{clime}} \newcommand{\vect}[1]{\bm{\mathbf{#1}}}
+\newcommand{\norm}[1]{\left\lVert#1\right\rVert}
+
+
+
+\input{colorize.tex}
+
+\newcommand{\abr}[1]{\textsc{#1}}
+\newcommand{\nlp}{\textsc{nlp}}
+\newcommand{\mb}[1]{\boldsymbol{\mathbf{#1}}}
+\newcommand{\g}{\, | \,}
+
+\newcommand*\colourcheck[1]{%
+  \expandafter\newcommand\csname #1check\endcsname{\textcolor{#1}{\ding{52}}}%
+}
+\colourcheck{blue}
+
+\title{Interactive Refinement of Cross-Lingual Word Embeddings}
+\author{
+\tiny{
+    Michelle Yuan$^{1*}$ Mozhi Zhang$^{1*}$ Benjamin Van Durme$^2$ Leah Findlater$^3$ Jordan Boyd-Graber$^1$
+} \\\vspace{10px}
+\tiny{$^1$University of Maryland $^2$John Hopkins University
+$^3$University of Washington $^*$Equal contribution}
+}
+\date{}
+
+\begin{document}
+
+
+
+\begin{frame}
+    \titlepage
+\end{frame}
+
+% authors
+%\input{sections/people}
+
+
+% 1. clime
+\latexfile{10.tex}
+% 2. keyword
+\latexfile{20.tex}
+% % % 3. retrofitting
+\latexfile{30.tex}
+% % % 4. Experiments
+\latexfile{40.tex}
+% % % 5. discussion/conclusion
+%\input{sections/50}
+
+
+\begin{frame}[t, allowframebreaks]
+\frametitle{References}
+\bibliographystyle{../../style/acl_natbib}
+\small
+\bibliography{../../bib/journal-abbrv,../../bib/michelle,../../bib/jbg,../../bib/mozhi}
+\end{frame}
+
+
+\end{document}
