@@ -1,0 +1,126 @@
+\documentclass[t]{beamer}
+%\usepackage[orientation=portrait,size=custom,width=8,height=4,scale=0.3,debug]{beamerposter}
+
+\RequirePackage{natbib}
+\setcitestyle{authoryear,round,citesep={;},aysep={,},yysep={;}}
+
+\mode<presentation>
+{
+  \usetheme{default}
+  \usecolortheme{default}
+  \usefonttheme{professionalfonts}
+  \setbeamertemplate{navigation symbols}{}
+  \setbeamertemplate{caption}[numbered]
+}
+
+\usepackage[english]{babel}
+\usepackage[utf8]{inputenc}
+
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amsthm}
+\usepackage{bibentry}
+\usepackage{graphicx}
+\usepackage{bm}
+\usepackage{booktabs}
+\usepackage{tikz}
+\usepackage{xcolor}
+\usepackage{multirow}
+\usepackage[normalem]{ulem}
+\usepackage{pifont}
+\usepackage{array}
+\usepackage{multimedia}
+\usepackage{makecell}
+\usepackage{xspace}
+\usepackage{pdfpages}
+\usepackage{color,colortbl}
+\usepackage{tabu}
+%\usepackage[T1]{fontenc}
+
+
+\renewcommand{\ULthickness}{1.2pt}
+\newcommand{\latexfile}[1]{\input{sections/#1}}
+\newcommand{\figfile}[1]{../figures/#1}
+\newcommand{\autofig}[1]{../auto_fig/#1}
+\newcommand{\datafile}[1]{\input{../data/#1}}
+
+\DeclareMathOperator*{\argmin}{\arg\!\min}
+\DeclareMathOperator*{\argmax}{\arg\!\max}
+
+\newcommand{\norm}[1]{\left\lVert#1\right\rVert}
+
+\newcommand{\abr}[1]{\textsc{#1}}
+\newcommand{\mb}[1]{\boldsymbol{\mathbf{#1}}}
+\newcommand{\bert}{\abr{bert}}
+\newcommand{\nlp}[0]{\abr{nlp}}
+\newcommand{\fone}{$F_1$}
+\newcommand{\D}[2]{\frac{\partial #1}{\partial #2}}
+\newcommand{\g}{\, | \,}
+\newcommand{\alps}{\abr{alps}}
+\newcommand{\coreset}{\abr{coreset}}
+\newcommand{\badge}{\abr{badge}}
+\newcommand{\km}{$k$-\abr{means}}
+\newcommand{\kmpp}{\km++}
+\newcommand{\mlm}{\abr{mlm}}
+\newcommand{\al}{\abr{al}}
+\newcommand{\scibert}{\abr{sci}\bert}
+\newcommand{\hl}[1]{\colorbox{yellow}{#1}}
+\newcommand{\hz}{\vphantom{\parbox[c]{0.1cm}{\rule{0.1cm}{0.4cm}}}}
+\newcommand{\given}{\, | \,}
+\newcommand{\sst}{\abr{sst-$2$}}
+\newcommand{\agnews}{\abr{ag}~\abr{news}}
+\newcommand{\pubmed}{\abr{pubmed}}
+
+\input{colorize.tex}
+
+
+\newcommand*\colourcheck[1]{%
+  \expandafter\newcommand\csname #1check\endcsname{\textcolor{#1}{\ding{52}}}%
+}
+\colourcheck{blue}
+
+\title{Cold-start Active Learning through Self-supervised Language Modeling}
+\author{
+    Michelle Yuan\inst{1} \and Hsuan-Tien Lin\inst{2} \and Jordan Boyd-Graber\inst{1}
+}
+\institute{
+    \inst{1}%
+    University of Maryland \and
+    \inst{2}%
+    National Taiwan University
+}
+\date{EMNLP 2020}
+%\titlegraphic{\includegraphics[height=1cm]{../figures/logo.png}}
+\begin{document}
+
+
+
+\begin{frame}
+    \titlepage
+\end{frame}
+
+% authors
+%\input{sections/people}
+
+
+% 1. active learning
+\latexfile{10.tex}
+% 2. alps
+\latexfile{20.tex}
+% % % 3. experiments
+\latexfile{30.tex}
+% % % 4. Experiments
+%\latexfile{40.tex}
+% % % 5. discussion/conclusion
+%\input{sections/50}
+
+
+\begin{frame}[t, allowframebreaks]
+\frametitle{References}
+\bibliographystyle{../../style/acl_natbib}
+\small
+\bibliography{../../bib/journal-abbrv,../../bib/michelle,../../bib/jbg}
+\end{frame}
+
+
+\end{document}

@@ -1,0 +1,58 @@
+\begin{frame}{Experiments}
+    \begin{itemize}
+        \item \textbf{Task:} \abr{pubmed} 20k \abr{rct}~\citep{dernoncourt-2017}
+        \item \textbf{Model:} \abr{scibert}~\citep{beltagy-2019}
+        \item Simulate active learner for 10 iterations where 100 sentences are
+            sampled each time
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Baselines}
+    \begin{enumerate}
+        \onslide<1-> \item Random
+        \onslide<2->\item Entropy~\citep{lewis-1994}
+        \onslide<3-> \item \badge{}~\citep{ash-2020}
+        \onslide<4->\item \bert{}-\abr{km}
+        \onslide<5->\item \abr{ft}-\bert{}-\abr{km}
+    \end{enumerate}
+\end{frame}
+
+\begin{frame}{Results}
+\begin{figure}
+\begin{overprint}
+    \onslide<1>\centerline{\includegraphics[width=0.6\textwidth]{\figfile{pubmed_rand.pdf}}}
+    \centerline{Random}
+\onslide<2>\centerline{\includegraphics[width=0.6\textwidth]{\figfile{pubmed_entropy.pdf}}}
+    \centerline{Entropy}
+\onslide<3>\centerline{\includegraphics[width=0.6\textwidth]{\figfile{pubmed_bertkm.pdf}}}
+    \centerline{\bert{}-\abr{km}}
+\onslide<4>\centerline{\includegraphics[width=0.6\textwidth]{\figfile{pubmed_ftbertkm.pdf}}}
+    \centerline{\abr{ft}-\bert{}-\abr{km}}
+\onslide<5>\centerline{\includegraphics[width=0.6\textwidth]{\figfile{pubmed_badge.pdf}}}
+    \centerline{\badge}
+\onslide<6>\centerline{\includegraphics[width=0.6\textwidth]{\figfile{pubmed_alps.pdf}}}
+    \centerline{\alps}
+\onslide<7>\centerline{\includegraphics[width=0.6\textwidth]{\figfile{pubmed_all.pdf}}}
+    \centerline{Full training dataset}
+\end{overprint}
+\end{figure}
+\end{frame}
+
+\begin{frame}{Time}
+\begin{table}[t]
+    \centering
+    \begin{tabular}{lrr}
+    \toprule
+    & \agnews{} & \pubmed{} \\
+    \midrule
+    Random & $<1$ & $<1$\\
+    Entropy & 7 & 10 \\
+    \alps & 14 & 24 \\
+    \badge & 23 & 70\\
+    \bert-\abr{km} & 28 & 58 \\
+    \abr{ft}-\bert-\abr{km} & 33 & 79 \\
+    \bottomrule
+    \end{tabular}
+\end{table}
+\end{frame}
+

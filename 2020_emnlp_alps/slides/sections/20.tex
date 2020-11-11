@@ -1,0 +1,112 @@
+\begin{frame}{\alps}
+\onslide<1-> \textbf{A}ctive \textbf{L}earning by \textbf{P}rocessing \textbf{S}urprisal
+    \begin{enumerate}
+    \onslide<2->
+        \item For each sentence $x$ in unlabeled dataset $\mathcal{U}$, compute a
+            surprisal embedding $s_x$ using pre-trained \bert{}
+    \onslide<3->
+        \item Run $k$-means clustering on the surprisal embeddings
+    \onslide<4->
+        \item Find the sentences that are closest to each cluster center
+    \onslide<5->
+        \item Query labels for these $k$ sentences
+    \end{enumerate}
+\end{frame}
+
+
+\begin{frame}{Surprisal Embeddings}
+\begin{center}
+\begin{figure}
+\begin{overprint}
+    \onslide<1>\centerline{\includegraphics[width=0.6\linewidth]{\figfile{surprisal1.png}}}
+    \onslide<2>\centerline{\includegraphics[width=0.6\linewidth]{\figfile{surprisal2.png}}}
+    \onslide<3>\centerline{\includegraphics[width=0.6\linewidth]{\figfile{surprisal3.png}}}
+    \onslide<4>\centerline{\includegraphics[width=0.6\linewidth]{\figfile{surprisal4.png}}}
+    \onslide<5->\centerline{\includegraphics[width=0.6\linewidth]{\figfile{surprisal5.png}}}
+\end{overprint}
+\end{figure}
+\end{center}
+\end{frame}
+
+\begin{frame}{\alps{} in Action}
+    \begin{itemize}
+        \item[] \texttt{Emotional eating is associated with overeating\dots (background)}
+		\item[] \texttt{Ticagrelor and clopidogrel antiplatelet treatment were used\dots (methods)}
+		\item[] \texttt{Visual acuity improvements in the 2 groups were similar. (results)}
+		\item[] \texttt{Teacher-rated and self-rated antisocial behavior\dots (results)}
+		\item[] \texttt{In contrast, early intervention with selective high-risk samples\dots  (conclusions)}
+		\item[] \dots
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{\alps{} in Action}
+    \begin{itemize}
+        \item[] \texttt{Emotional eating is associated with overeating\dots (background)}
+        \item[] \textcolor{hard}{\texttt{Ticagrelor and clopidogrel antiplatelet
+            treatment were used\dots (methods)}}
+        \item[] \textcolor{easy}{\texttt{Visual acuity improvements in the 2 groups were similar. (results)}}
+		\item[] \texttt{Teacher-rated and self-rated antisocial behavior\dots (results)}
+		\item[] \texttt{In contrast, early intervention with selective high-risk samples\dots  (conclusions)}
+		\item[] \dots
+    \end{itemize}
+\end{frame}
+
+
+\begin{frame}{\alps{} in Action}
+    \centering
+    \renewcommand{\arraystretch}{2}
+    \begin{table}
+    \resizebox{0.85\textwidth}{!}{
+        \begin{tabular}{*{10}{c}}
+        $\langle$ & 0.000 & 0.000 & 0.000 & 0.000 & 0.021 & 0.000 &  0.000 &
+            \dots & $\rangle$ \\
+        $\langle$ & 0.043 & 0.000 & 0.000 & 0.000 & 0.000 & 0.385 &  0.000 &
+            \dots & $\rangle$ \\
+        $\langle$ & 0.000 & 0.000 & 0.000 & 0.002 & 0.000 & 0.000 &  0.000 &
+            \dots & $\rangle$ \\
+        $\langle$ & 0.000 & 0.000 & 0.000 & 0.000 & 0.000 & 0.000 &  0.039 &
+            \dots & $\rangle$ \\
+        $\langle$ & 0.000 & 0.001 & 0.000 & 0.000 & 0.000 & 0.000 &  0.022 &
+            \dots & $\rangle$ \\
+    \end{tabular}
+    }
+    \end{table}
+    \dots
+\end{frame}
+
+\begin{frame}{\alps{} in Action}
+    \centering
+    \renewcommand{\arraystretch}{2}
+    \begin{table}
+    \resizebox{0.85\textwidth}{!}{
+        \begin{tabu}{*{10}{c}}
+        $\langle$ & 0.000 & 0.000 & 0.000 & 0.000 & 0.021 & 0.000 &  0.000 &
+            \dots & $\rangle$ \\
+            \rowfont{\color{hard}}
+        $\langle$ & 0.043 & 0.000 & 0.000 & 0.000 & 0.000 & 0.385 &  0.000 &
+            \dots & $\rangle$ \\
+            \rowfont{\color{easy}}
+        $\langle$ & 0.000 & 0.000 & 0.000 & 0.002 & 0.000 & 0.000 &  0.000 &
+            \dots & $\rangle$ \\
+        $\langle$ & 0.000 & 0.000 & 0.000 & 0.000 & 0.000 & 0.000 &  0.039 &
+            \dots & $\rangle$ \\
+        $\langle$ & 0.000 & 0.001 & 0.000 & 0.000 & 0.000 & 0.000 &  0.022 &
+            \dots & $\rangle$ \\
+    \end{tabu}
+    }
+    \end{table}
+    \dots
+\end{frame}
+
+\begin{frame}{\alps{} in Action}
+\begin{center}
+\begin{figure}
+\begin{overprint}
+    \onslide<1>\centerline{\includegraphics[width=0.9\linewidth]{\figfile{clusters_text.pdf}}}
+    \onslide<2->\centerline{\includegraphics[width=0.8\linewidth]{\figfile{centers_text.pdf}}}
+\end{overprint}
+\end{figure}
+\end{center}
+\end{frame}
+
+

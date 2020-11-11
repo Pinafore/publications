@@ -1,0 +1,53 @@
+\begin{frame}{Task}
+\onslide<1-> Document classification for detecting medical emergencies in low-resource languages\\\
+\onslide<2-> \begin{table}[t]
+    \centering
+    \begin{tabular}{p{0.1\textwidth}p{0.8\textwidth}}
+    \toprule
+    %\textbf{English} &
+    %... Seven inmates from the Bureau of Jail Management and Penology (BJMP),
+    %Laoag City, have been transferred to the isolation room due to chicken
+    %pox ...\\
+	%\midrule
+	\textbf{Ilocano} &
+    ... Nagtalinaed dagiti pito a balod ti Bureau of Jail Management and
+    Penology (BJMP) ditoy ciudad ti Laoag iti isolation room gapo iti tuko ...\\
+    \bottomrule
+  \end{tabular}
+\end{table}
+\end{frame}
+
+\begin{frame}{Experiments}
+\begin{itemize}
+    \item \textbf{Embeddings:} fastText~\citep{bojanowski-17} aligned with
+        \abr{rcsls}~\citep{joulin-2017}
+\item \textbf{Classifier:} \abr{cnn} (max-pooling)
+\item \textbf{Source language:} English
+\item \textbf{Target language:} Ilocano
+\end{itemize}
+\end{frame}
+
+\begin{frame}{User Study}
+\begin{figure}
+\centering
+\includegraphics[width=0.8\textwidth]{\figfile{ui-il.png}}
+\end{figure}
+\end{frame}
+
+\begin{frame}{Comparison}
+\begin{itemize}
+\item \textbf{Base:} original \abr{clwe} and original training dataset
+\item \textbf{Active:} original \abr{clwe} and training dataset augmented by active learning
+\item \textbf{CLIME:} refined \abr{clwe} and original training dataset
+\item \textbf{A+C:} refined \abr{clwe} and training dataset augmented by active learning
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Results}
+\begin{overprint}
+\onslide<1>\centerline{\includegraphics[width=0.6\textwidth]{\figfile{acc1.png}}}
+\onslide<2>\centerline{\includegraphics[width=0.6\textwidth]{\figfile{acc2.png}}}
+\onslide<3>\centerline{\includegraphics[width=0.6\textwidth]{\figfile{acc3.png}}}
+\onslide<4->\centerline{\includegraphics[width=0.6\textwidth]{\figfile{acc4.png}}}
+\end{overprint}
+\end{frame}
