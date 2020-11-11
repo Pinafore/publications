@@ -1,12 +1,13 @@
 \begin{frame}{\nlp{} for Low-resource Languages}
 \begin{itemize}
-\item Scarcity of both labeled and unlabeled data holds back applications in
+    \onslide<1->\item Scarcity of both labeled and unlabeled data holds back applications in
     low-resource languages
-\item Cross-lingual word embeddings (\abr{clwe}) can bridge the gap by mapping
+\onslide<2->\item Cross-lingual word embeddings (\abr{clwe}) can bridge the gap by mapping
     words from different languages to a shared vector space
+\onslide<3->\item \abr{clwe} not tailored for downstream tasks and need
+    refinement~\citep{zhang-20b}
 \end{itemize}
-\pause
-\textbf{How can we quickly refine CLWE for low-resource NLP?}
+\onslide<4->\textbf{How can we quickly refine CLWE for low-resource NLP?}
 \end{frame}
 
 
@@ -27,8 +28,10 @@
 
 
 \begin{frame}{\name{}}
-    CLassifying Interactively with Multilingual Embeddings
+    \textbf{CL}assifying \textbf{I}nteractively with \textbf{M}ultilingual
+    \textbf{E}mbeddings
     \begin{enumerate}
+        \item[]<2-> Input: pre-trained \abr{clwe}
         \item<2-> Select keywords with \textit{gradient-based
             salience}~\citep{li-16}
         \item<3-> Collect user feedback

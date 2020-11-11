@@ -1,4 +1,4 @@
-\begin{frame}{Experiments: Task}
+\begin{frame}{Task}
 \onslide<1-> Document classification for detecting medical emergencies in low-resource languages\\\
 \onslide<2-> \begin{table}[t]
     \centering
@@ -17,32 +17,34 @@
 \end{table}
 \end{frame}
 
-\begin{frame}{Experiments: Setting}
+\begin{frame}{Experiments}
 \begin{itemize}
+    \item \textbf{Embeddings:} fastText~\citep{bojanowski-17} aligned with
+        \abr{rcsls}~\citep{joulin-2017}
+    \item \textbf{Classifier:} \abr{cnn}~\citep{kim-14}
 \item \textbf{Source language:} English
 \item \textbf{Target language:} Ilocano
-\item \textbf{Embeddings:} fastText aligned with \abr{rcsls}
-\item \textbf{Classifier:} \abr{cnn} (max-pooling)
 \end{itemize}
 \end{frame}
 
-\begin{frame}{Experiments: User Study}
+\begin{frame}{User Study}
 \begin{figure}
 \centering
-\includegraphics[width=0.8\textwidth]{\figfile{ui-il.png}}
+\includegraphics[width=0.9\textwidth]{\figfile{ui-il.png}}
 \end{figure}
 \end{frame}
 
-\begin{frame}{Experiments: Methods}
+\begin{frame}{Comparison}
 \begin{itemize}
-\item \textbf{Base:} original \abr{clwe} and original training dataset
-\item \textbf{Active:} original \abr{clwe} and training dataset augmented by active learning
-\item \textbf{CLIME:} refined \abr{clwe} and original training dataset
-\item \textbf{A+C:} refined \abr{clwe} and training dataset augmented by active learning
+\item<1-> \textbf{Base:} original \abr{clwe} and original training dataset
+\item<2-> \textbf{Active:} original \abr{clwe} and training dataset augmented by
+    active learning (entropy sampling)
+\item<3-> \textbf{CLIME:} refined \abr{clwe} and original training dataset
+\item<4-> \textbf{A+C:} refined \abr{clwe} and training dataset augmented by active learning
 \end{itemize}
 \end{frame}
 
-\begin{frame}{Experiments: Results}
+\begin{frame}{Results}
 \begin{overprint}
 \onslide<1>\centerline{\includegraphics[width=0.6\textwidth]{\figfile{acc1.png}}}
 \onslide<2>\centerline{\includegraphics[width=0.6\textwidth]{\figfile{acc2.png}}}
