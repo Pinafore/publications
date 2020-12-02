@@ -1,0 +1,11 @@
+We introduce a new NLP task--noun phrase linking (NPL)--which is a subset of entity linking and expands named entity linking (\nel{}) to link all noun phrases in a document to an external knowledge base. 
+Our task is an expansion of \nel{} by linking not only named entities, but also references to named entities, and is distinct from coreference resolution in that references to unmentioned entities are also linked.
+Not only is this task more difficult, but performing well on this task would provide benefits to downstream systems, such as Question Answering systems (QA), which use entity linkers to assist with answering questions. 
+By replacing these entity linkers with noun phrase linkers, the QA systems have more information, while shifting some of the difficulty of question answering to designing a good noun phrase linker. 
+Our primary contribution is the introduction of the noun phrase linking task. 
+To introduce NPL, we plan to collect an evaluation set based on annotating several QA datasets which we then use to compare NPL models, and estimate their effectiveness in improving end-to-end QA accuracy.
+This new entity linking task is more difficult than traditional entity linking, because of the difficulty connecting implicit references to named entities, and so requires a method to efficiently collect data. 
+Our second contribution is that we develop an efficient method to collect annotation data by motivating domain experts to annotate and using human-in-the-loop annotation to assist annotators. 
+Data collection is efficiently done by guiding human annotators towards examples where multiple entity linking models disagreed while maintaining accuracy on a gold set. 
+We propose experiments to evaluate the effect of noun phrase linking on question answering systems, and also compare our new noun phrase linking systems against baseline coreference and entity linking systems. 
+In summary, we introduce NPL, demonstrate a method to efficiently collect data, and propose experiments.

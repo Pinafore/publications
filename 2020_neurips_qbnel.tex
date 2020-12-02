@@ -1,0 +1,72 @@
+\documentclass{article}
+\usepackage[preprint]{style/neurips_2020}
+\usepackage{hyperref}
+\usepackage{tikz}
+\newif\ifcomment\commenttrue
+\input{style/preamble}
+\newcommand{\dan}[0]{\abr{dan}}
+\newcommand{\lstm}[0]{\abr{lstm}}
+\newcommand{\gru}[0]{\abr{gru}}
+\newcommand{\ibm}[0]{\abr{ibm}}
+\newcommand{\nquestions}[0]{119,093}
+\newcommand{\ntotalquestions}[0]{132,849}
+\newcommand{\nsentences}[0]{440,195}
+\newcommand{\wikidumpdate}[0]{4/18/2018}
+\newcommand{\simplequestions}[0]{SimpleQuestions}
+\newcommand{\protobowl}[0]{Protobowl}
+
+\newcommand{\coqa}{\textsc{c}{\small o}\textsc{qa}}
+\newcommand{\cove}{\textsc{c}{\small o}\textsc{v}{\small e}}
+\newcommand{\nel}[0]{\abr{nel}}
+\newcommand{\quel}[0]{\abr{quel}}
+\newcommand{\rover}[0]{\abr{rover}}
+\newcommand{\opendialkg}{\abr{o}{\small pen}\abr{d}{\small ial}\abr{kg}}
+\newcommand{\mrr}{\abr{mrr}}
+\newcommand{\tfidf}{\abr{tf-idf}}
+\newcommand{\hre}{\abr{hre}}
+\newcommand{\parlai}{\abr{p}{\small arl}\abr{ai}}
+\newcommand{\wow}{\abr{w}{\small o}\abr{w}}
+\newcommand{\bilstm}{\abr{b}{\small i}\abr{lstm}}
+\newcommand{\tqa}{\abr{t}{\small rivia}\abr{qa}}
+\newcommand{\cis}{\textsc{cis}}
+\newcommand{\ir}{\abr{ir}}
+\newcommand{\rc}{\abr{rc}}
+\newcommand{\rnn}{\abr{rnn}}
+\newcommand{\trec}{\abr{trec}}
+\newcommand{\babi}{{\small b}\abr{a}{\small b}\abr{i}}
+
+\graphicspath{{2020_tacl_qbnel/commit_fig/}{2020_tacl_qbnel/autofig/}{2020_tacl_qbnel/figures/}}
+
+\title{What more can Entity Linking do for Question Answering?}
+
+\author{Naveen Raman \\
+	University of Maryland \\
+	\texttt{nraman1@umd.edu} \\
+	\And
+	Pedro Rodriguez \\
+	University of Maryland \\
+	\texttt{pedro@cs.umd.edu} \\
+	\And
+	Jordan Boyd-Graber \\
+	University of Maryland \\
+	\texttt{jbg@umiacs.umd.edu} \\
+}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract} 
+	\input{2020_tacl_qbnel/sections/00-abstract.tex}
+\end{abstract}
+\input{2020_tacl_qbnel/sections/10-intro.tex}
+\input{2020_tacl_qbnel/sections/20-generalize}
+\input{2020_tacl_qbnel/sections/30-interface}
+\input{2020_tacl_qbnel/sections/50-experiments}
+\input{2020_tacl_qbnel/sections/60-related}
+\input{2020_tacl_qbnel/sections/70-conclusion}
+
+\bibliographystyle{abbrv}
+\bibliography{bib/journal-full,bib/pedro}
+
+\end{document}

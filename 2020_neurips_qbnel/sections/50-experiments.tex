@@ -1,0 +1,50 @@
+\section{Proposed Experiments}
+\label{sec:exp}
+
+We design three experiments to evaluate different aspects of noun phrase linking. 
+Our first experiment compares prior entity linkers and coreference annotators on the noun phrase task, to determine if prior solutions can be used to solve the problem. 
+We design an experiment to determine if using prior entity linkers to assist annotators with improves the precision or recall of annotations. 
+After data collection, we design an experiment to assess the degree to which noun phrase linking assists question answering systems. 
+We also plan to develop a simple model for noun phrase linking, and compare it with a baseline coreference+named entity linking model on the collected dataset. 
+
+\subsection{Comparison of prior Entity Linkers}
+
+To evaluate current entity linkers on \qa{} tasks, we first plan to characterize the generalizability of \nel{} models trained on \abr{aida} and \abr{tac} 2010 to text from \qa{} tasks.
+We measure this directly by comparing the predictions of \abr{tagme}, \abr{blink}~\citep{wu2019blink}, and \cite{gupta2017entity} to a gold set of noun phrase annotations on one hundred questions from the development and test sets of \qb{}, \triviaqa{}, and \searchqa{}.
+We compare the precision and recall for each of these on the gold set, both only considering named entities, and also considering all noun phrases. 
+We additionally plan to augment entity linkers with co-reference models to see if this provides a gain in precision or recall. 
+
+\subsection{Noun Phrase Annotation effect on QA models}
+To determine the effect of noun phrase annotation on QA models, we run an experiment on \qb{} questions. 
+We plan to do this by replacing entities with their linked Wikipedia page title and evaluating performance through QANTA, as in Figure 1. 
+We consider our initial gold dataset to consist of 20 randomly chosen \qb{} questions, and we replace noun phrases with their corresponding entity. 
+We compare the three aforementioned linkers in addition to the gold linking set, which annotates noun phrases. 
+To evaluate QA accuracy, we use QANTA to predict each sentence in each question and compute the accuracy percentage. 
+This is to demonstrate whether resolving noun phrases has any effect upon downstream performance. 
+To motivate the experiment, we replace noun phrases for one sentence in a question (Figure 1) and find that it changes the answer from the incorrect David Hume, to the correct Francis Bacon. 
+Our metric is the accuracy of the QANTA \qa{} system with the replaced entities. 
+
+\subsection{Entity Linker effect on annotations}
+\label{sec:quality}
+
+We plan to analyze annotation quality by comparing annotations from a set of one hundred questions.
+These questions will be annotated five times: once by us for gold annotations and once for each of the four experimental conditions (Section~\ref{sec:el-int}).
+Annotations will be compared with standard entity linking metrics, such as precision and recall, with annotations treated as model predictions.
+Additionally, we plan to compare inter-rater reliability through kappa scores. 
+Our goal is to determine how best to improve the task of entity linking to make it easier for annotators, without sacrificing accuracy. 
+
+\subsection{Model comparison}
+We develop a noun phrase model that is improved during human-in-the-loop data collection. 
+The model is based off of n-grams, and is split into two parts; the first finds noun phrases, and the second links these noun phrases to Wikipedia. 
+We train and compare this model to a baseline coreference and named entity linking model, to determine whether models can be developed to perform well on the noun phrase linking task. 
+We perform cross validation on our collected data, as to not mix the train and test sets, to compare the two models. 
+We measure both the precision and recall for retrieving noun phrases. 
+ 
+
+
+
+
+
+
+
+%We then plan to use integrate this into a QA system based off of \qb{} questions, and evaluate the gain in accuracy due to increased entity linking accuracy and expansion of entity linking to noun phrases. 

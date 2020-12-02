@@ -1,0 +1,37 @@
+\section{Noun Phrase Linking}
+\label{sec:gen}
+We define the problem of Noun Phrase Linking and motivate the problem by discussing the improved performance in downstream tasks due to noun phrase linking. 
+We additionally define guidelines for noun phrase linking and develop an interface for annotating documents using those guidelines in Section 3. 
+
+\subsection{Noun Phrase Linking}
+Named entities refer to specific nouns such as people's names, and the name of places. 
+Annotating named entities provides a gain in accuracy when augmented to QA systems, but named entities exclude certain noun phrases that could further assist QA systems. 
+In particular, resolving anaphoric references, such as resolving "One work by this author" to "Novum Organum", provides a more difficult task because of the lack of a direct link between the noun phrase and the entity to be linked. 
+Resolving anaphoric references could allow for a bigger gain in helping QA systems, as seen by changing the answer to the correct answer, Francis Bacon, when noun phrases are replaced by their referenced entity (Figure 1).  
+\\
+\\
+We define the task of noun phrase linking to be the union of annotating anaphoric references along with annotating named entities, and in effect, annotating all noun phrases in a document that link to a named entity.
+This task differs from the coreference and entity linking, as entities that are referred to, but not necessarily ever mentioned in the document, can be linked. 
+For example, within the first sentence of Figure 1, Novum Organum is never mentioned. 
+However, "One work by this author" refers to Novum Organum, and so would be annotated in Noun Phrase Linking, but not in either coreference or entity linking.  
+We develop guidelines for linking noun phrases (Section \ref{sec:int}), and plan to conduct experiments to determine the effect of annotating noun phrases upon QA performance (Section \ref{sec:exp}). 
+\\
+\\
+We extend traditional entity linking to noun phrase linking because traditional entity linkers have been shown to perform well on \nel{} tasks, and extending to noun phrase linking allows for a more challenging task. 
+Current models do well in NEL and coreference resolution, both of which are tasks related to noun phrase linking. 
+Thus, it's plausible, although imperfect, that future models may show improvement on downstream tasks. 
+We also propose experiments that explore the effect that noun phrase linking has upon question answering accuracy (Section \ref{sec:exp}), to determine the extent to which noun phrase linking assists question answering systems. 
+ 
+
+\subsection{Noun Phrase Linking Guidelines}
+We develop guidelines for determining which entities to link, and what to link them to. 
+These guidelines will be used by annotators, along with examples, when determining what to annotate. 
+We link text spans that are noun phrases and refer to a uniquely identifiable named entity in the knowledge base. 
+For example, in Figure 1, we link "idols of the theatre" because it refers to a named entity. 
+On the other hand, we don't link the word "symbols", despite the presence of a Wikipedia page for symbol, because smybol does not refer to a specific symbol, but rather the general word. 
+If no Wikipedia page is present for a noun phrase, then we link it with "No Entity."
+The "No Entity" links are subdivided into "No Entity Character" and "No Entity Literature" for characters and works of literature respectively.
+Wikipedia is an incomplete knowledge base; rather than omit links simply because the correct entity does not exist, the entity should be linked, but assigned to a special null entity indicating its type. 
+
+
+
