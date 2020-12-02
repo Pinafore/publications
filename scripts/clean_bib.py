@@ -45,7 +45,8 @@ if __name__ == "__main__":
                 continue
             elif "=" in ii:
                 field = ii.split("=")[0].strip().lower()
-                acceptable = field not in kUNACCEPTABLE_OUTPUT[kind]
+                acceptable = (kind not in kUNACCEPTABLE_OUTPUT) or \
+                    (field not in kUNACCEPTABLE_OUTPUT[kind])
                 doi_field = field in doi_fields and args.doi
                 if acceptable or doi_field:
                     output[(key, kind)].append(ii.strip())
