@@ -1,0 +1,110 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[hyperref]{style/naacl2021}
+\usepackage{times}
+\usepackage{inconsolata}
+\usepackage{amssymb}
+\usepackage{pifont}
+
+\usepackage{url}
+\usepackage{bibunits}
+%\usepackage{floatrow}
+\hyphenation{Wiki-SQL}
+
+%\floatsetup[table]{capposition=top}
+%\floatsetup[figure]{capposition=top}
+
+\newif\ifcomment
+\commenttrue
+\commentfalse
+
+\newif\ifdoublespaceme
+\doublespacemefalse
+
+
+\input{style/preamble}
+
+\newcommand{\latexfile}[1]{\input{2021_naacl_multi_ance/sections/#1}}
+\newcommand{\tablefile}[1]{\input{2021_naacl_multi_ance/tables/#1}}
+\newcommand{\figfile}[1]{2021_naacl_multi_ance/figures/#1}
+\newcommand{\autofig}[1]{2021_naacl_multi_ance/auto_fig/#1}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\hotpot}{\textsc{HotPotQA}\xspace} 
+\newcommand{\bert}{{\abr{bert}}\xspace} 
+\newcommand{\name}{\textsc{BeamDR}\xspace} 
+\newcommand{\grr}{\textsc{\abr{grr}}\xspace} 
+\newcommand{\fone}{$F_1$}
+
+
+%\aclfinalcopy % Uncomment this line for the final submission
+
+%\setlength\titlebox{5cm}
+% You can expand the titlebox if you need extra space
+% to show all the authors. Please do not make the titlebox
+% smaller than 5cm (the original size); we will check this
+% in the camera-ready version and ask you to change it back.
+
+\newcommand\BibTeX{B{\sc ib}\TeX}
+\newcommand\confname{NAACL 2021}
+\newcommand\conforg{SIGDAT}
+
+\def\aclpaperid{} %  Enter the acl Paper ID here
+
+\title{Multi-Step Reasoning Over Unstructured Text with Beam Dense Retrieval}
+
+
+\author{
+  Chen Zhao\\
+  University of Maryland\\
+  {\tt chenz@cs.umd.edu} \\\And
+  Chenyan Xiong\\
+  Microsoft Research\\
+  {\tt chenyan.xiong@microsoft.com} \\\AND
+  Jordan Boyd-Graber\\
+  University of Maryland\\
+  {\tt jbg@umiacs.umd.edu} \\\And
+  Hal Daum{\'e} III\\
+  Microsoft Research \& University of Maryland\\
+  {\tt me@hal3.name} \\}
+
+\date{}
+
+\begin{document}
+\maketitle
+
+
+\ifdoublespaceme
+  \doublespacing
+\fi
+
+
+\begin{abstract}
+  \latexfile{00-abstract}
+
+\end{abstract}
+
+
+%\begin{bibunit}[style/acl_natbib_2019]
+
+\latexfile{10-intro}
+%\latexfile{20-setting}
+\latexfile{30-model}
+\latexfile{50-experiment}
+\latexfile{60-analysis}
+\latexfile{70-related}
+\latexfile{80-conclusion}
+\latexfile{90-ack}
+
+\clearpage
+
+%\putbib[bib/journal-full,bib/ref]
+%\end{bibunit}
+
+
+
+\bibliographystyle{style/acl_natbib_2019}
+\bibliography{bib/journal-full,bib/multi_ance}
+%\clearpage
+%\appendix
+
+
+\end{document}

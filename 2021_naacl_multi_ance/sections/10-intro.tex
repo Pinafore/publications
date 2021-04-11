@@ -1,0 +1,109 @@
+\section{Introduction}
+\label{sec:intro}
+
+
+Answering complex questions requires combining knowledge pieces
+through multiple steps into an evidence chain (\underline{Ralph
+  Hefferline} $\rightarrow$ \underline{Columbia University} in
+Figure~\ref{fig:ex}).
+%
+When the available knowledge sources are graphs or databases, 
+constructing chains can use the sources' inherent structure.
+%
+However, when the information needs to be pulled from unstructured
+text (which often has better coverage), standard information retrieval
+(\abr{ir}) approaches only go ``one hop'': from a query to a
+single passage.
+
+
+Recent approaches~\cite[\emph{inter alia}]{Dhingra2020Differentiable, Zhao:Xiong:Qian:Boyd-Graber-2020, zhaotransxh2020,asai2020learning} try to 
+achieve the best of both worlds: use the
+unstructured text of Wikipedia with its structured hyperlinks.
+%
+While they show promise on benchmarks, it's difficult to
+extend them beyond academic testbeds because real-world
+datasets often lack this structure.
+%
+For example, medical records lack links between reports.
+%
+
+Dense retrieval~\cite[\emph{inter alia}]{lee-etal-2019-latent,
+  guu2020realm, karpukhin-etal-2020-dense} provides a promising path to
+overcome this limitation.
+%
+It encodes the query and evidence (passage) into dense vectors and matches them in the embedding space.
+%
+In addition to its efficiency---thanks to maximum inner-product search
+(\abr{mips})---\newcite{xiong2020approximate} show that dense
+retrieval rivals
+\bert{}~\cite{devlin+19}-based (sparse) retrieve-then-rerank \abr{ir}
+pipelines on single step retrieval.
+%
+Unlike traditional term-based retrieval, fully learnable dense encodings 
+provide flexibility for different tasks.
+
+
+\begin{figure}[!t]
+    \centering
+    \includegraphics[width=0.9\linewidth]{\figfile{model_fig.pdf}}
+    \caption{Top: A complex question example from \hotpot{} that
+      requires finding an evidence chain. Bottom: \name{} iteratively
+      composes the new query and retrieves evidence in dense space
+      without the need for linked documents.  }
+    \label{fig:ex}
+    \end{figure}
+
+
+This paper investigates a natural question: can we build a 
+retrieval system to find an evidence chain on unstructured text corpora?
+%
+We propose a new multi-step dense retrieval method to model the
+implicit relationships between evidence pieces.
+%Finding the right evidence chain is
+%similar to search over structured objects.  
+We use beam search (Section~\ref{sec:model}) in the dense
+space to find and cache the most relevant candidate chains and 
+iteratively compose the query by appending the retrieval history.
+%
+We improve the retrieval by encouraging the representation to
+discriminate hard negative evidence chains from the correct chains,
+which are refreshed by the model.
+%iteratively improving the encoding during training.
+
+
+
+We evaluate \textbf{Beam} \textbf{D}ense \textbf{R}etrieval (\name{}) 
+on \hotpot{}~\cite{yang+18b}, a multi-hop question answering benchmark. 
+When retrieving evidence chains directly from the corpus (full retrieval), \name{} 
+is competitive to the 
+state-of-the-art cascade reranking systems that use Wikipedia links. Combined with standard 
+reranking and answer span extraction modules,
+the gain from full retrieval propagates to findings answers
+(Section~\ref{sec:experiment}). 
+%
+By iteratively composing the query representation, \name{} captures
+the hidden ``semantic'' relationships in the evidence
+(Section~\ref{sec:analysis}).
+
+%\ignore{
+%Knowledge acquisition plays an important role in 
+%answering complex questions that require multi-step reasoning. 
+%With well-defined entity and relation schemas, knowledge graphs are suitable source to 
+%support complex reasoning. However the low coverage of knowledge schemas
+%limits the applicationality to satisfy any given questions. Unstructured text as knowledge source 
+%has high coverage, but off the shelf information retrieval systems focus on 
+%retrieving single evidence, finding multiple evidence piece remains a challenging topic.
+
+%Recent apporaches aim at combining the advantages of both approaches.
+%They use Wikipedia as evidence corpus, in which the text is connected
+%through internal hyperlinks. By retrieving then reranking the question related text subgraph, these 
+%apporaches are able to conduct complex reasoning while mitigate the coverage 
+%problem. Despite strong results on the benchmarks, the key reason hampers these 
+%approaches to deploy on real scenarios is the assumption that
+%the corpus is semi-structured, which does not often hold.
+%For example, in medical domain where the corpus is a 
+%collection of medical reports, the links between
+%reports do not exist. This motivates us to address the following research question: 
+%Can we build an multi-step retrieval system without 
+%relying on the semi-structured information, while maintaining the strong results? 
+%}

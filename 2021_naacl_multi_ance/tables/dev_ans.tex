@@ -1,0 +1,36 @@
+\begin{table}
+  %\centering
+  \vspace{-0.3cm}
+  %\footnotesize 
+   \begin{tabular}{llcccc}\toprule 
+      \multirow{2}{*}{Retriever}  &\multirow{2}{*}{Reader} &\multicolumn{2}{c}{Dev}& \multicolumn{2}{c}{Test}\\
+      & & EM & F1 &  EM & F1  \\\hline
+     \multicolumn{6}{l}{\emph{BERT base Reader} }\\
+     %SR & 46.5 & 58.8  \\ 
+     \abr{txh} & \abr{txh}& 54.0 & 66.2 &51.6& 64.1  \\ 
+     \grr{} & \grr{} & 52.7 & 65.8  & -& -   \\ 
+     \name{}  & \grr{} & 54.9 & 68.0 &-&-  \\\hline
+     \multicolumn{6}{l}{\emph{BERT large wwm Reader} }\\
+     \grr{} & \grr{}& 60.5 & 73.3  &60.0&   73.0 \\ 
+     \name{} & \grr{} & 61.3 &  74.1 &60.4&  73.2 \\ 
+     \abr{mdr}$^*$ & \abr{mdr}$^*$& 61.5 & 74.7  &-&- \\ \hline
+     \multicolumn{6}{l}{\emph{ELECTRA large Reader} }\\
+     \abr{mdr}$^*$ & \abr{mdr}$^*$& 63.4 & 76.2 &62.3 & 75.3  \\ 
+     
+
+     %\multicolumn{3}{l}{\emph{ALBERT xxlarge Reader} }\\
+     %\abr{DDRQA} &62.9&76.9 &62.5& 75.9 \\ \hline
+     %\multicolumn{3}{l}{\emph{ELECTRA large Reader} }\\
+     %\abr{MDR}$^*$  & 63.4 & 76.2 &62.3 & 75.3  \\ 
+     %\abr{IRRR}$^*$  & - & - &65.7 & 78.2  \\ 
+     
+
+      \midrule
+    \end{tabular}
+        \caption{\hotpot{} dev and test set answer exact match (EM) and F1 results. $^*$ indicates parallel work.}
+        %and supporting facts exact match (EM) and F1 results. $^*$ indicates parallel work.}
+        
+        \label{tb:dev_ans}
+    
+    \end{table}
+    

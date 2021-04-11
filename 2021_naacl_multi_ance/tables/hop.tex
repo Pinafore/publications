@@ -1,0 +1,27 @@
+% !TEX root = ../../2019_emnlp_qalign.tex
+
+\begin{table}[t]
+    \centering
+
+    
+    \footnotesize
+        
+    \begin{tabular}{lcc|c}
+  
+      \toprule
+      \multirow{2}{*}{Models} & \multicolumn{2}{c|}{Passage Recall} & \multirow{2}{*}{Overlap}\\
+        & First hop & Second hop & \\
+       \midrule
+       \grr{}   &85.1& 85.3  &64.3\\
+       \name{}   & 86.4  & 78.9 & 26.7\\
+       \name{}$	\dagger$   &  88.0 &  87.1 &14.7\\
+      \bottomrule
+    \end{tabular}
+    \caption{Passage Recall and overlap comparison between \name{} and
+      \grr{} with different hop passages. Systems with~$\dagger$
+      filter second hop passages with links. }
+        \label{tb:hops}
+
+
+  \end{table}
+  

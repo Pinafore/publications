@@ -1,0 +1,30 @@
+\begin{table}[!tb]
+\small
+  \vspace{-0.3cm}
+  \footnotesize
+  \begin{tabular}{m{3cm}	m{0.6cm} m{0.6cm} m{0.85cm} m{0.6cm} }\toprule 
+   Models  & AR & PR & P EM & EM \\
+    \midrule
+    \multicolumn{5}{l}{\emph{Full Retrieval} }\\
+    \abr{tf-idf} & 39.7 & 66.9  &10.0 & 18.2 \\
+    
+    \abr{mdr} $^*$ & 75.4 & - & 65.9 & -\\ 
+    \name{} (\abr{ir} Neg) & 76.8 & 86.4 & 64.1 & 40.4\\
+    \name{} (Greedy) & 83.6 & 90.7 & 72.7 & 34.1\\
+    \name{} (Ours) & 87.0 & 92.9 & 79.2 & 60.7\\ \hline
+    \multicolumn{5}{l}{\emph{Reranking from Retrieval Outputs}}\\
+    \abr{sr} & 77.9 & 93.2 & 63.9 & 46.5\\ 
+      \grr{}   & 87.8  & 93.3 & 77.9 & 61.1 \\
+      \abr{mdr} $^*$ & 88.2 & - & 81.2 & -\\ 
+      \name{} (Ours) & 90.7 & 94.7 & 83.7 & 70.7\\ 
+    \bottomrule
+  \end{tabular}
+      \caption{Compare \name{} with other retrieval systems.
+      %over Answer Recall (AR), Passage Recall (PR), Passage Exact Match (P EM) and 
+      %Exact match (EM) metrics.
+      Top: Retrieval from the whole corpus, bottom: Reranking from top 100 full retrieval outputs. $^*$ indicates parallel work.}
+      
+      \label{tb:retrieval_results}
+  
+  \end{table}
+  

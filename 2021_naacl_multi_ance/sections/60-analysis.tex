@@ -1,0 +1,101 @@
+\section{Exploring How we Hop}
+\label{sec:analysis}
+%\todo{Need a better title}
+
+In this section, we explore how \name{} constructs
+evidence chains.
+
+\begin{figure}[t]
+    \centering
+    \includegraphics[width=0.85\linewidth]{\figfile{tsne_up.pdf}}
+    \caption{\abr{t-sne} visualization of query (Q) and passage (P)
+      embeddings over different retrieval steps.  
+      \name{} conducts multi-step reasoning by hopping in the learned representation space.}
+    \label{fig:tsne}
+\end{figure}
+
+\tablefile{hop}
+
+%\todo{polish the figure}
+
+
+\subsection{Qualitative Analysis}
+Figure~\ref{fig:tsne} shows query and passage representations with
+\abr{t-sne}~\cite{maaten2008visualizing}.
+%
+Unsurprisingly, in the dense space, the first hop query (question) is 
+close to its retrieved 
+passages but far from second hop passages (with 
+some negative passages in between).
+%
+After composing the question and first hop passages, the second hop queries
+indeed land closer to the second hop passages. 
+%
+Our 
+quantitative analysis (Table~\ref{tb:hops}) further shows 
+\name{} has little overlap between retrieved passages in two hops.
+%
+\name{} mimics multi-step reasoning by
+hopping in the learned representation space.
+%\todo{add top100 overlaps between two hop predictions}
+
+\subsection{Hop Analysis}
+
+
+To study model behaviors under different hops, we use heuristics\footnote{We label the passage that contains the answer
+as the second hop passage, while the other one as the first hop passage. If both passages include the answer,
+passage title mentioned in the question is the first hop passage.
+} to infer the order of evidence passages.
+%Table~\ref{tb:hops} compares \name{} and \grr{} prediction breakdowns under different hop passages. 
+In Table~\ref{tb:hops}, \name{} slightly wins on first hop passages, 
+%
+%
+with the help of hyperlinks, 
+\grr{} outperforms \name{} on second hop retrieval.
+%
+Only $21.9\%$ of the top-10 \name{} chains are
+connected by links.  
+\name{} wins
+after using links to filter candidates.
+%Although the assumption that these passages are always connected 
+%with hyperlinks does not hold in real-world applications. 
+
+
+\subsection{Human Evaluation on Model Errors and Case Study}
+
+To understand the strengths and weaknesses of \name{} compared with
+\grr{}, we manually analyze $100$ bridge questions from the \hotpot{}
+development set. \name{} predicts fifty of them correctly and \grr{}
+predicts the other fifty correctly (Tables~\ref{tb:human-eval} and~\ref{tb:case}).
+
+%\tablefile{cases}
+
+
+\paragraph{Strengths of \name{}.}
+Compared to \grr{}, the largest gain of \name{} is to identify question entity passages. 
+As there is often little context overlap besides the entity surface form, 
+a term-based approach (\abr{tf-idf} used by \grr{}) falters.
+Some of the \grr{} errors 
+also come from using reverse links to find second hop passages (i.e., the second hop passage links to the 
+first hop passage). 
+\tablefile{human-eval}
+
+\paragraph{Weaknesses of \name{}.}
+Like \citet{karpukhin-etal-2020-dense}, many of \name{}'s
+errors could be avoided by simple term matching. For example, matching 
+\textit{``What screenwriter with credits for Evolution co-wrote a film \ul{starring Nicolas Cage and T\'ea Leoni}?''}
+to the context \textit{``The Family Man is a 2000 American film written by David Diamond and David Weissman,
+and \ul{starring Nicolas Cage and T\'ea Leoni}.''}.
+%Encoding all passage
+%information into dense vectors is a challenging and promising
+%direction for future research.  
+%Some errors also come from the
+%disconnection of retrieved evidence chain.
+
+
+\tablefile{cases}
+
+
+%\tablefile{cases}
+
+

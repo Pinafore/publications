@@ -1,0 +1,176 @@
+
+\section{Experiments: Retrieval and Answering}
+\label{sec:experiment}
+
+\jbgcomment{Can we have more descriptive section titles?}
+
+Our experiments are on \hotpot{} fullwiki setting~\cite{yang+18b}, the
+multi-hop question answering benchmark.  We mainly evaluate on
+retrieval that extracts evidence chains (passages) from the corpus; we
+further add a downstream evaluation on whether it finds the right
+answer.
+
+
+\subsection{Experimental Setup}
+
+
+
+
+\paragraph{Metrics}
+Following \citet{asai2020learning}, we report four metrics
+on retrieval:
+%
+answer recall (\abr{ar}), if answer span is in the retrieved
+passages;
+%
+passage recall (\abr{pr}), if at least one gold passage is in the
+retrieved passages;
+%
+Passage Exact Match (\abr{p em}), if both gold passages are included
+in the retrieved passages;
+%
+and Exact Match (\abr{em}),
+whether both gold passages are included in the top two retrieved
+passages (top one chain).
+%
+We report exact match (\abr{em}) and \fone{} on
+answer spans.
+
+
+\paragraph{Implementation}
+
+We use a \bert{}-base encoder for retrieval and report both \bert{}
+base and large for span extraction.
+%
+We warm up \name{} with \abr{tf-idf} negative chains.
+%
+The retrieval is evaluated on ten passage chains (each chain has two
+passages).
+%
+To compare with existing retrieve-then-rerank cascade systems, we
+train a standard \bert{} passage reranker~\cite{nogueira2019passage},
+and evaluate on ten chains reranked from the top 100 retrieval
+outputs.
+%
+We train \name{} on six 2080Ti GPUs, 
+three for training, three for refreshing negative chains. 
+We do not search hyper-parameters and use suggested ones 
+from \citet{xiong2020approximate}.
+%
+
+%\todo{adjust table size}
+\subsection{Passage Chain Retrieval Evaluation}
+\tablefile{retrieval}
+
+\paragraph{Baselines}
+We compare \name{} with \abr{tf-idf}, Semantic
+Retrieval~\cite[\abr{sr}]{nie2019revealing}, which uses a cascade \bert{}
+pipeline, and the Graph recurrent
+retriever~\cite[\grr{}]{asai2020learning}, our main baseline, which
+iteratively retrieves passages following the Wikipedia hyperlink
+structure, and is state-of-the-art on the leaderboard.
+%
+We also compare against a contemporaneous model, multi-hop dense
+retrieval~\cite[\abr{mdr}]{xiong2020answering}.
+%\footnote{\abr{mdr} was submitted to Ar{$\chi$}iv on Sep
+%  27\textsuperscript{th}; according to \abr{acl} policy our work is
+%  contemporaneous.}
+  %While per \abr{acl} policy we do not need to
+  %compare to this late-breaking work, we include a comparison and
+  %highlight differences.}
+
+  
+%
+%\begin{figure*}\TopFloatBoxes
+%  \begin{floatrow}
+  
+%      \ttabbox{\resizebox{0.62\textwidth}{!}
+%        {\tablefile{dev_ans}}}
+%        {  
+%          \caption{\hotpot{} dev and test set answer and supporting facts exact match (EM) and F1 results. $^*$ indicates parallel work. 
+%     \label{tb:dev_ans}\vspace{-0.3cm}
+%     } 
+%     }
+   
+%   \ttabbox{\resizebox{0.32\textwidth}{!}
+%        {\tablefile{cases}}
+%       \caption{Case study of \name{} and \grr{} retrieval. Term based retrieval approaches (TF-IDF used by \grr{})
+%       is unable to distinguish an two players with same name. 
+%       \name{} correctly 
+%       identifies the question entity.\label{tb:case}\vspace{-0.3cm}
+%       }
+%       }
+ 
+  
+%  \end{floatrow}
+%\end{figure*}
+
+
+\paragraph{Results: Robust Evidence Retrieval without Document Links}
+
+Table~\ref{tb:retrieval_results} presents retrieval results. 
+%
+On full retrieval, 
+\name{} is competitive to \abr{grr}, state-of-the-art \emph{reranker} 
+using Wikipedia hyperlinks.
+%
+\name{} also has better retrieval than the contemporaneous \abr{mdr}.
+% 
+Although both approaches build on dense retrieval, \abr{mdr}
+is close to \name{} with \abr{tf-idf} negatives. We instead refresh
+negative chains with intermediate representations, which help the model
+better discover evidence chains.
+%
+Our ablation study (Greedy search) indicates the importance of maintaining the beam during inference.  
+%our asynchronized negative sample generation provides strong learning signals thus improve learned representations, 
+%and beam search inference better locates the passage path.
+With the help of cross-attention between the question and the passage, 
+using \bert{} to rerank \name{} outperforms all
+baselines.
+
+
+\paragraph{Varying the Beam size}
+
+Figure~\ref{fig:beamsize} plots the Passage \abr{em} with different
+beam sizes.  While initially increassing the beam size improves
+Passage Exact Match, the marginal improvement decreases after a beam
+size of forty.
+% \name{} is robust towards the increase number of passages retrieved at the first step. 
+
+\begin{figure}[t]
+  \begin{center}
+  \includegraphics[width=0.9\linewidth]{\figfile{beamEM1.pdf}}
+  \end{center}
+  \caption{Passage retrieval accuracy on different beam size. Our system is robust to the increase of beam size.}
+  \label{fig:beamsize}
+\end{figure}
+
+
+
+\subsection{Answer Extraction Evaluation}
+
+\paragraph{Baselines} We compare \name{} with  
+ \abr{txh}~\cite{zhaotransxh2020}, \abr{grr}~\cite{asai2020learning} and 
+ the contemporaneous \abr{mdr}~\cite{xiong2020answering}. 
+ %\footnote{While some other competitive leaderboard
+ %entries~\cite{zhang2020ddrqa,fang2020hierarchical} use stronger
+ %pre-trained models such as \abr{electra}.}
+ %
+  We use released code from \abr{grr}~\cite{asai2020learning} following its settings on
+ \bert{} base and large. We use four 
+ 2080Ti GPUs.
+
+ 
+%\tablefile{dev_ans}
+\tablefile{dev_ans}
+
+
+\paragraph{Results}
+
+Using the same implementation but on our reranked chains, \name{}
+outperforms \grr{} (Table~\ref{tb:dev_ans}), suggesting gains from
+retrieval could propagate to answer span extraction.
+%
+\name{} is competitive with \abr{mdr} but slightly lower; we speculate
+different reader implementations might be the cause.
+

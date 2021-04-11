@@ -1,0 +1,150 @@
+\section{\name{}: Beam Dense Retriever}
+\label{sec:model}
+
+
+This section first discusses preliminaries 
+for dense retrieval, then 
+introduces our method, \name{}.
+
+%
+
+
+\subsection{Preliminaries}
+
+Unlike classic retrieval techniques, dense retrieval methods match
+distributed text representations~\cite{bengio-13} rather than sparse
+vectors~\cite{salton-68}.
+%
+With encoders (e.g., \bert{}) to embed query~$q$ and passage~$p$ into
+dense vectors~$E_{Q}(q)$ and~$E_{P}(p)$, the relevance score $f$ is
+computed by a similarity function $sim(\cdot)$ (e.g., dot product)
+over two vector representations:
+\begin{equation}
+    f(q, p) = sim(E_{Q}(q), E_{P}(p)).
+    \label{eqn:sim}
+  \end{equation}
+  After encoding passage vectors offline, we can efficiently retrieve
+  passage through approximate nearest neighbor search over the maximum
+  inner product with the query, i.e.,
+  \abr{mips}~\cite{shrivastava2014asymmetric,JDH17}.
+
+
+
+\subsection{Finding Evidence Chains with \name{}}
+\label{subsec:beamdr}
+
+We focus on finding an evidence chain from an unstructured text corpus
+for a given question, often the hardest part of complex question
+answering.
+%
+We formulate it as multi-step retrieval problem.
+Formally, given a question~$q$ and a corpus $C$, the task is
+to form an ordered evidence chain~${p_{1}...p_{n}}$ from~$C$, with
+each evidence a passage.
+%
+We focus on the supervised setting, where the labeled evidence set
+%$P_{gold}$ \footnote{However the exact order of the chain is not given.}
+is given during training (but not during testing).
+
+Finding an evidence chain from the corpus 
+is challenging because:
+1) passages that do not share enough words are hard to retrieve 
+(e.g., in Figure~\ref{fig:ex}, the evidence \underline{Columbia University});
+%
+2) if you miss one evidence, you may err on all
+that come after.
+
+We first introduce scoring a single evidence chain, then finding the
+top $k$ chains with beam search, and finally training \name{}.
+%
+%A chain is only as strong as its weakest link---this is true for
+%reasoning chains as well: if you miss one link (passage in our case), you may err on all
+%that comes after.
+%
+%\jbgcomment{What's the difference between chain and sequence?  If
+%  there isn't one, let's standardize.}
+
+%\czcomment{hal is right, it should be the normalized score rather than raw score}
+
+\paragraph{Evidence Chain Scoring}
+
+The score $S_{n}$ of evidence chain ${p_{1},\dots,p_{n}}$ is the product of the
+(normalized) relevance scores of individual evidence pieces.
+%
+At each retrieval step $t$, 
+to incorporate the information from both the question and retrieval history, we compose  
+a new query~$q_{t}$ by appending the tokens of retrieved chains $p_{1},\dots,p_{t - 1}$ 
+to query $q$ ($q_t=[q;p_{1};\dots;p_{t-1}]$), we use \abr{mips} 
+%($q_t=q \circ p_{1} \circ\dots\circ p_{t-1}$), we use \abr{mips} 
+to find relevant evidence piece $p_t$ from the corpus and update the
+evidence chain score $S_t$ by multiplying the
+current step $t$'s relevance score $f (q_{t}, p_{t}) * S_{t -1}$.
+%\begin{equation}
+%  S_{t} = f (q_{t}, p_{t}) * S_{t -1}.
+%  \label{eqn:sc}
+%\end{equation}
+
+\jbgcomment{Perhaps I'm missing something, but if we're appending to a
+  query vector, doesn't that change the dimensionality?  How do you
+  then do MIPS on that?  The composition function seems unclear.}
+
+
+\czcomment{made the edit (deleted the ``vector''), here we are not appending to a vector, 
+but appending the tokens as the new input to BERT,
+therefore the dimensionality does not change.}
+
+\paragraph{Beam Search in Dense Space}
+
+
+Since enumerating all evidence chains is computationally impossible,
+%An exhaustive search, however, is computationally impossible.
+%
+we instead maintain an evidence cache.
+%
+In the structured search literature this is called a \emph{beam}:
+the $k$-best scoring candidate chains we have found thus far.
+%
+%We find most promising candidates by retaining highest scoring
+%chains.
+%
+%
+We select evidence chains with beam search in dense space.  At step
+$t$, we enumerate each candidate chain $j$ in the beam $p_{j,
+  1}...p_{j, t - 1}$, score the top $k$ chains and update the beam.
+After $n$ steps, the $k$ highest-scored evidence chains with
+length~$n$ are finally retrieved.
+
+
+\paragraph{Training \name{}}
+
+The goal of training is to learn embedding functions that
+differentiate positive (relevant) and negative evidence chains.
+%
+Since the evidence pieces are unordered, we 
+sample positive permuted evidence chains from the gold evidence set.
+%
+A negative chain has at least one evidence piece that is not in the gold 
+evidence set. 
+For each step $t$, the input is
+the query~$q$, a sampled positive chain~$P_{t}^{+} = p^{+}_{1},\dots,p^{+}_{t}$
+and~$m$ sampled negative chains $P_{j, t}^{-} = p^{-}_{1},\dots,p^{-}_{t}$. 
+We update the negative log likelihood (\abr{nll}) loss:
+\begin{align}
+  &L(q, P^{+}, P_{1}^{-}, ..., P_{m}^{-})   \\
+  &=\sum_{t}{\frac{e^{f([q;P_{t-1}^{+}], p^{+}_{t})}}{e^{f([q;P_{t-1}^{+}], p^{+}_{t})} + \sum_{j=1}^{m} {e^{f([q;P_{j, t-1}], p^{-}_{j, t})}}}}.\nonumber
+  \label{eqn:loss}
+\end{align}
+Rather than using local in-batch or term matching negative samples,
+like \citet{guu2020realm} we select negatives from the whole corpus,
+which can be more effective for single-step
+retrieval~\cite{xiong2020approximate}.
+%
+In multi-step retrieval, we select negative evidence chains from the corpus.
+Beam search on the training data finds the top~$k$
+highest scored negative chains for each retrieval step. Since the model parameters are dynamically updated, 
+we asynchronously refresh the negative chains with 
+the up-to-date model checkpoint~\cite{guu2020realm, xiong2020approximate}. 
+%We asynchronously conduct the beam search inference procedure on the training data to find top $k$
+%highest scored negative chains for each retrieval step with the up-to-date model checkpoint.
+
+

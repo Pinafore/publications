@@ -1,0 +1,35 @@
+\begin{table}[t]
+  \centering
+
+  \small
+  \footnotesize
+
+ 
+ \begin{tabular}{p{7.3cm}}
+       \hline 
+      \textbf{Q}: \underline{Chris Williams} last played for which football club from the National League North?
+
+      \textbf{Passage 1}: \underline{Christopher Jonathan "Chris" Williams} 
+      is an English semi-professional footballer who last played for \underline{Salford City} as a forward.
+      
+      \textbf{Passage 2}: \underline{Salford City Football Club} is a professional football club in the Kersal area of Salford, Greater Manchester, England. 
+      
+      
+       \textbf{\name{}}: Chris Williams (English Footballer) $\rightarrow$ Salford City F.C. \checkmark
+      
+      \textbf{\grr{}}: Chris Williams (Wide Receiver) $\rightarrow$ Miami Dolphins \ding{55}
+      \\\hline 
+      \caption{Case study of \name{} and \grr{} retrieval. Term-based retrieval approaches (\abr{tf-idf} used by \grr{})
+             is unable to distinguish two players with same name. 
+             \name{} correctly 
+             identifies the question entity.\label{tb:case}\vspace{-0.3cm}
+             }
+  %Case study of \name{} and \grr{} passage chain retrieval. With little textual overlap, term based retrieval approaches (TF-IDF used by \grr{})
+  %is unable to distinguish an American football player and a soccer player with same name. 
+  %\name{} correctly 
+  %identifies the question entity. 
+  %}
+  \label{tb:case}
+
+  \end{tabular}
+\end{table}

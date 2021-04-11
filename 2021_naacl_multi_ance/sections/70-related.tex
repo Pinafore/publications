@@ -1,0 +1,71 @@
+\section{Related Work}
+\label{sec:related}
+
+%Open-domain QA aims at answering any factoid questions from users with 
+%large textual corpora. \citet{chen2017reading} proposes a two-staged
+%pipeline to tackle this problem: a retriever selects a small amount of 
+%passages from the large document collections
+%that are likely include the answer, then a reading comprehension
+%model selects a span among these passages as the predicted answer. While
+%significant progress has been made on reading comprehension including 
+%adopting pre-trained language models, recent work has focused on  
+%improving the retrieval parts over the traditional search engines
+%using neural models. Several dense retrieval methods are proposed 
+%to directly conduct text matching in dense space. Though there's performance
+%gap to the current cascade retrieve-then-rerank~\cite{nogueira2019passage} 
+%system, the model simplicity and flexibility indicate high potential on future
+%research. 
+
+%A straightforward idea is to use existing single-step retrieval multiple
+%times, which adopts a cascade retrieve-then-rerank~\cite{nogueira2019passage} pipeline:
+%First a simple keyword matching (e.g., BM25) method retrieves a number of 
+%relevant passages, then a stronger neural model (e.g., fine-tuned BERT) is used to rerank each
+%query-passage pair. However, as previous work~\cite{yang+18b, asai2020learning} stated, not all passages share 
+%lexical overlap to the original multi-hop query, for example, in Figure~\ref{fig:ex}, 
+%the second passage \underline{Columbia University} only includes
+%the answer type (city). Therefore, keywords based retrieval methods perform
+%poorly on extracting those non-overlapping passages. 
+Extracting multiple pieces of evidence automatically has applications
+from solving crossword puzzles~\cite{littman2002probabilistic}, graph
+database construction~\cite{de2009towards}, and understanding
+relationships~\cite{chang-09c,iyyer-16} to question
+answering~\cite{ferrucci2010building}, which is the focus of this
+work.
+
+
+Given a complex question, researchers have investigated multi-step
+retrieval techniques to find an evidence chain. Knowledge graph
+question answering approaches~\cite[\emph{inter
+    alia}]{talmor-berant-2018-web, zhang2018variational} directly
+search the evidence chain from the knowledge graph, but falter when
+\abr{kg} coverage is sparse. With the release of large-scale
+datasets~\cite{yang+18b}, recent systems~\cite[\emph{inter
+    alia}]{nie2019revealing, zhaotransxh2020, asai2020learning,
+  Dhingra2020Differentiable} use Wikipedia abstracts (the first paragraph of a
+Wikipedia page) as the corpus to retrieve the evidence chain.
+%
+\citet{Dhingra2020Differentiable} treat Wikipedia as a knowledge graph, where each entity 
+is identified by its textual span mentions, while other approaches~\cite{nie2019revealing, zhaotransxh2020}
+directly retrieve passages. They first adopt a single-step retrieval to select the first hop passages 
+(or entity mentions), then find the 
+next hop candidates directly from Wikipedia links and rerank them.
+%
+%It first retrieves the first hop entities over all entity mentions, then expands the next hop  
+%candidates through Wikipedia links and rerank them.  
+%
+%Other approaches~\cite{nie2019revealing, zhaotransxh2020, asai2020learning} use similar pipelines to retrieve chains. 
+%They first adopt a single-step retrieval to select the first hop passages, then find the 
+%next hop candidates directly from Wikipedia links and rerank them.
+%
+Like \name{}, \citet{asai2020learning} use beam search to find the
+chains but still rely on a graph neural network over Wikipedia links.
+%
+%
+\name{} retrieves evidence chains through dense
+representations without relying on the corpus semi-structure.
+%
+\citet{qi2019answering, qi2020retrieve} iteratively generate the query from the 
+question and retrieved history, and use traditional sparse \abr{ir}
+systems to select the passage, which complements \name{}'s approach.
+
+

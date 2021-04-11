@@ -1,0 +1,26 @@
+% !TEX root = ../../2021_naacl_multi_ance.tex
+
+Complex question answering often requires finding
+a reasoning chain that consists of 
+multiple evidence pieces.
+%evidence chains.
+%
+Current approaches incorporate the strengths 
+of structured knowledge and unstructured text,
+assuming text corpora is semi-structured. 
+%structured data is not always available.
+%
+Building on dense retrieval methods,
+we propose a new multi-step retrieval approach (\name{})
+that iteratively forms an evidence chain through beam search in 
+dense representations.
+%
+When evaluated on multi-hop question answering, \name{} is competitive
+to state-of-the-art systems, \emph{without} using any semi-structured
+information.
+%
+Through query composition in dense space, 
+\name{} captures the implicit relationships between evidence 
+in the reasoning chain.  The code is available at \url{https://github.com/henryzhao5852/BeamDR}. 
+
+
