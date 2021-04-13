@@ -84,15 +84,6 @@ current step $t$'s relevance score $f (q_{t}, p_{t}) * S_{t -1}$.
 %  \label{eqn:sc}
 %\end{equation}
 
-\jbgcomment{Perhaps I'm missing something, but if we're appending to a
-  query vector, doesn't that change the dimensionality?  How do you
-  then do MIPS on that?  The composition function seems unclear.}
-
-
-\czcomment{made the edit (deleted the ``vector''), here we are not appending to a vector, 
-but appending the tokens as the new input to BERT,
-therefore the dimensionality does not change.}
-
 \paragraph{Beam Search in Dense Space}
 
 
@@ -120,13 +111,12 @@ length~$n$ are finally retrieved.
 The goal of training is to learn embedding functions that
 differentiate positive (relevant) and negative evidence chains.
 %
-Since the evidence pieces are unordered, we 
-sample positive permuted evidence chains from the gold evidence set.
+Since the evidence pieces are unordered, we use heuristics to infer the order of evidence chains.
 %
 A negative chain has at least one evidence piece that is not in the gold 
 evidence set. 
 For each step $t$, the input is
-the query~$q$, a sampled positive chain~$P_{t}^{+} = p^{+}_{1},\dots,p^{+}_{t}$
+the query~$q$, a positive chain~$P_{t}^{+} = p^{+}_{1},\dots,p^{+}_{t}$
 and~$m$ sampled negative chains $P_{j, t}^{-} = p^{-}_{1},\dots,p^{-}_{t}$. 
 We update the negative log likelihood (\abr{nll}) loss:
 \begin{align}
