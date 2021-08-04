@@ -1,0 +1,42 @@
+\section{Related Work and Discussion}
+\label{sec:related}
+
+
+
+
+
+
+
+Recent work in \abr{cqa} has used simple concatenation~\cite{elgohary2018Dataset}, sequential neural models~\cite{huang2018flowqa}, and transformers~\cite{qu2019Bert} for modeling the interaction between the conversation history, the question and reference documents.
+Some of the components in those models, such as relevant history turn
+selection~\cite{qu2019Attentive}, can be adopted in question rewriting models for our task.
+An interesting avenue for future work is to incorporate deeper context, either from other modalities~\cite{das2017visual} or from other dialog comprehension tasks~\cite{sun2019dream}.
+
+Parallel to our work, \newcite{rastogi2019scaling} and \newcite{su2019Improving}
+introduce utterance rewriting datasets for dialog state tracking.
+\newcite{rastogi2019scaling} covers a narrow
+set of domains and the rewrites of \newcite{su2019Improving} are based on
+Chinese dialog with two-turn fixed histories.
+In contrast, \name{} has histories of variable turn lengths, covers wider topics, and is based on \abr{cqa}.
+
+
+Training question rewriting using reinforcement learning with the task accuracy as reward signal is explored in retrieval-based \abr{qa}~\cite{liu2019generative}
+and in \abr{mrc}~\cite{buck2018ask}.
+A natural question is whether reinforcement learning could learn to retain the necessary context to rewrite questions in \abr{cqa}.
+However, our dataset could be used to pre-train a question rewriter that  can further be refined using reinforcement learning.
+
+More broadly, we hope \name{} can drive human-computer collaboration in \abr{qa}~\cite{feng2019What}.
+While questions typically vary in difficulty~\cite{sugawara2018makes}, existing research either introduces new benchmarks of difficult
+(adversarial) stand-alone questions~\cite[inter alia]{dua2019DROP,wallace2019Trick}, 
+or models that 
+simplify hard questions through paraphrasing~\cite{dong2017Learning}
+or decomposition~\cite{talmor2018web}.
+We aim at studying \abr{qa} models that can ask for human assistance (feedback) when they struggle to answer a question.
+
+The reading comprehension setup of \abr{cqa} provides a controlled environment where the main source of difficulty is  interpreting a question in its context.
+The interactive component of \abr{cqa} also provides a natural mechanism for improving rewriting.
+When the computer cannot understand (rewrite) a question because of complicated context, missing world knowledge, or upstream errors~\cite{Peskov-19} in the course of a conversation, it should be able to ask its interlocutor, ``can you unpack that?''
+This dataset helps start that conversation; the next steps are developing and evaluating models that efficiently
+decide when to ask for human assistance, and how to best use this assistance.
+
+

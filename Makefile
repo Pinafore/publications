@@ -2,6 +2,10 @@ TEX = $(wildcard */sections/*.tex *.tex */*.tex */tables/*.tex)
 BIB = $(wildcard bib/*.bib)
 FIG = $(wildcard */figures.*)
 
+.PHONY: list
+list:
+	@$(MAKE) -pRrq -f $(lastword $(MAKEFILE_LIST)) : 2>/dev/null | awk -v RS= -F: '/^# File/,/^# Finished Make data base/ {if ($$1 !~ "^[#.]") {print $$1}}' | sort | egrep -v -e '^[^[:alnum:]]' -e '^$@$$'
+
 clean:
 	rm -f *.aux *.dvi *.log *.bbl *.pdf *~ *.out *.blg *.nav *.toc *.snm *.fdb_latexmk *.fls *.synctex.gz
 	rm -f */*.aux */*.dvi */*.log */*.bbl */*.pdf */*~ */*.out */*.blg */*/*~
@@ -12,9 +16,9 @@ clean:
 
 clean_proposal:
 	rm -f *.aux *.dvi *.log *.bbl *.pdf *~ *.out *.blg *.nav *.toc *.snm *.fdb_latexmk *.fls *.synctex.gz
-	rm -f pedro_proposal/*.aux pedro_proposal/*.dvi pedro_proposal/*.log pedro_proposal/*.bbl pedro_proposal/*.pdf pedro_proposal/*~ pedro_proposal/*.out pedro_proposal/*.blg pedro_proposal/*/*~
-	rm -fR pedro_proposal/auto_fig
-	mkdir -pp pedro_proposal/auto_fig
+	rm -f pedro_thesis/*.aux pedro_thesis/*.dvi pedro_thesis/*.log pedro_thesis/*.bbl pedro_thesis/*.pdf pedro_thesis/*~ pedro_thesis/*.out pedro_thesis/*.blg pedro_thesis/*/*~
+	rm -fR pedro_thesis/auto_fig
+	mkdir -pp pedro_thesis/auto_fig
 
 scripts/hunspell_dictionary.dic: scripts/dictionary.txt
 	wc -l $< > $@
@@ -26,7 +30,7 @@ scripts/hunspell_dictionary.dic: scripts/dictionary.txt
 # TODO: make it so that this actually runs if the figure file (R or python) or data are updated.  Perhaps requires messing with the script.
 %/auto_fig/res.txt: %/figures.py
 	mkdir -p $(@:/res.txt=)
-	./scripts/rscript_if_ne.sh $(@:/auto_fig/res.txt=) > $@
+	out=$$(./scripts/rscript_if_ne.sh $(@:/auto_fig/res.txt=)) && echo "$$out" > $@
 
 %.pdf: %/auto_fig/res.txt %.tex $(TEX)
 	pdflatex $*
@@ -35,6 +39,7 @@ scripts/hunspell_dictionary.dic: scripts/dictionary.txt
 	bibtex $*
 
 %.paper.pdf: %.pdf %.bbl
+	pdflatex $*
 	pdflatex $*
 	pdflatex -halt-on-error $*
 	cp $< $@
@@ -61,6 +66,7 @@ scripts/hunspell_dictionary.dic: scripts/dictionary.txt
 %.tgz: %.bbl
 	tar cvfz $@ Makefile style/*.sty style/*.bst style/*.cls $(<:.bbl=.tex) bib/*.bib style/*.tex $(<:.bbl=)/figures/* $(<:.bbl=)/auto_fig/* $(<:.bbl=)/sections/*.tex
 
+
 %.arxiv.tgz: %.bbl
 	tar cvfz $@ Makefile $< style/*.sty style/*.bst style/*.cls $(<:.bbl=.tex) style/*.tex $(<:.bbl=)/figures/* $(<:.bbl=)/auto_fig/* $(<:.bbl=)/sections/*.tex
 
@@ -69,15 +75,58 @@ scripts/hunspell_dictionary.dic: scripts/dictionary.txt
 	mv 2020_emnlp_metaanswer_page_10.pdf 2020_emnlp_metaanswer.appendix.pdf
 	mv 2020_emnlp_metaanswer_page_0.pdf 2020_emnlp_metaanswer.submission.pdf
 
-2020_emnlp_qa_fairness.appendix.pdf: 2020_emnlp_qa_fairness.paper.pdf
-	python3 scripts/split_pdf.py 2020_emnlp_qa_fairness.paper.pdf 6
-	mv 2020_emnlp_qa_fairness_page_6.pdf 2020_emnlp_qa_fairness.appendix.pdf
-	mv 2020_emnlp_qa_fairness_page_0.pdf 2020_emnlp_qa_fairness.submission.pdf
+2021_emnlp_qa_fairness.appendix.pdf: 2021_emnlp_qa_fairness.paper.pdf
+	python3 scripts/split_pdf.py 2021_emnlp_qa_fairness.paper.pdf 6
+	mv 2021_emnlp_qa_fairness_page_6.pdf 2021_emnlp_qa_fairness.appendix.pdf
+	mv 2021_emnlp_qa_fairness_page_0.pdf 2021_emnlp_qa_fairness.submission.pdf
 
-2020_emnlp_simint.appendix.pdf: 2020_emnlp_simint.paper.pdf
-	python3 scripts/split_pdf.py 2020_emnlp_simint.paper.pdf 5
-	mv 2020_emnlp_simint_page_5.pdf 2020_emnlp_simint.appendix.pdf
-	mv 2020_emnlp_simint_page_0.pdf 2020_emnlp_simint.submission.pdf
+2021_emnlp_simint.appendix.pdf: 2021_emnlp_simint.paper.pdf
+	python3 scripts/split_pdf.py 2021_emnlp_simint.paper.pdf 5
+	mv 2021_emnlp_simint_page_5.pdf 2021_emnlp_simint.appendix.pdf
+	mv 2021_emnlp_simint_page_0.pdf 2021_emnlp_simint.submission.pdf
+
+2021_emnlp_paradigms.submission.pdf: 2021_emnlp_paradigms.paper.pdf
+	python3 scripts/split_pdf.py 2021_emnlp_paradigms.paper.pdf 10
+	mv 2021_emnlp_paradigms_page_0.pdf 2021_emnlp_paradigms.submission.pdf
+
+2021_emnlp_paradigms.appendix.pdf: 2021_emnlp_paradigms.submission.pdf
+	mv 2021_emnlp_paradigms_page_10.pdf 2021_emnlp_paradigms.appendix.pdf
+
+2021_emnlp_adaptation.appendix.pdf: 2021_emnlp_adaptation.paper.pdf
+	python3 scripts/split_pdf.py 2021_emnlp_adaptation.paper.pdf 6
+	mv 2021_emnlp_adaptation_page_6.pdf 2021_emnlp_adaptation.appendix.pdf
+	mv 2021_emnlp_adaptation_page_0.pdf 2021_emnlp_adaptation.submission.pdf
+
+2021_neurips_topics.appendix.pdf: 2021_neurips_topics.paper.pdf
+	python3 scripts/split_pdf.py 2021_neurips_topics.paper.pdf 15
+	mv 2021_neurips_topics_page_15.pdf 2021_neurips_topics.appendix.pdf
+	mv 2021_neurips_topics_page_0.pdf 2021_neurips_topics.submission.pdf
+
+2021_acl_leaderboard.submission.pdf: 2021_acl_leaderboard.paper.pdf
+	python3 scripts/split_pdf.py 2021_acl_leaderboard.paper.pdf 14
+	mv 2021_acl_leaderboard_page_0.pdf 2021_acl_leaderboard.submission.pdf
+
+2021_acl_leaderboard.appendix.pdf: 2021_acl_leaderboard.submission.pdf
+	mv 2021_acl_leaderboard_page_14.pdf 2021_acl_leaderboard.appendix.pdf
+
+annotated_squad_examples.pdf:
+	latexmk -pdf 2021_acl_leaderboard/supplementary.tex
+	mv supplementary.pdf annotated_squad_examples.pdf
+
+2021_acl_leaderboard.supplementary.zip: 2021_acl_leaderboard/data/label-studio.json annotated_squad_examples.pdf
+	mkdir -p /tmp/papers-tmp/supplementary/
+	cp 2021_acl_leaderboard/data/label-studio.json /tmp/papers-tmp/supplementary
+	cp 2021_acl_leaderboard/examples.toml /tmp/papers-tmp/supplementary
+	cp 2021_acl_leaderboard/squad-annotation-instructions.pdf /tmp/papers-tmp/supplementary
+	cp annotated_squad_examples.pdf /tmp/papers-tmp/supplementary
+	zip -j -r 2021_acl_leaderboard.supplementary.zip /tmp/papers-tmp/supplementary
+
+leaderboard: 2021_acl_leaderboard.paper.pdf 2021_acl_leaderboard.submission.pdf 2021_acl_leaderboard.appendix.pdf 2021_acl_leaderboard.supplementary.zip
 
 
-acl: 2020_acl_clime.paper.pdf 2020_acl_diplomacy.paper.pdf 2020_acl_refine_clwe.paper.pdf 2020_acl_trivia_tournament.appendix.pdf 
+paradigms: 2021_emnlp_paradigms.submission.pdf 2021_emnlp_paradigms.appendix.pdf
+
+
+
+
+acl: 2020_acl_clime.paper.pdf 2020_acl_diplomacy.paper.pdf 2020_acl_refine_clwe.paper.pdf 2020_acl_trivia_tournament.appendix.pdf

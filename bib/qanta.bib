@@ -30,12 +30,13 @@
   title     = {A Neural Network for Factoid Question Answering over Paragraphs}
 }
 
-@article{boyd2019question,
-  title   = {What Question Answering can Learn from Trivia Nerds},
-  author  = {Boyd-Graber, Jordan},
-  journal = {arXiv preprint arXiv:1910.14464},
-  year    = {2019}
+@inproceedings{boydgraber2020nerds,
+  title     = {What Question Answering can Learn from Trivia Nerds},
+  author    = {Jordan Boyd-Graber and Benjamin B\"orschinger},
+  year      = {2020},
+  booktitle = acl
 }
+
 
 # Shared Tasks
 
@@ -444,19 +445,51 @@ Tasks},
   pages   = {51-58}
 }
 
-@inproceedings{DBLP:conf/icdm/MelvillePM05,
-  author    = {Prem Melville and Foster J. Provost and Raymond J. Mooney},
-  title     = {An Expected Utility Approach to Active Feature-Value Acquisition},
-  booktitle = {Proceedings of the 5th {IEEE} International Conference on Data Mining
-        {(ICDM} 2005), 27-30 November 2005, Houston, Texas, {USA}},
-  pages     = {745--748},
-  year      = {2005},
-  url       = {https://doi.org/10.1109/ICDM.2005.23},
-  doi       = {10.1109/ICDM.2005.23},
-  timestamp = {Fri, 26 May 2017 00:49:29 +0200},
-  biburl    = {https://dblp.org/rec/bib/conf/icdm/MelvillePM05},
-  bibsource = {dblp computer science bibliography, https://dblp.org}
+@inproceedings{elkan2001foundations,
+  title={The foundations of cost-sensitive learning},
+  author={Elkan, Charles},
+  booktitle=ijcai,
+  volume={17},
+  number={1},
+  pages={973--978},
+  year={2001},
+  organization={Lawrence Erlbaum Associates Ltd}
 }
+
+@article{sen2008cost,
+  title={Cost-sensitive learning with conditional markov networks},
+  author={Sen, Prithviraj and Getoor, Lise},
+  journal={Data Mining and Knowledge Discovery},
+  volume={17},
+  number={2},
+  pages={136--163},
+  year={2008},
+  publisher={Springer}
+}
+
+
+@inproceedings{maliah2018mdp,
+  title={MDP-based cost sensitive classification using decision trees},
+  author={Maliah, Shlomi and Shani, Guy},
+  booktitle=aaai,
+  volume={32},
+  number={1},
+  year={2018}
+}
+
+
+@inproceedings{melville2005feature,
+  title     = {An expected utility approach to active feature-value acquisition},
+  booktitle = {Fifth {IEEE} International Conference on Data Mining ({ICDM'05})},
+  author    = {Melville, P and Saar-Tsechansky, M and Provost, F and Mooney, R},
+  pages     = {4 pp.--},
+  month     = nov,
+  year      = 2005,
+  url       = {http://dx.doi.org/10.1109/ICDM.2005.23},
+  issn      = {2374-8486},
+  doi       = {10.1109/ICDM.2005.23}
+}
+
 
 @article{DBLP:journals/pr/JiC07,
   author    = {Shihao Ji and
@@ -1389,21 +1422,12 @@ Peter and Sabharwal, Ashish},
   address   = {New York, NY, USA},
   location  = {Dallas, Texas, USA}
 }
-
-@inproceedings{ettinger2017build,
-  title      = {Towards Linguistically Generalizable {NLP} Systems: A
-  Workshop and Shared Task},
-  booktitle  = {Proceedings of the First Workshop on Building
-  Linguistically Generalizable {NLP} Systems},
-  author     = {Ettinger, Allyson and Rao, Sudha and Daum{\'e}, III, Hal
-  and Bender, Emily M},
-  publisher  = {Association for Computational Linguistics},
-  pages      = {1--10},
-  year       = 2017,
-  address    = {Stroudsburg, PA, USA},
-  conference = {Proceedings of the First Workshop on Building
-  Linguistically Generalizable NLP Systems},
-  location   = {Copenhagen, Denmark}
+@inproceedings{ettinger2017towards,
+  title     = {Towards Linguistically Generalizable {NLP} Systems: A
+            Workshop and Shared Task},
+  author    = {Allyson Ettinger and Sudha Rao and Hal Daum{\'e} III and Emily M. Bender},
+  booktitle = {In Proceedings of the First Workshop on Building Linguistically Generalizable NLP Systems},
+  year      = {2017}
 }
 
 @inproceedings{thorne2019fever2,
@@ -1442,20 +1466,24 @@ Mohit and Weston, Jason and Kiela, Douwe},
   booktitle = acl,
   year      = 2020
 }
+
+# This is a findings paper, not sure if cite key should be different
 @inproceedings{gardner2020contrast,
-  title     = {Evaluating {NLP} Models via Contrast Sets},
-  author    = {Gardner, Matt and Artzi, Yoav and Basmova, Victoria and
-Berant, Jonathan and Bogin, Ben and Chen, Sihao and Dasigi,
-Pradeep and Dua, Dheeru and Elazar, Yanai and Gottumukkala,
-Ananth and Gupta, Nitish and Hajishirzi, Hanna and Ilharco,
-Gabriel and Khashabi, Daniel and Lin, Kevin and Liu,
-Jiangming and Liu, Nelson F and Mulcaire, Phoebe and Ning,
-Qiang and Singh, Sameer and Smith, Noah A and Subramanian,
-Sanjay and Tsarfaty, Reut and Wallace, Eric and Zhang, Ally
-and Zhou, Ben},
+  title     = {Evaluating Models{'} Local Decision Boundaries via Contrast Sets},
+  booktitle = emnlp,
+  author    = {Gardner, Matt and Artzi, Yoav and Basmov, Victoria and Berant,
+               Jonathan and Bogin, Ben and Chen, Sihao and Dasigi, Pradeep and
+               Dua, Dheeru and Elazar, Yanai and Gottumukkala, Ananth and
+               Gupta, Nitish and Hajishirzi, Hannaneh and Ilharco, Gabriel and
+               Khashabi, Daniel and Lin, Kevin and Liu, Jiangming and Liu,
+               Nelson F and Mulcaire, Phoebe and Ning, Qiang and Singh, Sameer
+               and Smith, Noah A and Subramanian, Sanjay and Tsarfaty, Reut and
+               Wallace, Eric and Zhang, Ally and Zhou, Ben},
   year      = 2020,
-  booktitle = acl
+  url       = {https://www.aclweb.org/anthology/2020.findings-emnlp.117},
+  doi       = {10.18653/v1/2020.findings-emnlp.117}
 }
+
 
 @article{hendrycks2019natural,
   title         = {Natural Adversarial Examples},
@@ -1570,7 +1598,7 @@ Berant, Jonathan},
   year      = 2019
 }
 
-@article{billings1998poker,
+@inproceedings{billings1998poker,
   title     = {Opponent Modeling in Poker},
   author    = {Billings, Darse and Papp, Denis and Schaeffer, Jonathan and
   Szafron, Duane},
@@ -1757,7 +1785,7 @@ Technology Effects on Credibility},
 }
 
 @inproceedings{kalgaonkar2015asr,
-  title     = {Estimating confidence scores on {ASR} results using recurrent
+  title     = {Estimating cdonfidence scores on {ASR} results using recurrent
 neural networks},
   booktitle = {2015 {IEEE} International Conference on Acoustics, Speech and
 Signal Processing ({ICASSP})},
@@ -1812,16 +1840,18 @@ Signal Processing ({ICASSP})},
 }
 
 @article{bartolo2020beat,
-  title         = {Beat the {AI}: Investigating Adversarial Human Annotations
-    for Reading Comprehension},
-  author        = {Bartolo, Max and Roberts, Alastair and Welbl, Johannes and
-    Riedel, Sebastian and Stenetorp, Pontus},
-  month         = feb,
-  year          = 2020,
-  archiveprefix = {arXiv},
-  primaryclass  = {cs.CL},
-  eprint        = {2002.00293}
+  title   = {Beat the {{AI}}: Investigating Adversarial Human Annotation for
+             Reading Comprehension},
+  author  = {Bartolo, Max and Roberts, Alastair and Welbl, Johannes and Riedel,
+             Sebastian and Stenetorp, Pontus},
+  journal = {Transactions of the Association for Computational Linguistics},
+  volume  = 8,
+  pages   = {662--678},
+  year    = 2020,
+  url     = {https://www.aclweb.org/anthology/2020.tacl-1.43},
+  doi     = {10.1162/tacl\_a\_00338}
 }
+
 
 @inproceedings{torralba2011bias,
   title     = {Unbiased look at dataset bias},
@@ -1883,3 +1913,253 @@ Signal Processing ({ICASSP})},
   booktitle = ijcai,
   year      = 2017
 }
+@inproceedings{hermann2015teaching,
+  title     = {Teaching Machines to Read and Comprehend},
+  booktitle = nips,
+  author    = {Hermann, Karl Moritz and Kocisky, Tomas and Grefenstette, Edward
+    and Espeholt, Lasse and Kay, Will and Suleyman, Mustafa and
+    Blunsom, Phil},
+  year      = 2015
+}
+
+@article{gall1970teaching,
+  title     = {The Use of Questions in Teaching},
+  author    = {Gall, Meredith D},
+  journal   = {Review of educational research},
+  publisher = {American Educational Research Association},
+  volume    = 40,
+  number    = 5,
+  pages     = {707--721},
+  month     = dec,
+  year      = 1970,
+  url       = {https://doi.org/10.3102/00346543040005707},
+  issn      = {0034-6543},
+  doi       = {10.3102/00346543040005707}
+}
+
+@inproceedings{clarke2001million,
+  title     = {Exploiting redundancy in question answering},
+  booktitle = sigir,
+  author    = {Clarke, Charles L A and Cormack, Gordon V and Lynam, Thomas R},
+  publisher = {Association for Computing Machinery},
+  pages     = {358--365},
+  series    = {SIGIR '01},
+  month     = sep,
+  year      = 2001,
+  url       = {https://doi.org/10.1145/383952.384024},
+  address   = {New York, NY, USA},
+  location  = {New Orleans, Louisiana, USA},
+  isbn      = {9781581133318},
+  doi       = {10.1145/383952.384024}
+}
+@inproceedings{lam2003million,
+  title     = {1 Billion Pages = 1 Million Dollars? Mining the Web to Play ``Who
+              Wants to be a Millionaire?''},
+  author    = {Lam, S K and Pennock, D and Cosley, Dan and Lawrence, S},
+  year      = 2003,
+  booktitle = {Proceedings of the Nineteenth Conference on Uncertainty in Artificial Intelligence}
+}
+
+@article{raiffa1968decision,
+  title     = {Decision analysis: introductory lectures on choices under
+               uncertainty},
+  author    = {Raiffa, Howard},
+  publisher = {Addison-Wesley Decision analysis},
+  year      = 1968,
+  url       = {https://psycnet.apa.org/fulltext/1968-35027-000.pdf},
+  address   = {Oxford, England}
+}
+
+@article{brown2019poker,
+  title    = {Superhuman {AI} for multiplayer poker},
+  author   = {Brown, Noam and Sandholm, Tuomas},
+  journal  = {Science},
+  volume   = 365,
+  number   = 6456,
+  pages    = {885--890},
+  month    = aug,
+  year     = 2019,
+  url      = {http://dx.doi.org/10.1126/science.aay2400},
+  language = {en},
+  issn     = {0036-8075, 1095-9203},
+  pmid     = {31296650},
+  doi      = {10.1126/science.aay2400}
+}
+
+@article{yu2011calibration,
+  title   = {Calibration of Confidence Measures in Speech Recognition},
+  author  = {Yu, D and Li, J and Deng, L},
+  journal = {IEEE transactions on audio, speech, and language processing},
+  volume  = 19,
+  number  = 8,
+  pages   = {2461--2473},
+  month   = nov,
+  year    = 2011,
+  url     = {http://dx.doi.org/10.1109/TASL.2011.2141988},
+  issn    = {1558-7916, 1558-7924},
+  doi     = {10.1109/TASL.2011.2141988}
+}
+
+@inproceedings{nguyen2015calibration,
+  title     = {Posterior calibration and exploratory analysis for natural
+                     language processing models},
+  booktitle = emnlp,
+  author    = {Nguyen, Khanh and O'Connor, Brendan},
+  publisher = {Association for Computational Linguistics},
+  year      = 2015,
+  url       = {http://aclweb.org/anthology/D15-1182},
+  address   = {Stroudsburg, PA, USA},
+  location  = {Lisbon, Portugal},
+  doi       = {10.18653/v1/D15-1182}
+}
+@inproceedings{kuleshov2017estimating,
+  title     = {Estimating uncertainty online against an adversary},
+  author    = {Kuleshov, Volodymyr and Ermon, Stefano},
+  booktitle = aaai,
+  volume    = {31},
+  number    = {1},
+  year      = {2017}
+}
+
+@inproceedings{elkan2001cost,
+  title     = {The foundations of cost-sensitive learning},
+  booktitle = ijcai,
+  author    = {Elkan, Charles},
+  publisher = {Morgan Kaufmann Publishers Inc.},
+  pages     = {973--978},
+  series    = {IJCAI'01},
+  month     = aug,
+  year      = 2001,
+  url       = {https://dl.acm.org/doi/10.5555/1642194.1642224},
+  address   = {San Francisco, CA, USA},
+  location  = {Seattle, WA, USA},
+  isbn      = {9781558608122}
+}
+
+@inproceedings{lizotte2012budget,
+  title     = {Budgeted Learning of {Naive-Bayes} Classifiers},
+  author    = {Lizotte, Daniel J and Madani, Omid and Greiner, Russell},
+  year      = 2003,
+  booktitle = {Proceedings of the Nineteenth Conference on Uncertainty in Artificial Intelligence}
+}
+
+@article{arlot2010cross,
+  title     = {A survey of cross-validation procedures for model selection},
+  author    = {Arlot, Sylvain and Celisse, Alain},
+  journal   = {Statistics surveys},
+  publisher = {The author, under a Creative Commons Attribution License},
+  volume    = 4,
+  pages     = {40--79},
+  year      = 2010,
+  url       = {https://projecteuclid.org/euclid.ssu/1268143839},
+  language  = {en},
+  issn      = {1935-7516},
+  doi       = {10.1214/09-SS054}
+}
+
+@article{lewis2020overlap,
+  title         = {Question and Answer {Test-Train} Overlap in {Open-Domain}
+                   Question Answering Datasets},
+  author        = {Lewis, Patrick and Stenetorp, Pontus and Riedel, Sebastian},
+  year          = 2020,
+  url           = {http://arxiv.org/abs/2008.02637},
+  archiveprefix = {arXiv},
+  eprint        = {2008.02637},
+  primaryclass  = {cs.CL},
+  arxivid       = {2008.02637}
+}
+
+@article{kleinberg2018decision,
+  title    = {{HUMAN} {DECISIONS} {AND} {MACHINE} {PREDICTIONS}},
+  author   = {Kleinberg, Jon and Lakkaraju, Himabindu and Leskovec, Jure and
+              Ludwig, Jens and Mullainathan, Sendhil},
+  journal  = {The quarterly journal of economics},
+  volume   = 133,
+  number   = 1,
+  pages    = {237--293},
+  month    = feb,
+  year     = 2018,
+  url      = {http://dx.doi.org/10.1093/qje/qjx032},
+  language = {en},
+  issn     = {0033-5533},
+  pmid     = {29755141},
+  doi      = {10.1093/qje/qjx032},
+  pmc      = {PMC5947971}
+}
+
+@inproceedings{levesque2012winograd,
+  title     = {The winograd schema challenge},
+  author    = {Levesque, Hector and Davis, Ernest and Morgenstern, Leora},
+  booktitle = {Thirteenth International Conference on the Principles of Knowledge Representation and Reasoning},
+  year      = {2012}
+}
+
+@article{goel2021gym,
+  title         = {Robustness Gym: Unifying the {NLP} Evaluation Landscape},
+  author        = {Goel, Karan and Rajani, Nazneen and Vig, Jesse and Tan,
+                   Samson and Wu, Jason and Zheng, Stephan and Xiong, Caiming
+                   and Bansal, Mohit and R{\'e}, Christopher},
+  month         = jan,
+  year          = 2021,
+  url           = {http://arxiv.org/abs/2101.04840},
+  archiveprefix = {arXiv},
+  eprint        = {2101.04840},
+  primaryclass  = {cs.CL},
+  arxivid       = {2101.04840}
+}
+@inproceedings{mitchell2019model,
+  title     = {Model cards for model reporting},
+  author    = {Mitchell, Margaret and Wu, Simone and Zaldivar, Andrew and Barnes, Parker and Vasserman, Lucy and Hutchinson, Ben and Spitzer, Elena and Raji, Inioluwa Deborah and Gebru, Timnit},
+  booktitle = {Proceedings of the conference on fairness, accountability, and transparency},
+  pages     = {220--229},
+  year      = {2019}
+}
+
+@inproceedings{pleiss2020aum,
+  title     = {Identifying Mislabeled Data using the Area Under the Margin
+                   Ranking},
+  author    = {Pleiss, Geoff and Zhang, Tianyi and Elenberg, Ethan R and
+                   Weinberger, Kilian Q},
+  year      = 2020,
+  booktitle = nips
+}
+
+@inproceedings{swayamdipta2020cartography,
+  title     = {Dataset Cartography: Mapping and Diagnosing Datasets with
+               Training Dynamics},
+  booktitle = {Proceedings of the 2020 Conference on Empirical Methods in
+               Natural Language Processing ({EMNLP})},
+  author    = {Swayamdipta, Swabha and Schwartz, Roy and Lourie, Nicholas and
+               Wang, Yizhong and Hajishirzi, Hannaneh and Smith, Noah A and
+               Choi, Yejin},
+  publisher = {Association for Computational Linguistics},
+  pages     = {9275--9293},
+  month     = nov,
+  year      = 2020,
+  url       = {https://www.aclweb.org/anthology/2020.emnlp-main.746},
+  address   = {Online}
+}
+@article{natesan2016bayesian,
+  title     = {Bayesian prior choice in IRT estimation using MCMC and variational Bayes},
+  author    = {Natesan, Prathiba and Nandakumar, Ratna and Minka, Tom and Rubright, Jonathan D},
+  journal   = {Frontiers in psychology},
+  volume    = {7},
+  pages     = {1422},
+  year      = {2016},
+  publisher = {Frontiers}
+}
+@article{bojar2013wins,
+  title     = {Findings of the 2013 {W}orkshop on {S}tatistical {M}achine
+               {T}ranslation},
+  author    = {Bojar, Ond{\v r}ej and Buck, Christian and Callison-Burch, Chris
+               and Federmann, Christian and Haddow, Barry and Koehn, Philipp
+               and Monz, Christof and Post, Matt and Soricut, Radu and Specia,
+               Lucia},
+  publisher = {Association for Computational Linguistics},
+  pages     = {1--44},
+  month     = aug,
+  year      = 2013,
+  url       = {https://www.aclweb.org/anthology/W13-2201/},
+  address   = {Sofia, Bulgaria}
+}
+

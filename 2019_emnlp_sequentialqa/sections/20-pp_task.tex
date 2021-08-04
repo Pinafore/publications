@@ -1,0 +1,25 @@
+\section{Defining Question-In-Context Rewrites  \label{sec:pp_task}}
+
+
+
+We formally define the task of question-in-context rewriting
+(de-contextualization).
+Given a conversation topic $t$ and a history $H$ of $m-1$ turns, 
+each turn $k$ is a question $q_i$ and an answer $a_i$;
+the task is to generate a rewrite $q'_m$ for the next question $q_m$
+based on $H$.
+Since $q_m$ is part of the conversation, its meaning often involves
+references to parts of its preceding history.
+A valid rewrite $q'_m$ should be self-contained: a correct answer
+to $q'_m$ by itself is a correct answer to $q_m$ combined with the
+question's preceding history $H$.
+
+Figure~\ref{fig:example_convo} shows the assumptions of \abr{cqa} and
+how they are made explicit in rewrites.
+The first question omits the title of the page (Anna Vissi), the
+second question omits the answer to the first question (replacing both
+Anna Vissi and her husband with the pronoun ``they''), and the last
+question adds a scalar implicature that must be resolved.
+
+
+

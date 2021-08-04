@@ -31,11 +31,13 @@
 % Below should be safe
 \usepackage{framed}
 \usepackage{mdwlist}
+\usepackage{siunitx}
 \usepackage{latexsym}
 \usepackage{colortbl}
 \usepackage{xcolor}
 \usepackage{nicefrac}
 \usepackage{booktabs}
+\usepackage{fnpct}
 \usepackage{amsfonts}
 \usepackage[T1]{fontenc}
 \usepackage{bold-extra}
@@ -47,7 +49,8 @@
 \usepackage{microtype}
 \usepackage{multirow}
 \usepackage{multicol}
-\usepackage{todonotes}
+%\usepackage{todonotes}
+\usepackage{xpatch}
 % Don't use hyperref or url, as it can screw up AAAI / ICML formatting
 %\usepackage{url}
 \usepackage{latexsym,comment}
@@ -57,16 +60,9 @@
 
 \newcommand*{\missingreference}{{\Huge \colorbox{red}{?reference?}}}
 \newcommand*{\missingcitation}{{\Huge \colorbox{red}{?citation?}}}
+
 \makeatletter
-\def\@setref#1#2#3{%
-    \ifx#1\relax
-        \protect\G@refundefinedtrue
-        \nfss@text{\reset@font\missingreference}%
-        \@latex@warning{Reference `#3' on page \thepage \space
-            undefined}%
-    \else
-        \expandafter#2#1\null
-    \fi}
+\xpatchcmd{\@setref}{\bfseries}{\missingreference}{}{}
 \def\@citex[#1]#2{\leavevmode
     \let\@citea\@empty
     \@cite{\@for\@citeb:=#2\do
@@ -140,13 +136,21 @@
 
 \ifcomment
     \newcommand{\pinaforecomment}[3]{\colorbox{#1}{\parbox{.8\linewidth}{#2: #3}}}
+    %\newcommand{\prtodo}[1]{\todo[backgroundcolor=lightblue,linecolor=lightblue,author=Pedro]{#1}}
+    %\newcommand{\prtodoi}[1]{\todo[inline,backgroundcolor=lightblue,linecolor=lightblue,author=Pedro]{#1}}
+
+    \newcommand{\prtodo}[1]{\pinaforecomment{lightblue}{pr}{#1}}
+    \newcommand{\prtodoi}[1]{\pinaforecomment{lightblue}{pr}{#1}}
 \else
     \newcommand{\pinaforecomment}[3]{}
+    \newcommand{\prtodo}[1]{}
+    \newcommand{\prtodoi}[1]{}
 \fi
 
 \newcommand{\jbgcomment}[1]{\pinaforecomment{red}{JBG}{#1}}
 \newcommand{\mjpcomment}[1]{\pinaforecomment{blue}{MJP}{#1}}
 \newcommand{\czcomment}[1]{\pinaforecomment{orange}{chen}{#1}}
+\newcommand{\clscomment}[1]{\pinaforecomment{blue}{CLS}{#1}}
 \newcommand{\ffcomment}[1]{\pinaforecomment{red}{FF}{#1}}
 \newcommand{\fpcomment}[1]{\pinaforecomment{green}{FP}{#1}}
 \newcommand{\yhcomment}[1]{\pinaforecomment{green}{YH}{#1}}
@@ -154,8 +158,6 @@
 \newcommand{\tncomment}[1]{\pinaforecomment{blue}{TN}{#1}}
 \newcommand{\mnicomment}[1]{\pinaforecomment{green}{Mohit}{#1}}
 \newcommand{\prcomment}[1]{\pinaforecomment{lightblue}{Pedro}{#1}}
-\newcommand{\prtodo}[1]{\todo[backgroundcolor=lightblue,linecolor=lightblue,author=Pedro]{#1}}
-\newcommand{\prtodoi}[1]{\todo[inline,backgroundcolor=lightblue,linecolor=lightblue,author=Pedro]{#1}}
 \newcommand{\fscomment}[1]{\pinaforecomment{orange}{Shi}{#1}}
 \newcommand{\vmcomment}[1]{\pinaforecomment{yellow}{Varun}{#1}}
 \newcommand{\rscomment}[1]{\pinaforecomment{yellow}{Richard}{#1}}
@@ -178,11 +180,14 @@
 \newcommand{\lkfcomment}[1]{\pinaforecomment{yellow}{LF}{#1}}
 \newcommand{\yfcomment}[1]{\pinaforecomment{brown}{YF}{#1}}
 \newcommand{\ewcomment}[1]{\pinaforecomment{lightblue}{Eric}{#1}}
-\newcommand{\pgcomment}[1]{\pinaforecomment{cyan}{Pranav}{#1}}
+\newcommand{\pgcomment}[1]{\pinaforecomment{lightblue}{Pranav}{#1}}
 \newcommand{\dpcomment}[1]{\pinaforecomment{cyan}{Denis}{#1}}
 \newcommand{\bencomment}[1]{\pinaforecomment{lightblue}{Ben}{#1}}
 \newcommand{\mycomment}[1]{\pinaforecomment{pink}{Michelle}{#1}}
 \newcommand{\nrcomment}[1]{\pinaforecomment{red}{Naveen}{#1}}
+\newcommand{\ahcomment}[1]{\pinaforecomment{yellow}{Hoyle}{#1}}
+\newcommand{\ahintext}[1]{{\small\textcolor{red}{[#1 -- \textsc{hoyle}]}}}
+\newcommand{\mscomment}[1]{\pinaforecomment{lightblue}{Matt}{#1}}
 
 \newcommand{\smalltt}[1]{ {\tt \small #1 }}
 \newcommand{\smallurl}[1]{ \begin{tiny}\url{#1}\end{tiny}}
@@ -200,9 +205,12 @@
 
 \newcommand{\qb}[0]{\abr{qb}}
 \newcommand{\qa}[0]{\abr{qa}}
+\newcommand{\odqa}[0]{\abr{odqa}}
 \newcommand{\nlp}[0]{\abr{nlp}}
+\newcommand{\dpr}[0]{\abr{dpr}}
 \newcommand{\ml}[0]{\abr{ml}}
 \newcommand{\triviaqa}{\camelabr{Trivia}{qa}}
+\newcommand{\ambigqa}{\camelabr{Ambig}{qa}}
 \newcommand{\searchqa}{\camelabr{Search}{qa}}
 \newcommand{\wikiqa}{\camelabr{Wiki}{qa}}
 \newcommand{\newsqa}{\camelabr{News}{qa}}
@@ -218,7 +226,7 @@
 \newcommand{\quac}{\textsc{q}{\small u}\textsc{ac}}
 \newcommand{\elmo}{\textsc{elm}{\small o}}
 \newcommand{\fone}{$F_1$}
-\newcommand{\jeopardy}{\textit{Jeopardy!}}
+\newcommand{\jeopardy}{\textit{Jeopardy!\ }}
 
 \newcommand{\glove}{\abr{gl}{\small o}\abr{ve}}
 \newcommand{\openie}{\abr{o}{\small pen}\abr{ie}}

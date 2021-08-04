@@ -1,0 +1,69 @@
+
+\begin{table}[]
+\center
+\begin{tabular}{lll}
+\toprule
+                             & \textbf{Dev} & \textbf{Test} \\ \hline
+\textbf{Copy}                & 33.84        & 36.25         \\ 
+\textbf{Pronoun Sub} & 47.72        & 47.44         \\ 
+\textbf{Seq2Seq}          & 51.37        & 49.67         \\
+\textbf{Human Rewrites\textsuperscript{*}}        &
+                                                    \multicolumn{2}{c}{59.92}          \\ 
+  \bottomrule
+\end{tabular}
+
+\caption{\abr{bleu} scores of the baseline models on development and
+  test data. Seq2Seq improves up
+  to four points over naive baselines but still well below human
+  accuracy.
+    Human accuracy (*) is computed from a small subset of the
+  validation set.}
+\label{tab:bleu_results}
+\end{table}
+
+\section{Baselines}
+\label{sec:expr}
+
+
+
+
+We compare three baseline models for the question-in-context rewriting
+task. In the \textbf{Copy} baseline, the rewrite $q'_m$ is set to be
+the same as the input question $q_m$ without making any changes.
+
+We also try a \textbf{Pronoun Substitution} baseline in which the first pronoun in $q_m$ is replaced with the topic entity of the conversation.
+We use the title of the corresponding Wikipedia article to the
+original \abr{\quac} conversation as the topic entity.
+Similar to the Copy baseline, the training data is not used
+in that baseline.
+
+Unlike the previous baselines which do not use our rewrites as
+training data, the third baseline is a neural sequence-to-sequence
+(\textbf{Seq2Seq}) model with attention and a copy
+mechanism~\cite{bahdanau2015Neural, see2017get}.
+We construct the input sequence by concatenating all utterances in
+the history $H$, prepending them to $q_m$, and adding a special separator token
+between utterances. 
+ We use a bidirectional \abr{lstm} encoder-decoder model with shared the word embeddings between the encoder and the decoder.\footnote{We initialize the embeddings with GloVE~\cite{pennington2014glove} and 
+train with a batch-size of 16 for 200000 steps.
+We use OpenNMT~\cite{klein2018opennmt} implementation.}
+
+
+Since questions are written by humans, a human rewrites are the
+upper-bound for this task.
+However, annotators (especially crowdworkers) can be inconsistent or
+disagree.
+To estimate the human accuracy, we collect 100 pairs of rewritten questions; each pair
+has two rewrites of the same question (in its given context) by two different workers.
+We manually verify that all rewrites are valid and then use the pair of rewrites as a hypothesis and a reference.  
+
+
+
+Table~\ref{tab:bleu_results} shows the \abr{bleu} scores produced by the baselines
+and humans over both the validation and the test sets.\footnote{We use multi-bleu-detok.perl~\cite{sennrich2017nematus}}
+Although a well-trained standard neural sequence-to-sequence improves
+2--4 \abr{bleu} points over naive baselines, it is still 9 \abr{bleu} points below human-accuracy.  
+We analyze sources of errors in the following section.
+
+
+

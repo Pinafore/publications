@@ -1,0 +1,68 @@
+\documentclass[11pt,a4paper,table]{article}
+\usepackage[hyperref]{style/emnlp-ijcnlp-2019}
+\usepackage{times}
+\usepackage{url}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{latexsym}
+\usepackage{blindtext}
+\usepackage{tcolorbox}
+\newcommand\BibTeX{B{\sc ib}\TeX}
+\newcommand\confname{EMNLP-IJCNLP 2019}
+\newcommand\conforg{SIGDAT}
+\usepackage{booktabs}
+
+
+\aclfinalcopy \def\aclpaperid{3163} 
+
+
+\newcommand{\aecomment}[1]{ \textcolor{red}{[AE: {\bf #1}]} }
+\newcommand{\dpcomment}[1]{ \textcolor{red}{[DP: {\bf #1}]} }
+
+\title{Can You Unpack That? \\ Learning to Rewrite Questions-in-Context}
+
+
+\author{
+ Ahmed Elgohary, Denis Peskov,  Jordan Boyd-Graber\thanks{\hspace{.25cm}Now at Google Research Z\"urich}\\
+Department of Computer Science, \abr{umiacs}, iSchool, Language
+Science Center \\
+University of Maryland, College Park\\
+  {\tt \{elgohary, dpeskov, jbg\}@cs.umd.edu}
+}
+
+\newif\ifcomment\commenttrue
+\input{style/preamble}
+
+\newcommand{\latexfile}[1]{\input{2019_emnlp_sequentialqa/sections/#1}}
+\newcommand{\figfile}[1]{2019_emnlp_sequentialqa/figures/#1}
+\newcommand{\autofig}[1]{2019_emnlp_sequentialqa/auto_fig/#1}
+
+\newcommand{\quac} {\abr{Q{\small u}AC}}
+\newcommand{\name} {\abr{canard}}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+  \latexfile{00-abstract}
+\end{abstract}
+
+
+\latexfile{10-intro.tex}
+\latexfile{20-pp_task.tex}
+\latexfile{30-dataset_collection.tex}
+\latexfile{50-baselines.tex}
+\latexfile{40-dataset_analysis.tex}
+\latexfile{60-related_and_discussion.tex}
+\latexfile{ack.tex}
+
+\clearpage
+
+\bibliographystyle{style/acl_natbib}
+\bibliography{bib/journal-full,bib/jbg,bib/ahmed}
+
+\clearpage
+\input{2019_emnlp_sequentialqa/sections/appendix.tex}
+
+\end{document}

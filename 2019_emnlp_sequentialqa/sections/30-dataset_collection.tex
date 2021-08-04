@@ -1,0 +1,113 @@
+
+\begin{table}[t]
+	\centering
+	\begin{tabular}{l c}
+          \toprule
+	\textbf{	Characteristic }& \textbf{Ratio}\\
+		\hline
+		Answer Not Referenced & 0.98 \\
+		Question Meaning Unchanged &  0.95 \\
+		Correct Coreferences & 1.0 \\
+		Grammatical English & 1.0 \\
+		Understandable w/o Context & 0.90 \\
+                \bottomrule
+	\end{tabular}
+    \caption{Manual inspection of 50 rewritten context-independent questions from \name{} suggests that the new questions have enough context to be independently understandable.}
+    \label{tab:manualreview}
+\end{table}
+
+\section{Dataset Construction 
+	\label{sec:data}}
+
+We elicit paraphrases from human crowdworkers to make previously
+context-dependent questions \textit{unambiguously} answerable.
+Through this process, we resolve difficult coreference linkages and
+create a pair-wise mapping between ambiguous and context-enriched
+questions.
+We derive \name{} from \abr{\quac}~\cite{ChoiQuAC2018}, a sequential
+question answering dataset about specific Wikipedia sections.
+\abr{\quac} uses a pair of workers---a ``student'' and a ``teacher''---to ask
+and respond to questions.
+The ``student'' asks questions about a topic based on only the title
+of the Wikpedia article and the title of the target section.
+The ``teacher'' has access to the full Wikipedia section and provides answers by selecting text that answers the question.
+With this methodology, \abr{\quac} gathers 98k questions across 13,594 conversations.
+We take their entire dev set and a sample of their train set and
+create a custom JavaScript task in Mechanical Turk that allows
+workers to rewrite these questions.
+JavaScript hints help train the users and provides automated, real-time feedback.
+
+We provide workers with a comprehensive set of instructions and task examples. 
+We ask them to rewrite the questions in natural sounding English while preserving the sentence structure of the original question.  We discourage workers from introducing new words that are unmentioned
+in the previous utterances and ask them to copy phrases when appropriate from the original question.
+These instructions ensure that the rewrites only resolve
+conversation-dependent ambiguities.
+Thus, we encourage workers to create minimal edits; in
+Section~\ref{sec:models}, we take advantage of this to use
+\textsc{bleu} for evaluating model-generated rewrites.
+
+
+We display the questions in the conversation one at a time, since the
+rewrites should include only the previous utterance.  After a rewrite
+to the question is submitted, the answer to the question is displayed.
+The next question is then displayed.  This repeats until the end of
+the conversation. The full set of instructions and the data collection
+interface are provided in the appendix.
+
+We apply quality control throughout our collection process. 
+During the task, JavaScript checks automatically monitor and warn
+about common errors: submissions that are abnormally short
+(e.g., `why'), rewrites that still have pronouns (e.g., `he wrote this album'),
+or ambiguous words (e.g., `this article', `that').
+Many \abr{\quac} questions ask about `what/who else' or ask for
+`other' or `another' entity. For that class of questions, we ask
+workers to use a phrase such as `other than', `in addition to', `aside
+from', `besides', `together with' or `along with' with the appropriate
+context in their rewrite.
+
+We gather and review our data in batches to
+screen potentially compromised data or low quality workers.
+A post-processing script flags suspicious rewrites and workers who take and abnormally long or short time.
+We flag about 15\% of our data.
+\textit{Every} flagged question is manually reviewed by one of the
+authors and an entire \textsc{hit} is discarded if one is deemed
+inadequate.
+We reject 19.9\% of submissions and the rest comprise \name{}.
+Additionally, we filter out under-performing workers based on these
+rejections from subsequent batches.
+To minimize risk, we limit the initial pool of workers to those that
+have completed 500 \abr{hit}s with over 90\% accuracy and offer competitive payment of \$0.50 per \abr{hit}.
+
+We verify the efficacy of our quality control through manual review.
+A random sample of fifty questions sampled from the final dataset is reviewed for desirable characteristics by a native English speaker in Table~\ref{tab:manualreview}.  Each of the positive traits occurs in 90\% or more of the questions.  Based on our sample, our edits retain grammaticality, leave the
+question meaning unchanged, and use pronouns unambiguously.  There are rare occasions where workers use a part of the answer to the question being rewritten or where some of the context is left ambiguous.  These infrequent mistakes should not affect our models.
+We provide examples of failures in Table~\ref{tab:rewriteexamples}.
+
+
+\begin{table}[t]
+    \begin{centering}
+    \rowcolors{2}{white}{gray!25}
+    \begin{tabular}{p{7cm}}
+      \toprule
+		ORIGINAL: Was this an honest mistake by the media? \\
+                REWRITE: Was the claim of media regarding Leblanc's room \textcolor{teal}{come to true?}\\
+		ORIGINAL: What was a single from their album? \\
+		 REWRITE: What was a single from \textcolor{violet}{horslips' \textit{album}}?  \\
+          ORIGINAL: Did they marry?  \\
+           REWRITE:   Did Hannah Arendt and Heidegger marry? \\
+		 \bottomrule
+	\end{tabular}
+        \end{centering}
+        \caption{Not all rewrites correctly encode the context
+          required to answer a question.  We take two failures to
+          provide examples of the two common issues:
+          \textcolor{teal}{Changed Meaning} (top) and
+          \textcolor{violet}{Needs Context} (middle).  We provide an
+          example with no issues (bottom) for comparison. }
+	\label{tab:rewriteexamples}
+\end{table}
+
+We use the rewrites of \abr{\quac}'s development set as our test set
+($5{,}571$ question-in-context and corresponding rewrite pairs) and use
+a 10\% sample of \abr{\quac}'s training set rewrites as our
+development set ($3{,}418$); the rest are training data ($31{,}538$).
