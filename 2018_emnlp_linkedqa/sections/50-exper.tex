@@ -1,0 +1,114 @@
+\section{Baseline Results}
+
+\begin{table}[t!]
+\small
+\centering
+\begin{tabular}{ll}
+    \toprule
+  \textbf{Method} &  \textbf{EM} \\
+  \hline  
+    \multicolumn{2}{c}{Baselines: Questions in Isolation}  \\
+  \hline
+  IR & 15.6 \\
+  DrQA & 39.3\\
+  DrQA + limiting to entities & 39.7\\
+  \hline
+    \multicolumn{2}{c}{DrQA + Retrieval with context}  \\
+  \hline
+  Previous questions & 36.4\\
+  Previous predicted answers & 39.8\\
+  Previous gold answers & 40.1 \\
+  \hline
+    \multicolumn{2}{c}{DrQA + Reading with context}  \\
+  \hline
+   \makecell{Append relation descriptions\\ 
+   w/ predicted answers}
+ & 40.2 \\
+    \makecell{Append relation descriptions\\ 
+   w/ gold answers}
+ & 40.7 \\
+  \makecell{Explicit relation embedding \\
+   w/ predicted answers} & 38.3\\
+  \makecell{Explicit relation embedding \\
+   w/ gold answers} & 39.5\\
+  \hline \hline
+  \makecell{\textbf{IR} w/ Previous gold answers + \\
+  \textbf{Reading} w/ Append relation\\ descriptions
+   w/ gold answers}  & 40.7 \\
+  \bottomrule
+\end{tabular}
+\caption{Incorporating sequence information in the
+retrieval and the reading step slightly improves 
+overall accuracy compared to answering questions in isolation.} 
+
+\label{tab:main_results}
+\end{table}
+
+
+We compare the baselines' question answering accuracy:
+incorporating previous questions and answers slightly
+improves accuracy~(Table~\ref{tab:main_results}).
+
+
+We set the maximum number of retrieved documents to ten, and
+each document is divided into paragraphs each of 400 tokens. At test time, 
+we merge the top ten ranked such paragraphs and feed them to the reader.
+We use the reader network of~\newcite{chen2017reading}. 
+We limit the number of relation description spans for each entity pair to
+five. We used an \textsc{lstm} of
+one hidden layer and 128 hidden units for the paragraph, question, and 
+relation description encoders. Each reader was trained for twenty epochs.
+
+Table~\ref{tab:main_results} summarizes the results of the baselines
+(Section~\ref{sec:baselines}).  Question-answering accuracy is
+exact-match accuracy since we limit the answer spans to entity
+mentions whose boundaries are fixed for~ all~models.
+
+
+Incorporating the previous answer in the retrieval and the reading
+components slightly improves the overall question answering accuracy
+(Table~\ref{tab:main_results}).  The accuracy drops by more than 3\%
+when using the entire text of previous questions in the retrieval
+phase.  Modeling relations reduces the accuracy slightly compared to
+augmenting paragraphs with relation spans.  One possible explanation
+is that our relation embedding model is under-trained because many
+questions lack relevant relation-spans. Replacing Wikipedia with a
+larger corpus (e.g., ClueWeb) or improving reference detection might
+improve relation embedding model.
+Unsurprisingly, gold answers to previous questions are more useful
+than the predicted answers, which highlights a need for models that
+take into account the uncertainty about previous answers when gold
+previous answers are not available.  However, providing answers to
+previous questions is consistent for most \qb{} tournament play.
+
+
+
+
+
+\begin{figure}[t!]
+\begin{framed}
+\small
+\textbf{Question:} This man attempted to impress Jodie Foster by shooting Ronald Reagan, but he failed to kill the President. At trial, he was found not guilty by reason of insanity.\\
+\textbf{Gold answer to previous question:} Ronald Reagan \\
+\textbf{Predict without relation span:} George H. W. Bush\\
+\textbf{Correct answer:} John Hinckley Jr.\\
+\textbf{Relation span:} He is best known for defending President Ronald Reagan during the assassination attempt by John Hinckley Jr.
+\label{framed:example2}
+\end{framed}
+\caption{Modeling the relation between \textit{President Ronald Reagan}
+and \textit{John Hinckley Jr.} expressed by relation span helps 
+the reader select the correct answer entity.}
+
+
+\label{fig:example2}
+\end{figure}
+
+Figure~\ref{fig:example2} gives an example of how explicit relation embedding helps reader get a correct prediction. Without the 
+relation span, the model predicts George H. W. Bush (vice president at that time) as correct answer. Including the direct relation
+span between Reagan and John Hinckley Jr., 
+the model gets the correct answer.
+
+
+
+
+

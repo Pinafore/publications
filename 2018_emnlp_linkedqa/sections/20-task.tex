@@ -1,0 +1,24 @@
+\section{Sequential Question Answering Task}
+
+
+We define the task of open-domain sequential question answering: given a document collection $D$ and questions 
+grouped into disjoint sequences $\{ S_i \g i = 1 \dots n\}$ where each
+$S_i$ is an ordered sequence of question, answer pairs, and a subset of
+documents $S_i = ( (q_i^j,\ a_i^j,\ D_i^j) \g j = 1 \dots m )$, the task is
+to answer  questions $q_i^{\hat{j}}$ with document evidences
+$D_i^{\hat{j}}$ given access to previously asked questions in the same
+sequence and their corresponding answers $\{ (q_i^j,\ a_i^j ) \g j<\hat{j} \}$.
+
+Following~\newcite{chen2017reading}, we split the task into 
+two steps---a
+retrieval step and a reading step. In the retrieval step 
+the current question $q_i^{\hat{j}}$ and previous 
+questions and answers $\{ ( q_i^j,\ a_i^j ) \g j < \hat{j} \}$ are used
+ to retrieve a ranked list of paragraphs
+$D_i^{\hat{j}}$ from $D$ that are likely to contain the correct answer
+to the current question $q_i^{\hat{j}}$.
+The retrieved paragraphs $D_i^{\hat{j}}$ are the input to the
+reading step that selects a span from 
+$D_i^{\hat{j}}$ as the answer to $q_i^{\hat{j}}$. The reading step
+has access to previous questions and answers 
+$\{ ( q_i^j ,\ a_i^j ) \g j < \hat{j} \}$ as well.

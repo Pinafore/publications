@@ -1,0 +1,87 @@
+\section{Dataset Construction}
+
+This section describes QBLink's construction.
+QBLink is based on the \textit{bonus questions} of
+\textbf{Q}uiz \textbf{B}owl tournaments.  Unlike previous work that only uses the starter
+(or tossup) questions~\cite{boydgraber2012Besting}, bonus questions are not
+interruptable (players always hear the complete question) and have
+greater variability in difficulty.  Bonus questions start with a
+lead-in, which sets the stage for the rest of the question,
+followed by a sequence of related questions (Figure~\ref{fig:example}).
+
+
+
+Specifically, we collect bonus questions from \url{http://quizdb.org}
+for the tournaments in 2008--2018.  Each question is categorized by
+topic as history, literature, science, geography, fine arts,
+philosophy, religion, mythology, social sciences, current events or
+current events. We filter out too short questions (fewer than ten
+tokens), and only keep questions with exactly three sub-questions.
+One advantage of working with \qb{} data is that the community
+emphasizes sharing and redistribution of old questions: new students
+can practice and improve without paying for or licensing questions.
+
+
+
+We map the answers to unambiguous Wikipedia pages using combination of
+rule based matching and fuzzy string matching, then filter out the
+questions whose answers are not mapped to any Wikipedia page (12.5\%
+of the questions).
+
+To keep our development and test set intact and
+and of a reasonable percentage of questions,
+we use the questions in 2014 tournament
+(the year with the largest number
+of questions) for
+development and testing, and the rest of the questions are used for
+training (Table~\ref{tab:data_stats}). We use
+TagMe~\cite{ferragina2010tagme} for mention detection and linking
+question text~to~Wikipedia.
+
+
+\begin{table}[t!]
+\small
+\centering
+\begin{tabular}{ll}
+  \toprule
+  \multicolumn{2}{c}{\textbf{Num. Questions (Num. Sequences) $\times$ 3}}  \\
+ \hline
+ Training &  45,747 (15,249) \\
+ Developme &  3,630 (1,210)   \\
+ Testing &  6,555 (2,185) \\
+ \hline
+ \multicolumn{2}{c}{\textbf{Num. Sequences per Domain}}  \\
+ \hline
+ Current Events &  240 \\
+ Fine Arts &  2,588 \\
+ Geography &  472 \\
+ History &  3,961 \\
+ Literature &  3,879 \\
+ Mythology &  758 \\
+ Philosophy &  692 \\
+ Religion  &  746 \\
+ Science &  4,028 \\
+ Social Science &  827 \\
+ Trash &  453 \\
+ \hline
+ \multicolumn{2}{c}{\textbf{Num. Questions Tokens}}  \\
+ \hline
+ Training &  32.6 $\pm$ 9.6 \\
+ Developme &  33.5 $\pm$ 9.9 \\
+ Testing &  32.1 $\pm$ 10.24 \\
+ \hline
+ \multicolumn{2}{c}{\textbf{Num. TagMe Entities}}  \\
+ \hline
+ Training &  2.46 $\pm$ 1.68 \\
+ Developme &  2.49 $\pm$ 1.68 \\
+ Testing &  2.48 $\pm$ 1.77 \\
+ \hline
+Num. Unique Answers & 43,597\\
+Num. Unique Answer Pages & 18,529\\
+ \bottomrule
+\end{tabular}
+\caption{Statistics about QBLink. Most questions are fairly long and
+  contain 2.5 entity mentions, making the questions relatively
+  complex.}
+\label{tab:data_stats}
+\end{table}

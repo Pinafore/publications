@@ -1,0 +1,81 @@
+\section{Introduction}
+
+
+The framework of combining information retrieval and neural reading
+comprehension has been the basis of several systems for answering
+open-domain questions over unstructured
+text~\cite{chen2017reading,wang2018evidence,clark2018simple,htut2018training}.
+Typically, such systems take one input question at a time, retrieving and
+ranking multiple paragraphs that potentially contain the answer. A
+reading comprehension model then produces a ranked list of candidate
+answer spans from each paragraph. The final answer is then selected
+from the produced spans.
+
+
+In information-seeking dialogs, e.g., personal assistants,  
+users interact with a question answering system by asking  
+a sequence of related questions, where questions share the same
+predicate, entities, or at least a topic. 
+Answering each question in isolation is sub-optimal as
+information from previously asked questions and
+previously answers can help better answer
+\emph{this} question.
+
+
+We study the task of sequential open-domain question answering.  We
+ask how a standard open-domain question answering system can
+incorporate connections between question-answer pairs in the same
+sequence. We introduce QBLink, a new dataset of about 18,000 question
+sequences (Figure~\ref{fig:example}); each sequence consists of 
+three naturally occurring
+human-authored questions (totaling around 56,000 unique
+questions). The sequences themselves are also naturally occurring
+(i.e., we do not artificially combine individually-authored questions to
+form sequences), which allows us to focus more on the important
+connections between questions that should be incorporated to improve
+the end-to-end question answering accuracy.  
+
+\begin{figure}[t!]
+\begin{framed}
+\small
+\textbf{Lead-in:} Only twenty-one million units in this system will ever be created. For 10 points each:\\
+\textbf{Question 1:} Name this digital payment system whose transactions are recorded on a ``block chain''.\\
+ \textbf{Answer:} Bitcoin\\
+\textbf{Question 2:} Bitcoin was invented by this person, who, according to a dubious Newsweek cover story, is a 64-year-old Japanese-American man who lives in California.\\
+\textbf{Answer:} Satoshi Nakamoto\\
+\textbf{Question 3:} This online drugs marketplace, Chris Borglum's one-time favorite, used bitcoins to conduct all of its transactions. It was started in 2011 by Ross Ulbricht using the pseudonym Dread Pirate Roberts.\\
+\textbf{Answer:} Silk Road\\
+\label{framed:example}
+\end{framed}
+\caption{An example sequence of questions from QBLink. The lead-in and
+question 1 are asking about the same object/answer. The subject of question 2 is
+the same as the object of question 1. All questions are about a narrow 
+topic, Bitcoin.}
+
+      
+\label{fig:example}
+\end{figure}
+
+
+
+
+
+
+
+We compare sequence-aware models to baselines that process each
+question separately. For our sequence-aware models, we tweak the
+retrieval component by incorporating previous questions and their
+answers with the current question to find better paragraphs.  For the
+reader, we use the semantic relations between entities in previous
+questions (or corresponding answers) and entities mentioned in
+the paragraph being read (candidate answers) to better choose the
+answer entity.  Both the retrieval and reading steps can be slightly
+improved by incorporating sequence information.
+
+Our contributions are two-fold: first, we present a new dataset for
+sequential question answering. Our dataset contains complex questions
+on many topics. We make the dataset publicly available to encourage
+future research.  Second, we use our dataset to compare baselines in
+the open-domain question answering setup with the goal of showing that
+incorporating sequential connections between questions helps.
+

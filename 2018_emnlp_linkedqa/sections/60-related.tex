@@ -1,0 +1,67 @@
+\section{Related Work and Discussion}
+
+We adopt the open-domain question answering framework
+\cite{wang2018evidence,chen2017reading}.  Previous work considers
+improving that base framework itself~\cite[inter
+alia]{clark2018simple,swayamdipta2017multi} but retains the
+assumption of answering individual questions.
+
+Aside from the open-domain setup, much of the recent work on question
+answering focuses on reading-comprehension, where the gold answer to
+each question is assumed to exist in a given single paragraph for the
+model to read~\cite{hermann2015teaching,rajpurkar2016squad,
+  seo2017bidirectional}. Another line of work on question answering is
+question answering over structured
+knowledge-bases~\cite{berant2013semantic,berant2014semantic,yao2014information,gardner2017open}.
+Although we focus on general open-domain, QBLink can evaluate both
+reading-comprehension and knowledge-bases.
+
+
+
+Several question answering datasets have been proposed~\cite[inter
+alia]{berant2013semantic,
+  joshiTriviaQA2017,trischler2016newsqa,rajpurkar2018know}. However,
+all of them are limited to answering individual questions.
+
+
+\newcite{saha2018complex} study the problem of sequential question
+answering, and introduce a dataset for the task.  However, we differ
+in two aspects: 1) They consider question-answering over structured
+knowledge-bases.  2) Their dataset construction is synthetic: human
+annotators collect templates given knowledge-base predicates. Further,
+sequences are constructed synthetically by grouping individual
+questions by predicate or subjects.
+
+
+Both \newcite{IyyerSQA2017} and \newcite{talmor2018web} answer complex
+questions by decomposing each into a sequence of simple
+questions. \newcite{IyyerSQA2017} adopt a semantic parsing approach to
+answer questions over semi-structured tables. They construct a dataset
+of around 6,000 question sequences by asking humans to rewrite a set
+of 2,000 complex questions into simple sequences.
+\newcite{talmor2018web} consider the setup of open-domain question
+answering over unstructured text, but their dataset is constructed
+synthetically (with human paraphrasing) by combining simple questions
+with a few rules.
+
+In parallel to our work, \newcite{ChoiQuAC2018} and
+\newcite{reddy2018CoQA} introduce sequential question answering
+datasets (QuAC and CoQA) that focus on reading comprehension 
+(i.e., a single text snippet is pre-specified for answering the given
+questions).
+QBLink is entirely naturally occurring (all questions and answers were
+authored independently from any knowledge sources) and is primarily designed to
+challenge human players. 
+
+ 
+
+
+Our baseline, which improves reading by incorporating additional
+relation description spans, is similar to
+\newcite{weissenborn2017Dynamic} and
+\newcite{mihaylov2018Knowledgeable}, who integrate background
+commonsense knowledge into reading-comprehension systems.  Both rely
+on structured knowledge bases to extract information about semantic
+relations that hold between entities. Instead, we extract text spans
+that mention each pair of entities and encoded them into vector
+representations of the relations between entities.

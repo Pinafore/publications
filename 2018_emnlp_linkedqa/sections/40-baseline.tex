@@ -1,0 +1,106 @@
+\section{Baselines\label{sec:baselines}}
+
+
+We build our baselines \textsc{d}r\textsc{qa} from
+\newcite{chen2017reading} for open-domain question answering over
+Wikipedia.\footnote{We use the Wikipedia dump of 2017--09--20.} The
+framework starts with a retrieval phase followed by a reading phase.
+Retrieval ranks Wikipedia articles using tf-idf~\cite{salton1987term} a question query.
+
+The reading phase is a multi-layer recurrent neural network model
+that extracts an answer span from the top~$d$ retrieved paragraphs.
+The reader model computes a contextualized representation of each token $\*{t_i}$
+by running the token sequence through a multi-layer bidirectional
+long short-term memory network (\textsc{b}i\textsc{lstm}) \cite{hochreiter1997long}  and
+taking the corresponding hidden state to each token at the top layer.
+The question is encoded as vector~$\*q$, averaging a
+\textsc{b}i\textsc{lstm}'s hidden states over the question's
+tokens. An unnormalized score of $t_i$
+encodes which tokens start and end the answer span,
+\begin{eqnarray}
+Start(i) = \exp(\*{t_i}^T\*{W_{start}}\*q);\nonumber\\
+End(i) = \exp(\*{t_i}^T\*{W_{end}}\*q).
+\label{eq:scores}
+\end{eqnarray}
+To find the answer in multiple paragraphs at test time,
+we merge all  paragraphs
+before feeding them to the reader~\cite{clark2018simple}.
+
+
+\subsection{Answering Question in Isolation}
+We experiment with three models that ignore the sequential connections
+between questions and answer each question in isolation.
+Our first model is a simple information retrieval (\textsc{ir}) baseline that only
+uses the retrieval component: the title of the
+top-1 Wikipedia article is predicted as the answer.
+
+Our second baseline
+is the full \textsc{d}r\textsc{qa} whose reader is trained/tuned on the
+training/development questions.
+To assign paragraphs to each of the training questions, we follow a similar
+distant-supervision approach to~\citet{chen2017reading}. We retrieve
+the top twenty Wikipedia articles for each question, exclude the paragraphs that
+do not contain the gold answer, and then rank the remaining paragraphs
+using tf-idf. Each of the top ten paragraphs is paired with the question
+to form a data instance for~training~the~reader.
+
+
+Finally, we tweak the \textsc{d}r\textsc{qa} reader to limit the candidate answer spans
+to entity mentions that are linked to Wikipedia.
+We
+set the pre-normalization start and end
+scores of spans that are not detected mentions to zero.
+
+
+
+
+\subsection{Incorporating Context in Retrieval}
+
+To incorporate the sequential connections between questions in the
+retrieval phase, we append the previously asked questions to
+the current question. We also compare appending the predicted answers
+(top-1 span) to each of the previous questions as well as the gold answers
+to the current question.
+
+\subsection{Incorporating Context in Reader}
+
+
+In addition to encoding which entities have appeared in previous
+questions, we also want to provide our models with \emph{relationship}
+information.  However, pre-defined relationships from knowledge bases
+tend to be brittle.  Instead, we use a continuous representation of
+relationships~\cite{iyyer2016Feuding}.  For example, suppose we want
+to encode the relationships for an entity (answer candidate) that
+starts at $i$ and ends at $j$. We summarize that entities
+relationships from each of possible $k$ relation-spans.  A
+relation-span is a sequence of tokens from Wikipedia that contains
+both the answer candidate and an answer to a previous question (For
+example, the correct answer in Figure~\ref{fig:example2} has a
+relation-span \textit{``He is best known for defending President
+  Ronald Reagan during the assassination attempt by John Hinckley
+  Jr.''} with the previous answer \textit{``Ronald Reagan''}).  This
+is summarized in a vector~$\*r_{ij}$ by merging all~$k$ relation-spans
+in a single span that is then fed through a \textsc{b}i\textsc{lstm}
+whose hidden states are combined as a weighted sum with
+self-attention~\cite{lin2017structured}.
+
+The stronger the similarity between the relation that the question is
+asking about and the relation-spans, the higher the score of the
+candidate answer should be.  We estimate the similarity~$r$ by
+concatenating the elementwise absolute difference and Hadamard product
+between~$\*r_{ij}$ and the question embedding~$\*q$. We then use a
+trainable weight vector~$\*{w_{rel}}$ to combine the components of the
+concatenation and produce a single similarity score
+\[
+r = \*{w_{rel}}^T [\abs*{\*q-\*{r_{ij}}};\*{q} \circ \*{r_{ij}}].
+\]
+This influences the final selection of the answer span by adding the
+relation similarity score~$r$ to the start and end scores of the
+candidate answer (Equation~\ref{eq:scores}),
+\begin{eqnarray}
+Start(i) = \exp(\*{t_i}^TW_{start}\*q + r)\nonumber\\
+End(j) = \exp(\*{t_j}^TW_{end}\*q + r).
+\label{eq:scores_w_rel}
+\end{eqnarray}
+The relation embedding module is trained jointly with the reader.
+

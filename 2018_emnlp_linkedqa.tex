@@ -1,0 +1,92 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[a-1b]{pdfx}
+\usepackage[hyperref]{style/emnlp2018}
+
+\usepackage{times}
+\usepackage{latexsym}
+\usepackage{amsmath}
+\usepackage{url}
+\usepackage{algorithm}
+\usepackage{lipsum}
+\usepackage{multirow}
+\usepackage{framed}
+\usepackage{graphicx}
+\usepackage{longtable}
+\usepackage{tcolorbox}
+\usepackage{times}
+\usepackage{makecell}
+\usepackage{color}
+\usepackage{etoolbox}
+
+
+\usepackage{mathtools}
+
+
+\usepackage{array}
+\usepackage{booktabs}
+\setlength{\heavyrulewidth}{1.5pt}
+\setlength{\abovetopsep}{4pt}
+
+
+
+\DeclarePairedDelimiter\abs{\lvert}{\rvert}\DeclarePairedDelimiter\norm{\lVert}{\rVert}
+
+
+\makeatletter
+\let\oldabs\abs
+\def\abs{\@ifstar{\oldabs}{\oldabs*}}
+\let\oldnorm\norm
+\def\norm{\@ifstar{\oldnorm}{\oldnorm*}}
+\makeatother
+
+
+
+\newif\ifcomment\commenttrue
+\input{style/preamble}
+
+\newcommand{\czcomment}[1]{ \colorbox{blue}{   \parbox{.8\linewidth}{ cz: #1}  }}
+\newcommand\BibTeX{B{\sc ib}\TeX}
+
+
+\makeatletter
+\def\BState{\State\hskip-\ALG@thistlm}
+\makeatother
+
+\title{Dataset and Baselines for Sequential Open-Domain Question Answering}
+
+\author{
+ Ahmed Elgohary\thanks{\hspace{1.5mm}The first two authors contributed equally.}, Chen Zhao\footnotemark[1],  Jordan Boyd-Graber\\
+Department of Computer Science, \abr{umiacs}, iSchool, Language
+Science Center \\
+University of Maryland, College Park\\
+  {\tt \{elgohary, chenz, jbg\}@cs.umd.edu}
+}
+
+\def\*#1{\mathbf{#1}}
+\newcommand{\latexfile}[1]{\input{2018_emnlp_linkedqa/sections/#1}}
+\newcommand{\figfile}[1]{2018_emnlp_linkedqa/figures/#1}
+\newcommand{\autofig}[1]{2018_emnlp_linkedqa/auto_fig/#1}
+
+\aclfinalcopy
+\def\aclpaperid{2199}
+\begin{document}
+\maketitle
+
+
+\latexfile{00-abstract}
+\latexfile{10-intro}
+\latexfile{20-task}
+\latexfile{30-data}
+\newpage
+\latexfile{40-baseline}
+\latexfile{50-exper}
+\latexfile{60-related}
+\latexfile{70-conclusions}
+\latexfile{acknowledgment}
+
+
+\bibliography{bib/jbg,bib/ahmed}
+
+\bibliographystyle{style/emnlp_natbib}
+
+\end{document}

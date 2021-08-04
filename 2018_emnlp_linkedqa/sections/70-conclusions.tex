@@ -1,0 +1,24 @@
+\section{Conclusions and Future Work}
+
+We introduce QBLink, a dataset of 56,000 naturally occurring
+sequential question, answer pairs. The questions are designed
+primarily to challenge human players in Quiz Bowl tournaments.  We use
+QBLink to evaluate baselines for sequential open-domain question
+answering. We show that incorporating sequential information helps
+slightly improve question answering accuracy.
+
+Because our questions come from the \qb{} domain, another extension
+would be to explore how answering linked questions could improve
+situated gameplay.  \newcite{He-16:opponent} use opponent answers on
+questions to better estimate what players know; in a complete game
+with both tossups and bonuses, a complete opponent model would use
+both to improve strategy.
+
+In the future, we would like to invest in building better sequential
+question answering models that push the accuracy beyond the presented
+baselines. Specifically, we will look at how to better model the
+interaction between the reader and the relation embedding model and
+how to improve the relation embedding model itself by adopting ideas
+from the relation
+extraction~\cite{miwa2016end,peng2017cross,ammar2017ai2}.
+
