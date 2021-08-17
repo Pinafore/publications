@@ -1,0 +1,102 @@
+\section{Related Work}
+\label{ch:isicle:rel}
+
+\name{} draws together two primary threads: we use \irt{} to
+understand datasets, which has been applied to other \abr{nlp} tasks,
+and apply it to improving leaderboards.
+Finally, we explore how the insights of \irt{} can improve not just
+the analysis of test sets but to improve the \emph{construction} of
+test sets.
+
+\paragraph{\textbf{\abr{irt} in \abr{nlp}}}
+\irt{} is gaining traction in machine learning
+research~\citep{martinez2016ml,martinez2019irt} where automated metrics can be
+misleading~\citep{sedoc2019chateval}: machine
+translation~\citep{hopkins2013competitions} and chatbot
+evaluation~\citep{sedoc2020irt}.
+Concurrent with our work, \citet{vania2021compare} compare \nlp{} test sets with \irt{}.
+Closest to our work in \nlp{} is \citet{otani2016aggregation}, who
+rank machine translation \subjs{} and compute correlations with gold
+scores.  Similarly, \citet{martinez2020indicators} use \irt{} on
+non-language \abr{ai} video game benchmarks.
+Just as we use \irt{} to identify difficult or easy \itms{},
+\citet{lalor2016irt} create challenge sets for textual entailment.
+We
+test \irt{} as a way to guide annotation, but it can also
+train \nlp{} models; for example, deep models learn ``easy'' examples
+faster~\citep{lalor2018diff} and maintain test accuracy when training
+data are down-sampled~\citep{lalor2019latent}.
+
+\paragraph{\textbf{Improving Leaderboards}}
+The rise \nlp{} leaderboards has encouraged critical thought into
+improving them~\citep{linzen2020progress}, improving evaluation more
+broadly~\citep{eger2020workshop}, and thoughtful consideration of
+their influence on the direction of
+research~\citep{sculley2018curse,dotan2020value}.
+\name{} aims make leaderboard
+yardsticks~\citep{hernandez2020yardsticks} more reliable,
+interpretable, and part of curating the benchmark itself.
+In line
+with our reliability goal, just as statistical tests should appear in
+publications~\citep{dror2018guide,Dodge2019ShowYW}, they should be
+``freebies'' for leaderboard
+participants~\citep{ethayarajh2020utility}.  Alternatively,
+\citet{hou2019leader} posit that leaderboards could be automatically
+extracted from publications.
+How to aggregate multi-task
+benchmarks~\citep{wang2018glue,wang2019superglue,fisch2019mrqa} and multi-metric benchmarks~\citep{ma2021dynaboard} is an
+open question which---although we do not address---is one use for
+\irt{}.
+
+
+This work implicitly argues that leaderboards should be
+continually updated.  As a (static) leaderboard ages, the task(s)
+overfit~\citep{recht2019generalize} which---although
+mitigable~\citep{blum2015ladder,andersonCook2019host}---is best solved
+by continually collecting new data~\citep{kiela2021dynabench}.
+Ideally, new data should challenge models through adversarial
+collection~\citep{wallace2018trick,nie2019adversarial} and related
+methods~\citep{Gardner2020-gn}.  However, if making an easy
+leaderboard more difficult is possible, the
+leaderboard has outlived its helpfulness and should be retired~\citep{voorhees1999trec8}.
+
+Part of our work centers on alternate task efficacy rankings, but this
+na\"ively assumes that task efficacy is the sole use case of
+leaderboards.
+Indeed, focusing solely these factors can mislead the
+public~\citep{paullada2020data} and may not reflect human language
+capabilities~\citep{schlangen2020targeting}.
+Leaderboards are also well positioned to provide incentive structures
+for participants to prioritize fairness~\citep{bender2018data} and
+efficiency~\citep{strubell2019energy,schwartz2020green,min2021efficientqa}
+or incorporate testing of specific
+capabilities~\citep{ribeiro2020checklist,Dunietz2020-ty}.
+To enable these more nuanced analyses, leaderboards should accept
+runnable models rather than static
+predictions~\citep{ma2021dynaboard}.
+
+\paragraph{\textbf{Active Learning}}
+Beyond \irt{}, the analysis of training dynamics and active learning~\citep{settles09active} is helpful for actively sampling specific \itms{} or identifying low-quality \itms{}~\citep{brodley1999mislabel}.
+For example, \citet{swayamdipta2020cartography} and \citet{pleiss2020aum} propose alternative training dynamics-based methods for identifying difficult \itms{} as well annotation errors.
+Even closer to goals, \citet{rahman2020active} use active learning to build a test collection.
+Explicitly measuring how effectively examples separate the best \subj{} from the rest allows test set curators to ``focus on the bubble''~\citep{boydgraber2020nerds}, prioritizing examples most likely to reveal interesting distinctions between submitted systems.
+
+\paragraph{\textbf{Alternate Formulations}}
+\irt{} is an example of convergent evolution of models that
+predict \subj{} action given an \itm{}.
+Ideal point models~\cite{poole2017voting} consider how a legislator (\subj{})
+will vote on a bill (\itm{}) and use a similar mathematical formulation.
+The venerable \abr{elo} model~\cite{glickman-99} and modern
+extensions~\cite{herbrich-07} predict whether a player (\subj{}) will
+defeat an opponent (\itm{}) with, again, a similar mathematical model.
+Certain \irt{} models can also be formulated as nonlinear mixed
+models~\cite{rijmen2003nonlinear}, where the \itm{} parameters are fixed effects
+and the latent \subj{} parameters are random effects.
+This allows for comparisons between \irt{} models and other mixed effects models
+under a consistent framework.
+        {\bf \pl{1}} and {\bf \pl{2}} can be formulated as nonlinear mixed models, and {\bf \pl{3}} can be formulated as a discrete mixture model over~\itm{}s.
+As we discuss further in the next section, \name{}'s application of
+\irt{} can further be improved by adopting interpretable extensions of
+these models.
+
+

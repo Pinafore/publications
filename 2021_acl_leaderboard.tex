@@ -1,0 +1,120 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[hyperref]{style/acl2021}
+\usepackage{times}
+\usepackage{latexsym}
+\usepackage{url}
+\usepackage{booktabs}
+\usepackage{tikz}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{anyfontsize}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{xstring}
+\usepackage{todonotes}
+\usepackage{csquotes}
+\usepackage{pifont}\usepackage{mathtools}
+\usepackage{xcolor}
+\usepackage{enumitem}
+\newcommand{\hl}[1]{\colorbox{yellow}{#1}}
+\newcommand{\hz}{\vphantom{\parbox[c]{0.1cm}{\rule{0.1cm}{0.4cm}}}}
+
+\aclfinalcopy \def\aclpaperid{896} \newcommand{\projecturl}{\href{https://irt.pedro.ai}{irt.pedro.ai}}
+
+\newif\ifcomment
+\commentfalse
+
+\include{style/preamble}
+\newcommand{\emailcustom}[2]{ {\small \href{mailto://#1}{\texttt{#2}}}}
+\newcommand{\irt}{\abr{irt}}
+\newcommand{\iemph}[1]{\textit{#1}}
+\newcommand{\trec}{\abr{trec}}
+\newcommand{\ir}{\abr{ir}}
+\newcommand{\itm}{item}
+\newcommand{\itms}{items}
+\newcommand{\Itms}{Items}
+\newcommand{\Itm}{Item}
+\newcommand{\name}{\abr{dad}}
+\newcommand{\subj}{subject}
+\newcommand{\subjs}{subjects}
+\newcommand{\Subj}{Subject}
+\newcommand{\resp}{response}
+\newcommand{\resps}{responses}
+\newcommand{\Resp}{Response}
+\newcommand{\nsquadsubj}{0}
+\newcommand{\discability}{discriminability}
+\newcommand{\diff}{difficulty}
+\newcommand{\Diff}{Difficulty}
+\newcommand{\smart}{Ken}
+\newcommand{\dumb}{Burt}
+
+\newcommand{\Discability}{Discriminability}
+\newcommand{\answer}[1]{{\color{red}#1}}
+\newcommand{\pl}[1]{\IfStrEqCase{#1}{{1}{\abr{irt}-base}
+    {2}{\abr{irt}-disc}
+    {3}{\abr{irt}-feas}
+    {m}{\abr{irt}-vec}
+    {t}{\abr{irt}-tm}    
+  }
+}
+\newcommand{\terp}{\includegraphics[scale=0.02]{2021_acl_leaderboard/figures/redshell}}
+\newcommand{\sterp}{\textsuperscript{\includegraphics[scale=0.02]{2021_acl_leaderboard/figures/redshell}}}
+\graphicspath{{2021_acl_leaderboard/figures/}{2021_acl_leaderboard/commit_auto_figs/}{2021_acl_leaderboard/auto_fig/}}
+
+\title{Evaluation Examples Are Not Equally Informative:\\How Should That Change NLP Leaderboards?}
+
+\author{
+ Pedro Rodriguez \\
+University of Maryland\textsuperscript{\terp{}}\\
+Facebook Reality Labs\thanks{\ \ Work completed at University of Maryland.}\\
+\emaillink{me@pedro.ai}
+\And
+Joe Barrow\\
+University of Maryland\sterp{}\\
+\emaillink{jdbarrow@cs.umd.edu}
+\And
+Alexander Hoyle\\
+University of Maryland\sterp{}\\
+\emaillink{hoyle@umd.edu}
+\AND
+John P. Lalor\\
+University of Notre Dame\\
+\emaillink{john.lalor@nd.edu}
+\And
+Robin Jia\\
+University of Southern California\\
+\emaillink{robinjia@usc.edu}
+ \And
+Jordan Boyd-Graber\\
+University of Maryland\sterp{}\\ 
+\emaillink{jbg@umiacs.umd.edu}
+}
+
+\date{}
+
+\begin{document}
+\maketitle
+\setlength{\abovedisplayskip}{3pt}
+\setlength{\belowdisplayskip}{3pt}
+
+\begin{abstract}
+    \input{2021_acl_leaderboard/sections/00-abstract}
+\end{abstract}
+
+\input{2021_acl_leaderboard/sections/10-intro}
+\input{2021_acl_leaderboard/sections/20-story}
+\input{2021_acl_leaderboard/sections/30-leader}
+\input{2021_acl_leaderboard/sections/50-exp}
+\input{2021_acl_leaderboard/sections/55-interp}
+\input{2021_acl_leaderboard/sections/70-rel}
+\input{2021_acl_leaderboard/sections/80-conc}
+
+\input{2021_acl_leaderboard/sections/acks}
+
+\bibliography{bib/journal-full,bib/pedro}
+\bibliographystyle{style/acl_natbib}
+\clearpage
+\begin{appendix}
+    \input{2021_acl_leaderboard/sections/apx}
+\end{appendix}
+\end{document}

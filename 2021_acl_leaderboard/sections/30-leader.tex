@@ -1,0 +1,30 @@
+\section{Ranking and Comparing Subjects}
+\label{ch:isicle:compare}
+
+
+Fundamentally, the objective of comparative evaluations like
+leaderboards is to decide whether model~$A$ is better than model~$B$.
+A thread of \nlp{} has rightfully advocated for adding rigor to these
+decisions using statistics~\citep[Classical Testing
+  Theory]{traub1997ctt} where the objective is to infer a true
+score~$T$ from the observed test score~$X=T+E$ given a measurement
+error~$E$, uniform across \subj{}s.
+However, in educational testing---a field measuring skill and
+knowledge in humans---\irt{} is a primary measurement
+instrument~\citep[p.~2]{hambleton1991fundamentals}.
+A major motivation for \irt{} is that \subj{}s of different skill have
+\iemph{different} errors.
+\irt{} explicitly accounts for the bandwidth-fidelity
+dilemma~\citep{mcbride1976bandwidth}: \itms{} can either accurately
+measure a narrow ability range (fidelity) \textit{or} inaccurately
+measure large ability ranges (bandwidth).\footnote{Estimation error
+  of $\theta$ varies by position (Appendix~\ref{ch:isicle:irt-test}).  }
+This section and the next contrast methods for identifying the best
+model and advocate for \irt{}.
+
+\label{ch:isicle:agg}
+
+
+Implicit in nearly all leaderboard evaluations is ranking models by a
+statistic such as the average accuracy.
+As we show in \S\ref{ch:isicle:exp}, na\"ive rankings are noisier than \irt{} rankings.

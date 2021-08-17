@@ -1,0 +1,23 @@
+\section{Conclusion}
+\label{ch:isicle:conc}
+
+This paper advocates incorporating decades of research in crafting education tests to improve how we evaluate the capabilities of \abr{nlp} models.
+We propose and validate an alternate \irt{} ranking method for leaderboard evaluations, show it can guide annotation, detect annotation error, and naturally partition evaluation data.
+Just as educators moved from classical testing to \irt{}, the \nlp{} community should consider future evaluations with \irt{}.
+
+
+\subsection{Limitations}
+Although there is much to gain through \irt{} evaluation, there are limitations which make it hard to implement.
+First, it requires access to item-level responses for all examples for all \subjs{} which are often only available to organizers.
+Second, \citet{urbano2016reliability} notes that sampling mutually exclusive subsets has drawbacks---samples are not entirely independent.
+Lastly, our work is a proof of concept using \squad{} 2.0 as a test bed and our results may not generalize.
+
+\section{Future Work}
+\label{ch:isicle:future}
+
+We see a few directions for future work.
+First, this paper is intended to validate \irt{} and its usefulness as an active part of the leaderboard lifecycle; the natural next step is to implement it in a leaderboard.
+Second, our \irt{} models do not incorporate the \itm{} content (e.g., example text) to predict responses, but in principle could; Bayesian models with metadata~\citep{card2018meta} and ideal point models from political science~\citep{poole1985spatial} that incorporate bills and speeches do exactly this~\citep{gerrish2011text,nguyen2015tea,kraft2016vote}.
+Analogously, \irt{} for leaderboards can and should also incorporate text from passages, questions, and answers to better model what makes questions difficult.
+Such a model can also predict which characteristics would create discriminating or difficult \itms{}.
+Lastly, multidimensional \irt{} models to evaluate multiple skills could aid multi-task or multi-metric leaderboards like \abr{mrqa}~\citep{fisch2019mrqa} and Dynaboard~\citep{ma2021dynaboard}.
