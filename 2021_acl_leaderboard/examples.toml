@@ -1,0 +1,83 @@
+[item.disc.negative]
+# Annotate question IDs with reasons
+"572a1c943f37b319004786e3" = ["flawed", "bad_question"]
+"573083dc2461fd1900a9ce6f" = ["flawed", "bad_question + bad_answers"]
+"5acf782877cf76001a684eb4" = ["wrong", "is_answerable"]
+"5ad3cab2604f3c001a3ff0e3" = ["wrong", "is_answerable"]
+"572695285951b619008f774c" = ["correct"]
+"5737a0acc3c5551400e51f49" = ["correct"]
+"5726722bdd62a815002e8529" = ["flawed", "ambiguous + missing_answer"]
+"5726431d271a42140099d7f8" = ["wrong", "no_answer"]
+"5728e5224b864d1900165033" = ["flawed", "answer_partially_correct"]
+"5728f50baf94a219006a9e55" = ["flawed", "incomplete_answer"]
+
+[item.disc.near_zero]
+# Technically, the Swiss *also* produced a similar amount, but mostly valid
+"571caac55efbb31900334dc9" = ["correct"] 
+"572663a9f1498d1400e8ddf2" = ["correct", "one_answer_wrong"]
+# Technically correct, but is easy to get wrong due to 1-word different wording
+"5ad4d2855b96ef001a10a1dc" = ["correct", "misleading"]
+"56e1a0dccd28a01900c67a2f" = ["correct"]
+"5725ca4389a1e219009abeb6" = ["correct"]
+"5728e07e3acd2414000e00eb" = ["correct"]
+# If you resolve "it" correctly, its valid, but it could be ambig
+"5725c071271a42140099d12b" = ["correct", "ambiguous"]
+"56e1ec83cd28a01900c67c0c" = ["correct"]
+"572ffb02b2c2fd14005686b8" = ["correct", "incomplete_answer"]
+"56e1ded7cd28a01900c67bd5" = ["correct"]
+
+[item.disc.high]
+# Technically, the answer is only true for a certain set of sizes
+"56e1febfe3433e1400423239" = ["flawed", "answer_partially_correct"]
+"573784fa1c45671900574483" = ["correct"]
+"5727f16c3acd2414000df05b" = ["correct"]
+# The "rely" word is weird, but works
+"573098f38ab72b1400f9c5d3" = ["correct"]
+# Not ambig since there is only one sport mentioned
+"5706155352bb891400689895" = ["correct"]
+"572fd47fa23a5019007fca56" = ["correct"]
+"57376df3c3c5551400e51ed7" = ["correct", "one_answer_wrong"]
+"5726509bdd62a815002e815d" = ["correct"]
+"5727b8df3acd2414000dea9a" = ["correct"]
+"5729e1e36aef0514001550be" = ["correct"]
+
+[item.diff.low]
+"5a551230134fea001a0e18d0" = ["wrong", "is_answerable"]
+"5a5909b13e1742001a15cf4c" = ["correct"]
+"5726487b5951b619008f6ee1" = ["correct"]
+# This is a nice math/logic question!
+"5705e3f252bb89140068966d" = ["correct"]
+"5726462b708984140094c118" = ["correct"]
+"570961aa200fba1400367f16" = ["correct"]
+"5729ffda1d046914007796b2" = ["correct"]
+"5725fe63ec44d21400f3d7de" = ["correct"]
+"5725cb33271a42140099d1dd" = ["correct"]
+# impossibleness is based on hundreds vs thousands, I'm inclined to 
+# say this is actually answerable
+"5acfea0677cf76001a686466" = ["wrong", "is_answerable + misleading"]
+
+[item.diff.high]
+"57268bf9dd62a815002e890a" = ["correct"]
+"571c91c8dd7acb1400e4c10e" = ["correct"]
+"57337f6ad058e614000b5bcc" = ["correct"]
+"572822233acd2414000df557" = ["correct"]
+"5ad2b72fd7d075001a42a023" = ["correct"]
+"5a667f50846392001a1e1c67" = ["correct"]
+"57264d58f1498d1400e8db7c" = ["correct"]
+"5a2c30dabfd06b001a5aea2c" = ["correct"]
+"5ad4e61e5b96ef001a10a5b0" = ["correct"]
+"571cde695efbb31900334e1a" = ["correct"]
+
+[item.irt.validation]
+"57273f27dd62a815002e9a0c" = ["wrong", "answer_set_incomplete"]
+"5726e3c4dd62a815002e9407" = ["wrong", "answer_set_incomplete"]
+"5726a7ecf1498d1400e8e656" = ["wrong", "answer_set_incomplete"]
+"5ad567055b96ef001a10adeb" = ["wrong", "is_answerable"]
+"572663a9f1498d1400e8ddf2" = ["correct", "low_probability"]
+"5705f09e75f01819005e77a4" = ["wrong", "answer_set_incomplete"] 
+# Changed: unanswerable -> no_answer, equivalent?
+"5ad2990cd7d075001a429b61" = ["correct", "high_probability + no_answer"]
+"5733d13e4776f419006612c5" = ["wrong", "answer_set_incomplete"]
+"5730a314069b5314008321ed" = ["correct", "high_probability + no_answer"] 
+"5725cb33271a42140099d1dc" = ["correct", "high_probability + no_answer"] 
+
