@@ -93,8 +93,8 @@ scripts/hunspell_dictionary.dic: scripts/dictionary.txt
 	mv 2021_emnlp_paradigms_page_10.pdf 2021_emnlp_paradigms.appendix.pdf
 
 2021_emnlp_adaptation.appendix.pdf: 2021_emnlp_adaptation.paper.pdf
-	python3 scripts/split_pdf.py 2021_emnlp_adaptation.paper.pdf 6
-	mv 2021_emnlp_adaptation_page_6.pdf 2021_emnlp_adaptation.appendix.pdf
+	python3 scripts/split_pdf.py 2021_emnlp_adaptation.paper.pdf 7
+	mv 2021_emnlp_adaptation_page_7.pdf 2021_emnlp_adaptation.appendix.pdf
 	mv 2021_emnlp_adaptation_page_0.pdf 2021_emnlp_adaptation.submission.pdf
 
 2021_neurips_topics.appendix.pdf: 2021_neurips_topics.paper.pdf
@@ -126,7 +126,4 @@ leaderboard: 2021_acl_leaderboard.paper.pdf 2021_acl_leaderboard.submission.pdf 
 
 paradigms: 2021_emnlp_paradigms.submission.pdf 2021_emnlp_paradigms.appendix.pdf
 
-
-
-
-acl: 2020_acl_clime.paper.pdf 2020_acl_diplomacy.paper.pdf 2020_acl_refine_clwe.paper.pdf 2020_acl_trivia_tournament.appendix.pdf
+emnlp: 2021_emnlp_adaptation.paper.pdf 2021_emnlp_answer_equiv.paper.pdf 2021_emnlp_paradigms.paper.pdf

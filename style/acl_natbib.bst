@@ -1,4 +1,3 @@
-%%% acl_natbib.bst
 %%% Modification of BibTeX style file acl_natbib_nourl.bst
 %%% ... by urlbst, version 0.7 (marked with "% urlbst")
 %%% See <http://purl.org/nxg/dist/urlbst>
@@ -25,9 +24,14 @@
 %	 not address of publisher.)
 % - for papers with three authors, use et al. in citation
 % Dan Gildea 2017/06/08
+%
 % - fixed a bug with format.chapter - error given if chapter is empty
 %   with inbook.
 % Shay Cohen 2018/02/16
+%
+% - sort "van Noord" under "v" not "N"
+%   this is what previous ACL style files did and is pretty standard
+% Dan Gildea 2019/04/12
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
@@ -1797,7 +1801,7 @@ FUNCTION {sort.format.names}
   numnames 'namesleft :=
     { namesleft #0 > }
     { s nameptr
-      "{ll{ }}{  ff{ }}{  jj{ }}"
+      "{vv{ } }{ll{ }}{  ff{ }}{  jj{ }}"
       format.name$ 't :=
       nameptr #1 >
         {
