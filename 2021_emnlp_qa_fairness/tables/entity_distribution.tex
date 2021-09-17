@@ -1,0 +1,137 @@
+% This includes Squad-1.1 too. It has more coverage for person entities (18%)
+% All             & 2631 & 2216 & 11873 & 11313 & 10570 \\
+% Person          &  32.27 &  57.18 &   9.56 &  40.69 &  18.70 \\
+% Location        &  27.82 &  35.11 &  29.34 &  44.10 &  29.51 \\
+% No entity       &  22.61 &  20.13 &  47.95 &  14.93 &  33.76 \\
+% Organization    &  18.05 &  17.78 &  19.14 &  21.14 &  26.69 \\
+% Work of art     &  16.19 &  28.16 &   1.15 &  17.76 &   4.19 \\
+% Event           &   8.89 &   8.75 &   3.01 &   8.73 &   6.82 \\
+% Other           &   2.70 &   9.88 &   3.10 &  14.61 &   4.24 \\
+% Consumer good   &   1.06 &   0.63 &   0.33 &   3.99 &   0.50 \\
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Entity Distribution Table %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% DEV TABLE
+% \begin{table}[t]
+%     \centering
+%     \setlength{\tabcolsep}{10pt} % Default value: 6pt
+%     \resizebox{\linewidth}{!}{%
+%         \begin{tabular}{lrrrr}
+%         \textbf{Type} & \textbf{\nq} & \textbf{\qb}  & \textbf{\squad}  & \textbf{\triviaqa} \\ 
+%         \toprule
+%         \textbf{Person} &  \textbf{32.27} &  \textbf{57.18} &   9.56 &  \textbf{40.69} \\
+%         No entity       &  22.61 &  20.13 &  \textbf{47.95} &  14.93 \\        
+%         Location        &  27.82 &  35.11 &  29.34 &  44.10 \\
+%         Work of art     &  16.19 &  28.16 &   1.15 &  17.76 \\
+%         Other           &   2.70 &   9.88 &   3.10 &  14.61 \\        
+%         Organization    &  18.05 &  17.78 &  19.14 &  21.14 \\
+%         Event           &   8.89 &   8.75 &   3.01 &   8.73 \\
+%         Product         &   1.06 &   0.63 &   0.33 &   3.99 \\
+%         \rowcolor{lightgrey}
+%         Total Examples  & \textit{2631}   &  \textit{2216} &  \textit{11873} &  \textit{11313} \\
+%         \bottomrule
+%         %\hline
+%         \end{tabular}
+%     }
+% \caption{Coverage (\% of examples) of entity-types in \abr{qa} datasets' dev fold. Since examples can mention more than one entity, columns can sum to $>$100\%. Most datasets are rich in person entities, except \squad{}.}
+% %}
+% \label{tab:entity-distribution}
+% \end{table}
+
+% TRAIN + DEV table
+
+\begin{table}[t]
+    \centering
+    \setlength{\tabcolsep}{4pt} % Default value: 6pt
+    \resizebox{\linewidth}{!}{%
+        \begin{tabular}{l *{8}{R}}
+        \multirow{2}{*}{\textbf{Entity Type}} 
+            & \multicolumn{2}{c}{\textbf{\nq}} 
+            & \multicolumn{2}{c}{\textbf{\qb}}  
+            & \multicolumn{2}{c}{\textbf{\squad}}  
+            & \multicolumn{2}{c}{\textbf{\triviaqa}} \\ 
+        
+        & \cbcol{Train} & \cbcol{Dev} & \cbcol{Train} & \cbcol{Dev} & \cbcol{Train} & \cbcol{Dev} & \cbcol{Train} & \cbcol{Dev}\\ 
+        
+        \toprule
+        
+        \textbf{Person} 
+            & 32.14 &  32.27
+            & 58.49 &  57.18
+            & 14.56 &   9.56 
+            & 40.89 &  40.69 \\
+        
+        No entity       
+            & 21.97 &  22.61 
+            & 15.88 &  20.13 
+            & 37.27 &  47.95 
+            & 14.85 &  14.93 \\        
+        
+        Location        
+            & 28.42 &  27.82 
+            & 34.50 &  35.11 
+            & 33.52 &  29.34 
+            & 44.32 &  44.10 \\
+        
+        Work of art     
+            & 17.31 &  16.19 
+            & 27.98 &  28.16 
+            & 3.15  &   1.15 
+            & 17.53 &  17.76 \\
+        
+        Other           
+            &   2.66 & 2.70 
+            &   9.83 & 9.88 
+            &   5.08 & 3.10 
+            &  14.38 & 14.61 \\        
+            
+        
+        Organization    
+            &  17.73 & 18.05 
+            &  20.37 & 17.78 
+            &  21.34 & 19.14 
+            &  22.15 & 21.14 \\
+        
+        Event           
+            &   8.15 &   8.89 
+            &   8.87 &   8.75 
+            &   3.16 &   3.01 
+            &   8.59 &   8.73 \\
+        
+        % &   0.85 &   0.88 &   1.39 &   3.99 \\
+        Product         
+            &   0.85 &   1.06 
+            &   0.88 &   0.63 
+            &   1.39 &   0.33 
+            &   3.99 &   3.99 \\
+        
+        \rowcolor{lightgrey}
+        Total Examples  
+            & \cicol{106926} & \cicol{2631}
+            & \cicol{112927} & \cicol{2216}
+            & \cicol{130319} & \cicol{11873}
+            & \cicol{87622}  &  \cicol{11313} \\
+        \bottomrule
+        %\hline
+        \end{tabular}
+    }
+\caption{Coverage (\% of examples) of entity-types in \abr{qa} datasets. Since examples can mention more than one entity, columns can sum to $>$100\%. Most datasets except \squad{} are rich in people.}
+%}
+\label{tab:entity-distribution}
+\end{table}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% TRAIN FOLD
+
+% All             & 106926 & 112924 & 130318 & 87622 \\
+% Person          &  32.14 &  58.49 &  14.56 &  40.89 \\
+% Location        &  28.42 &  34.50 &  33.52 &  44.32 \\
+% No entity       &  21.97 &  15.88 &  37.27 &  14.85 \\
+% Organization    &  17.73 &  20.37 &  21.34 &  22.15 \\
+% Work of art     &  17.31 &  27.98 &   3.15 &  17.53 \\
+% Event           &   8.15 &   8.87 &   3.16 &   8.59 \\
+% Other           &   2.66 &   9.83 &   5.08 &  14.38 \\
+% Consumer good   &   0.85 &   0.88 &   1.39 &   3.99 \\
+
+% \multicolumn{2}{c}{Multi-column}

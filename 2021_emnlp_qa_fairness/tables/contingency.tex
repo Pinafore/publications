@@ -1,0 +1,19 @@
+\begin{table}[t]
+    \centering
+    \setlength{\tabcolsep}{6pt} % Default value: 6pt
+    \resizebox{\linewidth}{!}{%
+        \begin{tabular}{lccc}
+        \textbf{Gender} & \textbf{\# Correct} & \textbf{\# Incorrect} & \textbf{Accuracy} \\
+        
+        \toprule
+        
+        \textbf{\lrfeature{male}}           & \cellcolor[HTML]{C0C0C0}433   & \cellcolor[HTML]{C0C0C0}177   & 70.98\% \\
+        \textbf{\lrfeature{female}}         & \cellcolor[HTML]{C0C0C0}161   & \cellcolor[HTML]{C0C0C0}35    & 82.14\% \\
+        \textbf{\lrfeature{female/male}}   & \cellcolor[HTML]{C0C0C0}9     & \cellcolor[HTML]{C0C0C0}29    & 23.68\% \\
+        \bottomrule
+        %\hline
+        \end{tabular}
+    }
+\caption{Illustration of $n \times 2$ contingency table for the $\chi^2$-test: \textbf{Gender} in \textbf{\nq{}}, with $n = 3$ values: \lrfeature{male}, \lrfeature{female} and \lrfeature{female/male}. Female entities have a higher accuracy (82\%) than male (71\%). With two degrees of freedom and $\chi^2 = 53.55$, we get $p= $\SI{2.4e-12}, signaling significance.}
+\label{tab:contingency}
+\end{table}

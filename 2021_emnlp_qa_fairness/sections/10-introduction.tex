@@ -1,0 +1,16 @@
+
+\section{Introduction}
+
+Question answering (\abr{qa}) systems have impressive recent victories---beating trivia masters~\cite{ferruci-10} and superhuman reading~\cite{najberg-18}---but these triumphs hold only if they \emph{generalize}; \abr{qa} systems should be able to answer questions even if they do not look like training examples.
+While other work (Section~\ref{sec:related}) focuses on demographic representation in \abr{nlp} resources, our focus is how well \abr{qa} models generalize across demographic \demosubset{}s.
+
+After mapping mentions to a knowledge base (Section~\ref{sec:mapping}), we show existing \abr{qa} datasets lack diversity in the gender and national origin of the people mentioned: English-language \abr{qa} datasets mostly ask about \abr{us} men from a few professions  (Section~\ref{sec:distribution}).
+This is problematic because most English speakers (and users of English \abr{qa} systems) are not from the \abr{us} or \abr{uk}.
+Moreover, multilingual \abr{qa} datasets are often \emph{translated} from English datasets~\cite{lewis-etal-2020-mlqa,
+  artetxe2019xquad}.
+However, no work has verified that \abr{qa} systems generalize to infrequent demographic groups.
+
+Section~\ref{sec:accuracy} investigates whether statistical tests reveal patterns on demographic subgroups.  
+Despite skewed distributions, accuracy is not correlated with gender or nationality, though it is with professional field.
+For instance, Natural Questions~\cite[\abr{nq}]{kwiatkowski-19} systems do well with entertainers but poorly with scientists, which are handled well in \triviaqa{}.
+However, absence of evidence is not evidence of absence (Section~\ref{sec:conclusion}), and existing \abr{qa} datasets are not yet diverse enough to vet \abr{qa}'s generalization.

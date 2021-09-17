@@ -1,0 +1,23 @@
+
+\section{Discussion and Conclusion}
+\label{sec:conclusion}
+
+This paper delivers both good news and bad news.
+While datasets remain imperfect and reflect societal imperfections, for many demographic properties, we do not find strong evidence that \abr{qa} suffers from this skew.
+
+However, this is an absence of evidence rather than evidence of absence: these are skewed datasets that have fewer than a quarter of the questions about women.
+It is difficult to make confident assessments on such small datasets---many demographic \demorow{}s were excluded because they appeared infrequently (or not at all).
+Improving the diversity of \abr{qa} datasets can help us be more certain that \abr{qa} systems do generalize and reflect the diverse human experience.
+Considering such shortcomings, \citet{Rodriguez_2021} advocate improving evaluation by focusing on more important examples for ranking models; demographic properties could further refine more holistic evaluations.
+
+
+A broader analysis beyond person entities would indeed be a natural extension of this work. Label propagation can expand the analysis beyond people: the \entity{Hershey-Chase} experiment is associated with \entity{Alfred Hershey} and \entity{Martha Chase}, so it would—given the neighboring entities in the Wikipedia link graph—be 100\% American, 50\% male, and 50\% female.
+Another direction for future work is accuracy under counterfactual perturbation: swapping real-world entities (in contrast with nonce entities in \citet{li-20}) with different demographic values.
+
+Nonetheless, particularly for professional fields, imbalances remain.
+The lack of representation in \abr{qa} could cause us to think that things are better than they are because of Simpson's paradox~\cite{blyth-72}: gender and profession are not independent!
+For example, in \nq{}, our accuracy on women is higher in part because of its tilt toward entertainment, and we cannot say much about women scientists.
+We therefore caution against interpreting strong model performance on existing \abr{qa} datasets as evidence that the task is ‘solved’.
+Instead, future work must consider better dataset construction strategies and robustness of accuracy metrics to different \demosubset{}s of available data, as well as unseen examples.
+
+%Moving to evaluations where adjudications can be challenged or where missing information can be queried could help address implicit assumptions.

@@ -1,0 +1,43 @@
+\tablefile{entity_distribution}
+
+\section{Mapping Questions to Entities}
+\label{sec:mapping}
+
+We analyze four \abr{qa} tasks: \nq{},\footnote{For \nq{}, we only consider questions with short answers.} \squad~\cite{rajpurkar-16}, \qb~\cite{boyd-graber-12} and \triviaqa~\cite{joshi-17}.
+Google \abr{cloud-nl}\footnote{\smallurl{https://cloud.google.com/natural-language/docs/analyzing-entities}} finds and links entity mentions in \qa{} examples.\footnote{We analyze the dev fold, which is {\bf consistent with the training fold} (Table~\ref{tab:entity-distribution} and~\ref{tab:demographics}), as we examine accuracy.}
+
+\subsection{Focus on \emph{People}}
+\label{subsec:people}
+Many entities appear in examples (Table~\ref{tab:entity-distribution}) but \emph{people} form a majority in our \abr{qa} tasks (except \squad{}). Existing work in \abr{ai} fairness focuses on disparate impacts on people, and models harm especially when it comes to \emph{people}; hence, our primary intent is to understand how demographic \democol{}s of ``people'' correlate with model correctness.
+
+The people asked about in a question can be in the answer---``who founded Sikhism?'' (A: \answer{\entity{Guru Nanak}}), in the question---``what did \entity{Clara Barton} found?'' (A: American Red Cross), or the title of the source document---``what play featuring General Uzi premiered in Lagos in 2001?'' (A: \answer{King Baabu} is in the page on \entity{Wole Soyinka}).
+We search until we find an entity: first in the answer, then the question if no entity is found in the answer, and finally the document title.
+
+Demographics are a natural way to categorize these entities and we consider the high-coverage demographic {\bf \democol{}s} from \wikidata{}.\footnote{\smallurl{https://www.wikidata.org/wiki/Wikidata:Database_download}}
+Given an entity, Wikidata has good coverage for all datasets: gender ($>99\%$ ), nationality ($>93\%$), and profession ($>94\%$).
+For each \democol{}, we use the knowledge base to extract the specific {\bf \demorow{}} for a person (e.g., the \demorow{} ``poet'' for the \democol{} ``profession'').
+However, the \demorow{}s defined by \wikidata{} have inconsistent granularity, so we collapse near-equivalent \demorow{}s (E.g., ``writer'', ``author'', ``poet'', etc. See Appendix~\ref{appendix:country-collapse}--\ref{appendix:professions-collapse} for an exhaustive list).
+For questions with multiple values (where multiple entities appear in the answer, or a single entity has multiple \demorow{}s), we create a new value concatenating them together. 
+An `others’ \demorow{} subsumes \demorow{}s with fewer than fifteen examples; people without a \demorow{} become `not found' for that \democol{}.
+
+
+
+\label{entity-linking-procedure}
+
+
+
+\label{entity-linking-validation}
+
+Three authors manually verify entity assignments by vetting fifty random questions from each dataset. Questions with at least one entity had near-perfect 96\% inter-annotator agreement for \abr{cloud-nl}'s annotations, while for questions where \abr{cloud-nl} didn't find any entity, agreement is 98\%. Some errors were benign: incorrect entities sometimes retain correct demographic \demorow{}s; e.g., \entity{Elizabeth~II} instead of \entity{Elizabeth~I}. Other times, coarse-grained nationality ignores nuance, such as the distinction between \emph{Greece} and \emph{Ancient Greece}.
+
+\subsection{Who is in Questions?}
+\label{sec:distribution}
+
+Our demographic analysis reveals skews in all datasets, reflecting differences in task focus (Table~\ref{tab:demographics}).
+\nq{} are search queries and skew toward popular culture.
+\qb{} nominally reflects an undergraduate curriculum and captures more ``academic'' knowledge.
+\triviaqa{} is popular trivia, and \squad{} reflects Wikipedia articles.
+
+Across all datasets, men are asked about more than women, and the \abr{us} is the subject of the majority of questions except in \triviaqa{}, where the plurality of questions are about the \abr{uk}.
+\nq{} has the highest coverage of women through its focus on entertainment (\film{}, \music{} and \sports{}).
+\tablefile{demographics}

@@ -1,0 +1,249 @@
+% \definecolor{pos_color}{rgb}{0.0, 0.4, 0.3}
+% \definecolor{neg_color}{rgb}{0.6, 0.0, 0.2}
+\definecolor{pos_color}{rgb}{1.0, 0.80392157, 0.1372549}
+\definecolor{neg_color}{rgb}{0.81176471, 0.1254902 , 0.17647059}
+\definecolor{ntr_color}{rgb}{0.0, 0.0, 0.0}
+
+\newcommand{\postext}[1]{{\textcolor{GoogleBlue}{#1}}}
+\newcommand{\negtext}[1]{{\textcolor{GoogleRed}{#1}}}
+\newcommand{\blutext}[1]{{\textcolor{ntr_color}{#1}}}
+\newcommand{\mystar}{{\fontfamily{lmr}\selectfont$\star$}}
+% NQ
+%(Intercept)       1.6646     0.2934  1.000   5.673 1.40e-08 ***
+% xg_male          -0.4901     0.2345  0.945  -2.090  0.03661 *  
+% xo_fictional     -0.5566     0.4170  0.928  -1.335  0.18194    
+% xo_law.crime      0.7440     0.6967  0.914   1.068  0.28558    
+% xo_music          0.2178     0.2491  0.919   0.874  0.38189    
+% xo_not_found     -1.6296     0.5118  0.999  -3.184  0.00145 ** 
+% xo_science.tech  -0.7762     0.3791  0.972  -2.048  0.04059 *  
+% xo_sports        -0.2336     0.2642  0.923  -0.884  0.37664    
+% xmulti_person    -1.5257     0.2000  1.000  -7.630 2.35e-14 ***
+
+
+\begin{table*}[t]
+    \small
+    \centering
+    \setlength{\tabcolsep}{13pt} % Default value: 6pt
+    \resizebox{\linewidth}{!}{%
+        \begin{tabular}{llrcccc}
+        \textbf{Dataset} & \textbf{Features}  & \textbf{Coef} & \textbf{SE} & \textbf{Wald (|W|)} & \multicolumn{2}{l}{\textbf{$\mathbb{P}_{Z\sim\mathcal{N}}(|Z| > |W|)$}} \\ 
+        \toprule
+\multirow{8}{*}{\parbox{2.0 cm}{\textbf{\nq{} \\  \\  \\ Model~Fit: \\ 78.09\%}}}
+	 & \blutext{\lrfeature{\textbf{bias}}}
+	 & \blutext{\textbf{+1.964}}
+	 & \blutext{\textbf{0.727}}
+	 & \blutext{\textbf{2.703}}
+	 & \blutext{\textbf{0.0069}}
+	 & \blutext{\textbf{\mystar\mystar\mystar}}
+	
+\\
+
+	 & \negtext{\lrfeature{\textbf{multi\_answers}}}
+	 & \negtext{\textbf{-1.893}}
+	 & \negtext{\textbf{0.438}}
+	 & \negtext{\textbf{4.327}}
+	 & \negtext{\textbf{0.0000}}
+	 & \negtext{\textbf{\mystar\mystar\mystar\mystar}}
+	
+\\
+
+	 & \negtext{\lrfeature{\textbf{o\_not\_found}}}
+	 & \negtext{\textbf{-1.112}}
+	 & \negtext{\textbf{0.514}}
+	 & \negtext{\textbf{2.163}}
+	 & \negtext{\textbf{0.0305}}
+	 & \negtext{\textbf{\mystar\mystar}}
+	
+\\
+
+	 & \postext{\lrfeature{\textbf{t\_who}}}
+	 & \postext{\textbf{+0.773}}
+	 & \postext{\textbf{0.280}}
+	 & \postext{\textbf{2.764}}
+	 & \postext{\textbf{0.0057}}
+	 & \postext{\textbf{\mystar\mystar\mystar}}
+	
+\\
+
+	 & \negtext{\lrfeature{o\_science/tech}}
+	 & \negtext{-0.715}
+	 & \negtext{0.390}
+	 & \negtext{1.832}
+	 & \negtext{0.0670}
+	 & \negtext{\textbf{\mystar}}
+	
+\\
+
+	 & \negtext{\lrfeature{\textbf{multi\_entities}}}
+	 & \negtext{\textbf{-0.678}}
+	 & \negtext{\textbf{0.342}}
+	 & \negtext{\textbf{1.979}}
+	 & \negtext{\textbf{0.0478}}
+	 & \negtext{\textbf{\mystar\mystar}}
+	
+\\
+
+	 & \postext{\lrfeature{q\_sim}}
+	 & \postext{+0.406}
+	 & \postext{0.210}
+	 & \postext{1.934}
+	 & \postext{0.0531}
+	 & \postext{\textbf{\mystar}}
+	
+\\
+
+	 & \postext{\lrfeature{\textbf{e\_train\_count}}}
+	 & \postext{\textbf{+0.353}}
+	 & \postext{\textbf{0.178}}
+	 & \postext{\textbf{1.979}}
+	 & \postext{\textbf{0.0479}}
+	 & \postext{\textbf{\mystar\mystar}}
+	
+\\
+
+\midrule
+\multirow{8}{*}{\parbox{2.0 cm}{\textbf{\qb{} \\  \\  \\ Model~Fit: \\ 71.90\%}}}
+	 & \postext{\lrfeature{\textbf{e\_train\_count}}}
+	 & \postext{\textbf{+1.922}}
+	 & \postext{\textbf{0.269}}
+	 & \postext{\textbf{7.144}}
+	 & \postext{\textbf{0.0000}}
+	 & \postext{\textbf{\mystar\mystar\mystar\mystar}}
+	
+\\
+
+	 & \blutext{\lrfeature{\textbf{bias}}}
+	 & \blutext{\textbf{-1.024}}
+	 & \blutext{\textbf{0.291}}
+	 & \blutext{\textbf{3.516}}
+	 & \blutext{\textbf{0.0004}}
+	 & \blutext{\textbf{\mystar\mystar\mystar\mystar}}
+	
+\\
+
+	 & \negtext{\lrfeature{o\_film/tv}}
+	 & \negtext{-0.910}
+	 & \negtext{0.470}
+	 & \negtext{1.934}
+	 & \negtext{0.0531}
+	 & \negtext{\textbf{\mystar}}
+	
+\\
+
+	 & \negtext{\lrfeature{\textbf{multi\_entities}}}
+	 & \negtext{\textbf{-0.870}}
+	 & \negtext{\textbf{0.165}}
+	 & \negtext{\textbf{5.287}}
+	 & \negtext{\textbf{0.0000}}
+	 & \negtext{\textbf{\mystar\mystar\mystar\mystar}}
+	
+\\
+
+	 & \negtext{\lrfeature{\textbf{o\_science/tech}}}
+	 & \negtext{\textbf{-0.667}}
+	 & \negtext{\textbf{0.265}}
+	 & \negtext{\textbf{2.522}}
+	 & \negtext{\textbf{0.0117}}
+	 & \negtext{\textbf{\mystar\mystar}}
+	
+\\
+
+	 & \negtext{\lrfeature{o\_religion}}
+	 & \negtext{-0.655}
+	 & \negtext{0.362}
+	 & \negtext{1.812}
+	 & \negtext{0.0700}
+	 & \negtext{\textbf{\mystar}}
+	
+\\
+
+	 & \postext{\lrfeature{\textbf{o\_writing}}}
+	 & \postext{\textbf{+0.402}}
+	 & \postext{\textbf{0.189}}
+	 & \postext{\textbf{2.128}}
+	 & \postext{\textbf{0.0334}}
+	 & \postext{\textbf{\mystar\mystar}}
+	
+\\
+
+	 & \postext{\lrfeature{\textbf{t\_who}}}
+	 & \postext{\textbf{+0.363}}
+	 & \postext{\textbf{0.183}}
+	 & \postext{\textbf{1.990}}
+	 & \postext{\textbf{0.0466}}
+	 & \postext{\textbf{\mystar\mystar}}
+	
+\\
+
+\midrule
+\multirow{7}{*}{\parbox{2.0 cm}{\textbf{\triviaqa{} \\  \\  \\ Model~Fit: \\ 60.18\%}}}
+	 & \blutext{\lrfeature{\textbf{bias}}}
+	 & \blutext{\textbf{-1.066}}
+	 & \blutext{\textbf{0.114}}
+	 & \blutext{\textbf{9.353}}
+	 & \blutext{\textbf{0.0000}}
+	 & \blutext{\textbf{\mystar\mystar\mystar\mystar}}
+	
+\\
+
+	 & \negtext{\lrfeature{o\_religion}}
+	 & \negtext{-0.443}
+	 & \negtext{0.255}
+	 & \negtext{1.738}
+	 & \negtext{0.0822}
+	 & \negtext{\textbf{\mystar}}
+	
+\\
+
+	 & \postext{\lrfeature{o\_law/crime}}
+	 & \postext{+0.412}
+	 & \postext{0.218}
+	 & \postext{1.890}
+	 & \postext{0.0588}
+	 & \postext{\textbf{\mystar}}
+	
+\\
+
+	 & \postext{\lrfeature{\textbf{multi\_answers}}}
+	 & \postext{\textbf{+0.341}}
+	 & \postext{\textbf{0.024}}
+	 & \postext{\textbf{14.090}}
+	 & \postext{\textbf{0.0000}}
+	 & \postext{\textbf{\mystar\mystar\mystar\mystar}}
+	
+\\
+
+	 & \postext{\lrfeature{t\_who}}
+	 & \postext{+0.230}
+	 & \postext{0.129}
+	 & \postext{1.778}
+	 & \postext{0.0754}
+	 & \postext{\textbf{\mystar}}
+	
+\\
+
+	 & \negtext{\lrfeature{\textbf{o\_politics}}}
+	 & \negtext{\textbf{-0.208}}
+	 & \negtext{\textbf{0.095}}
+	 & \negtext{\textbf{2.177}}
+	 & \negtext{\textbf{0.0295}}
+	 & \negtext{\textbf{\mystar\mystar}}
+	
+\\
+
+	 & \postext{\lrfeature{o\_writing}}
+	 & \postext{+0.192}
+	 & \postext{0.098}
+	 & \postext{1.955}
+	 & \postext{0.0506}
+	 & \postext{\textbf{\mystar}}
+	
+\\
+
+\bottomrule
+        \end{tabular}
+    }
+    
+\caption{\label{tab:logistic-regression} Influential features after filtering \democol{}s based on a $\chi^2$ test (Figure~\ref{fig:accuracies}). Highly influential features ($p$-value < $0.1$), both positive (blue) and negative (red). Higher number of \mystar's signals higher significance.}
+\end{table*}
+

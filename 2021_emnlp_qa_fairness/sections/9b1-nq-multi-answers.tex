@@ -1,0 +1,387 @@
+\subsection{Examples with \lrfeature{multi\_answers} feature}
+\label{appendix:multi-answers-examples}
+In the Logistic Regression analysis (Section~\ref{subsec:logistic-regression}), we create two features: \lrfeature{multi\_answers} and \lrfeature{multi\_entities}. Former captures the presence of multiple gold answers to the question in a given example, while latter signals presence of multiple person entities — all in either the answers, the question text or the document title for a given example. While \lrfeature{multi\_entities} has consistent negative co-relation with model correctness (Appendix \ref{appendix:logistic-regression}), \lrfeature{multi\_answers} has a disparate effect.
+Though it signals towards incorrectly answered examples in \nq{}, it has a statistically significant positive correlation with model correctness for \triviaqa{} examples. Going through the examples, it reveals that \triviaqa{} uses multiple answers to give alternate formulations of an answer, which aids machine reading, while multiple \nq{} answers are often a sign of question ambiguity~\cite{min-etal-2020-ambigqa}.
+
+To demonstrate that, we enlist here examples from development fold of both \nq{} (Appendix~\ref{appendix:nq-examples}) and \triviaqa{} (Appendix~\ref{appendix:trivia-qa-examples}) that have multiple gold answers.
+
+\subsubsection{\nq{} examples with multiple answers:}
+\label{appendix:nq-examples}
+\setlength{\parindent}{0em}
+\tiny{\setlength{\parindent}{0cm}
+\textbf{id: \texttt{-4135209844918483842}} \\
+Q: \textit{who carried the us flag in the 2014 olympics} \\
+A: \entity{Todd Lodwick} \\
+A: \entity{Julie Chu}}
+
+\tiny{\setlength{\parindent}{0cm}
+\textbf{id: \texttt{8838716539218945006}} \\
+Q: \textit{who says that which we call a rose} \\
+A: \entity{William Shakespeare} \\
+A: \entity{Juliet}}
+
+\tiny{\setlength{\parindent}{0cm}
+\textbf{id: \texttt{-6197052503812142206}} \\
+Q: \textit{who has won the most superbowls as a player} \\
+A: \entity{Charles Haley} \\
+A: \entity{Tom Brady}}
+
+\tiny{\setlength{\parindent}{0cm}
+\textbf{id: \texttt{-2840415450119119129}} \\
+Q: \textit{who started the guinness book of world records} \\
+A: \entity{Hugh Beaver} \\
+A: \entity{Norris and Ross McWhirter}}
+
+\tiny{\setlength{\parindent}{0cm}
+\textbf{id: \texttt{6997422338613101186}} \\
+Q: \textit{who played the nurse on andy griffith show} \\
+A: \entity{Langdon} \\
+A: \entity{Julie Adams}}
+
+\tiny{\setlength{\parindent}{0cm}
+\textbf{id: \texttt{-7064677612340044331}} \\
+Q: \textit{who wrote the song if i were a boy} \\
+A: \entity{BC Jean} \\
+A: \entity{Toby Gad}}
+
+\tiny{\setlength{\parindent}{0cm}
+\textbf{id: \texttt{3248410603422198181}} \\
+Q: \textit{who conducted the opening concert at carnegie hall} \\
+A: \entity{Walter Damrosch} \\
+A: \entity{Pyotr Ilyich Tchaikovsky}}
+
+\tiny{\setlength{\parindent}{0cm}
+\textbf{id: \texttt{-3772952199709196386}} \\
+Q: \textit{who founded amazon where is the headquarters of amazon} \\
+A: \entity{founded by Jeff Bezos} \\
+A: \entity{based in Seattle , Washington}}
+
+\tiny{\setlength{\parindent}{0cm}
+\textbf{id: \texttt{4053461415821443645}} \\
+Q: \textit{who wrote song what a friend we have in jesus} \\
+A: \entity{Joseph M. Scriven} \\
+A: \entity{Charles Crozat Converse}}
+
+\tiny{\setlength{\parindent}{0cm}
+\textbf{id: \texttt{-5670674709553776773}} \\
+Q: \textit{who sings the theme song for the proud family} \\
+A: \entity{Solange Knowles} \\
+A: \entity{Solange Knowles}}
+
+\tiny{\setlength{\parindent}{0cm}
+\textbf{id: \texttt{2978779480736570480}} \\
+Q: \textit{days of our lives cast doug and julie} \\
+A: \entity{Bill Hayes} \\
+A: \entity{Susan Seaforth}}
+
+\tiny{\setlength{\parindent}{0cm}
+\textbf{id: \texttt{6173192803639008655}} \\
+Q: \textit{who has appeared in the most royal rumbles} \\
+A: \entity{Isaac Yankem / `` Diesel '' / Kane} \\
+A: \entity{Shawn Michaels}}
+
+\tiny{\setlength{\parindent}{0cm}
+\textbf{id: \texttt{7561389892504775773}} \\
+Q: \textit{who wrote the song stop the world and let me off} \\
+A: \entity{Carl Belew} \\
+A: \entity{W.S. Stevenson}}
+
+\tiny{\setlength{\parindent}{0cm}
+\textbf{id: \texttt{-8366545547296627039}} \\
+Q: \textit{who wrote the song photograph by ringo starr} \\
+A: \entity{Ringo Starr} \\
+A: \entity{George Harrison}}
+
+\tiny{\setlength{\parindent}{0cm}
+\textbf{id: \texttt{-5674327280636928690}} \\
+Q: \textit{who sings you're welcome in moana credits} \\
+A: \entity{Lin - Manuel Miranda} \\
+A: \entity{Jordan Fisher}}
+
+\tiny{\setlength{\parindent}{0cm}
+\textbf{id: \texttt{-2432292250757146771}} \\
+Q: \textit{who wrote the song i hate you i love you} \\
+A: \entity{Garrett Nash} \\
+A: \entity{Olivia O'Brien}}
+
+\tiny{\setlength{\parindent}{0cm}
+\textbf{id: \texttt{-3632974700795137148}} \\
+Q: \textit{who is the owner of reading football club} \\
+A: \entity{Xiu Li Dai} \\
+A: \entity{Yongge Dai}}
+
+\tiny{\setlength{\parindent}{0cm}
+\textbf{id: \texttt{7163132803738849961}} \\
+Q: \textit{who played guitar on my guitar gently weeps} \\
+A: \entity{Eric Clapton} \\
+A: \entity{George Harrison}}
+
+\tiny{\setlength{\parindent}{0cm}
+\textbf{id: \texttt{1318031841813121387}} \\
+Q: \textit{who sang the theme song to that 70s show} \\
+A: \entity{Todd Griffin} \\
+A: \entity{Cheap Trick}}
+
+\tiny{\setlength{\parindent}{0cm}
+\textbf{id: \texttt{1393634180793653648}} \\
+Q: \textit{who came up with the initial concept of protons and neutrons} \\
+A: \entity{Werner Heisenberg} \\
+A: \entity{Dmitri Ivanenko}}
+
+\tiny{\setlength{\parindent}{0cm}
+\textbf{id: \texttt{9134704289334516617}} \\
+Q: \textit{who missed the plane the day the music died} \\
+A: \entity{Waylon Jennings} \\
+A: \entity{Tommy Allsup}}
+
+\tiny{\setlength{\parindent}{0cm}
+\textbf{id: \texttt{8466196474705624263}} \\
+Q: \textit{who was running as vice president in 1984} \\
+A: \entity{Congresswoman Ferraro} \\
+A: \entity{Vice President George H.W. Bush}}
+
+\tiny{\setlength{\parindent}{0cm}
+\textbf{id: \texttt{5579013873387598720}} \\
+Q: \textit{who has won the canada open women's doubles} \\
+A: \entity{Mayu Matsumoto} \\
+A: \entity{Wakana Nagahara}}
+
+\tiny{\setlength{\parindent}{0cm}
+\textbf{id: \texttt{5584540254904933863}} \\
+Q: \textit{who sang what are we doing in love} \\
+A: \entity{Dottie West} \\
+A: \entity{Kenny Rogers}}
+
+\tiny{\setlength{\parindent}{0cm}
+\textbf{id: \texttt{-8677459248394445003}} \\
+Q: \textit{who is hosting e live from the red carpet} \\
+A: \entity{Ryan Seacrest} \\
+A: \entity{Giuliana Rancic}}
+
+\tiny{\setlength{\parindent}{0cm}
+\textbf{id: \texttt{-1342189058950802702}} \\
+Q: \textit{who made the poppies at tower of london} \\
+A: \entity{Paul Cummins} \\
+A: \entity{Tom Piper}}
+
+\tiny{\setlength{\parindent}{0cm}
+\textbf{id: \texttt{6014950976264156000}} \\
+Q: \textit{who sang never gonna let you go} \\
+A: \entity{Joe Pizzulo} \\
+A: \entity{Leeza Miller}}
+
+\tiny{\setlength{\parindent}{0cm}
+\textbf{id: \texttt{-8052136860650205450}} \\
+Q: \textit{who wrote the song rainy days and mondays} \\
+A: \entity{Roger Nichols} \\
+A: \entity{Paul Williams}}
+
+\tiny{\setlength{\parindent}{0cm}
+\textbf{id: \texttt{7903911150166287814}} \\
+Q: \textit{what position did doug peterson play in the nfl} \\
+A: \entity{quarterback} \\
+A: \entity{holder on placekicks}}
+
+\tiny{\setlength{\parindent}{0cm}
+\textbf{id: \texttt{583026970021621830}} \\
+Q: \textit{who invented the first home video security system} \\
+A: \entity{Marie Van Brittan Brown} \\
+A: \entity{her husband Albert Brown}}
+
+\tiny{\setlength{\parindent}{0cm}
+\textbf{id: \texttt{5427679691711111925}} \\
+Q: \textit{who were the two mathematicians that invented calculus} \\
+A: \entity{Isaac Newton} \\
+A: \entity{Gottfried Leibniz}}
+
+\tiny{\setlength{\parindent}{0cm}
+\textbf{id: \texttt{-9163844183450408581}} \\
+Q: \textit{nba record for most double doubles in a season} \\
+A: \entity{Tim Duncan leads the National Basketball Association ( NBA ) in the points - rebounds combination with 840} \\
+A: \entity{John Stockton leads the points - assists combination with 714}}
+
+\tiny{\setlength{\parindent}{0cm}
+\textbf{id: \texttt{-8109367537690343895}} \\
+Q: \textit{who were the twins that played for kentucky} \\
+A: \entity{Andrew Michael Harrison} \\
+A: \entity{Aaron Harrison}}
+
+\tiny{\setlength{\parindent}{0cm}
+\textbf{id: \texttt{4784420206031467202}} \\
+Q: \textit{who wrote he ain't heavy he's my brother lyrics} \\
+A: \entity{Bobby Scott} \\
+A: \entity{Bob Russell}}
+
+\tiny{\setlength{\parindent}{0cm}
+\textbf{id: \texttt{4136958282795887427}} \\
+Q: \textit{who opens the church of the holy sepulchre} \\
+A: \entity{the Nusaybah family} \\
+A: \entity{the Joudeh Al - Goudia family}}
+
+\tiny{\setlength{\parindent}{0cm}
+\textbf{id: \texttt{-2610209560699528896}} \\
+Q: \textit{who is the writer of 50 shades of grey} \\
+A: \entity{Erika Mitchell Leonard} \\
+A: \entity{E.L. James}}
+
+\tiny{\setlength{\parindent}{0cm}
+\textbf{id: \texttt{8968036245733884389}} \\
+Q: \textit{when did stephen curry won the mvp award} \\
+A: \entity{2015 ,} \\
+A: \entity{2015}}
+
+\tiny{\setlength{\parindent}{0cm}
+\textbf{id: \texttt{-1899514742808499173}} \\
+Q: \textit{who are nominated for president of india 2017} \\
+A: \entity{Ram Nath Kovind} \\
+A: \entity{Meira Kumar}}
+
+\tiny{\setlength{\parindent}{0cm}
+\textbf{id: \texttt{-3019484115332998709}} \\
+Q: \textit{what movie is count on me by bruno mars in} \\
+A: \entity{A Turtle 's Tale : Sammy 's Adventures} \\
+A: \entity{Diary of a Wimpy Kid : The Long Haul}}
+
+\tiny{\setlength{\parindent}{0cm}
+\textbf{id: \texttt{810060125994185205}} \\
+Q: \textit{who was the first to say i'm going to disney world} \\
+A: \entity{Dick Rutan} \\
+A: \entity{Jeana Yeager}}
+
+\tiny{\setlength{\parindent}{0cm}
+\textbf{id: \texttt{339027965927992295}} \\
+Q: \textit{who sings the whiskey ain't workin anymore} \\
+A: \entity{Travis Tritt} \\
+A: \entity{Marty Stuart}}
+
+\tiny{\setlength{\parindent}{0cm}
+\textbf{id: \texttt{5995814638252489040}} \\
+Q: \textit{who played scotty baldwins father on general hospital} \\
+A: \entity{Peter Hansen} \\
+A: \entity{Ross Elliott}}
+
+\tiny{\setlength{\parindent}{0cm}
+\textbf{id: \texttt{3723628014502752965}} \\
+Q: \textit{who wrote cant get you out of my head lyrics} \\
+A: \entity{Cathy Dennis} \\
+A: \entity{Rob Davis}}
+
+\tiny{\setlength{\parindent}{0cm}
+\textbf{id: \texttt{3886074985605209321}} \\
+Q: \textit{who sings find out who your friends are with tracy lawrence} \\
+A: \entity{Tim McGraw} \\
+A: \entity{Kenny Chesney}}
+
+\tiny{\setlength{\parindent}{0cm}
+\textbf{id: \texttt{3624266518328727040}} \\
+Q: \textit{who invented the printing press and what year} \\
+A: \entity{Johannes Gutenberg} \\
+A: \entity{circa 1439}}
+
+\tiny{\setlength{\parindent}{0cm}
+\textbf{id: \texttt{-4951004239400083779}} \\
+Q: \textit{who plays chris grandy in 13 going on 30} \\
+A: \entity{Jim Gaffigan} \\
+A: \entity{Alex Black}}
+
+\tiny{\setlength{\parindent}{0cm}
+\textbf{id: \texttt{2672721743911117185}} \\
+Q: \textit{who developed a set of postulates to prove that specific microorganisms cause disease} \\
+A: \entity{Robert Koch} \\
+A: \entity{Friedrich Loeffler}}
+
+\tiny{\setlength{\parindent}{0cm}
+\textbf{id: \texttt{2166092801797515500}} \\
+Q: \textit{who is the director of taarak mehta ka ooltah chashmah} \\
+A: \entity{Harshad Joshi} \\
+A: \entity{Malav Suresh Rajda}}
+
+\tiny{\setlength{\parindent}{0cm}
+\textbf{id: \texttt{-3389723371168293793}} \\
+Q: \textit{who has the most olympic medals in figure skating} \\
+A: \entity{Tessa Virtue} \\
+A: \entity{Scott Moir}}
+
+\tiny{\setlength{\parindent}{0cm}
+\textbf{id: \texttt{-8391680223788694572}} \\
+Q: \textit{who wrote if i were a boy reba or beyonce} \\
+A: \entity{BC Jean} \\
+A: \entity{Toby Gad}}
+
+\tiny{\setlength{\parindent}{0cm}
+\textbf{id: \texttt{1070572237499172286}} \\
+Q: \textit{who wrote the song after you've gone} \\
+A: \entity{Turner Layton} \\
+A: \entity{Henry Creamer}}
+
+\tiny{\setlength{\parindent}{0cm}
+\textbf{id: \texttt{2343902375984110832}} \\
+Q: \textit{who does the voice of mickey mouse on mickey mouse clubhouse} \\
+A: \entity{Wayne Allwine} \\
+A: \entity{Bret Iwan}}
+
+\tiny{\setlength{\parindent}{0cm}
+\textbf{id: \texttt{7013863939803495694}} \\
+Q: \textit{who sings love me tender in princess diaries 2} \\
+A: \entity{Norah Jones} \\
+A: \entity{Adam Levy}}
+
+\tiny{\setlength{\parindent}{0cm}
+\textbf{id: \texttt{4925057086725798331}} \\
+Q: \textit{who wrote yakkity yak don't talk back} \\
+A: \entity{Jerry Leiber} \\
+A: \entity{Mike Stoller}}
+
+\tiny{\setlength{\parindent}{0cm}
+\textbf{id: \texttt{647605647914971565}} \\
+Q: \textit{who wrote lyrics for phantom of the opera} \\
+A: \entity{Charles Hart} \\
+A: \entity{Richard Stilgoe}}
+
+\tiny{\setlength{\parindent}{0cm}
+\textbf{id: \texttt{-6371603500131574271}} \\
+Q: \textit{who sings somebody's watching me with michael jackson} \\
+A: \entity{Rockwell} \\
+A: \entity{Jermaine Jackson}}
+
+\tiny{\setlength{\parindent}{0cm}
+\textbf{id: \texttt{-4036503601399675973}} \\
+Q: \textit{when did michael jordan return to the nba} \\
+A: \entity{1995} \\
+A: \entity{2001}}
+
+\tiny{\setlength{\parindent}{0cm}
+\textbf{id: \texttt{4323871331649279373}} \\
+Q: \textit{who invented the printing press and in what year} \\
+A: \entity{Johannes Gutenberg} \\
+A: \entity{1440}}
+
+\tiny{\setlength{\parindent}{0cm}
+\textbf{id: \texttt{7234277123646852447}} \\
+Q: \textit{who sings war don't let me down} \\
+A: \entity{American production duo The Chainsmokers} \\
+A: \entity{vocals of American singer Daya}}
+
+\tiny{\setlength{\parindent}{0cm}
+\textbf{id: \texttt{4245798066923223457}} \\
+Q: \textit{who has the most all star mvp awards} \\
+A: \entity{Bob Pettit} \\
+A: \entity{Kobe Bryant}}
+
+\tiny{\setlength{\parindent}{0cm}
+\textbf{id: \texttt{-3585157729928173881}} \\
+Q: \textit{who plays hulk in the thor and avengers series of movies} \\
+A: \entity{Fred Tatasciore} \\
+A: \entity{Rick D. Wasserman}}
+
+\tiny{\setlength{\parindent}{0cm}
+\textbf{id: \texttt{-7892904540301629325}} \\
+Q: \textit{who wrote the song going to kansas city} \\
+A: \entity{Jerry Leiber} \\
+A: \entity{Mike Stoller}}
+
+\tiny{\setlength{\parindent}{0cm}
+\textbf{id: \texttt{1838851770314085590}} \\
+Q: \textit{who plays sheila carter on the bold and the beautiful} \\
+A: \entity{Kimberlin Brown} \\
+A: \entity{Michelle Stafford}}

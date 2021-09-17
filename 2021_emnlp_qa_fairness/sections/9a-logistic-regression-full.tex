@@ -1,0 +1,23 @@
+\tablefile{logistic-regression-full-appendix}
+
+\section{Logistic Regression features.}
+\label{appendix:logistic-regression}
+This section enlists a full set of features used for the logistic regression analysis after feature reduction, each with their coefficients, standard error, Wald Statistic and significance level in Table~\ref{tab:logistic-regression-appendix}. We also describe the templates and the implementation details of the features using in our logistic regression analysis (Section~\ref{subsec:logistic-regression}) in Appendix~\ref{appendix:feature-implementation}, and finally enlist some randomly sampled examples both from \nq{} and \triviaqa{} datasets in Appendix~\ref{appendix:multi-answers-examples} to show how \lrfeature{multi\_answers} feature has disparate effects on them.
+
+\subsection{Implementation of Logistic Regression features}
+\label{appendix:feature-implementation}
+\begin{itemize}
+  \item \lrfeature{q\_sim}: For closed-domain \qa{} tasks like \nq{} and \squad{}, this feature measures (sim)ilarity between (q)uestion text and evidence sentence---the sentence from the evidence passage which contains the answer text---using Jaccard similarity over unigram tokens~\cite{sugawara-18}. Since we do not include \squad{} in our logistic regression analysis (Section~\ref{subsec:logistic-regression}, this feature is only relevant for \nq{}.
+  
+  \item \lrfeature{e\_train\_count}: This binary feature represents if distinct (e)ntities appearing in a \qa{} example (through the approach described in Section~\ref{sec:mapping}) appears more than twice in the particular dataset's training fold. We avoid logarithm here as even the log frequency for some commonly occurring entities exceeds the expected feature value range.
+  
+  \item \lrfeature{t\_wh*}: This represents the features that captures the expected entity type of the answer: \lrfeature{t\_who}, \lrfeature{t\_what}, \lrfeature{t\_where}, \lrfeature{t\_when}. Each binary feature captures if the particular \lrfeature{"wh*"} word appears in the first ten (t)okens of the question text.\footnote{\qb{} questions often start with ``For 10 points, name this writer \textit{who}...''}
+  
+  \item \lrfeature{multi\_entities}: For number of linked person-entities in a example as described in Section~\ref{sec:mapping} as $n$, this feature is $log_2(n)$. Hence, this feature is 0 for example with just single person entity.
+  
+  \item \lrfeature{multi\_answers}: For number of gold-answers annotated in a example as $n$, this feature is $log_2(n)$. Hence, this feature is 0 for example with just answer.
+  
+  \item \lrfeature{g\_*}: Binary demographic feature signaling the presence of the (g)ender characterized by the feature. For instance, \lrfeature{g\_female} signals if the question is about a female person.
+  
+  \item \lrfeature{o\_*}: Binary demographic feature signaling the presence of the occupation (or profession) as characterized by the feature. For instance, \lrfeature{o\_writer} signals if the question is about a writer.
+\end{itemize}

@@ -1,0 +1,569 @@
+\begin{table*}[t]
+    \small\small
+    \centering
+    \setlength{\tabcolsep}{28pt} % Default value: 6pt
+    \resizebox{\linewidth}{!}{%
+        \begin{tabular}{llrcccc}
+        \textbf{Dataset} & \textbf{Features}  & \textbf{Coef} & \textbf{SE} & \textbf{Wald (|W|)} & \multicolumn{2}{l}{\textbf{$\mathbb{P}_{Z\sim\mathcal{N}}(|Z| > |W|)$}} \\ 
+        \toprule
+        
+\multirow{21}{*}{\parbox{3.5 cm}{\textbf{\large\nq{} \\  \\  \\ Model~Fit: \\ \\ 78.09\%}}}
+	 & \blutext{\lrfeature{\textbf{bias}}}
+	 & \blutext{\textbf{+1.964}}
+	 & \blutext{\textbf{0.727}}
+	 & \blutext{\textbf{2.703}}
+	 & \blutext{\textbf{0.0069}}
+	 & \blutext{\textbf{\mystar\mystar\mystar}}
+	
+\\
+
+	 & \negtext{\lrfeature{\textbf{multi\_answers}}}
+	 & \negtext{\textbf{-1.893}}
+	 & \negtext{\textbf{0.438}}
+	 & \negtext{\textbf{4.327}}
+	 & \negtext{\textbf{0.0000}}
+	 & \negtext{\textbf{\mystar\mystar\mystar\mystar}}
+	
+\\
+
+	 & \negtext{\lrfeature{\textbf{o\_not\_found}}}
+	 & \negtext{\textbf{-1.112}}
+	 & \negtext{\textbf{0.514}}
+	 & \negtext{\textbf{2.163}}
+	 & \negtext{\textbf{0.0305}}
+	 & \negtext{\textbf{\mystar\mystar}}
+	
+\\
+
+	 & \postext{\lrfeature{\textbf{t\_who}}}
+	 & \postext{\textbf{+0.773}}
+	 & \postext{\textbf{0.280}}
+	 & \postext{\textbf{2.764}}
+	 & \postext{\textbf{0.0057}}
+	 & \postext{\textbf{\mystar\mystar\mystar}}
+	
+\\
+
+	 & \postext{\lrfeature{o\_law/crime}}
+	 & \postext{+0.729}
+	 & \postext{0.738}
+	 & \postext{0.989}
+	 & \postext{0.3227}
+	 & \postext{\textbf{}}
+	
+\\
+
+	 & \negtext{\lrfeature{\textbf{o\_science/tech}}}
+	 & \negtext{\textbf{-0.715}}
+	 & \negtext{\textbf{0.390}}
+	 & \negtext{\textbf{1.832}}
+	 & \negtext{\textbf{0.0670}}
+	 & \negtext{\textbf{\mystar}}
+	
+\\
+
+	 & \negtext{\lrfeature{t\_where}}
+	 & \negtext{-0.695}
+	 & \negtext{0.645}
+	 & \negtext{1.078}
+	 & \negtext{0.2811}
+	 & \negtext{\textbf{}}
+	
+\\
+
+	 & \negtext{\lrfeature{\textbf{multi\_entities}}}
+	 & \negtext{\textbf{-0.678}}
+	 & \negtext{\textbf{0.342}}
+	 & \negtext{\textbf{1.979}}
+	 & \negtext{\textbf{0.0478}}
+	 & \negtext{\textbf{\mystar\mystar}}
+	
+\\
+
+	 & \postext{\lrfeature{t\_what}}
+	 & \postext{+0.505}
+	 & \postext{0.415}
+	 & \postext{1.216}
+	 & \postext{0.2240}
+	 & \postext{\textbf{}}
+	
+\\
+
+	 & \negtext{\lrfeature{o\_stage}}
+	 & \negtext{-0.444}
+	 & \negtext{0.607}
+	 & \negtext{0.732}
+	 & \negtext{0.4640}
+	 & \negtext{\textbf{}}
+	
+\\
+
+	 & \postext{\lrfeature{g\_female}}
+	 & \postext{+0.427}
+	 & \postext{0.489}
+	 & \postext{0.873}
+	 & \postext{0.3829}
+	 & \postext{\textbf{}}
+	
+\\
+
+	 & \postext{\lrfeature{o\_executive}}
+	 & \postext{+0.425}
+	 & \postext{0.684}
+	 & \postext{0.622}
+	 & \postext{0.5341}
+	 & \postext{\textbf{}}
+	
+\\
+
+	 & \postext{\lrfeature{\textbf{q\_sim}}}
+	 & \postext{\textbf{+0.406}}
+	 & \postext{\textbf{0.210}}
+	 & \postext{\textbf{1.934}}
+	 & \postext{\textbf{0.0531}}
+	 & \postext{\textbf{\mystar}}
+	
+\\
+
+	 & \postext{\lrfeature{\textbf{e\_train\_count}}}
+	 & \postext{\textbf{+0.353}}
+	 & \postext{\textbf{0.178}}
+	 & \postext{\textbf{1.979}}
+	 & \postext{\textbf{0.0479}}
+	 & \postext{\textbf{\mystar\mystar}}
+	
+\\
+
+	 & \postext{\lrfeature{o\_others}}
+	 & \postext{+0.346}
+	 & \postext{0.443}
+	 & \postext{0.781}
+	 & \postext{0.4346}
+	 & \postext{\textbf{}}
+	
+\\
+
+	 & \postext{\lrfeature{o\_music}}
+	 & \postext{+0.310}
+	 & \postext{0.259}
+	 & \postext{1.200}
+	 & \postext{0.2302}
+	 & \postext{\textbf{}}
+	
+\\
+
+	 & \negtext{\lrfeature{o\_fictional}}
+	 & \negtext{-0.256}
+	 & \negtext{0.445}
+	 & \negtext{0.576}
+	 & \negtext{0.5644}
+	 & \negtext{\textbf{}}
+	
+\\
+
+	 & \negtext{\lrfeature{o\_politics}}
+	 & \negtext{-0.197}
+	 & \negtext{0.304}
+	 & \negtext{0.646}
+	 & \negtext{0.5185}
+	 & \negtext{\textbf{}}
+	
+\\
+
+	 & \postext{\lrfeature{o\_film/tv}}
+	 & \postext{+0.142}
+	 & \postext{0.226}
+	 & \postext{0.629}
+	 & \postext{0.5294}
+	 & \postext{\textbf{}}
+	
+\\
+
+	 & \negtext{\lrfeature{t\_when}}
+	 & \negtext{-0.134}
+	 & \negtext{0.378}
+	 & \negtext{0.354}
+	 & \negtext{0.7233}
+	 & \negtext{\textbf{}}
+	
+\\
+
+	 & \negtext{\lrfeature{g\_male}}
+	 & \negtext{-0.126}
+	 & \negtext{0.508}
+	 & \negtext{0.249}
+	 & \negtext{0.8033}
+	 & \negtext{\textbf{}}
+	
+\\
+
+\midrule
+\multirow{18}{*}{\parbox{2.0 cm}{\textbf{\large \qb{} \\  \\  \\ Model~Fit: \\ \\ 71.90\%}}}
+	 & \postext{\lrfeature{\textbf{e\_train\_count}}}
+	 & \postext{\textbf{+1.922}}
+	 & \postext{\textbf{0.269}}
+	 & \postext{\textbf{7.144}}
+	 & \postext{\textbf{0.0000}}
+	 & \postext{\textbf{\mystar\mystar\mystar\mystar}}
+	
+\\
+
+	 & \blutext{\lrfeature{\textbf{bias}}}
+	 & \blutext{\textbf{-1.024}}
+	 & \blutext{\textbf{0.291}}
+	 & \blutext{\textbf{3.516}}
+	 & \blutext{\textbf{0.0004}}
+	 & \blutext{\textbf{\mystar\mystar\mystar\mystar}}
+	
+\\
+
+	 & \negtext{\lrfeature{\textbf{o\_film/tv}}}
+	 & \negtext{\textbf{-0.910}}
+	 & \negtext{\textbf{0.470}}
+	 & \negtext{\textbf{1.934}}
+	 & \negtext{\textbf{0.0531}}
+	 & \negtext{\textbf{\mystar}}
+	
+\\
+
+	 & \negtext{\lrfeature{\textbf{multi\_entities}}}
+	 & \negtext{\textbf{-0.870}}
+	 & \negtext{\textbf{0.165}}
+	 & \negtext{\textbf{5.287}}
+	 & \negtext{\textbf{0.0000}}
+	 & \negtext{\textbf{\mystar\mystar\mystar\mystar}}
+	
+\\
+
+	 & \negtext{\lrfeature{t\_what}}
+	 & \negtext{-0.734}
+	 & \negtext{0.457}
+	 & \negtext{1.605}
+	 & \negtext{0.1085}
+	 & \negtext{\textbf{}}
+	
+\\
+
+	 & \postext{\lrfeature{o\_translation}}
+	 & \postext{+0.671}
+	 & \postext{1.439}
+	 & \postext{0.466}
+	 & \postext{0.6412}
+	 & \postext{\textbf{}}
+	
+\\
+
+	 & \negtext{\lrfeature{\textbf{o\_science/tech}}}
+	 & \negtext{\textbf{-0.667}}
+	 & \negtext{\textbf{0.265}}
+	 & \negtext{\textbf{2.522}}
+	 & \negtext{\textbf{0.0117}}
+	 & \negtext{\textbf{\mystar\mystar}}
+	
+\\
+
+	 & \negtext{\lrfeature{\textbf{o\_religion}}}
+	 & \negtext{\textbf{-0.655}}
+	 & \negtext{\textbf{0.362}}
+	 & \negtext{\textbf{1.812}}
+	 & \negtext{\textbf{0.0700}}
+	 & \negtext{\textbf{\mystar}}
+	
+\\
+
+	 & \postext{\lrfeature{t\_where}}
+	 & \postext{+0.545}
+	 & \postext{0.615}
+	 & \postext{0.885}
+	 & \postext{0.3760}
+	 & \postext{\textbf{}}
+	
+\\
+
+	 & \negtext{\lrfeature{o\_history}}
+	 & \negtext{-0.484}
+	 & \negtext{0.436}
+	 & \negtext{1.109}
+	 & \negtext{0.2673}
+	 & \negtext{\textbf{}}
+	
+\\
+
+	 & \postext{\lrfeature{\textbf{o\_writing}}}
+	 & \postext{\textbf{+0.402}}
+	 & \postext{\textbf{0.189}}
+	 & \postext{\textbf{2.128}}
+	 & \postext{\textbf{0.0334}}
+	 & \postext{\textbf{\mystar\mystar}}
+	
+\\
+
+	 & \negtext{\lrfeature{o\_not\_found}}
+	 & \negtext{-0.382}
+	 & \negtext{0.349}
+	 & \negtext{1.093}
+	 & \negtext{0.2744}
+	 & \negtext{\textbf{}}
+	
+\\
+
+	 & \negtext{\lrfeature{o\_fictional}}
+	 & \negtext{-0.368}
+	 & \negtext{0.540}
+	 & \negtext{0.681}
+	 & \negtext{0.4957}
+	 & \negtext{\textbf{}}
+	
+\\
+
+	 & \postext{\lrfeature{\textbf{t\_who}}}
+	 & \postext{\textbf{+0.363}}
+	 & \postext{\textbf{0.183}}
+	 & \postext{\textbf{1.990}}
+	 & \postext{\textbf{0.0466}}
+	 & \postext{\textbf{\mystar\mystar}}
+	
+\\
+
+	 & \postext{\lrfeature{o\_artist}}
+	 & \postext{+0.194}
+	 & \postext{0.268}
+	 & \postext{0.721}
+	 & \postext{0.4709}
+	 & \postext{\textbf{}}
+	
+\\
+
+	 & \postext{\lrfeature{o\_music}}
+	 & \postext{+0.123}
+	 & \postext{0.249}
+	 & \postext{0.492}
+	 & \postext{0.6225}
+	 & \postext{\textbf{}}
+	
+\\
+
+	 & \negtext{\lrfeature{o\_politics}}
+	 & \negtext{-0.113}
+	 & \negtext{0.202}
+	 & \negtext{0.560}
+	 & \negtext{0.5756}
+	 & \negtext{\textbf{}}
+	
+\\
+
+	 & \negtext{\lrfeature{o\_philosophy}}
+	 & \negtext{-0.082}
+	 & \negtext{0.259}
+	 & \negtext{0.315}
+	 & \negtext{0.7530}
+	 & \negtext{\textbf{}}
+	
+\\
+
+\midrule
+\multirow{22}{*}{\parbox{2.0 cm}{\textbf{\large\triviaqa{} \\  \\  \\ Model~Fit: \\ \\  60.18\%}}}
+	 & \blutext{\lrfeature{\textbf{bias}}}
+	 & \blutext{\textbf{-1.066}}
+	 & \blutext{\textbf{0.114}}
+	 & \blutext{\textbf{9.353}}
+	 & \blutext{\textbf{0.0000}}
+	 & \blutext{\textbf{\mystar\mystar\mystar\mystar}}
+	
+\\
+
+	 & \negtext{\lrfeature{o\_education}}
+	 & \negtext{-0.665}
+	 & \negtext{0.534}
+	 & \negtext{1.245}
+	 & \negtext{0.2132}
+	 & \negtext{\textbf{}}
+	
+\\
+
+	 & \postext{\lrfeature{o\_economics}}
+	 & \postext{+0.503}
+	 & \postext{0.579}
+	 & \postext{0.869}
+	 & \postext{0.3848}
+	 & \postext{\textbf{}}
+	
+\\
+
+	 & \negtext{\lrfeature{o\_philosophy}}
+	 & \negtext{-0.469}
+	 & \negtext{0.342}
+	 & \negtext{1.370}
+	 & \negtext{0.1706}
+	 & \negtext{\textbf{}}
+	
+\\
+
+	 & \negtext{\lrfeature{\textbf{o\_religion}}}
+	 & \negtext{\textbf{-0.443}}
+	 & \negtext{\textbf{0.255}}
+	 & \negtext{\textbf{1.738}}
+	 & \negtext{\textbf{0.0822}}
+	 & \negtext{\textbf{\mystar}}
+	
+\\
+
+	 & \postext{\lrfeature{\textbf{o\_law/crime}}}
+	 & \postext{\textbf{+0.412}}
+	 & \postext{\textbf{0.218}}
+	 & \postext{\textbf{1.890}}
+	 & \postext{\textbf{0.0588}}
+	 & \postext{\textbf{\mystar}}
+	
+\\
+
+	 & \postext{\lrfeature{\textbf{multi\_answers}}}
+	 & \postext{\textbf{+0.341}}
+	 & \postext{\textbf{0.024}}
+	 & \postext{\textbf{14.090}}
+	 & \postext{\textbf{0.0000}}
+	 & \postext{\textbf{\mystar\mystar\mystar\mystar}}
+	
+\\
+
+	 & \postext{\lrfeature{\textbf{t\_who}}}
+	 & \postext{\textbf{+0.230}}
+	 & \postext{\textbf{0.129}}
+	 & \postext{\textbf{1.778}}
+	 & \postext{\textbf{0.0754}}
+	 & \postext{\textbf{\mystar}}
+	
+\\
+
+	 & \postext{\lrfeature{o\_science/tech}}
+	 & \postext{+0.219}
+	 & \postext{0.151}
+	 & \postext{1.452}
+	 & \postext{0.1466}
+	 & \postext{\textbf{}}
+	
+\\
+
+	 & \negtext{\lrfeature{o\_stage}}
+	 & \negtext{-0.212}
+	 & \negtext{0.257}
+	 & \negtext{0.824}
+	 & \negtext{0.4098}
+	 & \negtext{\textbf{}}
+	
+\\
+
+	 & \negtext{\lrfeature{\textbf{o\_politics}}}
+	 & \negtext{\textbf{-0.208}}
+	 & \negtext{\textbf{0.095}}
+	 & \negtext{\textbf{2.177}}
+	 & \negtext{\textbf{0.0295}}
+	 & \negtext{\textbf{\mystar\mystar}}
+	
+\\
+
+	 & \postext{\lrfeature{\textbf{o\_writing}}}
+	 & \postext{\textbf{+0.192}}
+	 & \postext{\textbf{0.098}}
+	 & \postext{\textbf{1.955}}
+	 & \postext{\textbf{0.0506}}
+	 & \postext{\textbf{\mystar}}
+	
+\\
+
+	 & \negtext{\lrfeature{o\_sports}}
+	 & \negtext{-0.183}
+	 & \negtext{0.117}
+	 & \negtext{1.570}
+	 & \negtext{0.1164}
+	 & \negtext{\textbf{}}
+	
+\\
+
+	 & \postext{\lrfeature{o\_film/tv}}
+	 & \postext{+0.150}
+	 & \postext{0.092}
+	 & \postext{1.626}
+	 & \postext{0.1039}
+	 & \postext{\textbf{}}
+	
+\\
+
+	 & \negtext{\lrfeature{t\_when}}
+	 & \negtext{-0.146}
+	 & \negtext{0.299}
+	 & \negtext{0.488}
+	 & \negtext{0.6258}
+	 & \negtext{\textbf{}}
+	
+\\
+
+	 & \negtext{\lrfeature{o\_not\_found}}
+	 & \negtext{-0.143}
+	 & \negtext{0.205}
+	 & \negtext{0.699}
+	 & \negtext{0.4845}
+	 & \negtext{\textbf{}}
+	
+\\
+
+	 & \negtext{\lrfeature{o\_executive}}
+	 & \negtext{-0.130}
+	 & \negtext{0.207}
+	 & \negtext{0.625}
+	 & \negtext{0.5323}
+	 & \negtext{\textbf{}}
+	
+\\
+
+	 & \negtext{\lrfeature{o\_others}}
+	 & \negtext{-0.101}
+	 & \negtext{0.152}
+	 & \negtext{0.665}
+	 & \negtext{0.5058}
+	 & \negtext{\textbf{}}
+	
+\\
+
+	 & \negtext{\lrfeature{multi\_entities}}
+	 & \negtext{-0.099}
+	 & \negtext{0.077}
+	 & \negtext{1.290}
+	 & \negtext{0.1971}
+	 & \negtext{\textbf{}}
+	
+\\
+
+	 & \postext{\lrfeature{e\_train\_count}}
+	 & \postext{+0.081}
+	 & \postext{0.075}
+	 & \postext{1.079}
+	 & \postext{0.2804}
+	 & \postext{\textbf{}}
+	
+\\
+
+	 & \postext{\lrfeature{o\_music}}
+	 & \postext{+0.022}
+	 & \postext{0.097}
+	 & \postext{0.223}
+	 & \postext{0.8237}
+	 & \postext{\textbf{}}
+	
+\\
+
+	 & \postext{\lrfeature{t\_what}}
+	 & \postext{+0.018}
+	 & \postext{0.134}
+	 & \postext{0.132}
+	 & \postext{0.8947}
+	 & \postext{\textbf{}}
+	
+\\
+
+\bottomrule
+        \end{tabular}
+    }
+    
+\caption{\label{tab:logistic-regression-appendix}Influential features revealed through Logistic Regression Analysis (Sec~\ref{subsec:logistic-regression}) over the demographic \democol{}s deemed significant through the $\chi^2$ test (Figure~\ref{fig:accuracies}). We report the highly influential features with significance of $p$-value < $0.1$, both positive (blue) and negative (red), and \textbf{bold} the highly significant ones ($p$-value < $0.05$). Number of \mystar{} in the last column represents the significance level of that feature.}
+\end{table*}

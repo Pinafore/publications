@@ -1,0 +1,82 @@
+\section{What Questions can \abr{qa} Answer?}
+\label{sec:accuracy}
+
+\qa{} datasets have different representations of demographic \democol{}s; 
+is this focus benign or do these differences carry through to model accuracy?
+
+We analyze a \abr{sota} system for each of our four tasks.
+For \nq{} and \squad{}, we use a fine-tuned \bert{}~\cite{alberti2019bert} with curated training data (e.g., downsample questions without answers and split documents into multiple training instances). For the open-domain \triviaqa{} task, we use \abr{orqa}~\cite{lee2019latent} with a \bert{}-based reader and retriever components. Finally, for \qb{}, we use the competition winner from \citet{wallace-19}, a \abr{bert}-based reranker of a \abr{tf-idf} retriever.
+Accuracy (exact-match) and average F1 are both common \abr{qa} metrics~\cite{rajpurkar-16}. Since both are related and some statistical tests require binary scores, we focus on exact-match.
+
+Rather than focus on aggregate accuracy, we focus on demographic \demosubset{}s' accuracy (Figure~\ref{fig:accuracies}). 
+For instance, while 66.2\% of questions about people are correct in \qb{}, the number is lower for the Dutch (\demovalue{Netherlands}) (55.6\%) and higher for  \demovalue{Ireland} (87.5\%).
+Unsurprisingly, accuracy is consistently low on the `not\_found' \demosubset{}, where \wikidata{} lacks a person's demographic \demorow{}.
+
+Are the differences we observe across strata significant?
+We probe this in two ways: using $\chi^2$ tests~\cite{plackett1983karl} to see \emph{if} trends exist and using logistic regression to explore those that do.
+
+\subsection{Do Demographic Values Affect Accuracy?}
+\label{subsec:chi-squared-test}
+The $\chi^2$ test is a non-parametric test of whether two variables are independent. 
+To see if accuracy and \democol{}s are independent, we apply a $\chi^2$ test to a $n \times 2$ contingency table with $n$ rows representing the frequency of that \democol{}'s \demosubset{}s contingent on whether the model prediction is correct or not (Table~\ref{tab:contingency}).
+If we reject the null with a Bonferroni correction~\cite[divide the $p$-value threshold by three, as we have multiple tests for each dataset]{holm-79}, that suggests possible relationships:
+gender in \nq{} ($p=$\SI{2.36e-12}) and professional field in \nq{} ($p=0.0142$), \qb{} ($p=$\SI{2.34e-07}) and \triviaqa{} ($p=0.0092$). 
+However, we find no significant relationship between nationality and accuracy in any dataset.
+
+While $\chi^{2}$ identifies \emph{which} \democol{}s impact model accuracy, it does not characterize \emph{how}.
+For instance, $\chi^2$  indicates \nq{}'s gender is significant, but is this because accuracy is higher for women, or because the presence of both genders in examples lowers the accuracy?
+
+\tablefile{contingency}
+
+\subsection{Exploration with Logistic Regression}
+\label{subsec:logistic-regression}
+
+\newcommand{\hfeat}[1]{\textbf{\lrfeature{#1}}}
+
+Thus, we formulate a simple logistic regression: 
+can an example's demographic \demorow{}s predict if a model answers correctly?
+Logistic regression and related models are the workhorse for discovering and explaining the relationship between variables in history~\cite{mccloskey-87}, education~\cite{Linden-2013}, political science~\cite{poole-11}, and sports~\cite{glickman-99}.
+Logistic regression is also a common tool in \abr{nlp}: to find linguistic constructs that allow determiner omission~\cite{kiss-10} or to understand how a scientific paper's attributes effect citations~\cite{yogatama-11}. 
+Unlike model calibration~\cite{niculescu2005predicting}, whose goal it to maximize prediction accuracy, the goal here is \emph{explanation}.
+
+
+We define binary features for demographic \demorow{}s of \democol{}s the $\chi^2$ test found significant (thus we exclude all of \squad{}, the nationality \democol{}, and gender \democol{} for all but \nq{}).
+For instance, a question about \entity{Abidali Neemuchwala} would have features for \hfeat{g\_male}, \hfeat{o\_executive} but zero for everything else.\footnote{Exhaustive list of demographic features in the Appendix.}
+Real-valued features, \hfeat{multi\_entities} and \hfeat{multi\_answers}, capture the effect of multiple person-entities and multiple gold-answers (scaled with the base two logarithm). 
+\tablefile{logistic-regression-linear-no-lasso}
+
+But that is not the only reason an answer may be difficult or easy.  
+Following \citet{sugawara-18}, we incorporate features that reveal the questions' difficulty.
+For instance, questions that clearly hint  the answer type reduce ambiguity. 
+The \hfeat{t\_who} checks if the token ``who'' is in the start of the question.
+Similarly, \hfeat{t\_what}, \hfeat{t\_when}, and \hfeat{t\_where} capture other entity-types. 
+Questions are also easier if evidence only differs from the question by a couple of words; thus, \hfeat{q\_sim} is the Jaccard similarity between question and evidence tokens. 
+Finally, the binary feature \hfeat{e\_train\_count} marks if the person-entities occur in the training data more than twice.
+
+We first drop features with negligible effect on accuracy using \lasso{} (regularization $\lambda=1$) by removing  zero coefficients.
+For the remaining features, Wald statistics~\cite{fahrmeir2007regression} estimate $p$-values. 
+Although we initially use quadratic features they are all eliminated during feature reduction.
+Thus, we only report the linear features with a minimal significance ($p$-value < 0.1).
+
+
+
+\subsection{How do Properties Affect Accuracy?}
+
+Recall that logistic regression uses features to predict whether the \abr{qa} system will get the answer right or not.
+Features associated with correct answers have positive weights (like those derived from \citet{sugawara-18}, \hfeat{q\_sim} and \hfeat{e\_train\_count}), those associated with incorrect answers have negative weights, and features without effect will be near zero.
+Among the \hfeat{t\_wh*} features, \hfeat{t\_who} significantly correlates with model correctness, especially in \nq{} and \qb{}, where questions asked directly about a person. 
+
+However, our goal is to see if, \emph{after} accounting for obvious reasons a question could be easy, demographic properties can explain \abr{qa} accuracy. 
+The strongest effect is for professions (Table~\ref{tab:logistic-regression}).
+For instance, while \nq{} and \qb{} systems struggle on science questions, \triviaqa{}'s does not.
+Science has roughly equivalent representation (Table~\ref{tab:demographics}), suggesting \qb{} questions are harder.
+
+While \hfeat{multi\_answer} (and \hfeat{multi\_entities}) reveal harder \nq{} questions, it has a positive effect in \triviaqa{}, as \triviaqa{} uses multiple answers for alternate formulations of answers (Appendix~\ref{appendix:nq-examples}, \ref{appendix:trivia-qa-examples}), which aids machine reading, while multiple \abr{nq} answers are often a sign of ambiguity~\cite{Boyd-Graber-20, Si:Zhao:Boyd-Graber-2021}:
+``\emph{Who says that which we call a rose?}'' A: \entity{Juliet}, A: \entity{William Shakespeare}.
+For male and female genders, \nq{} has no statistically significant effect on accuracy, only questions about entities with multiple genders depresses accuracy.
+Given the many findings of gender bias in \abr{nlu}~\cite{zhao-17,webster-18,zhao-18,stanovsky-19}, this is surprising.
+However, we caution against accepting this conclusion without further investigation given the strong correlation of gender with professional field~\cite{goulden-11}, where we do see significant effects. 
+
+Taken together, the $\chi^{2}$ and logistic regression analysis give us reason to be optimistic: 
+although data are skewed for all \demosubset{}s, \abr{qa} systems might well generalize from limited training data across gender and nationality.
+% However, plurality of subjects and occupational diversity seems to be more problematic, perhaps because fields have specialized terminology, which is sometimes contradictory: a ``launch'' is different for startup founders, astronauts, and shipbuilder.
