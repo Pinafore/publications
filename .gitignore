@@ -35,6 +35,7 @@
 *.synctex.gz
 *.synctex.gz(busy)
 *.pdfsync
+*/pdfa.xmpi
 
 ## Auxiliary and intermediate files from other packages:
 
@@ -129,3 +130,5 @@ sympy-plots-for-*.tex/
 
 */auto_fig/res.txt
 2019_tacl_trick/data/round2_df.json
+
+*/auto_fig/*
