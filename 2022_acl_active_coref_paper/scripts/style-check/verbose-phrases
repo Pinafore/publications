@@ -1,0 +1,241 @@
+a large number of                   % phrase you mean "many"
+a substantial number of             % phrase how substantial?  most?  or just enough that can't be ignored?
+an insufficient number of           % phrase "too few"
+a significant number of             % phrase one is significant.   consider "prohibitive" if the number is sufficient to be problematic.
+a number of                         % phrase getting the verb agreement for this useless phrase is tricky.
+a number of different               % phrase use "different" (should have a high score)
+a small number of                   % phrase you mean "few"
+a low number of                   % phrase you mean "few"
+a relatively low number of                   % phrase you mean "few"
+actually                            % spelling probably doesn't add
+to an extent                        % phrase you can probably remove
+and instead                         % phrase replace with but?
+be done                             % phrase if "X of Y can be done", try "Y can be Xed"; it's already passive voice.
+combining multiple                  % phrase as opposed to "combining one?"
+aggregating multiple                % phrase "aggregating"
+do this                             % phrase probably verbose if you use a pronoun for what you're doing
+exists[ ]                           % phrase probably no better than "is", but end of sentence may be unavoidable?
+if it is to                         % phrase should be "to" (usually followed by "be X")
+if they are to                      % phrase should be "to" (usually followed by "be X")
+in general                          % phrase unless matched with "in specific," this is usually useless; perhaps "overall"
+in order to                         % phrase remove "in order" and get "to"
+in the past                         % phrase past tense is likely enough.
+in the way of                       % phrase should be "as"
+counting the number of              % phrase counting.  dude.
+is permitted to                     % phrase "may"
+largely opaque                      % phrase largely does not modify opaque
+makes a new                         % phrase should be "creates"
+may not chose                       % phrase "may not" is future tense; "chose" is past.
+one should note                     % phrase just write it.
+note that                           % phrase is the rest of the paper less notable?
+Note, that                          % syntax not only should you not "note that", no comma after note.
+we note                             % phrase is the rest of the paper less notable?
+note however that                   % phrase is the rest of the paper less notable?
+it is important to note             % phrase is the rest of the paper less notable?
+really                              % phrase probably doesn't add; if you think it does, use "r{}eally" -- don't change to 'in fact'
+in fact				    % phrase cut
+rigorously                          % spelling probably doesn't add, and I rarely do anything with rigor
+the way in which                    % phrase should be "how" or ""
+the manner in which                 % phrase should be "how" or ""
+value stems                         % phrase value is derived or offered, I think.
+time at which                       % phrase very likely "when"
+place at which                      % phrase very likely "where"
+at the time                         % phrase very likely "when"
+reduced number of                   % phrase very likely "fewer" or maybe maybe "less"
+is present in                       % phrase present is probably redudant, try "is in"
+they all                            % phrase maybe "all xs" would be better.
+easy to do                          % phrase "feasible" or "practical" might be better.
+is going to                         % phrase "will".
+are going to                        % phrase "will".
+getting                             % phrase probably "receiving" or "querying"
+those are                           % phrase see if "those X are" is clearer?
+design is motivated                 % phrase "inspired by" is probably better than "motivated" for design
+locations throughout the world      % phrase drop "throughout the world"
+e.g., as opposed to                 % phrase if you're giving examples, you're not talking about what isn't.  drop "e.g."
+in addition, we also                % phrase remove either "also" or "in addition"
+other related issues                % phrase probably remove "other"
+the aforementioned                  % phrase "these xs" or "this x" would be less snooty
+center around                       % phrase (cook) a center is a point: "center on" is okay.
+could care less                     % phrase (cook) 'really? how much less could you care?' (should be couldn't)
+grouped together                    % phrase redundant.  "grouped" alone should suffice.
+put together                        % phrase long: "construct" "build" or "assemble"
+consistent with each other          % phrase redundant.  "consistent" suffices.
+be accomplished with                % phrase try "requires" "uses" "needs"?
+the lack of knowledge of            % phrase would "X is unknown" work better?
+gets to know                        % phrase you mean "learns"
+trying to look like                 % phrase you mean "acting", "emulating", or "mimicing"
+has got to be                       % phrase "must be"
+got                                 % phrase try "became" "received" ?
+gotten                              % phrase try "helped" ?
+live in a vacuum                    % phrase a tired metaphor that makes me want to vomit.
+positive impact                     % phrase try "benefit"
+negative impact                     % phrase try "harm" or "consequences"
+adverse impact                      % phrase try "harm" or "consequences"
+adversely impacting                 % phrase try "harming" or "hurting"
+discuss the issues of               % phrase could probably drop "the issues of" unless there's a list
+the presence of                     % phrase not far from 'is', 'has', etc.
+does not allow                      % phrase consider "forbids" or "prohibits"
+and/or                              % phrase just say or.
+there is the potential to           % phrase just say may.
+there is the possibility that       % phrase just say might.
+can be achieved                     % phrase maybe not so good?
+find out                            % phrase perhaps determine?
+in the absence of                   % phrase perhaps without?
+in the presence of                  % phrase perhaps with?
+set up                              % phrase perhaps create, configure, or initialize
+in the face of                      % phrase can be overused.  try despite?
+several times (at|of)               % phrase discouraged by Kurt.
+a large degree of                   % phrase ick.
+we start by first                   % phrase redundant. ("first, we" or "we start by").
+in general, they are usually        % phrase redundant.
+refers to the notion                % phrase define your term precisely if possible.
+a significant amount of             % phrase probably just "significant"
+real practical                      % phrase as opposed to imaginary practical?
+people that are                     % phrase use people who are?
+additional detail that we add       % phrase as opposed to additional detail that we subtract?
+in some cases and not in others     % phrase "in some cases"
+it is known that                    % phrase just say it.
+caused due to                       % phrase "caused by"
+a result of the fact that           % phrase "caused by"
+results (indicate|show|suggest)     % phrase drop
+research (indicates|show|suggest)   % phrase drop
+can be attributed to the fact that  % phrase "is because"
+a large set of                      % phrase probably don't care that it is a set.
+a small set of                      % phrase probably don't care that it is a set: use 'a few'
+provides a look at                  % phrase (timid) probably mean "shows".
+in most cases                       % phrase "usually"
+continue into the forseeable future % phrase "continue".
+for the forseeable future           % phrase drop.
+fail to successfully                % phrase "fail to" is sufficient.
+Clearly,                            % syntax starting a sentence with clearly confuses me.
+in different continents             % phrase ON different continents, IN different countries
+(we|to) handle                      % phrase use a more specific verb like address, treat, solve
+handling                            % phrase use a more specific verb like addressing, treating, solving, mitigating (unless handling errors or exceptions)
+For the purposes of                 % phrase "For"
+We observe that                     % phrase drop.
+some degree of                      % phrase "some"
+in the problem of                   % phrase (contributed by rap)
+conclude several things             % phrase make (draw) several conclusions
+extra bonus                         % phrase "bonus"
+added bonus                         % phrase "bonus"
+it is important to emphasize that   % phrase use diction to emphasize.
+it is possible that                 % phrase "x may y"
+caused due to                       % phrase "caused by"
+recent work by                      % phrase could maybe be dropped, as the cite will include the date.
+identify the location of            % phrase "find"
+that go across                      % phrase "that cross"
+ideally, we would like              % phrase "we would like"
+enabling the ability to             % phrase "supporting" or "allowing" or "permitting"
+absolutely essential                % phrase essential is.
+we essentially do                   % phrase essentially is a poor adverb.  "The essence of our algorithm is a..."
+Essentially,                        % phrase maybe "In essence," but could also be removed.
+In this section (we|I)              % phrase "In this section, we", or "In this section, I"
+essentially all                     % phrase "most"
+past experience                     % phrase "experience" http://www.cmu.edu/styleguide/trickywords.html
+particulary difficult primarily     % phrase simplify
+intuition about why                 % phrase "intuition as to why"
+Recall from above                   % phrase "recall"
+Further, (I|we) will also           % phrase drop further or also
+respectively                        % phrase unneeded.
+in terms of                         % phrase don't need this.
+the extent to which                 % phrase "how much"
+make sure                           % phrase "ensure"
+make up                             % phrase "constitute" "compose"
+make use of                         % phrase "use"
+make a decision                     % phrase "decide"
+make a guess                        % phrase "guess"
+since that time                     % phrase "since then"
+choices to make                     % phrase "choices"
+certain limitations                 % phrase what does 'certain' add to limitations?
+will [a-z]* in the future           % phrase "will"
+business entities                   % phrase "businesses"
+rely primarily on                   % phrase "primarily" weakens "rely".  perhaps just "use" would be simpler.
+has the potential to                % phrase can
+have not yet developed              % phrase "have yet to develop"
+to be effective,                    % phrase probably redundant.
+provide information about           % phrase "tell how" "reveal" "expose" "disclose"
+are different,                      % phrase "differ"
+have already been                   % phrase "have been"? "were"?
+as appropriate                      % phrase not needed?
+only rarely                         % phrase "rarely" is probably enough.
+is effective at                     % phrase "can"
+foremost among them is              % phrase "foremost is" would be shorter.
+those that have no                  % phrase those without
+that have no                        % phrase "without"?
+a variety of diverse                % phrase redundant
+be highly valuable in               % phrase simplify.
+the overall goal                    % phrase 'the goal'
+sometimes an? [a-z]+ will           % phrase an x may
+this is perhaps because             % phrase this may be because
+adding an additional                % phrase redundant
+IP protocol                         % phrase redundant
+works well                          % phrase be more specific.
+something                           % phrase could eliminate.
+to keep from                        % phrase "to avoid"
+[\.,] since (!then)                 % phrase probably you mean "because" unless you're talking about time. -- "has since" is okay.
+performance characteristics         % phrase rare that characteristics adds.
+takes into account                  % phrase considers
+specify particular                  % phrase if specifying, particular should be redundant.
+prototype implementation            % phrase "implementation" is redundant.
+given a particular                  % phrase "given a" is probably enough
+described in detail (in|below)      % phrase use "detailed"
+relatively more                     % phrase more is already relative.
+focus primarily on                  % phrase bad metaphor: subject of focus is singular.
+primary focus                       % phrase bad metaphor: subject of focus is singular.
+relatively more                     % phrase more is already relative.
+gives [a-z]+ [a-z]+ information about % phrase use "tells" x
+gives [a-z]+ information about      % phrase use "tells" x
+an important question to ask is     % phrase just ask it.
+an interesting thing                % phrase avoid saying something is interesting.  if you have to say it, it isn't.
+checks to see if                    % phrase "checks" or "determines"
+have an effect on                   % phrase "affect"
+an important question to ask is     % phrase just ask it.
+an interesting thing                % phrase avoid saying something is interesting.  if you have to say it, it isn't.
+checks to see if                    % phrase "checks" or "determines"
+we can see                          % phrase "we can see" isn't formal enough.
+still remain                        % phrase "remain".
+change over time                    % phrase "change"
+turn into                           % phrase "become"
+looking back in retrospect          % phrase pick.
+ensures that there will be no       % phrase "prevents"
+does have                           % phrase "has"
+first step toward this              % phrase "toward this" can probably be dropped.
+can potentially be                  % phrase "might be", or just "can be"
+obviates the need for               % phrase just obviates x, not obviates the need for x.
+it is indeed                        % phrase "it is", though still passive.
+planning in advance                 % phrase when else might you plan?
+a lot of                            % phrase "many"
+keep in mind                        % phrase "consider" (or drop)
+it is clear that                    % phrase if clear, you don't have to say it.
+especially true                     % phrase true is an absolute, can't be especially true.
+making it increasingly difficult    % phrase preventing, discouraging, impeding, blocking, slowing...
+is potentially                      % phrase "may be"
+have been [a-z]* in the past        % phrase 'in the past' is redundant with tense.
+amount of time  % phrase "duration"
+should ideally % phrase "should"
+are of great benefit to % phrase "help" or "aid"
+are of benefit to % phrase "help" or "aid" or "promote"
+important here % phrase consider "relevant"
+while at the same time % phrase "while" is enough.
+are able to % phrase can
+subvert the proper operation of % phrase subvert
+speed slow % phrase speed is probably redundant.
+of size no smaller than % phrase "of size" is probably redundant
+of size no larger than % phrase "of size" is probably redundant
+of size smaller than % phrase "of size" is probably redundant
+of size larger than % phrase "of size" is probably redundant
+might potentially % phrase "might"
+in the context of % phrase "in" avoid, if possible.
+increase the amount of % phrase probably just increase.
+show the difference between % phrase compare
+in addition, we also % phrase pick.
+overhead efficiency % phrase huh?
+have an effect on % phrase "affect"
+have a signficant effect on %  phrase "affect"
+we find % phrase can usually be removed
+this suggests % phrase remove or make more precise
+effective for providing	   	 % phrase remove
+we performed a                   % phrase just use the verb directly
+we perform a                     % phrase just use the verb directly
+were able to                     % phrase could
+are able to                      % phrase can

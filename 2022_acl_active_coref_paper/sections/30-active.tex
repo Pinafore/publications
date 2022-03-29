@@ -1,0 +1,254 @@
+\section{Method: Active Learning}
+\label{sec:active}
+Neural models achieve high accuracy for \ontonotes{} but cannot quickly
+adapt to new datasets because of shifts in domain or
+annotation standards~\citep{poot-2020}.
+To transfer to new domains, models need substantial in-domain, labeled data.
+In low-resource situations, \coref{} is infeasible for real-time
+applications.
+To reduce the labeling burden, active learning may
+target spans that most confuse the model.
+Active learning for domain adaptation~\citep{rai-2010} typically proceeds as follows:
+begin with a model
+trained on source data,
+sample and label $k$ spans from
+documents in the
+target domain based on a strategy, and
+train the model
+on labeled data.
+
+This labeling setup may appear straightforward to apply to \coref{}, but there are some tricky details.
+The first complication is that---unlike text classification---\coref{} is a \emph{clustering} task.
+Early approaches in active learning for \coref{} use \emph{pairwise
+annotations}~\citep{miller-2012,sachan-2015}.
+Pairs of spans are sampled and the annotator labels
+whether each pair is coreferent.
+The downside to pairwise annotations is that it requires many labels.
+To label the antecedent
+of entity mention $x$, $x$ must be compared to every
+candidate span in the document. \citet{li-2020} propose a new scheme
+called \emph{discrete annotations}.
+Instead of sampling pairs of spans, the active learning strategy samples
+individual spans.
+Then, the annotator only has to find and label first antecedent of $x$ in the
+document, which bypasses the multiple pairwise comparisons. Thus, we use
+discrete annotations to minimize labeling.
+
+To further improve active learning for \coref{}, we consider the following
+issues.
+First, the \coref{} model has different scores for mention detection and linking,
+but prior active learning methods only considers linking. Second,
+labeling \coref{} requires time to read the document context.
+Therefore, we explore important aspects of active learning
+ for adapting \coref{}: model uncertainty
+(Section~\ref{ssec:uncertainty}), and the balance between reading and labeling
+(Section~\ref{ssec:tradeoff}).
+
+
+\subsection{Uncertainty Sampling}
+\label{ssec:uncertainty}
+A well-known active learning strategy is uncertainty sampling.
+A common measure of uncertainty is the entropy in the distribution of the model's
+predictions for a given example~\citep{lewis-1994}.
+Labeling uncertain examples improves
+accuracy for tasks like text classification~\citep{settles-2009}.
+For \coref{}, models have multiple components, and computing uncertainty is not
+as
+straightforward.
+Is uncertainty over where mentions are located more important than linking
+spans?  Or the other way around?
+Thus, we investigate different sources of \coref{}
+model uncertainty.
+
+\subsubsection{Clustered Entropy}
+\label{ssec:clust-ent}
+
+To sample spans for learning \coref{}, \citet{li-2020} propose a strategy called
+\emph{clustered entropy}.  This metric scores the uncertainty in the entity
+cluster assignment of a mention span $x$. If $x$ has \emph{high} clustered entropy,
+then it should be labeled to help the model learn its antecedents. Computing clustered entropy
+requires the probability that $x$ is assigned to an entity cluster.
+\citet{li-2020} use \ctof{}, which only gives probability of $x$ being
+assigned to antecedent $y$. So, they define $P(C=c)$ as the sum of antecedent probabilities $P(Y=y)$,
+\begin{equation}
+    P(C=c) = \sum_{y \in C \cap \mathcal{Y}(x)} P(Y=y).
+\end{equation}
+Then, they define clustered entropy as,
+\begin{equation}
+    \ent{}(x) = -\sum_{c \in \mathcal{C}} P(C=c) \log P(C=c).
+    \label{eq:li-clust-ent}
+\end{equation}
+The computation of clustered entropy in Equation~\ref{eq:li-clust-ent} poses two issues.
+First, summing the probabilities may not accurately represent the model's probability of linking $x$ to $c$.
+There are other ways to aggregate the probabilities (e.g.~taking the maximum).
+\ctof{} never computes cluster probabilities to make predictions, so it is not obvious how $P(C=c)$ should be computed for clustered entropy.
+Second, Equation~\ref{eq:li-clust-ent} does
+not consider mention detection.  For \ontonotes{}, this is not an issue
+because singletons (clusters of size 1) are not annotated and mention detection
+score is implicitly included in $P(Y=y)$.
+For other datasets containing singletons, the model should disambiguate
+singleton clusters from non-mention spans.
+
+To resolve these issues,
+we make the following changes. First, we use \icoref{} to obtain cluster
+probabilities. \icoref{} is a
+mention clustering model so it already has probabilities over
+entity clusters~(Equation~\ref{eq:cluster}).  Second, we explore other forms of
+maximum entropy sampling.  Neural \coref{} models have scorers for mention
+detection and clustering.  Both scores should be considered
+to sample spans that confuse the model.
+Thus, we propose more strategies to target uncertainty in mention detection.
+
+\subsubsection{Generalizing Entropy in Coreference}
+\label{ssec:entropy}
+
+To generalize entropy sampling, we first formalize mention
+detection and clustering. Given span $x$, assume $X$ is the random
+variable encoding whether
+$x$ is an entity mention (1) or not (0).
+In Section~\ref{sec:model}, we assume that the cluster distribution
+$P(C)$ is independent
+of $X$: $P(C) = P(C \given X)$.\footnote{A side effect of \ontonotes{}
+  models lacking singletons.} In other words, Equation~\ref{eq:cluster} is actually computing $P(C=c \given X=1)$.
+We sample top-$k$ spans with the following strategies.
+
+\paragraph{ment-ent} Highest mention detection entropy:
+\begin{align}
+    \ent{MENT}(x)
+        &= \ent{}{(X)} \\
+        &= - \sum_{i=0}^1 P(X=i) \log P(X=i). \nonumber
+\end{align}
+The probability $P(X)$ is
+computed from normalized mention scores $s_m$ (Equation~\ref{eq:unary}).
+\textbf{Ment-ent} may sample spans that challenge mention detection (e.g.
+class-ambiguous words like ``park'').
+The annotator can clarify whether spans are entity mentions to improve mention
+detection.
+
+\paragraph{clust-ent} Highest mention clustering entropy:
+\begin{align}
+    \ent{CLUST}(x)
+        &= \ent{}(C \given X = 1) \\
+        &= -\sum_{c \in \mathcal{C}} P(C = c \given X =
+    1) \log \nonumber \\
+    & \qquad P(C = c \given X = 1). \nonumber
+\end{align}
+\textbf{Clust-ent} looks at clustering scores
+without explicitly addressing mention detection.
+Like in \ontonotes{}, all spans are assumed to be entity mentions.
+The likelihood $P(C =c \given X = 1)$ is given by \icoref{}
+(Equation~\ref{eq:cluster}).
+
+\paragraph{cond-ent} Highest conditional entropy:
+\begin{equation}
+\begin{split}
+    \ent{COND}(x)
+        &= \ent{}(C \given X) \\
+        &= \sum_{i=0}^1 P(X=i) \ent{}(C \given X = i) \\
+        &= P(X=1) \ent{}(C \given X=1) \\
+        &= P(X=1) \ent{CLUST}(x).
+\end{split}
+\end{equation}
+We reach the last equation because there is no uncertainty in
+clustering $x$ if $x$ is not an entity mention and $\ent{}(C \given X=0) = 0$.
+\textbf{Cond-ent} takes the uncertainty of mention detection into
+account.  So, we may sample more pronouns because they are
+obviously mentions but difficult to cluster.
+
+\paragraph{joint-ent} Highest joint entropy:
+\begin{align}
+    \ent{JOINT}(x)
+        &= \ent{}(X,C) = \ent{}(X) + \ent{}(C \given X) \nonumber \\
+        &= \ent{MENT}(x) + \ent{COND}(x).
+\end{align}
+\textbf{Joint-ent} may sample spans that are difficult to detect as entity mentions
+\emph{and} too confusing to
+cluster.
+This sampling strategy most closely aligns with the uncertainty of the
+training objective. It may also fix any imbalance between mention detection and
+linking~\citep{wu-2020}.
+
+
+\subsection{Trade-off between Reading and Labeling}
+\label{ssec:tradeoff}
+
+For \coref{}, the annotator reads the document context
+to label the antecedent of a mention span.
+Annotating and reading spans from different documents may slow down labeling,
+but restricting sampling to the same
+document may cause redundant labeling~\citep{miller-2012}.
+To better understand this trade-off, we explore different
+configurations with~$k$, the number of annotated spans, and~$m$, the maximum number of
+documents being read.  Given source model $h_0$ already
+fine-tuned on \ontonotes{}, we adapt $h_0$ to a target
+domain through active learning (Algorithm~\ref{alg:active}):
+
+
+\paragraph{Scoring}
+To sample~$k$ spans from unlabeled
+data~$\mathcal{U}$ of the target domain, we score spans with an
+active learning strategy~$S$.
+Assume $S$
+scores each span through an \textit{acquisition model}~\citep{lowell-2019}.
+For the acquisition model, we use $h_{t-1}$, the model fine-tuned from the last cycle.
+The acquisition score quantifies the span's importance given
+$S$ and the acquisition model.
+
+\paragraph{Reading}
+Typically, active learning samples~$k$ spans with
+the highest acquisition scores.
+To constrain~$m$, the number of documents read, we
+find the documents of the~$m$ spans with highest
+acquisition scores and only sample spans from those documents.
+Then, the~$k$ sampled spans will belong to at most~$m$ documents.
+If $m$ is set to ``unconstrained'', then we simply sample the $k$
+highest-scoring spans,
+irrespective of the document boundaries.
+
+Our approach resembles \citet{miller-2012} where they sample spans based on
+highest uncertainty and continue sampling from the same document until
+uncertainty falls below a threshold.
+Then, they sample the most uncertain span
+from a new document. We modify their method because the uncertainty
+threshold will vary for different
+datasets and models.  Instead, we use the number of documents read to
+control context switching.
+
+\paragraph{Labeling}
+An oracle (e.g.,
+human annotator or gold data) labels the antecedents of sampled spans with discrete
+annotations (Section~\ref{sec:active}).
+
+\paragraph{Continued Training}
+We combine data labeled from current and past cycles. We
+train the source model $h_0$ (which is already trained on \ontonotes{}) on the labeled target data. We do not continue training a model from a past active learning cycle because
+it may be biased from only training on scarce target
+data~\citep{ash-2020-warmstart}.
+
+\begin{algorithm}[t]
+\caption{Active Learning for Coreference}
+\begin{algorithmic}[1]
+    \Require Source model $h_0$, Unlabeled data $\mathcal{U}$,
+    Active learning strategy $S$,
+    No.~of cycles $T$,
+    No.~of labeled spans $k$, Max. no. of read docs $m$
+    \State Labeled data $\mathcal{L}=\{\}$
+    \For {cycles $t=1, \dots, T$}
+        \State $a_x \gets$ Score span $x \in \mathcal{U}$ by $S(h_{t-1}, x)$
+        \State $\mathcal{Q} \gets$ Sort ($\downarrow$) $x \in \mathcal{U}$ by scores $a_x$
+        \State $\mathcal{Q}_m \gets$ Top-$m$ spans in $\mathcal{Q}$
+        \State $\mathcal{D} \gets \{\bm{d}_x \given x \in \mathcal{Q}_m \}$ where
+        $\bm{d}_x$ is doc of $x$
+        \State $\widetilde{\mathcal{Q}} \gets$ Filter $\mathcal{Q}$ s.t.~spans belong to
+        $\bm{d} \in \mathcal{D}$
+        \State $\widetilde{\mathcal{Q}}_k \gets$ Top-$k$ spans in
+        $\widetilde{\mathcal{Q}}$
+        \State $\mathcal{L}_k \gets$ Label antecedents for
+        $\widetilde{\mathcal{Q}}_k$
+        \State $\mathcal{L} \gets \mathcal{L} \cup \mathcal{L}_k$
+        \State $h_t \gets$ Continue train $h_0$ on $\mathcal{L}$
+    \EndFor
+    \Return $h_T$
+\end{algorithmic}
+\label{alg:active}
+\end{algorithm}

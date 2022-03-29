@@ -1,0 +1,9 @@
+model,missing_mention,extra_mention,missing_entity,extra_entity,divided_entity,conflated_entity
+source,1038,273,491,205,143,14
+random,848,301,355,221,174,27
+random-ment,546,208,169,160,237,17
+ment-ent,544,255,179,185,237,19
+clust-ent,532,263,174,187,233,26
+cond-ent,475,290,133,211,235,19
+joint-ent,1067,193,491,131,134,24
+li-clust-ent,514,284,170,219,242,24

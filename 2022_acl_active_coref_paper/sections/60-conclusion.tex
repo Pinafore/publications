@@ -1,0 +1,19 @@
+\section{Conclusion}
+
+Neural \coref{} models desparately depend on large, labeled data.
+ We use active learning to transfer a model trained on \ontonotes{}, the
+ ``de facto'' dataset, to new domains.
+Active learning for \coref{} is difficult because the problem does not only
+concern sampling examples. We must consider different aspects, like sources of
+model uncertainty and cost of reading documents.
+Our work explores these factors through exhaustive simulations.
+Additionally, we develop a user interface to run a user study from which we observe human annotation time and
+throughput.
+In both simulations and the user study, \coref{} improves from
+continued training on spans sampled from the same document rather than different
+contexts.
+Surprisingly, sampling by entropy in mention detection, rather than linking, is most helpful for domains like
+\preco{}. This opposes the assumption that the uncertainty strategy must
+be directly tied to the training objective.
+Future work may extend our contributions to multilingual transfer or
+multi-component tasks, like open-domain \abr{qa}.

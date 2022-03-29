@@ -1,0 +1,61 @@
+\section{Problem: Adapting Coreference}
+\label{sec:model}
+
+
+\citet{lee-2018} introduce \ctof{}, a neural model that outperforms prior rule-based systems.
+It assigns an antecedent $y$ to mention span $x$. The set
+$\mathcal{Y}(x)$ of
+possible antecedent spans include a dummy antecedent $\epsilon$ and all spans
+preceding $x$.
+If span~$x$ has
+no antecedent, then $x$ should be assigned to $\epsilon$.  Given entity mention $x$,
+the model learns a distribution over its candidate antecedents in $\mathcal{Y}(x)$,
+\begin{equation}
+    P(Y=y) = \frac{\ex{s(x,y)}}{\sum_{y' \in \mathcal{Y}(x)} \ex{s(x,y')}}.
+    \label{eq:antecedent}
+\end{equation}
+The scores $s(x,y)$ are computed by the model's pairwise scorer
+(Appendix~\ref{ssec:neural}).
+
+\coref{} models like \ctof{} are typically trained on \ontonotes{}.
+Recent work in \coref{} improves upon \ctof{} and has \abr{sota} results on \ontonotes{}~\citep{wu-2020-corefqa,joshi-2020}.
+However, annotation guidelines and the underlying text differ across domains. As a result, these \coref{} models cannot
+immediately transfer to other datasets.
+For different domains, spans could hold
+different meanings or link to different entities.
+\citet{xia-2021} show the benefits of \emph{continued training} where a model
+trained on \ontonotes{} is further trained on the target dataset.
+For several target domains, continued training from \ontonotes{} is stronger than
+training the model from scratch, especially when the training dataset is small.
+
+Their experiments use an incremental variant of \ctof{} called
+\icoref{}~\citep{xia-2020}.
+While \ctof{} requires $\Theta(n)$ memory to simultaneously access all spans in
+the document and infer a span's antecedent,
+\icoref{} only needs constant memory to predict a span's entity
+cluster.
+Despite using less space, \icoref{} retains the same accuracy as \ctof{}.
+Rather than assigning $x$ to antecedent $y$, \icoref{}
+ assigns $x$ to cluster $c$ where $c$ is from a set of observed entity clusters $\mathcal{C}$,
+\begin{equation}
+    P(C=c) = \frac{\ex{s(x,c)}}{\sum_{c' \in \mathcal{C}} \ex{s(x,c')}}.
+    \label{eq:cluster}
+\end{equation}
+As the algorithm processes spans in the
+document, each span is either placed in a cluster from $\mathcal{C}$ or
+added to a new cluster.
+To learn the distribution over clusters (Equation~\ref{eq:cluster}), the algorithm first creates a cluster
+representation that is an aggregate of span
+representations over spans that currently exist in the cluster.
+With cluster and span representations, individual spans and entity clusters are
+mapped into a shared space. Then, we can compute $s(x,c)$ using the same pairwise scorer as before.
+
+\citet{xia-2021} show that continued training is useful for domain adaptation
+but assume that labeled data already exist in the target
+domain.
+However, model transfer is more critical when annotations are scarce.
+Thus, the question becomes: how can we adapt \coref{} models without requiring a
+large, labeled dataset?
+Our paper investigates active learning as a potential solution.  Through active learning, we reduce labeling costs by sampling and annotating a small subset of ambiguous spans.
+
+

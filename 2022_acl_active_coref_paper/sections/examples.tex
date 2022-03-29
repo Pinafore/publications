@@ -1,0 +1,127 @@
+\begin{table*}[!t]
+    \centering
+    \small
+    \renewcommand{\arraystretch}{1.6}
+    \begin{tabular}{p{1.25cm}p{9.5cm}p{4cm}}
+    \toprule
+         Strategy & Sampled Spans & Comments\\
+    \midrule
+        \textbf{random} &
+        Later, I got out of the back door secretly and gave the food to the old man, whose
+        \entity{name I had discovered}{1}  was Taff. I had never seen anything else as lovely as the smile of
+        satisfaction \entity{on}{2}  Taff's face when he ate the food. From then on, my visits to
+        \entity{the old house had}{3} a purpose, and I enjoyed every minute of
+        the rest of my stay. &
+        \emph{Sampled spans are typically not entity mentions.} \\
+        \textbf{random-ment} &
+        When opening
+        the door, his face was full of smiles and he hugged \entity{his two
+        children and gave \entity{his
+        wife}{2} a kiss}{1}. Afterwards, he walked with me to the car. We passed the tree. I
+        was so curious that I asked  \entity{him}{3} about what I had
+        \entity{seen}{4} earlier. &
+        \emph{Diverse set of span types is sampled, including spans that
+        are not entity mentions and ones that do link to entities.} \\
+        \textbf{li-clust-ent} &
+        Although \entity{he and \entity{his young men}{2}}{1} had taken no part
+        in the killings, he knew that \entity{the white men}{3} would blame
+        \entity{all of \entity{the Indians}{5}}{4}. &
+        \emph{Many sampled spans are nested entity mentions.} \\
+        \textbf{ment-ent} &
+        This summer, Republicans have been  \entity{meeting}{1} ``behind closed
+        doors'' on a Medicare proposal scheduled to be released \entity{later this month, only a few
+        weeks before Congress votes}{2} on it, thereby avoiding independent analysis of the costs,
+mobilization by opponents and other inconvenient aspects of a long national debate. Two years ago,
+        the Republicans rang alarms about the \entity{Clinton}{3} plan's
+        emphasis on \entity{managed
+        care}{4} &
+        \emph{Sampled spans are both entity mentions and non-entities. The spans
+        are difficult for mention detection like ``meeting'' but may also be
+        hard for clustering like ``Clinton''.} \\
+        \textbf{clust-ent} &
+        After that, \entity{Mary}{1}
+        buys some school things, too. Here \entity{mother}{2} buys a lot of food, like bread,
+        cakes, meat and fish. \entity{They}{3} get home very late. &
+        \emph{Different types of entity mentions are sampled.} \\
+        \textbf{cond-ent} &
+        It is a chance to thank everyone who has contributed to
+        shaping \entity{you}{1} during the high school years; it is a chance to appreciate all those
+        who have been instrumental in \entity{your}{2} education. Take a moment to express gratitude
+        to all those who have shared the experiences of \entity{your}{3} high
+        school years. &
+        \emph{More pronouns are sampled because
+        they are obviously entity mentions and hard to cluster. However,
+        repeated sampling of the same entity occurs.} \\
+        \textbf{joint-ent} &
+        \entity{This}{1} is an eternal regret handed down
+        from generation to generation and \entity{you}{2} are only one of those who languish for
+        (...) followers. \entity{Love}{3} is telephone, but it is difficult to seize
+        \entity{the center time for dialing}{4}, and you will let the
+        opportunity slip if your call is either too early or too late. &
+        \emph{Many entity mentions are sampled but some are difficult for
+        mention detector to detect.} \\
+    \bottomrule
+    \end{tabular}
+    \caption{The example spans from \preco{} documents that are sampled with each active learning
+    strategy.}
+    \label{tab:examples_preco}
+\end{table*}
+
+\begin{table*}[!t]
+    \centering
+    \small
+    \renewcommand{\arraystretch}{1.6}
+    \begin{tabular}{p{1.25cm}p{9.5cm}p{4cm}}
+    \toprule
+         Strategy & Sampled Spans & Comments\\
+    \midrule
+        \textbf{random} &
+        The discovery of a tube behind a \entity{fuse box alarms
+        Linda, and the image of stock\entity{ings}{2} disturbs the main}{2} character due to his guilt
+        over  \entity{an encounter with a woman and his son Biff in
+        \entity{Boston}{4}}{3}. &
+        \emph{Choice of sampled spans are very random and do not seem to improve
+        learning coreference.} \\
+        \textbf{random-ment} &
+        The speaker of one of \entity{this author's works}{1} invites the
+        reader to  \entity{take}{2} a little sun, a little honey, as commanded
+        by \entity{Persephone's}{3} bees. &
+        \emph{Diverse set of span types is sampled, including spans that
+        are not entity mentions and ones that do link to entities.} \\
+        \textbf{li-clust-ent} &
+        For 10 points, name  \entity{this \entity{Moliere}{2} play about \entity{Argan who is constantly concerned
+        with \entity{his}{4} health}{3}}{1}. &
+        \emph{Many sampled spans are nested entity mentions.} \\
+        \textbf{ment-ent} &
+        He then sees \entity{Ignorance and Want}{1} emerge from \entity{a
+        cloak}{2}. Earlier, he sees \entity{a door-knocker}{3}
+        \entity{transform}{4} into
+        \entity{a human figure, which drags a belt made of chains and
+        locks}{5}. &
+        \emph{Compared to \preco{}, more entity mentions are sampled but most
+        sampled spans are still difficult to detect.} \\
+        \textbf{clust-ent} &
+        \entity{\entity{Its}{2} protagonist}{1} hires Croton to rescue a different character after listening to a giant - LRB -
+        \ * - RRB - Christian named Urban \entity{discuss}{3} a meeting at
+        Ostranium. &
+        \emph{Compared to \preco{}, a few sampled spans are not entity mentions.} \\
+        \textbf{cond-ent} &
+        While \entity{this work}{1} acknowledges the
+soundness of the arguments that use the example of the ancients,
+        \entity{\entity{its}{3} author}{2} refuses to reply to
+        \entity{them}{4}, adding that we are constructing no
+        system here \entity{we}{5} are a historian, not a critic. &
+        \emph{More pronouns are sampled because
+        they are obviously entity mentions and hard to cluster. Unlike \preco{},
+        repeated sampling occurs less often.} \\
+        \textbf{joint-ent} &
+        This man falls in love with \entity{the maid with \entity{lime colored
+        panties}{2}}{1} and dates \entity{Luciana}{3}. &
+        \emph{Compared to \preco{}, more entity mentions are sampled.} \\
+    \bottomrule
+    \end{tabular}
+    \caption{The example spans from \qbcoref{} documents that are sampled with each active learning
+    strategy.}
+    \label{tab:examples_qbcoref}
+\end{table*}
+

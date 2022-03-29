@@ -1,0 +1,8 @@
+\\abr\{[a-zA-Z]+\}	X
+\\citet\{[a-zA-Z\:\-0-9/]+\}	\ X
+\\citeauthor\{[a-zA-Z\:\-0-9/]+\}	\ X
+\\qb\{\}	\ Quizbowl
+\\qanta\{\}	\ Qanta
+\\squad\{\}	\ Squad
+Jeopardy!	Jeopardy
+\.\\footnote	\. \\footnote

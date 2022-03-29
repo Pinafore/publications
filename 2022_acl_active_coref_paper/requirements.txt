@@ -1,0 +1,6 @@
+pandas
+plotnine
+numpy
+cookiecutter
+scikit-misc
+scikit-learn

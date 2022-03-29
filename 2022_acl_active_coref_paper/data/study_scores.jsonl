@@ -1,0 +1,8 @@
+{"seed": 57, "strategy": "ment-ent", "cycle": 1, "f1": 0.552323896532939, "mentions": 0.61502989312903, "user": "nsvanid1", "day": 1, "session": "1"}
+{"seed": 57, "strategy": "ment-ent", "cycle": 1, "f1": 0.5971040219648733, "mentions": 0.6679202463932565, "user": "jvillen3", "day": 1, "session": "1"}
+{"seed": 57, "strategy": "ment-ent", "cycle": 1, "f1": 0.5925546093174018, "mentions": 0.6734409664307807, "user": "lfondre1", "day": 1, "session": "1"}
+{"seed": 67, "strategy": "ment-ent", "cycle": 1, "f1": 0.6312337909077897, "mentions": 0.7352273857195801, "user": "emcgraw1", "day": 1, "session": "1"}
+{"seed": 57, "strategy": "ment-ent", "cycle": 1, "f1": 0.5907131203283915, "mentions": 0.6949166013784333, "user": "jvillen3", "day": 1, "session": "2"}
+{"seed": 57, "strategy": "ment-ent", "cycle": 1, "f1": 0.5399917750339696, "mentions": 0.6498114306987586, "user": "lfondre1", "day": 1, "session": "2"}
+{"seed": 67, "strategy": "ment-ent", "cycle": 1, "f1": 0.5874339074660567, "mentions": 0.7000483580252341, "user": "emcgraw1", "day": 1, "session": "2"}
+{"seed": 57, "strategy": "ment-ent", "cycle": 1, "f1": 0.5491835736934405, "mentions": 0.6234733837780433, "user": "nsvanid1", "day": 1, "session": "2"}

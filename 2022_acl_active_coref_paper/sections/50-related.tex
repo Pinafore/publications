@@ -1,0 +1,43 @@
+\section{Related Work}
+
+\citet{gasperin-2009} present the first work on active learning for \coref{}
+yet observe negative results:
+active learning is not more effective
+than random sampling.
+\citet{miller-2012} explore
+different settings for labeling \coref{}.
+First, they
+label the most uncertain pairs of spans in the corpus.
+Second, they label all pairs in the most
+uncertain documents.
+The first approach beats random sampling but requires
+the annotator to infeasibly read many documents.
+The second approach is more realistic but loses to random sampling.
+\citet{zhao-2014} argue that active learning helps domain adaptation of
+\coref{}.
+\citet{sachan-2015} treat
+pairwise
+annotations as optimization constraints.
+\citet{li-2020} replace pairwise annotations with
+discrete annotations and experiment active learning with neural models.
+
+Active learning has been exhaustively studied for text
+classification~\citep{lewis-1994,zhu-2008,zhang-2017}.
+Text classification is a much simpler task, so researchers investigate  strategies beyond uncertainty sampling.
+\citet{yuan-2020-alps} use language model surprisal to cluster documents and then
+sample representative points for each cluster.
+\citet{margatina-2021} search for constrastive examples, which are documents
+that are similar in
+the feature space yet differ in predictive likelihood.
+Active learning is also applied to tasks like
+machine
+translation~\citep{liu-2018}, visual question
+answering~\citep{karamcheti-2021}, and entity alignment~\citep{bing-2021}.
+
+Rather than solely running simulations, other papers have also ran
+user studies or developed user-friendly interfaces. \citet{wei-2019} hold a user study for active
+learning to observe the time to annotate clinical named entities.
+\citet{lee-2020} develop active learning for
+language learning that adjusts labeling difficulty based on user
+skills. \citet{klie-2020} create a human-in-the-loop pipeline to improve
+entity linking for low-resource domains.

@@ -1,0 +1,235 @@
+% Preamble file contains handy macros and most packages you might want to use.
+% At the start are packages that conflict with various styles.  Don't add them
+% in!  Just put it in your main TeX file instead.
+
+% Do not put either of these (subfigure or subfloat) into the preamble
+% - they clash.  Use them in the final LaTeX document
+% \usepackage{subfigure}
+% \suepackage{subfloat}
+
+% Do not use times in the preamble!  It just causes problems with some
+% publication chairs (e.g., ICML 2013).  If you want it, put it in your own
+% document.
+% \usepackage{times}
+
+
+% Breaks ACM-SIG style
+% \usepackage{titlesec}
+% \usepackage{amsthm}
+% \usepackage{nomencl}
+
+% comment out the following line, as it conflicts with aistats2012.sty
+%\usepackage{caption}
+
+% This is required by NSF.  Do not remove; if it conflicts with
+% another package, fix that problem without removing this from
+% Preamble.  This may involved editing style files or bst files.  It's
+% painful, but do that rather than messing with this.  This is
+% required by federal government.
+\usepackage[a-1b]{pdfx}
+
+% Below should be safe
+\usepackage{framed}
+\usepackage{mdwlist}
+\usepackage{siunitx}
+\usepackage{latexsym}
+\usepackage{colortbl}
+\usepackage{xcolor}
+\usepackage{nicefrac}
+\usepackage{booktabs}
+\usepackage{fnpct}
+\usepackage{amsfonts}
+\usepackage[T1]{fontenc}
+\usepackage{bold-extra}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{bm}
+\usepackage{graphicx}
+\usepackage{mathtools}
+\usepackage{microtype}
+\usepackage{multirow}
+\usepackage{multicol}
+%\usepackage{todonotes}
+\usepackage{xpatch}
+% Don't use hyperref or url, as it can screw up AAAI / ICML formatting
+%\usepackage{url}
+\usepackage{latexsym,comment}
+\usepackage[normalem]{ulem}
+
+\newcommand{\breakalign}{\right. \nonumber \\ & \left. \hspace{2cm}}
+
+\newcommand*{\missingreference}{{\Huge \colorbox{red}{?reference?}}}
+\newcommand*{\missingcitation}{{\Huge \colorbox{red}{?citation?}}}
+
+\makeatletter
+\xpatchcmd{\@setref}{\bfseries}{\missingreference}{}{}
+\def\@citex[#1]#2{\leavevmode
+    \let\@citea\@empty
+    \@cite{\@for\@citeb:=#2\do
+        {\@citea\def\@citea{,\penalty\@m\ }%
+            \edef\@citeb{\expandafter\@firstofone\@citeb\@empty}%
+            \if@filesw\immediate\write\@auxout{\string\citation{\@citeb}}\fi
+            \@ifundefined{b@\@citeb}{\hbox{\reset@font\missingcitation}%
+                \G@refundefinedtrue
+                \@latex@warning
+                {Citation `\@citeb' on page \thepage \space undefined}}%
+            {\@cite@ofmt{\csname b@\@citeb\endcsname}}}}{#1}}
+\makeatother
+
+\newcommand{\feat}[1]{{\small \texttt{#1}}}
+\newcommand{\act}[1]{{\small \texttt{#1}}}
+\newcommand{\ngram}[0]{$n$-gram}
+\newcommand{\topic}[1]{\underline{#1}}
+\newcommand{\gem}[1]{\mbox{\textsc{gem}}}
+\newcommand{\abr}[1]{\textsc{#1}}
+\newcommand{\camelabr}[2]{{\small #1}{\textsc{#2}}}
+\newcommand{\abrcamel}[2]{{\textsc #1}{\small{#2}}}
+\newcommand{\grammar}[1]{{\color{red} #1}}
+\newcommand{\explain}[2]{\underbrace{#2}_{\mbox{\footnotesize{#1}}}}
+\newcommand{\dir}[1]{\mbox{Dir}(#1)}
+\newcommand{\bet}[1]{\mbox{Beta}(#1)}
+\newcommand{\py}[1]{\mbox{\textsc{py}}(#1)}
+\newcommand{\td}[2]{\mbox{\textsc{TreeDist}}_{#1} \left( #2 \right)}
+\newcommand{\yield}[1]{\mbox{\textsc{Yield}} \left( #1 \right)}
+\newcommand{\mult}[1]{\mbox{Mult}( #1)}
+\newcommand{\wn}{\textsc{WordNet}}
+\newcommand{\twentynews}{\textsc{20news}}
+\newcommand{\g}{\, | \,}
+\newcommand{\Gam}[1]{\Gamma \left( \textstyle #1 \right)}
+\newcommand{\LG}[1]{\log \Gamma \left( \textstyle #1 \right)}
+\newcommand{\Pois}[1]{\mbox{Poisson}(#1)}
+\newcommand{\pcfg}[3]{#1_{#2 \rightarrow #3}}
+\newcommand{\grule}[2]{#1 \rightarrow #2}
+\newcommand{\kl}[2]{D_{\mbox{\textsc{KL}}} \left( #1 \,||\, #2 \right)}
+
+\newcommand{\digambig}[1]{\Psi \left( #1 \right) }
+\newcommand{\digam}[1]{\Psi \left( \textstyle #1 \right) }
+\newcommand{\ddigam}[1]{\Psi' \left( \textstyle #1 \right) }
+
+
+\renewenvironment{quote}
+{\list{}{\rightmargin\leftmargin}%
+    \item\relax\small\ignorespaces}
+{\unskip\unskip\endlist}
+
+\DeclareMathOperator*{\argmax}{arg\,max}
+\DeclareMathOperator*{\argmin}{arg\,min}
+\newcommand{\bmat}[1]{\text{\textbf{#1}}}
+\newcommand{\bvec}[1]{\boldsymbol{#1}}
+
+%\newcommand{\email}[1]{ {\small \href{mailto://#1}{\texttt{#1} }  }}
+\newcommand{\emaillink}[1]{{\small \href{mailto://#1}{\texttt{#1}}}}
+\newcommand{\smallemaillink}[2]{{\small \href{mailto://#2}{\texttt{#1}}}}
+
+% JBG: Consider renaming from \ch to \zh because of conflict when adding Cyrillic
+\newcommand{\ch}[1]{\begin{CJK*}{UTF8}{gbsn}#1\end{CJK*}}
+
+\newcommand{\e}[2]{\mathbb{E}_{#1}\left[ #2 \right] }
+\newcommand{\h}[2]{\mathbb{H}_{#1}\left[ #2 \right] }
+\newcommand{\ind}[1]{\mathds{1}\left[ #1 \right] }
+\newcommand{\ex}[1]{\mbox{exp}\left\{ #1\right\} }
+\newcommand{\D}[2]{\frac{\partial #1}{\partial #2}}
+\newcommand{\elbo}{\mathcal{L}}
+
+\newcommand{\hidetext}[1]{}
+\newcommand{\ignore}[1]{}
+
+\ifcomment
+    \newcommand{\pinaforecomment}[3]{\colorbox{#1}{\parbox{.8\linewidth}{#2: #3}}}
+    %\newcommand{\prtodo}[1]{\todo[backgroundcolor=lightblue,linecolor=lightblue,author=Pedro]{#1}}
+    %\newcommand{\prtodoi}[1]{\todo[inline,backgroundcolor=lightblue,linecolor=lightblue,author=Pedro]{#1}}
+
+    \newcommand{\prtodo}[1]{\pinaforecomment{lightblue}{pr}{#1}}
+    \newcommand{\prtodoi}[1]{\pinaforecomment{lightblue}{pr}{#1}}
+\else
+    \newcommand{\pinaforecomment}[3]{}
+    \newcommand{\prtodo}[1]{}
+    \newcommand{\prtodoi}[1]{}
+\fi
+
+\newcommand{\jbgcomment}[1]{\pinaforecomment{red}{JBG}{#1}}
+\newcommand{\mjpcomment}[1]{\pinaforecomment{blue}{MJP}{#1}}
+\newcommand{\czcomment}[1]{\pinaforecomment{orange}{chen}{#1}}
+\newcommand{\clscomment}[1]{\pinaforecomment{blue}{CLS}{#1}}
+\newcommand{\ffcomment}[1]{\pinaforecomment{red}{FF}{#1}}
+\newcommand{\fpcomment}[1]{\pinaforecomment{green}{FP}{#1}}
+\newcommand{\yhcomment}[1]{\pinaforecomment{green}{YH}{#1}}
+\newcommand{\hhecomment}[1]{\pinaforecomment{blue}{HH}{#1}}
+\newcommand{\tncomment}[1]{\pinaforecomment{blue}{TN}{#1}}
+\newcommand{\mnicomment}[1]{\pinaforecomment{green}{Mohit}{#1}}
+\newcommand{\prcomment}[1]{\pinaforecomment{lightblue}{Pedro}{#1}}
+\newcommand{\fscomment}[1]{\pinaforecomment{orange}{Shi}{#1}}
+\newcommand{\vmcomment}[1]{\pinaforecomment{yellow}{Varun}{#1}}
+\newcommand{\rscomment}[1]{\pinaforecomment{yellow}{Richard}{#1}}
+\newcommand{\jszcomment}[1]{\pinaforecomment{green}{JSG}{#1}}
+\newcommand{\ascomment}[1]{\pinaforecomment{blue}{AS}{#1}}
+\newcommand{\vecomment}[1]{\pinaforecomment{blue}{VE}{#1}}
+\newcommand{\halcomment}[1]{\pinaforecomment{magenta!20}{Hal}{#1}}
+\newcommand{\kgcomment}[1]{\pinaforecomment{blue}{Kim}{#1}}
+\newcommand{\vancomment}[1]{\pinaforecomment{green}{VAN}{#1}}
+\newcommand{\thangcomment}[1]{\pinaforecomment{green}{Thang}{#1}}
+\newcommand{\alvincomment}[1]{\pinaforecomment{cyan}{Alvin}{#1}}
+\newcommand{\reviewercomment}[1]{\pinaforecomment{blue}{Reviewer}{#1}}
+\newcommand{\brscomment}[1]{\pinaforecomment{blue}{BRS}{#1}}
+\newcommand{\psrcomment}[1]{\pinaforecomment{yellow}{PSR}{#1}}
+\newcommand{\zkcomment}[1]{\pinaforecomment{cyan}{ZK}{#1}}
+\newcommand{\swcomment}[1]{\pinaforecomment{yellow}{SW}{#1}}
+\newcommand{\shaycomment}[1]{\pinaforecomment{yellow}{SBC}{#1}}
+\newcommand{\jlundcomment}[1]{\pinaforecomment{cyan}{J}{#1}}
+\newcommand{\kdscomment}[1]{\pinaforecomment{ceil}{KDS}{#1}}
+\newcommand{\lkfcomment}[1]{\pinaforecomment{yellow}{LF}{#1}}
+\newcommand{\yfcomment}[1]{\pinaforecomment{brown}{YF}{#1}}
+\newcommand{\ewcomment}[1]{\pinaforecomment{lightblue}{Eric}{#1}}
+\newcommand{\pgcomment}[1]{\pinaforecomment{lightblue}{Pranav}{#1}}
+\newcommand{\dpcomment}[1]{\pinaforecomment{cyan}{Denis}{#1}}
+\newcommand{\bencomment}[1]{\pinaforecomment{lightblue}{Ben}{#1}}
+\newcommand{\mycomment}[1]{\pinaforecomment{pink}{Michelle}{#1}}
+\newcommand{\nrcomment}[1]{\pinaforecomment{red}{Naveen}{#1}}
+\newcommand{\ahcomment}[1]{\pinaforecomment{yellow}{Hoyle}{#1}}
+\newcommand{\ahintext}[1]{{\small\textcolor{red}{[#1 -- \textsc{hoyle}]}}}
+\newcommand{\mscomment}[1]{\pinaforecomment{lightblue}{Matt}{#1}}
+
+\newcommand{\smalltt}[1]{ {\tt \small #1 }}
+\newcommand{\smallurl}[1]{ \begin{tiny}\url{#1}\end{tiny}}
+%\newcommand{\smallurl}[1]{ \begin{tiny} HIDDEN \end{tiny}}
+\newenvironment{compactenum}{ \begin{enumerate*} \small }{ \end{enumerate*} }
+
+\definecolor{lightblue}{HTML}{3cc7ea}
+\definecolor{CUgold}{HTML}{CFB87C}
+\definecolor{grey}{rgb}{0.95,0.95,0.95}
+\definecolor{ceil}{rgb}{0.57, 0.63, 0.81}
+\definecolor{UMDred}{HTML}{ed1c24}
+\definecolor{UMDyellow}{HTML}{ffc20e}
+
+% Datasets / Models
+
+\newcommand{\qb}[0]{\abr{qb}}
+\newcommand{\qa}[0]{\abr{qa}}
+\newcommand{\odqa}[0]{\abr{odqa}}
+\newcommand{\nlp}[0]{\abr{nlp}}
+\newcommand{\dpr}[0]{\abr{dpr}}
+\newcommand{\ml}[0]{\abr{ml}}
+\newcommand{\triviaqa}{\camelabr{Trivia}{qa}}
+\newcommand{\ambigqa}{\camelabr{Ambig}{qa}}
+\newcommand{\searchqa}{\camelabr{Search}{qa}}
+\newcommand{\wikiqa}{\camelabr{Wiki}{qa}}
+\newcommand{\newsqa}{\camelabr{News}{qa}}
+\newcommand{\trecqa}{\camelabr{Trec}{qa}}
+\newcommand{\qblink}{\abrcamel{qb}{Link}}
+\newcommand{\qanta}{\textsc{qanta}}
+\newcommand{\muse}{\textsc{muse}}
+\newcommand{\squad}{\textsc{sq}{\small u}\textsc{ad}}
+\newcommand{\nq}[0]{\abr{nq}}
+\newcommand{\conll}{\textsc{c}{\small o}\textsc{nll}}
+\newcommand{\hotpot}{\abr{h}{\small otpot}\abr{qa}}
+\newcommand{\fever}{\abr{fever}}
+\newcommand{\quac}{\textsc{q}{\small u}\textsc{ac}}
+\newcommand{\elmo}{\textsc{elm}{\small o}}
+\newcommand{\fone}{$F_1$}
+\newcommand{\jeopardy}{\textit{Jeopardy!\ }}
+
+\newcommand{\glove}{\abr{gl}{\small o}\abr{ve}}
+\newcommand{\openie}{\abr{o}{\small pen}\abr{ie}}
+\newcommand{\bert}{\abr{bert}}
+\newcommand{\drqa}{\abr{d}{\small r}\abr{qa}}
+\newcommand{\docqa}{\abr{d}{\small oc}\abr{qa}}

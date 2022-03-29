@@ -1,0 +1,133 @@
+% This must be in the first 6 lines to tell arXiv to use pdfLaTeX, which is strongly recommended.
+\pdfoutput=1
+% In particular, the hyperref package requires pdfLaTeX in order to break URLs across lines.
+
+\documentclass[11pt]{article}
+
+% Remove the "review" option to generate the final version.
+
+\usepackage{style/acl_arr}
+
+% Standard package includes
+\usepackage{times}
+\usepackage{latexsym}
+
+% For proper rendering and hyphenation of words containing Latin characters (including in bib files)
+\usepackage[T1]{fontenc}
+
+% This assumes your files are encoded as UTF8
+\usepackage[utf8]{inputenc}
+
+% This is not strictly necessary, and may be commented out,
+% but it will improve the layout of the manuscript,
+% and will typically save some space.
+\usepackage{microtype}
+
+
+
+\renewcommand{\UrlFont}{\ttfamily\small}
+
+\usepackage{algorithm}
+\usepackage[noend]{algpseudocode}
+\usepackage{varwidth}
+\usepackage{multirow}
+\usepackage{tabularx}
+\usepackage{subcaption}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amsfonts}
+\usepackage{bbm}
+\usepackage{bm}
+\usepackage{booktabs}
+\usepackage{graphicx}
+\usepackage{multirow}
+\usepackage{multicol}
+\usepackage{enumitem}
+\usepackage{mdwlist}
+\usepackage{csquotes}
+
+\setlist{nosep}
+
+% If the title and author information does not fit in the area allocated, uncomment the following
+%
+%\setlength\titlebox{<dim>}
+%
+% and set <dim> to something 5cm or larger.
+
+\title{Adapting Coreference Resolution Models through Active Learning}
+\author{Michelle Yuan$^\dagger$\ \ \ \ Patrick Xia$^\ddagger$\ \ \ \ Chandler May$^\ddagger$\\
+{\bf Benjamin Van Durme}$^\ddagger$\ \ \ \ {\bf Jordan Boyd-Graber}$^\dagger$\\
+    Human Language Technology Center of Excellence\\
+    $^\dagger$University of Maryland\ \ \ \ \ $^\ddagger$Johns Hopkins University\\
+    \texttt{myuan@cs.umd.edu paxia@cs.jhu.edu jbg@umiacs.umd.edu} \\}
+
+%\author{Michelle Yuan \\
+%    University of Maryland \\
+%    \texttt{myuan@cs.umd.edu} \\\And
+%    Patrick Xia \\
+%    Johns Hopkins University \\
+%\texttt{paxia@cs.jhu.edu} \\\AND
+%    Chandler May \\
+%    Johns Hopkins University \\
+%\texttt{cjmay@jhu.edu} \\\And
+%    Benjamin Van Durme\\
+%    Johns Hopkins University \\
+%\texttt{vandurme@cs.jhu.edu} \\\And
+%    Jordan Boyd-Graber \\
+%    University of Maryland\\
+%\texttt{jbg@umiacs.umd.edu} \\}
+
+\date{}
+
+\newif\ifcomment\commenttrue
+%\newif\ifcomment\commentfalse
+\input{style/preamble}
+
+\usepackage[normalem]{ulem}
+
+\newcommand{\avgfone}{\abr{Avg}~$\textsc{F}_1$}
+\newcommand{\coref}{\abr{cr}}
+\newcommand{\icoref}{\abr{ic{\small oref}}}
+\newcommand{\spanbert}{\abr{s{\small pan}bert}}
+\newcommand{\spanbertlarge}{\spanbert-\textsc{\small large}-\textsc{\small cased}}
+\newcommand{\ctof}{\abr{c{\small 2}f-coref}}
+\newcommand{\ontonotes}{\abr{o{\small nto}n{\small otes}}}
+\newcommand{\preco}{\abr{p{\small re}c{\small o}}}
+\newcommand{\qbcoref}{\abr{qbc{\small oref}}}
+
+\newcommand{\latexfile}[1]{\input{sections/#1}}
+\newcommand{\al}{\abr{al}}
+\newcommand{\norm}[1]{\left\lVert#1\right\rVert}
+\newcommand{\hl}[1]{\colorbox{yellow}{#1}}
+\newcommand{\hz}{\vphantom{\parbox[c]{0.1cm}{\rule{0.1cm}{0.4cm}}}}
+\setlength\fboxsep{0pt}
+\newcommand{\given}{\, | \,}
+\newcommand{\gold}[1]{\abr{gold}(#1)}
+\newcommand{\ent}[1]{\text{H}_{\text{#1}}}
+\newcommand{\entity}[2]{[#1]\textsubscript{#2}}
+
+\newtheorem{theorem}{Proposition}
+
+\graphicspath{ {figures/}{auto_commit_fig/}{auto_fig/} }
+
+
+\begin{document}
+\maketitle
+\begin{abstract}
+\latexfile{00-abstract}
+\end{abstract}
+\latexfile{10-intro}
+\latexfile{20-coref}
+\latexfile{30-active}
+\latexfile{40-experiments}
+\latexfile{50-related}
+\latexfile{60-conclusion}
+\latexfile{70-ethics}
+\latexfile{acknowledgements.tex}
+
+\bibliography{bib/journal-full,bib/jbg,bib/michelle}
+\bibliographystyle{style/acl_natbib}
+\latexfile{appendix}
+
+\end{document}
