@@ -1,0 +1,51 @@
+% varying number of documents read and spans sampled
+\begin{frame}{Reading and Labeling Trade-off}
+\begin{columns}[c]
+\column{0.6\textwidth}
+    \includegraphics[width=\textwidth]{\autofig{preco_f1.pdf}}
+\column{0.4\textwidth}
+\begin{itemize}
+\item
+Test Avg F1 on PreCo of models trained with each strategy
+\item
+Each column varies in the maximum number of docs. read per cycle
+\item
+Each column varies in the number of labeled spans per cycle
+\end{itemize}
+\end{columns}
+\end{frame}
+
+% user study results
+\begin{frame}{Reading and Labeling for Humans}
+\onslide<1->
+Three users
+label spans sampled from PreCo
+\vfill
+    \centerline{\includegraphics[width=0.8\textwidth]{\figfile{ui.pdf}}}
+\vfill
+\onslide<2->
+    Users complete two twenty-five minute sessions:
+    \begin{enumerate}
+        \item \textbf{FewDocs:} Read fewer docs.~and label multiple spans per doc.
+        \item \textbf{ManyDocs:} Read more docs.~and label
+    one span per doc.
+    \end{enumerate}
+\end{frame}
+
+\begin{frame}{Reading and Labeling for Humans}
+\begin{columns}[c]
+\column{0.5\textwidth}
+    \includegraphics[width=\textwidth]{\autofig{userstudy_reduced.pdf}}
+\column{0.5\textwidth}
+    \begin{itemize}
+        \item  Each color indicates one of three users
+and the linetype designates the session
+\item Black dots
+mark the first span labeled in a different document
+\item The
+mean Avg F1 across users for each session is on the
+right
+    \end{itemize}
+\end{columns}
+\end{frame}
+

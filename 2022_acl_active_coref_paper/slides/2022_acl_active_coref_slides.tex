@@ -1,0 +1,109 @@
+\documentclass[aspectratio=169,t,xcolor=table]{beamer}
+\usepackage[utf8]{inputenc}
+
+\usepackage{booktabs}
+\usepackage{subcaption}
+
+\usetheme{Ufg}
+
+\usepackage[round,semicolon,authoryear]{natbib}
+\usepackage{bibentry}
+\nobibliography*
+
+\newtheorem{define}{Definition}
+\newtheorem{thm}{Theorem}
+\newtheorem{ex}{Example}
+\newtheorem{exer}{Exercise}
+
+\setbeamertemplate{theorems}[numbered]
+\setbeamertemplate{caption}[numbered]
+
+\setPrimaryColor{LightBlue}
+\setSecondaryColor{DarkBlue}
+\setLogos{lib/logos/cs.png}{lib/logos/umd.png}{lib/logos/hopkins.png}
+
+\newcommand{\conclusionbegin}{
+   \newcounter{finalframe}
+   \setcounter{finalframe}{\value{framenumber}}
+}
+\newcommand{\conclusionend}{
+   \setcounter{framenumber}{\value{finalframe}}
+}
+
+\newcommand{\latexfile}[1]{\input{sections/#1}}
+\newcommand{\figfile}[1]{figures/#1}
+\newcommand{\autofig}[1]{auto_fig/#1}
+\newcommand{\datafile}[1]{\input{../data/#1}}
+
+\newcommand{\ent}[1]{\text{H}_{\text{#1}}}
+\newcommand{\given}{\, | \,}
+
+\input{title.tex}
+
+\setLayout{vertical}
+
+%\begin{frame}
+    %\frametitle{Table of Contents}
+    %\tableofcontents
+%\end{frame}
+
+\latexfile{10.tex}
+\latexfile{20.tex}
+\latexfile{30.tex}
+\latexfile{40.tex}
+\latexfile{50.tex}
+
+%\section{Vertical}
+
+%\setLayout{vertical}
+%\begin{frame}{Sample frame title}
+
+    %In this slide, some important text will be
+    %\alert{highlighted} because it's important. Please, don't abuse it.
+
+    %\begin{block}{Remark}
+        %Sample text
+    %\end{block}
+
+    %\begin{alertblock}{Important theorem}
+        %Sample text in alert box
+    %\end{alertblock}
+
+    %\begin{examples}
+        %Sample text in green box. The title of the block is ``Examples".
+    %\end{examples}
+
+%\end{frame}
+
+
+%\section{Main point layout}
+
+%\setLayout{mainpoint}
+%\begin{frame}[plain,noframenumbering]
+    %\frametitle{Preliminary Empirical Study}
+%\end{frame}
+
+%\section{Horizontal}
+
+%\setLayout{horizontal}
+%\begin{frame}
+    %\frametitle{Sample frame title}
+    %This is a text in second frame. For the sake of showing an example.
+
+    %\begin{itemize}
+        %\item<1-> Text visible on slide 1
+        %\item<2-> Text visible on slide 2
+        %\begin{itemize}
+            %\item text subitem
+        %\end{itemize}
+        %\item<3> Text visible on slides 3
+        %\item<4-> Text visible on slide 4~\citep{yuan-2020-clime}
+    %\end{itemize}
+%\end{frame}
+
+\conclusionbegin
+\input{thanks.tex}
+\input{references.tex}
+\conclusionend
+
+\end{document}

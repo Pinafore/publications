@@ -1,0 +1,285 @@
+\ProvidesPackage{beamerthemeUfg}[2019/10/15]
+%\usepackage[sfdefault]{roboto}
+\usepackage{tikz}
+\usepackage[T1]{fontenc}
+\usepackage{array}
+\usepackage{ifthen}
+\usepackage{colortbl}
+\usepackage{adjustbox}
+
+\mode<presentation>
+\usepackage{arev}
+\usefonttheme{serif}
+
+\definecolor{INFBlue}{RGB}{0, 92, 161}
+\definecolor{UFGBlue}{RGB}{0, 114, 185}
+\definecolor{PrimaryColor}{RGB}{33, 33, 33}
+
+\definecolor{DarkGray}{RGB}{33,33,33}
+\definecolor{LightGray}{RGB}{150,150,150}
+\definecolor{Ocean}{RGB}{129,194,234}
+\definecolor{DarkOrange}{RGB}{255, 152, 0}
+\definecolor{LightOrange}{RGB}{255, 193, 7}
+\definecolor{DarkGreen}{RGB}{91, 141, 8}
+\definecolor{LightGreen}{RGB}{122, 188, 12}
+\definecolor{LightPurple}{RGB}{191, 83, 219}
+\definecolor{DarkPurple}{RGB}{142, 36, 170}
+\definecolor{VeryLightGray}{RGB}{249, 249, 249}
+
+\definecolor{UMDRed}{RGB}{226, 24, 51}
+\definecolor{UMDYellow}{RGB}{255,210,0}
+\definecolor{LightBlue}{RGB}{234, 242, 248 }
+\definecolor{DarkBlue}{RGB}{27, 88, 133}
+
+\newcommand{\setPrimaryColor}[1]{
+    \colorlet{PrimaryColor}{#1}
+}
+
+\newcommand{\setSecondaryColor}[1]{
+    \colorlet{SecondaryColor}{#1}
+}
+
+\newcommand{\setLogos}[3]{
+    \pgfdeclareimage[height=12mm]{logo1_title}{#1}
+    \pgfdeclareimage[height=10mm]{logo2_small}{#2}
+    \pgfdeclareimage[width=13mm]{logo2_medium}{#2}
+    \pgfdeclareimage[height=25mm]{logo3}{#3}
+}
+
+\newcommand{\setDefaultConfig}{
+    \color{DarkGray} %Primary
+    \setbeamercolor{bgcolor}{fg=PrimaryColor}
+    \setbeamercolor{bgcolordark}{fg=SecondaryColor}
+    \setbeamercolor{normal}{fg=DarkGray}
+    \setbeamercolor{title}{fg=DarkGray}
+    \setbeamercolor{frametitle}{fg=DarkGray}
+    \setbeamercolor{structure}{fg=SecondaryColor}
+    \setbeamercolor{normal text}{fg=DarkGray,bg=white}
+    \setbeamercolor{section number projected}{bg=DarkGray,fg=white}
+    \setbeamercolor{itemize item}{fg=DarkGray}
+    \setbeamercolor{itemize subitem}{fg=DarkGray}
+    \setbeamercolor{itemize subsubitem}{fg=DarkGray}
+    \setbeamercolor{itemize subbody}{fg=DarkGray}
+    \setbeamercolor{itemize/enumerate body}{fg=DarkGray}
+    \setbeamercolor{itemize/enumerate subbody}{fg=DarkGray}
+    \setbeamercolor{itemize/enumerate subsubbody}{fg=DarkGray}
+    \setbeamercolor{alerted text}{fg=UMDRed}
+    \setbeamercolor{example text}{fg=DarkGreen}
+    \setbeamercolor{block title}{fg=SecondaryColor}
+    \setbeamertemplate{frametitle}{ \vbox{}\hskip -0.5ex \vskip -3ex   \strut\insertframetitle\strut }
+}
+
+\newcommand{\setWhiteConfig}{
+    \color{white}
+    \setbeamercolor{normal}{fg=white}
+    \setbeamercolor{frametitle}{fg=white}
+    \setbeamercolor{structure}{fg=white}
+    \setbeamercolor{normal text}{fg=white,bg=white}
+    \setbeamercolor{section number projected}{bg=white,fg=white}
+    \setbeamercolor{frametitle}{fg=white}
+    \setbeamercolor{itemize item}{fg=white}
+    \setbeamercolor{itemize subitem}{fg=white}
+    \setbeamercolor{itemize subsubitem}{fg=white}
+    \setbeamercolor{itemize/enumerate body}{fg=white}
+    \setbeamercolor{itemize/enumerate subbody}{fg=white}
+    \setbeamercolor{itemize/enumerate subsubbody}{fg=white}
+    \setbeamertemplate{frametitle}{ \vbox{}\hskip -0.5ex \vskip -3ex   \strut\insertframetitle\strut }
+}
+
+
+\setDefaultConfig
+
+
+%----------------------------------------Formatting beamer elements
+\setbeamerfont{alerted text}{series=\bfseries}
+\setbeamerfont{block title}{series=\bfseries}
+
+\setbeamercolor{section in toc}{fg=DarkGray}
+\setbeamertemplate{section in toc}{%
+    \hspace{1cm} {\inserttocsectionnumber} \hspace{1cm} \inserttocsection
+}
+\setbeamercolor{subsection in toc}{fg=UFGBlue}
+\setbeamertemplate{subsection in toc}{%
+    \hspace{2.5cm} $\rhd$ \hspace{1cm} \inserttocsubsection \\
+}
+
+
+
+\setbeamertemplate{itemize item}{\scriptsize\raise1.25pt\hbox{\large\donotcoloroutermaths$\bullet$}}
+\setbeamertemplate{itemize subitem}{\tiny\raise1.5pt\hbox{\donotcoloroutermaths$\circ$}}
+\setbeamertemplate{itemize subsubitem}{\tiny\raise1.5pt\hbox{\donotcoloroutermaths$\blacksquare$}}
+
+\setbeamertemplate{frametitle}{
+    \vbox{}\hskip -0.5ex \vskip -3ex   \strut\insertframetitle\strut
+}
+\setbeamerfont{frametitle}{size=\LARGE, series=\bfseries}
+
+\setbeamertemplate{footline}{
+    \ifnum \insertpagenumber > 1
+        \raisebox{7pt}[0pt][0pt]{
+            \makebox[\paperwidth]{\hfill\makebox[30pt]{\bfseries\scriptsize\insertframenumber/\inserttotalframenumber }}
+        }
+    \fi
+}
+\defbeamertemplate{footline}{ftln}{
+
+}
+
+% WORKING ON BLOCKS
+\setbeamertemplate{navigation symbols}{}
+
+\setbeamertemplate{block begin}{
+	\vspace{\fill}
+	\begin{adjustbox}{max width=0.98\textwidth, trim=0 2ex 0 0,clip}
+		\begin{tabular}{!{\color{SecondaryColor}{\vrule width 4pt}}>{\columncolor[gray]{0.97}}m{\textwidth}}
+			\begin{beamercolorbox}{block title} \usebeamerfont*{block title} \vbox{}\vskip 0.2ex \insertblocktitle \end{beamercolorbox}\usebeamerfont*{block text}
+		}
+		\setbeamertemplate{block end}{\end{tabular}\end{adjustbox}}
+
+\setbeamertemplate{block alerted begin}{
+	\vspace{\fill}
+	\begin{adjustbox}{max width=0.98\textwidth, trim=0 2ex 0 0,clip}
+		\begin{tabular}{!{\color{UMDRed}{\vrule width 4pt}}>{\columncolor[gray]{0.97}}m{\textwidth}}
+			\begin{beamercolorbox}{alerted text} \usebeamerfont*{block title} \vbox{}\vskip 0.2ex \insertblocktitle \end{beamercolorbox}\usebeamerfont*{block text}
+		}
+		\setbeamertemplate{block alerted end}{\end{tabular}\end{adjustbox}}
+
+\setbeamertemplate{block example begin}{
+	\vspace{\fill}
+	\begin{adjustbox}{max width=0.98\textwidth, trim=0 2ex 0 0,clip}
+		\begin{tabular}{!{\color{DarkGreen}{\vrule width 4pt}}>{\columncolor[gray]{0.97}}m{\textwidth}}
+			\begin{beamercolorbox}{example text} \usebeamerfont*{block title} \vbox{}\vskip 0.2ex \insertblocktitle \end{beamercolorbox}\usebeamerfont*{block text}
+		}
+\setbeamertemplate{block example end}{\end{tabular}\end{adjustbox}}
+
+
+
+\setbeamersize{text margin left=0.05\textwidth}
+\setbeamersize{text margin right=0.15\textwidth}
+\setbeamercolor{bgcolor}{bg=PrimaryColor}
+\setbeamercolor{bgcolordark}{bg=SecondaryColor}
+
+
+% ----------------------------------Define layouts backgrounds
+\pgfdeclareimage[width=\paperwidth]{vertical}{lib/layouts/vertical_bg.pdf}
+\pgfdeclareimage[width=\paperwidth]{horizontal}{lib/layouts/horizontal_bg.pdf}
+\pgfdeclareimage[width=\paperwidth]{titlepage}{lib/layouts/intro_bg.pdf}
+\pgfdeclareimage[width=\paperwidth]{transparent}{lib/layouts/title_bg.pdf}
+
+
+% ----------------------------------Defining the layouts
+\newcommand{\titleLayout}{
+
+    \usebackgroundtemplate{
+
+        \begin{picture}(100,256)(0,0)
+
+             \put(0,0){
+                \begin{beamercolorbox}[wd=1.1\paperwidth,ht=\paperheight]{bgcolor}\end{beamercolorbox}
+             }
+            \put(0,0){\pgfuseimage{titlepage}}
+            \put(12,10){\pgfuseimage{logo1_title}}
+            \put(345,25){\pgfuseimage{logo3}}
+        \end{picture}
+
+    }
+
+
+    \setbeamerfont{title}{series=\bfseries,parent=structure}
+    \setbeamerfont{subtitle}{size=\scriptsize,series=\bfseries,parent=structure}
+    \setbeamerfont{author}{size=\small,series=\bfseries,parent=structure}
+    \setbeamerfont{institute}{size=\scriptsize,series=\mdseries,parent=structure}
+    \setbeamerfont{date}{size=\scriptsize,series=\bfseries,parent=structure}
+
+
+}
+
+\newcommand{\horizontal}{
+    \usebackgroundtemplate{
+        \begin{picture}(100,256)(0,0)
+            \put(0,0){
+                \begin{beamercolorbox}[wd=1.1\paperwidth,ht=\paperheight]{bgcolor}\end{beamercolorbox}
+             }
+            \put(0,0){\pgfuseimage{horizontal}}
+            \put(10,5){\pgfuseimage{logo2_small}}
+        \end{picture}
+    }
+    \setDefaultConfig
+}
+
+\newcommand{\vertical}{
+    \usebackgroundtemplate{
+        \begin{picture}(100,256)(0,0)
+            \put(0,0){
+                \begin{beamercolorbox}[wd=1.1\paperwidth,ht=\paperheight]{bgcolor}\end{beamercolorbox}
+             }
+            \put(0,0){\pgfuseimage{vertical}}
+            \put(410,205){\pgfuseimage{logo2_medium}}
+        \end{picture}
+    }
+
+   \setDefaultConfig
+}
+\newcommand{\blank}{
+  \usebackgroundtemplate{
+    \begin{picture}(100,256)(0,0)
+        \begin{beamercolorbox}[wd=1.1\paperwidth,ht=\paperheight]{bgcolordark}
+        \end{beamercolorbox}
+    \end{picture}
+  }
+    \setWhiteConfig
+
+
+}
+
+\newcommand{\mainpoint}{
+  \usebackgroundtemplate{
+    \begin{picture}(100,256)(0,0)
+        \put(0,0){
+            \begin{beamercolorbox}[wd=1.1\paperwidth,ht=\paperheight]{bgcolordark}
+            \end{beamercolorbox}
+        }
+        \put(0,0){\pgfuseimage{transparent}}
+        % Put the frame title in the middle of page
+        \put(160,115){
+            \begin{tabular}{m{0.7\textwidth}}
+                \begin{flushleft}
+                   \selectfont \Huge \bfseries \insertframetitle
+                \end{flushleft}
+            \end{tabular}
+        }
+        \put(150,80){
+            \begin{tikzpicture}
+                \fill[white] (0,0) rectangle (0.2,3);
+            \end{tikzpicture}
+        }
+    \end{picture}
+
+  }
+
+  \setWhiteConfig
+  \setbeamertemplate{frametitle}{  }
+
+}
+
+\titleLayout
+
+% --------------------------------------------%
+% Defining command to control slide's changes
+% --------------------------------------------%
+
+\newcommand{\setBGColor}[1]{
+    \setbeamercolor{bgcolor}{bg=#1}
+}
+
+\newcommand{\setLayout}[1]{
+    \ifthenelse{\equal{#1}{titlepage}}{\titleLayout}{}
+    \ifthenelse{\equal{#1}{vertical}}{\vertical}{}
+    \ifthenelse{\equal{#1}{horizontal}}{\horizontal}{}
+    \ifthenelse{\equal{#1}{mainpoint}}{\mainpoint}{}
+    \ifthenelse{\equal{#1}{blank}}{\blank}{}
+}
+
+
+
+

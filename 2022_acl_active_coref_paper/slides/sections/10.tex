@@ -1,0 +1,33 @@
+% introduce coreference
+\begin{frame}{Coreference Resolution (CR)}
+\onslide<1-> The task of discovering spans of text that refer to the same entity
+\vfill
+    \centerline{\includegraphics[width=\textwidth]{\figfile{example_source.pdf}}}
+\vfill
+\onslide<2-> Neural, end-to-end models~\citep{lee-2018, joshi-2020} are
+    SOTA for OntoNotes 5.0 \\
+
+\end{frame}
+
+% introduce problem of adapting coreference
+\begin{frame}{Problem: Adapting CR Models}
+\onslide<1-> Models trained on OntoNotes may not immediately
+    generalize to new domains
+\vfill
+    \centerline{\includegraphics[width=\textwidth]{\figfile{example_adapt.pdf}}}
+\vfill
+\onslide<2-> Impedes immediate application for scenarios like distinguishing entities in legal documents
+\end{frame}
+
+\begin{frame}{Problem: Adapting CR Models}
+    \begin{itemize}
+        \onslide<1-> \item \citep{xia-2021} show the benefits of \emph{continued training}
+    where a model trained on OntoNotes is further trained on the target dataset
+    \onslide<2-> \item However, they assume labeled data already exist in the target
+        domain
+    \onslide<3-> \item How can we adapt CR models without requiring large amounts of
+        newly annotated data?
+    \end{itemize}
+\end{frame}
+
+

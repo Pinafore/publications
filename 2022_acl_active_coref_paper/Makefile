@@ -32,11 +32,9 @@ auto_fig/res.txt: figures.py
 	./scripts/style-check.rb *.tex sections/*.tex
 
 
-
 # These targets should remain in sync (e.g., if you fix one, do the same for the other).  Except for the .tgz target should have all the bib files but the arxiv target should have the bbl file ($<)
 %.tgz: %.bbl
 	tar cvfz $@ Makefile style/*.sty style/*.bst style/*.cls $(<:.bbl=.tex) bib/*.bib style/*.tex figures/* auto_fig/* sections/*.tex
-
 
 %.arxiv.tgz: %.bbl
 	tar cvfz $@ Makefile $< style/*.sty style/*.bst style/*.cls $(<:.bbl=.tex) style/*.tex figures/* auto_fig/* sections/*.tex
