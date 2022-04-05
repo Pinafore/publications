@@ -1,15 +1,18 @@
 % conclusion
 \begin{frame}{Summary}
 \begin{enumerate}
-\item Neural CR models cannot immediately adapt without training on in-domain,
-labeled data
-\item To reduce amount of annotation, we use active learning to choose particular text spans for users to label
-\item We explore various aspects of active learning for CR, including sources of
+\onslide<1->
+\item To reduce annotation for transferring coreference resolution models, we use active learning to choose text spans for users to label
+\onslide<2->
+\item We explore various aspects of active learning for coreference resolution,
+    like sources of
 model uncertainty and the trade-off between reading and labeling
-\item Sampling by mention detection entropy is more useful for domains like
+\onslide<3->
+\item Surprisingly, sampling by mention detection entropy is more useful for domains like
 PreCo
+\onslide<4->
 \item In both simulations and the user study,
-CR improves from continued training on spans sampled from the same document rather than different
+there are more benefits from sampling spans from the same document rather than different
 contexts
 \end{enumerate}
 \end{frame}

@@ -112,18 +112,18 @@
 \setbeamertemplate{frametitle}{
     \vbox{}\hskip -0.5ex \vskip -3ex   \strut\insertframetitle\strut
 }
-\setbeamerfont{frametitle}{size=\LARGE, series=\bfseries}
+\setbeamerfont{frametitle}{size=\Large, series=\bfseries}
 
-\setbeamertemplate{footline}{
-    \ifnum \insertpagenumber > 1
-        \raisebox{7pt}[0pt][0pt]{
-            \makebox[\paperwidth]{\hfill\makebox[30pt]{\bfseries\scriptsize\insertframenumber/\inserttotalframenumber }}
-        }
-    \fi
-}
-\defbeamertemplate{footline}{ftln}{
+%\setbeamertemplate{footline}{
+    %\ifnum \insertpagenumber > 1
+        %\raisebox{7pt}[0pt][0pt]{
+            %\makebox[\paperwidth]{\hfill\makebox[30pt]{\bfseries\scriptsize\insertframenumber/\inserttotalframenumber }}
+        %}
+    %\fi
+%}
+%\defbeamertemplate{footline}{ftln}{
 
-}
+%}
 
 % WORKING ON BLOCKS
 \setbeamertemplate{navigation symbols}{}
@@ -154,8 +154,8 @@
 
 
 
-\setbeamersize{text margin left=0.05\textwidth}
-\setbeamersize{text margin right=0.15\textwidth}
+\setbeamersize{text margin left=0.10\textwidth}
+\setbeamersize{text margin right=0.10\textwidth}
 \setbeamercolor{bgcolor}{bg=PrimaryColor}
 \setbeamercolor{bgcolordark}{bg=SecondaryColor}
 
@@ -170,19 +170,19 @@
 % ----------------------------------Defining the layouts
 \newcommand{\titleLayout}{
 
-    \usebackgroundtemplate{
+    %\usebackgroundtemplate{
 
-        \begin{picture}(100,256)(0,0)
+        %\begin{picture}(100,256)(0,0)
 
-             \put(0,0){
-                \begin{beamercolorbox}[wd=1.1\paperwidth,ht=\paperheight]{bgcolor}\end{beamercolorbox}
-             }
-            \put(0,0){\pgfuseimage{titlepage}}
-            \put(12,10){\pgfuseimage{logo1_title}}
-            \put(345,25){\pgfuseimage{logo3}}
-        \end{picture}
+             %\put(0,0){
+                %\begin{beamercolorbox}[wd=1.1\paperwidth,ht=\paperheight]{bgcolor}\end{beamercolorbox}
+             %}
+            %\put(0,0){\pgfuseimage{titlepage}}
+            %\put(12,10){\pgfuseimage{logo1_title}}
+            %\put(345,25){\pgfuseimage{logo3}}
+        %\end{picture}
 
-    }
+    %}
 
 
     \setbeamerfont{title}{series=\bfseries,parent=structure}
@@ -223,11 +223,11 @@
 \newcommand{\blank}{
   \usebackgroundtemplate{
     \begin{picture}(100,256)(0,0)
-        \begin{beamercolorbox}[wd=1.1\paperwidth,ht=\paperheight]{bgcolordark}
+        \begin{beamercolorbox}[wd=1.1\paperwidth,ht=\paperheight]{white}
         \end{beamercolorbox}
     \end{picture}
   }
-    \setWhiteConfig
+    \setDefaultConfig
 
 
 }

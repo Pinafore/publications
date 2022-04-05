@@ -228,15 +228,7 @@ def plot_preco():
     df = df[df.strategy != 'li-clust-ent'] # for slides
 
     g_f1 = make_plot('f1', df)
-    max_docs = df.max_docs.max() # for slides
-    g_f1 += facet_grid('num_spans ~ max_docs', # for slides
-        labeller=labeller(
-            rows = lambda x: f'{x} spans',
-            cols = lambda x: f'{x} docs' if int(x) < max_docs else 'unconstrained'
-            )
-    )
-
-    g_f1.save(filename=OUTPUTS['preco_f1'], width=9, height=6) # for slides
+    g_f1.save(filename=OUTPUTS['preco_f1'], width=6, height=9) # for slides
     return df
 
 
@@ -299,13 +291,13 @@ def plot_userstudy():
                 legend_text=element_text(size=15), legend_key_size=30
                 )
         # add scores
-        if not full:
-            scores = pd.DataFrame([
-                {'x':28,'y':50,'score':'0.581'},
-                {'x':28, 'y':20, 'score':'0.560'}
-            ])
-            g += xlim(0,30)
-            g += geom_text(data=scores, mapping=aes(x='x', y='y', label='score'), color='black', size=15)
+        # if not full:
+            # scores = pd.DataFrame([
+                # {'x':28,'y':50,'score':'0.581'},
+                # {'x':28, 'y':20, 'score':'0.560'}
+            # ])
+            # g += xlim(0,30)
+            # g += geom_text(data=scores, mapping=aes(x='x', y='y', label='score'), color='black', size=15)
 
         g.save(filename=gfxdir(f'userstudy{suffix}.pdf'))
 

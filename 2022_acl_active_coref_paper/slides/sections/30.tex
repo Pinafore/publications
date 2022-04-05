@@ -16,9 +16,10 @@ the model has different scores for mention detection and clustering
 \begin{enumerate}
 \onslide<1-> \item \textbf{Mention detection:}
     \begin{itemize}
-        \item Given span $x$, let $X$ be the random variable encoding whether $x$ is an
+        \item Given a span of text $x$, let $X$ be the random variable encoding whether $x$ is an
 entity mention (1) or not (0)
-        \item The CR model first scores the likelihood of $X$ being $1$
+        \item The CR model first scores $P(X=1)$, which is the likelihood of $x$
+            being an entity mention
     \end{itemize}
 \onslide<2-> \item \textbf{Mention clustering:}
     \begin{itemize}
@@ -37,7 +38,6 @@ model determines $P(C=c \given X=1)$ for each observed entity cluster $c$
         &= \ent{}{(X)} \\
         &= - \sum_{i=0}^1 P(X=i) \log P(X=i). \nonumber
 \end{align}
-\vfill
 Samples spans that challenge mention detection (e.g. class-ambiguous words like
 ``park'').
 \end{frame}
@@ -51,7 +51,6 @@ Samples spans that challenge mention detection (e.g. class-ambiguous words like
     1) \log \nonumber \\
     & \qquad P(C = c \given X = 1). \nonumber
 \end{align}
-\vfill
 Entropy computation does not explicitly address uncertainty in mention
 detection.
 \end{frame}
@@ -67,7 +66,6 @@ detection.
         &= P(X=1) \ent{CLUST}(x).
 \end{split}
 \end{equation}
-\vfill
 Samples words like pronouns because they are obviously entity mentions but
 difficult to cluster.
 \end{frame}
@@ -80,51 +78,52 @@ difficult to cluster.
         &= \ent{}(X,C) = \ent{}(X) + \ent{}(C \given X) \nonumber \\
         &= \ent{MENT}(x) + \ent{COND}(x).
 \end{align}
-\vfill
 Samples spans that are difficult to detect as entity mentions \emph{and}
 too confusing to cluster.
 \end{frame}
 
-\begin{frame}{Experiments}
-\onslide<1->
-    \textbf{Baselines:}
+\begin{frame}{Experiments: Baselines}
 \begin{enumerate}
 \item \textbf{random:} Sample from all spans in the document
 \item \textbf{random-ment:} Like other uncertainty strategies, sample only from
 the pool of spans that are likely entity mentions
 \end{enumerate}
-\vfill
-\onslide<2->
-    \textbf{Datasets:}
+\end{frame}
+\begin{frame}{Experiments: Datasets}
     \begin{enumerate}
-    \item \textbf{OntoNotes 5.0:} Most common dataset for training and evaluating
+        \item \textbf{OntoNotes 5.0 (source):} Most common dataset for training and evaluating
         CR that contains news articles and telephone
             conversations~\citep{pradhan-2013}. Only non-singletons are
             annotated.
-    \item \textbf{PreCo:} Large corpus of grad-school reading comprehension
+        \item \textbf{PreCo (target):} Large corpus of grade-school reading comprehension
         texts with annotated singletons~\citep{chen-2018}.
     \end{enumerate}
 \end{frame}
 
 % comparing strategies
-\begin{frame}{Evaluating Sampling Strategies}
+\begin{frame}{Evaluating Active Learning}
 \begin{columns}[c]
 \column{0.5\textwidth}
     \includegraphics[width=\textwidth]{\autofig{preco_simple_f1.pdf}}
 \column{0.5\textwidth}
-    Test Avg. F1 on PreCo of models trained with each strategy where we simulate
-    fifty spans from  one document being labeled on each cycle
+    \begin{itemize}
+    \item
+    Test Avg. F1 on PreCo of models trained with each strategy
+    \item Each cycle simulates
+    fifty spans from one document being labeled
+\item \textbf{Ment-ent}, \textbf{clust-ent}, and \textbf{joint-ent} are effective while \textbf{random} performs worst
+    \end{itemize}
 \end{columns}
 \end{frame}
 
 % section 4.1.1
-\begin{frame}{Distribution of Sampled Span Types}
-\begin{columns}[c]
-\column{0.55\textwidth}
-    \includegraphics[width=\textwidth]{\autofig{preco_samples.pdf}}
-\column{0.45\textwidth}
-Cumulative counts of entities, non-entities,
-pronouns, and singletons sampled for each strategy
-over first four cycles of the PreCo simulation
-\end{columns}
-\end{frame}
+%\begin{frame}{Distribution of Sampled Span Types}
+%\begin{columns}[c]
+%\column{0.55\textwidth}
+    %\includegraphics[width=\textwidth]{\autofig{preco_samples.pdf}}
+%\column{0.45\textwidth}
+%Cumulative counts of entities, non-entities,
+%pronouns, and singletons sampled for each strategy
+%over first four cycles of the PreCo simulation
+%\end{columns}
+%\end{frame}

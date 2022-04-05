@@ -1,16 +1,19 @@
 % varying number of documents read and spans sampled
 \begin{frame}{Reading and Labeling Trade-off}
 \begin{columns}[c]
-\column{0.6\textwidth}
-    \includegraphics[width=\textwidth]{\autofig{preco_f1.pdf}}
 \column{0.4\textwidth}
+    \includegraphics[width=\textwidth]{\autofig{preco_f1.pdf}}
+\column{0.6\textwidth}
 \begin{itemize}
 \item
 Test Avg F1 on PreCo of models trained with each strategy
 \item
-Each column varies in the maximum number of docs. read per cycle
+Each column varies in max.~number of docs.~read per cycle
 \item
-Each column varies in the number of labeled spans per cycle
+Each row varies in number of labeled spans per cycle
+\item
+For unconstrained reading, model training is unstable
+
 \end{itemize}
 \end{columns}
 \end{frame}
@@ -20,9 +23,7 @@ Each column varies in the number of labeled spans per cycle
 \onslide<1->
 Three users
 label spans sampled from PreCo
-\vfill
     \centerline{\includegraphics[width=0.8\textwidth]{\figfile{ui.pdf}}}
-\vfill
 \onslide<2->
     Users complete two twenty-five minute sessions:
     \begin{enumerate}
@@ -42,9 +43,8 @@ label spans sampled from PreCo
 and the linetype designates the session
 \item Black dots
 mark the first span labeled in a different document
-\item The
-mean Avg F1 across users for each session is on the
-right
+\item Users label at least twice as many spans during \textbf{FewDocs} than they do for
+    \textbf{ManyDocs}
     \end{itemize}
 \end{columns}
 \end{frame}
