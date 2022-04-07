@@ -4,7 +4,7 @@ BIB = $(wildcard *.bib)
 
 clean:
 	rm -f *.aux *.log *.bbl *~ *.out *.nav *.toc *.snm *.blg *.fls *.fdb_latexmk
-	rm -fR auto_fig
+	#rm -fR auto_fig
 
 #auto_fig: figures.py
 	#mkdir -p auto_fig

@@ -66,12 +66,9 @@ def add_initial_point(df):
     df = df.append(runs, ignore_index=True)
     return df
 
-def preprocess(df, initial=True, slides=True):
+def preprocess(df, initial=True):
     df.strategy = df.strategy.replace({'noise': 'random', 'random':'random-ment', 'li-ent': 'li-clust-ent'})
-    if slides:
-        STRATEGIES = [ 'clust-ent','cond-ent', 'joint-ent', 'ment-ent', 'random','random-ment']
-    else:
-        STRATEGIES = [ 'clust-ent','cond-ent', 'joint-ent', 'ment-ent', 'random','random-ment', 'li-clust-ent']
+    STRATEGIES = [ 'clust-ent','cond-ent', 'joint-ent', 'ment-ent', 'random','random-ment']
     df = df[df.strategy.isin(STRATEGIES)]
     df.strategy = pd.Categorical(df.strategy, categories = STRATEGIES, ordered=True)
     # change max_docs to overall maximum docs to represent unconstrained sampling
@@ -171,6 +168,31 @@ def plot_simple_f1():
             )
     g.save(filename=OUTPUTS['preco_simple_f1'])
 
+def plot_simple_f1_sequence(i):
+    df = pd.read_csv(datadir('results_preco.csv'))
+    df = preprocess(df)
+    df = df[(df.total_spans <= 300)]
+    df = df[(df.num_spans==50) & (df.max_docs==1)]
+    STRATEGIES = [ 'ment-ent','clust-ent', 'cond-ent', 'joint-ent', 'random','random-ment']
+    df = df[df.strategy.isin(STRATEGIES[:i])]
+    g = ggplot(df, aes(x='total_spans', y='f1', color='strategy', linetype='linetype'))
+    g += geom_point(size=1.0, alpha=0.5)
+    g += geom_smooth(size=3.0, span=0.8, alpha=0.1)
+    g += theme_bw()
+    g += theme(legend_position='top')
+    g += ylim(0.4,0.75)
+    g += labs(color='Strategy', x='No. of Spans', y='Avg. F1 Score')
+    g += guides(fill=False, linetype=False)
+    colors = ['orchid', 'salmon', 'skyblue', 'lightgreen', 'lightslategrey', 'navy']
+    g += scale_color_manual(values = colors)
+    g += theme(
+            axis_title=element_text(size=25),
+            axis_text = element_text(size=20),
+            legend_position = 'top', legend_title=element_text(size=20),
+            legend_text=element_text(size=15), legend_key_size=20,
+            )
+    g.save(filename = gfxdir(f'preco_simple_f1_{i}.pdf'))
+
 def process_counts(df):
     all_counts = []
     for i, row in df.iterrows():
@@ -225,11 +247,45 @@ def plot_preco():
     df = preprocess(df, initial=True)
     df = df[(df.total_spans <= 300)]
     df = df[df.num_spans > 10]
-    df = df[df.strategy != 'li-clust-ent'] # for slides
 
     g_f1 = make_plot('f1', df)
     g_f1.save(filename=OUTPUTS['preco_f1'], width=6, height=9) # for slides
     return df
+
+def plot_preco_sequence(i):
+    data_fp = datadir('results_preco.csv')
+    df = pd.read_csv(data_fp)
+    df = preprocess(df, initial=True)
+    df = df[(df.total_spans <= 300)]
+    df = df[df.num_spans > 20]
+    df = df[df.max_docs != 5]
+    STRATEGIES = [ 'ment-ent','clust-ent', 'cond-ent', 'joint-ent', 'random','random-ment']
+    df = df[df.strategy.isin(STRATEGIES[:i])]
+    g = ggplot(df, aes(x='total_spans', y='f1', color='strategy', linetype='linetype'))
+    g += geom_point(size=0.2, alpha=0.3)
+    g += theme_bw()
+    g += theme(
+            axis_title=element_text(size=20),
+            axis_text = element_text(size=15),
+            strip_text = element_text(size=20),
+            legend_position = 'right', legend_title=element_text(size=20),
+            legend_text=element_text(size=15), legend_key_size=20,
+            )
+    label = 'Avg. F1 Score'
+    g += labs(color='Strategy', x='# of Spans', y=label)
+    g += guides(fill=False, color=guide_legend(reverse=False), linetype=False)
+    colors = ['orchid', 'salmon', 'skyblue', 'lightgreen', 'lightslategrey', 'navy']
+    g += scale_color_manual(values = colors)
+    g += geom_smooth(size=3.0, span=0.8, alpha=0.1)
+    max_docs = df.max_docs.max()
+    g += facet_wrap('max_docs',
+            labeller=lambda x: f'{x} docs' if int(x) < max_docs else 'unconstrained',
+            nrow=1
+            )
+    g += ylim(0.4,0.75)
+    g.save(filename=gfxdir(f'preco_f1_{i}.pdf'), width=12, height=4)
+
+
 
 
 def plot_qbcoref():
@@ -255,7 +311,7 @@ def plot_qbcoref():
     g_mention.save(filename=OUTPUTS['qbcoref_mention'], width=6, height=9)
     return df
 
-def plot_userstudy():
+def plot_userstudy(i):
     def preprocess_data(fp, day, session):
         df = pd.read_json(fp, lines=True)
         df['session'] = session
@@ -269,18 +325,22 @@ def plot_userstudy():
         df['read'] = df.apply(lambda row: 'FewDocs' if session == 1 else 'ManyDocs', axis=1)
         return df
 
-    def plot_sessions(full):
+    def plot_sessions(full, i):
         suffix = '_full' if full else '_reduced'
         # line_size = 3 if full else 1.5
         dot_size = 0.5 if full else 1
         df1_1 = preprocess_data(datadir(f'session1{suffix}.jsonl'), 1, 1)
         df1_2 = preprocess_data(datadir(f'session2{suffix}.jsonl'), 1, 2)
         df = pd.concat([df1_1, df1_2], ignore_index=True)
+        users = ['user1', 'user2', 'user3']
+        df = df[df.user.isin(users[:i])]
+
         df_switches = df[df.switch]
         g = ggplot(df, aes(x='total_time', y='total_spans', color='user'))
         g += geom_line(aes(linetype='factor(read)'), size=2)
         g += geom_point(df_switches, size=dot_size, color='black')
         g += theme_bw()
+        g += scale_color_manual(values=['dodgerblue', 'plum', 'palegreen'])
         g += labs(y='No. of Labeled Spans', x='Total Labeling Time (min.)', linetype='Session')
         g += guides(color=False)
         g += theme(legend_position='top')
@@ -290,19 +350,11 @@ def plot_userstudy():
                 legend_position = 'top', legend_title=element_text(size=15),
                 legend_text=element_text(size=15), legend_key_size=30
                 )
-        # add scores
-        # if not full:
-            # scores = pd.DataFrame([
-                # {'x':28,'y':50,'score':'0.581'},
-                # {'x':28, 'y':20, 'score':'0.560'}
-            # ])
-            # g += xlim(0,30)
-            # g += geom_text(data=scores, mapping=aes(x='x', y='y', label='score'), color='black', size=15)
 
-        g.save(filename=gfxdir(f'userstudy{suffix}.pdf'))
+        g.save(filename=gfxdir(f'userstudy{suffix}_{i}.pdf'))
 
-    plot_sessions(True)
-    plot_sessions(False)
+    plot_sessions(False, i)
+
 
 def plot_errors():
     def plot_errors_df(df):
@@ -351,8 +403,9 @@ def plot_errors():
 
 
 if __name__ == "__main__":
-    plot_simple_f1()
-    plot_samples_bar()
-    df_preco = plot_preco()
-    plot_userstudy()
+    for i in range(1,7):
+        plot_simple_f1_sequence(i)
+        plot_preco_sequence(i)
+    for i in range(1,4):
+        plot_userstudy(i)
 

@@ -1,21 +1,93 @@
 % varying number of documents read and spans sampled
-\begin{frame}{Reading and Labeling Trade-off}
-\begin{columns}[c]
-\column{0.4\textwidth}
-    \includegraphics[width=\textwidth]{\autofig{preco_f1.pdf}}
-\column{0.6\textwidth}
-\begin{itemize}
-\item
-Test Avg F1 on PreCo of models trained with each strategy
-\item
-Each column varies in max.~number of docs.~read per cycle
-\item
-Each row varies in number of labeled spans per cycle
-\item
-For unconstrained reading, model training is unstable
+%\begin{frame}{Reading and Labeling Trade-off}
+%\begin{columns}[c]
+%\column{0.4\textwidth}
+    %\includegraphics[width=\textwidth]{\autofig{preco_f1.pdf}}
+%\column{0.6\textwidth}
+%\begin{itemize}
+%\item
+%Test Avg F1 on PreCo of models trained with each strategy
+%\item
+%Each column varies in max.~number of docs.~read per cycle
+%\item
+%Each row varies in number of labeled spans per cycle
+%\item
+%For unconstrained reading, model training is unstable
 
-\end{itemize}
-\end{columns}
+%\end{itemize}
+%\end{columns}
+%\end{frame}
+
+\begin{frame}{Should we label spans within or across documents?}
+\scriptsize
+   \begin{quote}
+       A fantastic \spot<2>[fill=cyan]{experience}, very informative, very
+       time consuming but enjoyable. So much information to take in about
+       Guinness that you would’ve never known. For example,
+       \spot<2>[fill=cyan]{the brewery} hired the statistician Willam
+       Gosset in 1899. \spot<2>[fill=cyan]{The “student”} was known for developing the Student’s t-test,
+       \spot<3>[fill=pink]{a well-known method in statistical inference}.
+   \end{quote}
+   \begin{quote}
+       Ha’penny Bridge might look like it’s just another bridge. But if you
+       read about the history, you will know how significant this bridge
+       is. Apparently half a penny was the toll that had to be paid from
+       1816 until the year 1919 in order to cross the
+       \spot<3>[fill=pink]{Liffey Bridge}.
+   \end{quote}
+   \begin{quote}
+       Lovely park. Easy to get to on public transport. I recommend getting
+       the bikes for hire when you get there, \spot<3>[fill=pink]{it} made getting around really easy and you can cut across the fields to go and see the deer more easily!
+   \end{quote}
+   \centering
+   \normalsize
+   \only<2>{\textcolor{cyan}{Within}}
+   \only<3>{\textcolor{pink}{Across}}
+
+\end{frame}
+
+\begin{frame}{Varying Number of Documents Read}
+    \small
+    \begin{itemize}
+    \item
+    Test Avg. F1 on PreCo of each strategy
+    \item On each cycle, sample fifty spans from either one document or across
+        many documents
+    \end{itemize}
+\only<2>{
+    \includegraphics[width=\textwidth]{\autofig{preco_f1_1.pdf}}
+    \centering
+    \textcolor{green}{Mention Detection Entropy}
+}
+\only<3>{
+    \includegraphics[width=\textwidth]{\autofig{preco_f1_2.pdf}}
+    \centering
+    \textcolor{Orchid}{Mention Clustering Entropy}
+}
+\only<4>{
+    \includegraphics[width=\textwidth]{\autofig{preco_f1_3.pdf}}
+    \centering
+    \textcolor{red}{Conditional Entropy}
+}
+\only<5>{
+    \includegraphics[width=\textwidth]{\autofig{preco_f1_4.pdf}}
+    \centering
+    \textcolor{SkyBlue}{Joint Entropy}
+}
+\only<6>{
+    \includegraphics[width=\textwidth]{\autofig{preco_f1_5.pdf}}
+    \centering
+    \textcolor{Gray}{Random}
+}
+\only<7>{
+    \includegraphics[width=\textwidth]{\autofig{preco_f1_6.pdf}}
+    \centering
+    \textcolor{NavyBlue}{Random Entity Mentions}
+}
+\only<8>{
+    \includegraphics[width=\textwidth]{\autofig{preco_f1_6.pdf}}
+    Model training is unstable with unconstrained sampling
+}
 \end{frame}
 
 % user study results
@@ -33,18 +105,25 @@ label spans sampled from PreCo
     \end{enumerate}
 \end{frame}
 
-\begin{frame}{Reading and Labeling for Humans}
-\begin{columns}[c]
-\column{0.5\textwidth}
-    \includegraphics[width=\textwidth]{\autofig{userstudy_reduced.pdf}}
-\column{0.5\textwidth}
+\begin{frame}{Labeling Throughput At Least Doubles in FewDocs}
+\begin{columns}[t]
+\column{0.6\textwidth}
+\only<1>{
+    \includegraphics[width=\textwidth]{\autofig{userstudy_reduced_1.pdf}}
+}
+\only<2>{
+    \includegraphics[width=\textwidth]{\autofig{userstudy_reduced_2.pdf}}
+}
+\only<3>{
+    \includegraphics[width=\textwidth]{\autofig{userstudy_reduced_3.pdf}}
+}
+\column{0.4\textwidth}
+    \small
     \begin{itemize}
         \item  Each color indicates one of three users
 and the linetype designates the session
 \item Black dots
 mark the first span labeled in a different document
-\item Users label at least twice as many spans during \textbf{FewDocs} than they do for
-    \textbf{ManyDocs}
     \end{itemize}
 \end{columns}
 \end{frame}

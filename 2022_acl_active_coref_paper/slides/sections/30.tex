@@ -1,92 +1,98 @@
 % generalizing entropy
-\begin{frame}{Uncertainty Sampling}
-\begin{itemize}
-\onslide<1-> \item A common active learning strategy is to sample data that the model is most
-uncertain about
-\onslide<2-> \item Maximum entropy sampling~\citep{lewis-1994} chooses data with
-highest predictive entropy
-\onslide<3-> \item For CR, these strategies are not as straightforward because
-the model has different scores for mention detection and clustering
-\end{itemize}
-\end{frame}
+%\begin{frame}{How to quantify uncertainty?}
+%\begin{itemize}
+%\onslide<1-> \item A common uncertainty sampling strategy is maximum entropy
+    %sampling~\citep{lewis-1994}, which chooses data with
+%highest predictive entropy
+%\onslide<2-> \item For coreference resolution, these strategies are not as straightforward because
+%the model has different scores for mention detection and clustering
+%\end{itemize}
+%\end{frame}
 
 
-\begin{frame}{Decomposing Decisions in CR}
+%\begin{frame}{Decomposing Decisions in CR}
 
+%\begin{enumerate}
+%\onslide<1-> \item \textbf{Mention detection:}
+    %\begin{itemize}
+        %\item Given a span of text $x$, let $X$ be the random variable encoding whether $x$ is an
+%entity mention (1) or not (0)
+        %\item The CR model first scores $P(X=1)$, which is the likelihood of $x$
+            %being an entity mention
+    %\end{itemize}
+%\onslide<2-> \item \textbf{Mention clustering:}
+    %\begin{itemize}
+        %\item Given span $x$, let $C$ be the random variable associated with the entity
+%cluster of $x$
+        %\item For spans that are likely entity mentions, the CR
+%model determines $P(C=c \given X=1)$ for each observed entity cluster $c$
+    %\end{itemize}
+%\end{enumerate}
+%\end{frame}
+
+%\begin{frame}{Uncertainty Sampling Strategies}
+%\textbf{ment-ent:} Mention detection entropy
+%\begin{align}
+    %\ent{MENT}(x)
+        %&= \ent{}{(X)} \\
+        %&= - \sum_{i=0}^1 P(X=i) \log P(X=i). \nonumber
+%\end{align}
+%Samples spans that challenge mention detection (e.g. class-ambiguous words like
+%``park'').
+%\end{frame}
+
+%\begin{frame}{Uncertainty Sampling Strategies}
+%\textbf{clust-ent:} Mention clustering entropy
+%\begin{align}
+    %\ent{CLUST}(x)
+        %&= \ent{}(C \given X = 1) \\
+        %&= -\sum_{c \in \mathcal{C}} P(C = c \given X =
+    %1) \log \nonumber \\
+    %& \qquad P(C = c \given X = 1). \nonumber
+%\end{align}
+%Entropy computation does not explicitly address uncertainty in mention
+%detection.
+%\end{frame}
+
+%\begin{frame}{Uncertainty Sampling Strategies}
+%\textbf{cond-ent:} Conditional entropy
+%\begin{equation}
+%\begin{split}
+    %\ent{COND}(x)
+        %&= \ent{}(C \given X) \\
+        %&= \sum_{i=0}^1 P(X=i) \ent{}(C \given X = i) \\
+        %&= P(X=1) \ent{}(C \given X=1) \\
+        %&= P(X=1) \ent{CLUST}(x).
+%\end{split}
+%\end{equation}
+%Samples words like pronouns because they are obviously entity mentions but
+%difficult to cluster.
+%\end{frame}
+
+
+%\begin{frame}{Uncertainty Sampling Strategies}
+%\textbf{joint-ent:} Joint entropy
+%\begin{align}
+    %\ent{JOINT}(x)
+        %&= \ent{}(X,C) = \ent{}(X) + \ent{}(C \given X) \nonumber \\
+        %&= \ent{MENT}(x) + \ent{COND}(x).
+%\end{align}
+%Samples spans that are difficult to detect as entity mentions \emph{and}
+%too confusing to cluster.
+%\end{frame}
+
+\begin{frame}{Experiments: Strategies}
+\onslide<1->
 \begin{enumerate}
-\onslide<1-> \item \textbf{Mention detection:}
-    \begin{itemize}
-        \item Given a span of text $x$, let $X$ be the random variable encoding whether $x$ is an
-entity mention (1) or not (0)
-        \item The CR model first scores $P(X=1)$, which is the likelihood of $x$
-            being an entity mention
-    \end{itemize}
-\onslide<2-> \item \textbf{Mention clustering:}
-    \begin{itemize}
-        \item Given span $x$, let $C$ be the random variable associated with the entity
-cluster of $x$
-        \item For spans that are likely entity mentions, the CR
-model determines $P(C=c \given X=1)$ for each observed entity cluster $c$
-    \end{itemize}
-\end{enumerate}
-\end{frame}
-
-\begin{frame}{Maximum Entropy Sampling for CR}
-\textbf{ment-ent:} Mention detection entropy
-\begin{align}
-    \ent{MENT}(x)
-        &= \ent{}{(X)} \\
-        &= - \sum_{i=0}^1 P(X=i) \log P(X=i). \nonumber
-\end{align}
-Samples spans that challenge mention detection (e.g. class-ambiguous words like
-``park'').
-\end{frame}
-
-\begin{frame}{Maximum Entropy Sampling for CR}
-\textbf{clust-ent:} Mention clustering entropy
-\begin{align}
-    \ent{CLUST}(x)
-        &= \ent{}(C \given X = 1) \\
-        &= -\sum_{c \in \mathcal{C}} P(C = c \given X =
-    1) \log \nonumber \\
-    & \qquad P(C = c \given X = 1). \nonumber
-\end{align}
-Entropy computation does not explicitly address uncertainty in mention
-detection.
-\end{frame}
-
-\begin{frame}{Maximum Entropy Sampling for CR}
-\textbf{cond-ent:} Conditional entropy
-\begin{equation}
-\begin{split}
-    \ent{COND}(x)
-        &= \ent{}(C \given X) \\
-        &= \sum_{i=0}^1 P(X=i) \ent{}(C \given X = i) \\
-        &= P(X=1) \ent{}(C \given X=1) \\
-        &= P(X=1) \ent{CLUST}(x).
-\end{split}
-\end{equation}
-Samples words like pronouns because they are obviously entity mentions but
-difficult to cluster.
-\end{frame}
-
-
-\begin{frame}{Maximum Entropy Sampling for CR}
-\textbf{joint-ent:} Joint entropy
-\begin{align}
-    \ent{JOINT}(x)
-        &= \ent{}(X,C) = \ent{}(X) + \ent{}(C \given X) \nonumber \\
-        &= \ent{MENT}(x) + \ent{COND}(x).
-\end{align}
-Samples spans that are difficult to detect as entity mentions \emph{and}
-too confusing to cluster.
-\end{frame}
-
-\begin{frame}{Experiments: Baselines}
-\begin{enumerate}
-\item \textbf{random:} Sample from all spans in the document
-\item \textbf{random-ment:} Like other uncertainty strategies, sample only from
-the pool of spans that are likely entity mentions
+\item \textbf{ment-ent:} Mention detection entropy
+\item \textbf{clust-ent:} Mention clustering entropy
+\item \textbf{cond-ent:} Conditional entropy
+\item \textbf{joint-ent} Joint entropy
+\onslide<2->
+\item \textbf{random:} Randomly sample from all spans in the document
+\onslide<3->
+\item \textbf{random-ment:} Randomly sample only from
+    the pool of spans that are likely entity mentions
 \end{enumerate}
 \end{frame}
 \begin{frame}{Experiments: Datasets}
@@ -101,16 +107,50 @@ the pool of spans that are likely entity mentions
 \end{frame}
 
 % comparing strategies
-\begin{frame}{Evaluating Active Learning}
+\begin{frame}{Comparing Strategies}
 \begin{columns}[c]
-\column{0.5\textwidth}
-    \includegraphics[width=\textwidth]{\autofig{preco_simple_f1.pdf}}
-\column{0.5\textwidth}
+\column{0.6\textwidth}
+\only<1>{
+    \includegraphics[width=\textwidth]{\autofig{preco_simple_f1_1.pdf}}
+    \vfill \centering
+    \textcolor{green}{Mention Detection Entropy}
+}
+\only<2>{
+    \includegraphics[width=\textwidth]{\autofig{preco_simple_f1_2.pdf}}
+    \vfill \centering
+    \textcolor{Orchid}{Mention Clustering Entropy}
+}
+\only<3>{
+    \includegraphics[width=\textwidth]{\autofig{preco_simple_f1_3.pdf}}
+    \vfill \centering
+    \textcolor{red}{Conditional Entropy}
+}
+\only<4>{
+    \includegraphics[width=\textwidth]{\autofig{preco_simple_f1_4.pdf}}
+    \vfill \centering
+    \textcolor{SkyBlue}{Joint Entropy}
+}
+\only<5>{
+    \includegraphics[width=\textwidth]{\autofig{preco_simple_f1_5.pdf}}
+    \vfill \centering
+    \textcolor{Gray}{Random}
+}
+\only<6>{
+    \includegraphics[width=\textwidth]{\autofig{preco_simple_f1_6.pdf}}
+    \vfill \centering
+    \textcolor{NavyBlue}{Random Entity Mentions}
+}
+\only<7>{
+    \includegraphics[width=\textwidth]{\autofig{preco_simple_f1_6.pdf}}
+}
+\column{0.4\textwidth}
+\small
     \begin{itemize}
     \item
-    Test Avg. F1 on PreCo of models trained with each strategy
-    \item Each cycle simulates
-    fifty spans from one document being labeled
+    Test Avg. F1 on PreCo
+    \item For each cycle, we simulate labeling
+    fifty spans from one document
+\onslide<7->
 \item \textbf{Ment-ent}, \textbf{clust-ent}, and \textbf{joint-ent} are effective while \textbf{random} performs worst
     \end{itemize}
 \end{columns}

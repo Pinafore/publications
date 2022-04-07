@@ -1,18 +1,43 @@
 % active learning
 \begin{frame}{Method: Active Learning}
-\onslide<1-> Find particular spans of text for users to label
-    \centerline{\includegraphics[width=\textwidth]{\figfile{example_target.pdf}}}
-\onslide<2-> The goal is to adapt the model to the target domain by continue
-training it on these newly labeled spans
+    \begin{itemize}
+        \item<1-> Use active learning to find particular spans of text for users to label
+    %\centerline{\includegraphics[width=\textwidth]{\figfile{example_target.pdf}}}
+        \item<2-> The goal is to adapt the model to the target domain by continue
+training it on spans labeled from active learning
+    \end{itemize}
 \end{frame}
 
-\begin{frame}{Method: Active Learning}
-We explore active learning for adapting CR models by:
-\begin{enumerate}
-\onslide<1-> \item Sampling spans according to different sources of model
-uncertainty
-\onslide<2-> \item Understanding the trade-off between reading and labeling
-costs
-\end{enumerate}
+
+\begin{frame}{What should we label?}
+    \onslide<1->
+       \begin{quote}
+           A fantastic \spot<2>[fill=green]{experience}, very informative, very
+           \spot<2>[fill=green]{time} consuming but enjoyable. So much information to take
+           in about Guinness that \spot<4>[fill=red]{you} would’ve never known. For
+           example, \spot<3>[fill=Orchid]{the brewery} hired the statistician Willam Gosset
+           in 1899. \spot<3>[fill=Orchid]{The “student”} was known for developing
+           the Student’s t-test,
+           \spot<5>[fill=SkyBlue]{a well-known method in statistical
+           inference}.
+       \end{quote}
+       \centering
+       \medskip
+    \only<2>{\textcolor{green}{Uncertainty in mention detection}}
+    \only<3>{\textcolor{Orchid}{Uncertainty in mention clustering}}
+    \only<4>{\textcolor{red}{Uncertainty in mention clustering
+    conditioned on mention detection}}
+    \only<5>{\textcolor{SkyBlue}{Uncertainty in both mention detection
+    and mention clustering}}
 \end{frame}
+
+%\begin{frame}{Method: Active Learning}
+%We explore active learning for adapting CR models by:
+%\begin{enumerate}
+%\onslide<1-> \item Sampling spans according to different sources of model
+%uncertainty
+%\onslide<2-> \item Understanding the trade-off between reading and labeling
+%costs
+%\end{enumerate}
+%\end{frame}
 
