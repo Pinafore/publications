@@ -41,6 +41,7 @@
    \end{quote}
    \centering
    \normalsize
+   \vfill
    \only<2>{\textcolor{cyan}{Within}}
    \only<3>{\textcolor{pink}{Across}}
 
@@ -51,9 +52,9 @@
     \begin{itemize}
     \item
     Test Avg. F1 on PreCo of each strategy
-    \item On each cycle, sample fifty spans from either one document or across
-        many documents
+    \item On each cycle, we sample fifty spans, which each can belong to any document
     \end{itemize}
+    \vfill
 \only<2>{
     \includegraphics[width=\textwidth]{\autofig{preco_f1_1.pdf}}
     \centering
@@ -84,24 +85,34 @@
     \centering
     \textcolor{NavyBlue}{Random Entity Mentions}
 }
-\only<8>{
+%\only<8>{
+    %\includegraphics[width=\textwidth]{\autofig{preco_f1_6.pdf}}
+    %Model training is unstable with unconstrained sampling
+%}
+\end{frame}
+
+
+\begin{frame}[c]{Model training is Unstable in Unconstrained Sampling}
+    \centering
     \includegraphics[width=\textwidth]{\autofig{preco_f1_6.pdf}}
-    Model training is unstable with unconstrained sampling
-}
 \end{frame}
 
 % user study results
-\begin{frame}{Reading and Labeling for Humans}
-\onslide<1->
+\begin{frame}{Humans Read and Label Coreference}
 Three users
 label spans sampled from PreCo
-    \centerline{\includegraphics[width=0.8\textwidth]{\figfile{ui.pdf}}}
-\onslide<2->
+\vfill
+    \centerline{\includegraphics[width=\textwidth]{\figfile{ui.pdf}}}
+\end{frame}
+
+\begin{frame}{Humans Read and Label Coreference}
     Users complete two twenty-five minute sessions:
+    \vspace{1cm}
     \begin{enumerate}
-        \item \textbf{FewDocs:} Read fewer docs.~and label multiple spans per doc.
-        \item \textbf{ManyDocs:} Read more docs.~and label
-    one span per doc.
+        \item \textbf{FewDocs:} Read fewer documents and label multiple
+            spans per document
+        \item \textbf{ManyDocs:} Read more documents and label
+    one span per document
     \end{enumerate}
 \end{frame}
 

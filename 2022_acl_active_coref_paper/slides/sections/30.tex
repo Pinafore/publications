@@ -95,14 +95,24 @@
     the pool of spans that are likely entity mentions
 \end{enumerate}
 \end{frame}
+
 \begin{frame}{Experiments: Datasets}
     \begin{enumerate}
-        \item \textbf{OntoNotes 5.0 (source):} Most common dataset for training and evaluating
-        CR that contains news articles and telephone
-            conversations~\citep{pradhan-2013}. Only non-singletons are
-            annotated.
-        \item \textbf{PreCo (target):} Large corpus of grade-school reading comprehension
-        texts with annotated singletons~\citep{chen-2018}.
+        \item \textbf{OntoNotes 5.0 (source):}
+            \begin{itemize}
+                \item Most common CR dataset~\citep{pradhan-2013}
+            \item News articles and telephone
+            conversations
+            \item Only non-singletons are
+            annotated
+            \end{itemize}
+            \vspace{1cm}
+        \item \textbf{PreCo (target):}
+            \begin{itemize}
+            \item Large corpus of grade-school reading comprehension
+        texts~\citep{chen-2018}
+            \item Singletons are annotated
+            \end{itemize}
     \end{enumerate}
 \end{frame}
 
@@ -140,9 +150,9 @@
     \vfill \centering
     \textcolor{NavyBlue}{Random Entity Mentions}
 }
-\only<7>{
-    \includegraphics[width=\textwidth]{\autofig{preco_simple_f1_6.pdf}}
-}
+%\only<7>{
+    %\includegraphics[width=\textwidth]{\autofig{preco_simple_f1_6.pdf}}
+%}
 \column{0.4\textwidth}
 \small
     \begin{itemize}
@@ -150,10 +160,16 @@
     Test Avg. F1 on PreCo
     \item For each cycle, we simulate labeling
     fifty spans from one document
-\onslide<7->
-\item \textbf{Ment-ent}, \textbf{clust-ent}, and \textbf{joint-ent} are effective while \textbf{random} performs worst
+%\onslide<7->
+%\item \textbf{Ment-ent}, \textbf{clust-ent}, and \textbf{joint-ent} are effective while \textbf{random} performs worst
     \end{itemize}
 \end{columns}
+\end{frame}
+
+\begin{frame}{Ment-ent, Clust-ent, Joint-ent are Effective but Random
+    Performs Worst!}
+\centering
+\includegraphics[width=0.6\textwidth]{\autofig{preco_simple_f1_6.pdf}}
 \end{frame}
 
 % section 4.1.1

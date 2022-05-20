@@ -172,7 +172,7 @@ def plot_simple_f1_sequence(i):
     df = pd.read_csv(datadir('results_preco.csv'))
     df = preprocess(df)
     df = df[(df.total_spans <= 300)]
-    df = df[(df.num_spans==50) & (df.max_docs==1)]
+    df = df[(df.num_spans==50) & (df.max_docs == 1)]
     STRATEGIES = [ 'ment-ent','clust-ent', 'cond-ent', 'joint-ent', 'random','random-ment']
     df = df[df.strategy.isin(STRATEGIES[:i])]
     g = ggplot(df, aes(x='total_spans', y='f1', color='strategy', linetype='linetype'))
