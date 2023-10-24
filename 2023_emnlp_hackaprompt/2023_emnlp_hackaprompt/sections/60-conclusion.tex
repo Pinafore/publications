@@ -1,0 +1,24 @@
+\section{Conclusion: LLM Security Challenges}
+\label{sec:conclusion}
+
+% \subsection{Review}
+
+We ran the 2023 HackAPrompt competition to encourage research in the fields of large language model security and prompt hacking. We collected 600K+ adversarial prompts from thousands of competitors worldwide. We describe our competition's structure, the dataset we compiled, and the most intriguing findings we discovered. In particular, we documented 29 separate prompt hacking techniques in our taxonomical ontology, and discovered new techniques such as the \context{} attack. We further explore how our competition results can generalize across intents (Appendix \ref{appx:generalize_intents}), generalize across \llm{}s (Appendix \ref{appx:inter-model}), and even generalize to different modalities (Appendix \ref{appx:other-modalities}). 
+Additionally, we provide some security recommendations (Appendix \ref{appx:recommendations})
+
+Due to their simplicity, prompt based defense are an increasingly well studied solution to prompt injection \cite{fangzhao2023defending, Schulhoff_Learn_Prompting_2022}
+However, a significant takeaway from this competition is that prompt based defenses \emph{do not} work. Even evaluating the output of one model with another is not foolproof. 
+
+A comparison can be drawn between the process of prompt hacking an AI and social engineering a human.
+\llm{} security is in early stages, and just like human social engineering may not be 100\% solvable, so too could prompt hacking prove to be an impossible problem; you can patch a software bug, but perhaps not a (neural) brain. We hope that this competition serves as a catalyst for research in this domain. 
+
+
+
+% CL: cut down conclusion to fit in 8 pages. 
+
+% \paragraph{Intractability of Full Security}
+
+% We were blown away by the creativity of competitors and think that better prompts is certainly not sufficient to prevent prompt hacking. Additionally, we do not believe prompt hacking to be an entirely solvable problem with current transformer architectures. 
+
+% \subsection{Future Work}
+% We hope that the dataset and ontology we develop will be useful for future research. We consider some potentially promising use cases for the \playground and \submissions datasets. The dataset could be used to fine-tune an adversarial \llm{}. The dataset could first be augmented to target different tasks (other than `I have been PWNED`) by prompting a \llm{} to do so. 

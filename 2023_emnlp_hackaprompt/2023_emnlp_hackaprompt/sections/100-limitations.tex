@@ -1,0 +1,11 @@
+\section*{Limitations}
+\label{sec:limitations}
+
+% \jbgcomment{Add citations}
+
+We recognize several limitations of this work. Firstly, the testing has been conducted on only a few language models, most of them served through closed APIs. This may not be representative of all language models available. Therefore, the generalization of these findings to other models should be approached with caution. Secondly, this analysis focuses on prompt hacking, but there exist other potential ways to break language models that have not been addressed within the scope of this paper, such as training data poisoning~\cite{Vilar2022PromptingPF}. It is important to recognize that when combined with prompt hacking, these other security risks could pose an even greater danger to the reliability and security of language models. 
+
+An additional limitations to consider is that this dataset is a snapshot in time. Due to prompt drift \cite{chen2023chatgpts}, these prompts won't necessarily work when run against the same models or updated versions of those models in the future.
+Another limitation is that much of this work may not be easily reproducible due to changes in APIs and model randomness. We have already found at least 6,000 prompts which only work some of the time.
+
+% \jbgcomment{make sure to raise the limitations that were uncovered during the review: notably that this is a snapshot in time}
