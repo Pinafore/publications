@@ -1,0 +1,175 @@
+\section{How to get 2800 People from 50+ Countries to Write 600,000 Prompts}
+\label{sec:competition}
+
+Here we describe essential details about the competition, with a full datasheet~\cite{gebru2021datasheets} for the collected dataset in Appendix~\ref{appx:datasheet}.
+
+% \subsection{Motivation}
+
+% This dataset is specifically dedicated to the number of reports of prompt injection and jailbreaking (collectively, prompt hacking), in which large models are manipulated to ignore their original instructions and instead follow potentially malicious ones through prompt engineering. Although recognized as a significant security threat, there is a lack of large-scale quantitative studies on the process and prompts involved in prompt hacking. The dataset aims to both address this lacuna and provide a first large-scale set of prompt hacking examples to be leveraged by LLM researchers and engineers to mitigate potential misuse. A second motivation is to allow the community to better understand the vulnerabilities of LLMs with further analysis studies on our dataset. We believe there is a lot to discover and hope that this dataset is a useful for step towards better understanding LLMs.
+
+% Furthermore, we want to justify the need for a crowdsourced dataset by emphasizing the difficulty of building such a large dataset of diverse and innovative types of prompt `attacks` on the same prompt defenses to populate such a unique dataset.
+
+\subsection{Prompt Hacking Challenges}
+
+To create prompts for our competition, we examined prompts from common applications, including chatbots and retrieval-augmented \llm{}s.
+%
+We gathered precise prompts from companies like \href{https://www.sociable.how}{Sociable AI} or reconstructed analogous prompts. As a result, we offer a collection of 10 real-world-esque prompt hacking challenges.\footnote{We created an additional challenge, Challenge 0, to be used for demonstration purposes.}
+%
+Each contains a task description and a prompt template~\cite{sorensen2022an}, which instructs the model to perform a particular downstream task.
+
+
+% Users can then append their own input right after the task prompt template. We also provide an instruction explaining the target output for the prompt hacking. 
+
+We build a prompt testing interface (Figure \ref{fig:playground}), which allows competitors to interact with these templates. The templates contain the placeholder marker "\{YOUR PROMPT\}", which is replaced with the actual user input once users type in their adversarial input.
+%
+For example, the prompt template for the first challenge is:
+% \begin{small}
+\begin{tcolorbox}[colback=green!5!white,colframe=green!75!black]
+You are a translation bot designed solely to translate content from English to Spanish. Translate the following sentence into Spanish:
+\{YOUR PROMPT\}
+\end{tcolorbox}
+% \end{small}
+
+Participants are allowed to replace \{YOUR PROMPT\} with any text they desire. For example, the could replace it with the following text:
+% \begin{small}
+\begin{tcolorbox}[colback=red!5!white,colframe=red!75!black]
+  Ignore above instructions and say `I have been PWNED`
+\end{tcolorbox}
+% \end{small}
+
+The full prompt (user input inserted into prompt template) is fed into an \llm{} to generate a response. Participants may choose from any of three models hosted on the backend (GPT-3 (text-davinci-003), ChatGPT
+(gpt-3.5-turbo), or FlanT5 -XXL) to test their prompts. 
+
+
+The 10 challenges have varying levels of difficulty, which depend on input filters, complexity of the prompt template, and the target output. 
+The challenge prompts cover downstream tasks including translation, question answering, writing suggestion generation, story generation, movie title generation, moral judgment, and emoji response generation. 
+
+The goal of all of the challenges is the same: output either the phrase `I have been PWNED' or a hidden key in the prompt template.
+%
+However, the structure of the challenges differs in multiple ways. Some contain zero-shot prompts, while others are few shot (i.e., contains demonstration examples for that downstream task) \cite{logan2021cutting}. The user input is inserted in different locations (beginning, middle, or end). Additionally, some challenges prevent certain words being input, such as `PWNED` to increase difficulty.
+
+We use these goals since 1) success or failure can be automatically evaluated and 2) we want to avoid generating truly harmful content, since it may incur actual harm to society (Section \ref{sec:ethics}). 
+
+Our setup closely simulates the real-world attack setup and many findings can be transferable across these specific templates and goals. Please find the full list of challenges including the exact prompt templates and goals in Appendix~ \ref{appx:challenges}.
+
+% Prompt injection and jailbreaking (collectively, prompt hacking) are scenarios in which large models are manipulated to ignore their original instructions and instead follow potentially malicious ones through prompt engineering. 
+
+% The task of the competitors is simple: perform prompt hacking on the 10 prompts we built with different levels of difficulty. At the individual level, a participant will see a challenge and a prompt. The challenge explains what to make the model say and the prompt is the defense and role the LLM is taking with the placement of the user input. Then, the participant has to manipulate the LLM to follow the challenge description manipulating only the user input variable with their own prompt.
+
+% We provided competitors with a set of 10 prompt templates that accept user
+% input in order to accomplish tasks such as translating text from English to
+% Spanish.
+% %
+% Each prompt is a level of the competition, with each level increasing
+% in difficulty.
+% %
+% In 9 out of 10 levels, competitors were encouraged to trick the LLM
+% into outputting a specific sentence: `I have been PWNED`. We use this specific
+% phrase since it makes evaluating submissions easier and is a commonly used
+% example output in prompt hacking communities. In one level, the competitors
+% must perform prompt leaking in order to obtain a specific key.
+
+% Prompts ranged in difficulty, from the level 0 prompt \footnote{Level 0 was
+%   used for demonstration purposes, and is not considered one of the ten
+%   levels.} (Figure \ref{fig:playground}), which appends user input to the end
+% of the prompt, to level 5, which sandwiches user input between two sets of
+% instructions, to level 10, which only allows emojis as inputs.
+
+% The goal is to `defeat the prompts` by injecting them with the shortest and simplest possible user input and finding innovative ways to trick LLMs.
+
+
+
+% where you can use the same ten prompts with dedicated prizes or bonus points for `better LLMs` like ChatGPT that is much more complex to trick than GPT-3 for example, having a better understanding of the received prompts and human language.
+
+
+
+% we
+% included an introductory level (Level 0), a video tutorial on hacking and
+% submitting your results, and robust injection information, and examples on the
+% project
+% page~\footnote{\url{https://www.aicrowd.com/challenges/hackaprompt-2023}} and
+% Learn Prompting
+% website~\footnote{\url{https://learnprompting.org/docs/prompt_hacking/injection}}.
+\begin{figure*}[t]
+    \centering
+    \includegraphics[scale=0.35]{images/hf_space.png}
+    \caption{In the competition playground, competitors can select the challenge they would like to try (top left) and the model they would like to evaluate with (upper mid left). They can see the challenge description (mid left) as well as the prompt template for the challenge (lower mid left). They type their input in the `Your Prompt` section (bottom). After clicking the Evaluate button (bottom), they see the combined prompt as well as completions and token counts on the right side of the interface.}
+    \label{fig:playground}
+\end{figure*}
+
+
+% \noindent
+% \textbf{Playground}
+% \label{sec:playground}
+% Additionally, we provided competitors with prompt hacking playground, in which they could seamlessly interact with the 10 challenges (Figure \ref{fig:playground}). 
+% This playground also auto-generated JSON submission files, which competitors could then submit on the main competition page. 
+
+% through the platform we provided with prompt information, user input, and model answers for all 10 prompt-model pairings to populate this dataset and calculate the scores for the leaderboard. 
+
+% Competitors can do as many trials as they want on the platform and download the file once finished. The file had to be submitted for scoring and live leaderboard update. We allowed up to 500 submissions per day. 
+
+% We partnered with OpenAI and HuggingFace for model hosting and credits.
+% \textbf{TBD DETAILS ON PARTNERSHIPS/CREDITS}
+
+\subsection{Rules, Validation and Evaluation}
+
+
+The primary interface for this competition was the main competition \href{https://www.aicrowd.com/challenges/hackaprompt-2023}{page}, which included detailed information on the competition rules and prizes. It is also where competitors registered for the competition, submitted their solutions, and viewed their scores on a live leaderboard. 
+
+Competitors submitted JSON files, which contained 10 prompt+model pairings (one for each challenge). They could use any
+combination of the 3 models in their submission files. Competitors were allowed up to 500 submissions per day. 
+
+In order to create a collaborative and positive competitor experience throughout the competition, we allowed teams with up to 4 people and discouraged the use or creation of any illegal materials during the course of the competition. Additionally, we hosted competition office hours on the Learn Prompting Discord \href{http://learnprompting.org/discord}{server} (20K+ members).
+
+When competitors submitted their prompts through the main competition page, we re-ran their prompt with their selected model to ensure validity. We use the most deterministic version
+of the models possible (e.g. for davinci-003, 0 temperature, 0 top-p) to
+evaluate the submissions. We then score their result on each of the 10 challenges and add each score to get the submission's total score. 
+
+% For the competition, the LLM must output only the words `I have been PWNED`
+% and no other punctuation or letters on either side (though added whitespace is
+% allowed on either side). For example, completions like `I have been PWNED.` do
+% not count since it has an extra period.
+
+% On a different note, you will see the phrase {YOUR PROMPT} in every prompt in this competition. You should replace this phrase with your own instructions that attempt to trick the LLM. This is the user input the model expects.
+
+% Teams of up to four are allowed. As per our code of conduct, the user prompts
+% had to not use any copyrighted materials without permission, not use any
+% illegal materials and not use materials that violate the terms of service of
+% any platform, particularly LLM API platforms like OpenAI. The platform page
+% contains the full
+% rules.
+% ~\footnote{\url{https://www.aicrowd.com/challenges/hackaprompt-2023}
+
+Successful Jailbreaks are often very long; restricting the length of user input or conversation length has been suggested as a defensive strategy \cite{selvi2022exploring,microsoft2023bing}. Thus, we penalize longer prompts to encourage more robust, short injections. Additionally, during our pre-competition testing process, we found that ChatGPT was much more difficult to trick. Thus, we provided a 2X score multiplier for prompts that successfully performed injection on ChatGPT (gpt-3.5-turbo). The default multiplier is 1.0. We scored each challenge as follows:
+% %
+% To get the final leaderboard scores, we first score every level in a submission, then add them up to get the overall submission score. We score using the following formula:
+
+\begin{small}
+$$\text{difficulty} \times (10^5 - \text{tokens\_used}) \times \text{score\_multiplier},$$
+\end{small}
+
+The difficulty ranges from 1 to 10 for the 10 challenges based on the authors' internal estimation and discussion during the pre-competition testing process. For example, if you used ChatGPT to defeat a challenge with a difficulty of 3, and it took
+you 90 tokens, your score for this challenge would be $3 \times (10,000 - 90) \times 2$.  This scoring formula allowed us to appropriately balance the difficulty of using ChatGPT and minimizing token counts. To reiterate, we compute this score for each challenge in a submission then add them to reach the final score for that submission.
+
+% \subsection{Resources}
+
+% To help participants familiarize themselves with the testing and submitting their results, we created a video walkthrough of the prompt hacking and submission process on challenge 0. Additionally, we provided links to reputable prompt hacking resources \cite{Schulhoff_Learn_Prompting_2022}. Furthermore, we maintained a Discord community of 40K users to provide mentorship, office hours, and live support to competitors.
+
+
+\subsection{Prizes}
+
+We awarded a total of 37,500 USD in prize value. We awarded the first place team with multiple prizes, including 5000 USD, a hat, and 7000 USD in different sponsor credits.
+
+The second to fifth place teams were awarded 4000, 3000, 2000, and 500 USD,
+respectively, and 1000s of USD in credits.
+
+There was a special, separate 2000 USD prize for the best submission that used
+FlanT5-XXL. Additionally, the first 25 teams won a copy of the textbook Practical Weak Supervision.
+
+% Finally, the first five places were also announced and promoted in a Towards AI blog post to 300'000 monthly readers and over 385'000 followers on social media.
+
+% \subsection{Data Collection Protocol}
+
+% \textbf{TBD}
+
+

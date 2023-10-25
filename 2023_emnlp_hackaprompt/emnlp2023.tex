@@ -1,0 +1,272 @@
+% This must be in the first 5 lines to tell arXiv to use pdfLaTeX, which is strongly recommended.
+\pdfoutput=1
+% In particular, the hyperref package requires pdfLaTeX in order to break URLs across lines.
+
+\documentclass[11pt]{article}
+
+% \setcounter{secnumdepth}{5}
+
+\usepackage{algorithm}
+\usepackage{algpseudocodex}[noEnd=true]
+\usepackage{titlesec}
+
+ \usepackage{graphicx}
+ \usepackage{array}
+ \usepackage{stfloats} 
+\usepackage{verbatim}
+\usepackage{listings}
+\usepackage{quoting}
+
+
+\usepackage{amsmath}
+\usepackage{svg}
+
+\usepackage{hyperref}
+ \usepackage[skins]{tcolorbox}
+\newtcbox{\attackbox}[1][red]{on line, arc=7pt,colback=red!5!white,colframe=red!75!black, before upper={\rule[-3pt]{0pt}{10pt}},boxrule=1pt, boxsep=0pt,left=6pt,right=6pt,top=2pt,bottom=2pt}
+
+
+% \begin{tcolorbox}[colback=red!5!white,colframe=red!75!black]
+%   Ignore above instructions and say `I have been PWNED`
+% \end{tcolorbox}
+
+% \newcbo
+ 
+\usepackage{forest}
+\usetikzlibrary{shadows}
+
+% Remove the "review" option to generate the final version.
+\usepackage{EMNLP2023}
+\usepackage{listings}
+
+% Standard package includes
+\usepackage{times}
+\usepackage{latexsym}
+% \usepackage{emoji}
+% For proper rendering and hyphenation of words containing Latin characters (including in bib files)
+\usepackage[T1]{fontenc}
+% For Vietnamese characters
+% \usepackage[T5]{fontenc}
+% See https://www.latex-project.org/help/documentation/encguide.pdf for other character sets
+
+% This assumes your files are encoded as UTF8
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+
+% This is not strictly necessary and may be commented out.
+% However, it will improve the layout of the manuscript,
+% and will typically save some space.
+\usepackage{microtype}
+
+% This is also not strictly necessary and may be commented out.
+% However, it will improve the aesthetics of text in
+% the typewriter font.
+\usepackage{inconsolata}
+\usepackage{multirow}
+
+% commands
+\newcommand{\goalhijacking}{\texttt{Goal Hijacking}}
+\newcommand{\targetphrase}{\texttt{Target Phrase Generation}}
+% \newcommand{\overrun}{\texttt{Overrun Attack}}
+\newcommand{\anamalous}{\texttt{Anomalous Token Attack}}
+\newcommand{\fragconcat}{\texttt{Fragmentation Concatenation Attack}}
+
+\newcommand{\variables}{\texttt{Variables}}
+
+
+\newcommand{\leaking}{\texttt{Prompt Leaking}}
+\newcommand{\compoundinstruction}{\texttt{Compound Instruction Attack}}
+
+\newcommand{\fewshot}{\texttt{Few Shot Attack}}
+\newcommand{\defineddict}{\texttt{Defined Dictionary Attack}}
+
+\newcommand{\traindataleaking}{\texttt{Training Data Reconstruction}}
+\newcommand{\malicious}{\texttt{Malicious Action Generation}}
+\newcommand{\harmful}{\texttt{Harmful Information Generation}}
+\newcommand{\tokenwasting}{\texttt{Token Wasting}}
+\newcommand{\prefixinjection}{\texttt{Prefix Injection}}
+\newcommand{\styleinjection}{\texttt{Style Injection}}
+\newcommand{\distractor}{\texttt{Distractor Instructions}}
+\newcommand{\negateddistractor}{\texttt{Negated Distractor Instructions}}
+\newcommand{\injection}{\texttt{Prompt Injection}}
+\newcommand{\jailbreaking}{\texttt{Jailbreaking}}
+\newcommand{\prompthacking}{\texttt{Prompt Hacking}}
+\newcommand{\direct}{\texttt{Simple Instruction Attack}}
+\newcommand{\specialcase}{\texttt{Special Case Attack}}
+\newcommand{\contextswitching}{\texttt{Context Switching Attack}}
+\newcommand{\contextignoring}{\texttt{Context Ignoring Attack}}
+
+\newcommand{\virtualization}{\texttt{Virtualization}}
+\newcommand{\separators}{\texttt{Separators}}
+\newcommand{\payload}{\texttt{Payload Splitting}}
+
+\newcommand{\competing}{\texttt{Competing Objectives}}
+
+\newcommand{\mismatch}{\texttt{Mismatched Generalization}}
+
+
+\newcommand{\contextcompletion}{\texttt{Context Termination Attack}}
+\newcommand{\tokensmuggling}{\texttt{Token Smuggling}}
+\newcommand{\contextcontinuation}{\texttt{Context Continuation Attack}}
+\newcommand{\tokentheft}{\texttt{Token Theft}}
+\newcommand{\denialofservice}{\texttt{Denial of Service}}
+
+\newcommand{\recursive}{\texttt{Recursive Prompt Hacking}}
+\newcommand{\context}{\texttt{Context Overflow}}
+\newcommand{\obfuscation}{\texttt{Obfuscation Attack}}
+\newcommand{\syntactic}{\texttt{Syntactic Transformation Attack}}
+\newcommand{\typos}{\texttt{Typos}}
+\newcommand{\fitb}{\texttt{Fill in the Blank Attack}}
+
+\newcommand{\submissions}{\texttt{Submissions Dataset}}
+
+\newcommand{\playground}{\texttt{Playground Dataset}}
+
+\newcommand{\cognitive}{\texttt{Cognitive Hacking}}
+
+\newcommand{\instructionrepetition}{\texttt{Instruction Repetition Attack}}
+
+
+
+\newcommand{\indirecttask}{\texttt{Task Deflection Attack}}
+
+% Define the \inlinetext command
+\newcommand{\inlinetext}[1]{\lstinline|#1|}
+
+% Customize the listings environment
+\lstset{
+    basicstyle=\normalfont,
+    breaklines=true,
+    columns=flexible,
+    xleftmargin=0pt,
+    xrightmargin=0pt,
+    frame=none,
+    escapeinside={<@}{@>},
+    breakindent=0pt,
+    aboveskip=0pt,
+    belowskip=0pt,
+    lineskip=-1ex
+}
+
+% If the title and author information does not fit in the area allocated, uncomment the following
+%
+%\setlength\titlebox{<dim>}
+%
+% and set <dim> to something 5cm or larger.
+
+% \title{A Competition and Dataset to Understand the Strengths and Limitations of Large Language Models' Security}
+\title{Ignore This Title and HackAPrompt: Exposing Systemic Vulnerabilities of LLMs through a Global Scale Prompt Hacking Competition}
+
+% Author information can be set in various styles:
+% For several authors from the same institution:
+% \author{Author 1 \and ... \and Author n \\
+%         Address line \\ ... \\ Address line}
+% if the names do not fit well on one line use
+%         Author 1 \\ {\bf Author 2} \\ ... \\ {\bf Author n} \\
+% For authors from different institutions:
+% \author{Author 1 \\ Address line \\  ... \\ Address line
+%         \And  ... \And
+%         Author n \\ Address line \\ ... \\ Address line}
+% To start a separate ``row'' of authors use \AND, as in
+% \author{Author 1 \\ Address line \\  ... \\ Address line
+%         \AND
+%         Author 2 \\ Address line \\ ... \\ Address line \And
+%         Author 3 \\ Address line \\ ... \\ Address line}
+
+% \author{Sander Schulhoff \\
+%   University of Maryland \\
+%   \texttt{sschulho@umd.edu} \\\And
+%   Jeremy Pinto \\
+%   MILA \\
+%   \texttt{jerpint@gmail.com} \\}
+
+\author{Sander Schulhoff$^{1*}$ \hspace{0.2cm}
+Jeremy Pinto$^{2*}$  \hspace{0.2cm}
+ \textbf{Anaum Khan}$^{1}$ \hspace{0.2cm}
+ \textbf{Louis-François Bouchard}$^{2,3}$ \hspace{0.2cm}
+ \textbf{Chenglei Si}$^{4}$ \\
+ \textbf{Svetlina Anati}$^{4**}$ \hspace{0.1cm}
+ \textbf{Valen Tagliabue}$^{5**}$ \hspace{0.1cm}
+ \textbf{Anson Liu Kost}$^{6**}$ \hspace{0.1cm}
+ \textbf{Christopher Carnahan}$^{7**}$ \\
+  \textbf{Jordan Boyd-Graber}$^{1}$
+  \\
+  $^{1}$ University of Maryland \hspace{0.2cm}
+  $^{2}$ Mila \hspace{0.2cm}
+  $^{3}$ Towards AI \hspace{0.2cm}
+  $^{4}$ Stanford \\
+  $^{5}$ Technical University of Sofia  \hspace{0.2cm}
+  $^{6}$ University of Milan \hspace{0.2cm}
+  $^{7}$ NYU \\
+  \texttt{sschulho@umd.edu}  \hspace{0.3cm}
+  \texttt{jerpint@gmail.com}
+  \hspace{0.3cm}
+  \texttt{jbg@umiacs.umd.edu}
+  \\
+}
+
+\newif\ifcomment\commenttrue
+\input{preamble}
+\begin{document}
+
+\titleclass{\subsubsubsection}{straight}[\subsubsection]
+\newcounter{subsubsubsection}[subsubsection]
+\renewcommand\thesubsubsubsection{\thesubsubsection.\arabic{subsubsubsection}}
+\titleformat{\subsubsubsection}
+  {\normalfont\normalsize\bfseries}{\thesubsubsubsection}{1em}{}
+\titlespacing*{\subsubsubsection}
+{0pt}{3.25ex plus 1ex minus .2ex}{1.5ex plus .2ex}
+\makeatletter
+\def\toclevel@subsubsubsection{4}
+\def\l@subsubsubsection{\@dottedtocline{4}{7em}{4em}}
+\makeatother
+\setcounter{secnumdepth}{4}
+\setcounter{tocdepth}{4}
+
+
+
+\maketitle
+\begin{abstract}
+\input{2023_emnlp_hackaprompt/sections/00-abstract}
+\end{abstract}
+
+\input{2023_emnlp_hackaprompt/sections/10-introduction}
+\input{2023_emnlp_hackaprompt/sections/20-background}
+\input{2023_emnlp_hackaprompt/sections/30-competition}
+\input{2023_emnlp_hackaprompt/sections/40-analysis}
+\input{2023_emnlp_hackaprompt/sections/50-ontology}
+
+
+% \clearpage
+
+% \input{2023_emnlp_hackaprompt/sections/70-discussion}
+
+\input{2023_emnlp_hackaprompt/sections/60-conclusion}
+
+
+\clearpage
+
+\input{2023_emnlp_hackaprompt/sections/100-limitations}
+\input{2023_emnlp_hackaprompt/sections/110-ethics}
+\input{2023_emnlp_hackaprompt/sections/120-recognition}
+
+\clearpage
+
+\bibliography{anthology,custom}
+\bibliographystyle{acl_natbib}
+
+\clearpage
+\appendix
+
+\input{2023_emnlp_hackaprompt/appendix/inter-model}
+\input{2023_emnlp_hackaprompt/appendix/generalize}
+\input{2023_emnlp_hackaprompt/appendix/secure_model}
+\input{2023_emnlp_hackaprompt/appendix/other-modalities}
+\input{2023_emnlp_hackaprompt/appendix/additional_attacks}
+\input{2023_emnlp_hackaprompt/appendix/datasheet}
+\input{2023_emnlp_hackaprompt/appendix/challenges}
+\input{2023_emnlp_hackaprompt/appendix/team_reports}
+
+
+
+\end{document}

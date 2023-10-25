@@ -1,0 +1,122 @@
+
+\section{Datasheet}
+\label{appx:datasheet}
+
+We present a datasheet~\cite{gebru2021datasheets} with more information about the competition task and the associated prompt datasets: \playground{} and \submissions{}.
+
+\subsection{Motivation}
+
+\textbf{For what purpose was the dataset created?}
+
+This datasets were created to quantitatively study prompt injection and jailbreaking (collectively, prompt hacking).
+
+\textbf{Who created the dataset} 
+
+The dataset was created by Anonymous (will reveal if accepted). 
+
+The dataset was not created on the behalf of any entity. 
+
+\textbf{Who funded the creation of the dataset?}
+
+The competition responsible for this dataset was funded by various companies through prizes and compute support (credits, hosting services) (will reveal after acceptance).
+
+\subsection{Composition}
+\label{appx:Composition}
+
+\textbf{What do the instances that comprise the dataset represent (e.g., documents, photos, people, countries)?}
+
+The \playground{} contains $589,331$ anonymous entries, with fields for the level of difficulty (0 to 10), the prompt (string), the user input (string), the model's completion (string), the model used (string: FlanT5-XXL, gpt-3.5-turbo or text-davinci-003), the expected completion (string), the token count (int), if it succeeded or not ("correct", binary) and the score (float). 
+
+The \submissions{} contains $7,332$ entries of the same prompt/user input/model completion/model used/completion string/token count and success combination but in the form of a unified submission file with all 10 levels that a specific user could submit at once. This overall dataset contains $58,257$ prompts for those $7,332$ entries. The \submissions{}, contrary to the \playground{} links multiple prompt levels (from only one and up to all 10 with an average of $7.95$ prompts per submission) to a specific user, thus allowing to perform intra-user analysis that is not possible with the \playground{} single-prompt dataset with no tracking of the user. The \submissions{} is also a higher quality injection dataset as demonstrated in Table~\ref{tab:success_rates}.
+
+% In Appendix~\ref{appx:challenges}, we list the 10 prompts and space for user inputs used in the dataset. Level 1 is an example of one data entry, and level 2-10 are the challenge level and the prompt to "defeat".
+
+\textbf{Is there a label or target associated with each instance?}
+
+Yes, if the prompt(s) succeeded.
+
+% \textbf{Is any information missing from individual instances?}
+
+% No
+
+\textbf{Are there recommended data splits (e.g., training, development/validation, testing)?}
+
+No
+
+\textbf{Are there any errors, sources of noise, or redundancies in the dataset?}
+
+Since the dataset is crowdsourced, we did find cases of redundancy and "spam" where some participants entered the same user input multiple times and some other cases where user inputs are just random words or characters to test the system.
+
+We did not manually check the entire dataset, so it may contain additional anomalous activities and/or offensive content.
+
+\textbf{Do/did we do any data cleaning on the dataset?}
+
+We did not. All data is presented exactly as collected. We provide information on which demonstrations may contain human errors in the repository.
+
+\textbf{Was there any offensive information in the dataset?}
+
+We are aware of innapropriate language in the dataset, but have not manually gone through it.
+
+\subsection{Collection Process}
+\label{appx:Collection-Process}
+
+\textbf{How was the data associated with each instance acquired?}
+
+We provided competitors with an interface to register for the competition and submit the competition file. The competition file is a JSON file we automatically produce for each competitor using the playground we provided with prompt information, user input, and model answers for all 10 prompt-model pairings to populate this dataset and calculate the scores for the leaderboard. Competitors can do as many trials as they want on the playground using their OpenAI API key or for free with the FlanT5-XXL model and download the file once finished. The file had to be submitted to our submission platform for points compilation and live leaderboard update. We allowed up to 500 submissions per day.
+
+\textbf{Who was involved in the data collection process and how were they compensated?}
+
+The data was automatically collected from the playground and the submission system. We (the authors of the paper) then populated a CSV file with all aggregated entries.
+
+\textbf{Over what timeframe was the data collected?}
+
+The dataset was collected in June 2023 from the HackAPrompt competition that took place between May 2023 and June 2023.
+
+
+\subsection{Uses}
+
+\textbf{Has the dataset been used for any tasks already?}
+
+No
+
+\textbf{Is there a repository that links to any or all papers or systems that use the dataset}
+
+No
+
+\textbf{Is there anything about the composition of the dataset or the way it was collected and preprocessed/cleaned/labeled that might impact future uses?}
+
+We did not manually inspect the entire dataset; it may contain offensive content.
+
+\subsection{Distribution}
+
+\textbf{Will the dataset be distributed to third parties?}
+
+Yes, it is free and available online.
+
+\textbf{Have any third parties imposed IP-based or other restrictions on the data associated with the instances?}
+
+No
+
+\textbf{Do any export controls or other regulatory restrictions apply to the dataset or to individual instances?}
+
+No
+
+\subsection{Maintenance}
+
+\textbf{Who will be supporting/hosting/maintaining the dataset?}
+
+The authors of this paper will provide needed maintenance to the dataset. 
+
+% \textbf{How can the owner/curator/manager of the dataset be contacted (e.g., email address)?}
+
+% Please email us at learnprompting@gmail.com
+
+\textbf{Is there an erratum?}
+
+There is not, but we mention potential issues with the data in this datasheet.
+
+\textbf{Will the dataset be updated (e.g., to correct labeling errors, add
+new instances, delete instances)?}
+
+Yes, but we expect minimal updates to be needed as we do not intend to add more data to the dataset.
+

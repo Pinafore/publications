@@ -1,0 +1,7 @@
+\section{Security Recommendations}
+\label{appx:recommendations}
+
+There do exist some commonsense strategies which are guaranteed to work. For example, not all user facing applications require free form text to be shown to users (e.g. a classification app). Thus, it is possible to prevent some classes of prompt injection entirely by only returning the label.
+Vulnerabilities that occur when \llm{} generated code is run~\cite{ludwig2023achieving} can be avoided by running untrusted code in an isolated machine (e.g. a Docker Image). The Dual LLMs: Privileged and Quarantined~\cite{willison2023the} approach can ensure that prompt injection is impossible in a limited context. For some less certain solutions, consider fine tuning or making use of guardrails systems \cite{dinu2023NeMo}. 
+Our dataset could be used to build statistical defenses by fine tuning prompt hacking classifiers and automating red teaming. We also expect that it will lead to further research on prompt hacking \cite{shen2023characterizing} and related competitions\cite{Gandalf2023}.
+Additionally, reconsidering the transformer architecture and/or building user input embeddings into your model architecture could help models more easily evade prompt hacking.
